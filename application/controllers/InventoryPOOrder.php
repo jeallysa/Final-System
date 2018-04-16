@@ -49,9 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        
   if ($_POST)  {
         
- for ($x = 0; $x < count($this->input->post('itemId')); $x++){                                                       // i need these two condition first look at the post if there is no problem and all are good..
+ for ($i = 0; $i < count($this->input->post('itemId')); $i++){                                                       // i need these two condition first look at the post if there is no problem and all are good..
                                                                                                                     // because if the next for loop returns false nothing will be inserted and will cause error
-   if((!empty($receivedv[$x]) && !empty($yield_weightv[$x]) && !empty($datev[$x]) && !empty($receivedByv[$x]) )){     //The only thing that can go to the 2nd loop are the one that passes the validation
+   if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) && !empty($datev[$i]) && !empty($receivedByv[$i]) )){     //The only thing that can go to the 2nd loop are the one that passes the validation
       
       
       
