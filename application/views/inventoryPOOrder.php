@@ -189,7 +189,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                     </div>
                 
-                </div>            </nav>
+                </div>           
+            </nav>
         
 
 
@@ -221,7 +222,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            if(!empty($order)) {                                                                           
            foreach($order as $object){
            $temp =  $object->supp_po_id;
-           $sup_id = $object->sup_id;   
+           $sup_id = $object->sup_id; 
+           $dateMin = $object->suppPO_date;       
 
 ?>
 
@@ -243,7 +245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>Date Received:</label>
-                                                         <input type="date" class="form-control"  max ="<?php echo date("Y-m-d")?>" name="date[]" required>
+                                                         <input type="date" class="form-control"  min="<?php echo $dateMin ?>"  max ="<?php echo date("Y-m-d")?>" name="date" required>
                                                     </div>
 
 
@@ -268,7 +270,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>Received By: </label>
-                                                        <select class="form-control" name="receivedBy[]" required>
+                                                        <select class="form-control" name="receivedBy" required>
                                                             
                                                             
                                       <?php
@@ -343,7 +345,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                <td>
                                                
-                                    <input  type="number" class="form-control" maxlength="4" name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty-$object->received ?>" readonly/> 
+                                    <input  type="number" class="form-control" maxlength="4" name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty - $object->received ?>" readonly/> 
                                             
                                           </td>        
                                                     
@@ -358,8 +360,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                     
                                   
-                                            <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >  
-                                                 <?php   
+                                             <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
+                                             <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
+                                                    
+                                                    
+                                                    
+                                                    <?php   
                                                     
                                                   
                                                 '</tr>' ;
@@ -537,7 +543,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                     
                                                 <td >
-                                                            <input type="date" class="form-control " name="date[]"  max ="<?php echo date("Y-m-d")?>" id ="<?php echo "poPartialDate".$i?>" />
+                                                            <input type="date" class="form-control " name="date[]"   min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" id ="<?php echo "poPartialDate".$i?>" />
                                                 </td>
                                                 <td>
                                                          <select  class="form-control " name="receivedBy[]" >

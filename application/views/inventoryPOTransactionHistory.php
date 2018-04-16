@@ -337,7 +337,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <thead>
                                                 <tr>
                                                     <th>Date Delivered</th>
+                                                    <th>DR No. <th>
                                                     <th>Item Name <th>
+                                                    
                                                     <th>Type <th>
                                                     <th>Quantity/Weight(g) Delivered<th>
                                                     <th>Yield Weight</th>
@@ -351,7 +353,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
       <?php
 
-                             $retrieveDetails ="SELECT date_received , item , type ,supp_delivery.received as received , yield_weight , yields, received_by FROM supp_delivery join supp_po_ordered  using(supp_po_id) where supp_po_id =".$temp  ;  
+                             $retrieveDetails ="SELECT date_received, drNo, item, type,supp_delivery.received, yield_weight,yields, received_by FROM supp_delivery left join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id =".$temp  ;  
                
                                               $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
@@ -360,7 +362,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                   
                                            echo '<tr>' ,
                                                 '<td>'  . $object->date_received. '</td>' ,
-                                                '<td>'  . $object->item .         '</td>' ,
+                                                      '<td>'  . $object->drNo   .        '</td>' ,
+                                              
+                                                   '<td>'  ,                         '</td>' ,
+                                              '<td>'  . $object->item .         '</td>' ,
                                                 '<td>'  ,                         '</td>' ,
                                                   
                                                 '<td>'  . $object->type .         '</td>' ,  

@@ -24,6 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $data['lastPO'] = $this->inventoryPOAdd_model->RetrieveLastPO();
             $data['tempExisting'] = $this->inventoryPOAdd_model->checkIfTempIsEmpty();
             $data['TempOrdered'] = $this->inventoryPOAdd_model->displayOrderedTemp();
+            $data['sumOfTemp'] = $this->inventoryPOAdd_model->sumOfTemp();
+            $data['sumTotal'] = $this->inventoryPOAdd_model->sumTotal();
             
             
             

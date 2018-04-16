@@ -73,8 +73,40 @@
           return $query-> result();
       }else
           return NULL;
-  
   }  
+      
+      
+        
+     function sumOfTemp(){
+      $query = $this->db->query(' SELECT  sum(qty) as tQty , sum(amount) as subTotal
+  FROM supp_temp_po_order ');      
+      if($query->num_rows() > 0){
+          return $query-> result();
+      }else
+          return NULL;
+  }     
+      
+            
+     function sumTotal(){
+      $query = $this->db->query('SELECT trucking_fee + sum(amount) as tAmount FROM supp_temp_po_order join supp_temp_po group by trucking_fee
+');      
+      if($query->num_rows() > 0){
+          return $query-> result();
+      }else
+          return NULL;
+  }     
+    
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
               
       

@@ -229,6 +229,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+            $dateMin = $object->suppPO_date
 ?>                                 
                                     
                                <!--------------------------- MODAL Full Payment ------------------------------->
@@ -315,7 +316,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group label-floating">
                                                                                   <label>Date of Payment:</label>
-                                                                                  <input class="form-control" type="date"  max ="<?php echo date("Y-m-d")?>" name="date" required>
+                                                                                  <input class="form-control" type="date"  min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" name="date" required>
                                                                                 </div>
                                                                             </div>
                                                                           
@@ -361,6 +362,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+            $dateMin = $object->suppPO_date
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -450,7 +452,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group label-floating">
                                                                                   <label>Date of Payment:</label>
-                                                                                  <input class="form-control" type="date"  max ="<?php echo date("Y-m-d")?>" name="date" required>
+                                                                                  <input class="form-control" type="date"  min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" name="date" required>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-4">
@@ -520,7 +522,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Date Received</th>
+                                                                       <th>DR No.</th>
                                                                         <th>Item Name</th>
+                                                                 
                                                                         <th>Type</th>
                                                                         <th>Quantity/ Original Weight(g)</th>
                                                                         <th>Yield Weight(g)</th>
@@ -543,7 +547,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
                          for($table = 0 ; $table < 4 ; $table++){
                           
-                             $retrieveDetails ="SELECT * FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
+                             $retrieveDetails ="SELECT distinct supp_po_ordered_id , date_received, drNo , item , type ,  qty , yield_weight , yields , unitPrice , amount   FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
                              ".$sup_id ." and  type = ".$arrayType[$table]." and supp_po_ordered.supp_po_id = $temp"  ;  
                
                                               $query = $this->db->query($retrieveDetails);
@@ -554,6 +558,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                   
                                            echo '<tr>' ,
                                                 '<td>'  . $object->date_received   . '</td>' ,
+                                                '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  . number_format($object->qty)  . '</td>' ,

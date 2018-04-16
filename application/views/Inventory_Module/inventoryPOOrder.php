@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="logo">
                 <img src="<?php echo base_url(); ?>assets/img/logo.png" alt="image1" width="250px" height="150px">
             </div>
-            <div class="sidebar-wrapper">
+             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
                         <a href="<?php echo base_url(); ?>inventoryDashboard">
@@ -120,8 +120,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </li>
                            
                             <li>
-                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -189,7 +189,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                     </div>
                 
-                </div>            </nav>
+                </div>           
+            </nav>
         
 
 
@@ -221,7 +222,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            if(!empty($order)) {                                                                           
            foreach($order as $object){
            $temp =  $object->supp_po_id;
-           $sup_id = $object->sup_id;   
+           $sup_id = $object->sup_id; 
+           $dateMin = $object->suppPO_date;       
 
 ?>
 
@@ -243,7 +245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>Date Received:</label>
-                                                         <input type="date" class="form-control" name="date[]" required>
+                                                         <input type="date" class="form-control"  min="<?php echo $dateMin ?>"  max ="<?php echo date("Y-m-d")?>" name="date" required>
                                                     </div>
 
 
@@ -268,7 +270,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>Received By: </label>
-                                                        <select class="form-control" name="receivedBy[]" required>
+                                                        <select class="form-control" name="receivedBy" required>
                                                             
                                                             
                                       <?php
@@ -338,12 +340,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>      
                                                     
                                                 <td>
-                                            <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo number_format($object->qty) ?>" readonly> <!-- name of id=qty-->
+                                            <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo $object->qty ?>" readonly> <!-- name of id=qty-->
                                                   </td>
                                                     
                                                <td>
                                                
-                                    <input  type="number" class="form-control" maxlength="4" name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo number_format($object->qty-$object->received) ?>" readonly/> 
+                                    <input  type="number" class="form-control" maxlength="4" name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty - $object->received ?>" readonly/> 
                                             
                                           </td>        
                                                     
@@ -358,8 +360,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                     
                                   
-                                            <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >  
-                                                 <?php   
+                                             <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
+                                             <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
+                                                    
+                                                    
+                                                    
+                                                    <?php   
                                                     
                                                   
                                                 '</tr>' ;
@@ -500,14 +506,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>     
                                                          
                                                    <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo number_format($object->qty) ?>" readonly />
+                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
                                                   
                                                     </td>   
                                                     
                                                  
                                            <td>
                                                
-                                    <input  type="number" class="form-control"  name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo number_format($object->qty-$object->received) ?>" readonly/> 
+                                    <input  type="number" class="form-control"  name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty-$object->received ?>" readonly/> 
                                             
                                           </td>   
                                                     
@@ -537,7 +543,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                     
                                                 <td >
-                                                            <input type="date" class="form-control " name="date[]"  id ="<?php echo "poPartialDate".$i?>" />
+                                                            <input type="date" class="form-control " name="date[]"   min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" id ="<?php echo "poPartialDate".$i?>" />
                                                 </td>
                                                 <td>
                                                          <select  class="form-control " name="receivedBy[]" >

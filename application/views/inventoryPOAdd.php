@@ -501,7 +501,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                                                                 <tr>
                                                                     <td><b>Total Grams/Qty</b></td>
-                                                                    <td><center><b><input type="number"  class="form-control" name="totalItem" id="totalItem" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="number"  class="form-control" name="totalItem" id="totalItem" value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->tQty; }}  ?>" readonly required/></b></center></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
@@ -511,21 +511,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                      <td><b>Trucking Fee</b></td>
                                                                      <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo $object->trucking_fee; }}  ?>" readonly /></b></td>  
                                                                      <td></td>
-                                                                     <td><!--<center><b><input type="number"  class="form-control" name="" id="" readonly required/></b></center> --></td>
+                                                                     <td></td>
                                                                 </tr>
                                                             
                                                                 <tr>
                                                                     <td></td>
                                                                     <td></td>
+                                                                    <td></td>
                                                                     <td><center><b>Sub total</b></center></td>
-                                                                    <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  readonly required/></b></center></td>
+                                                                    <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->subTotal; }}  ?>"  readonly required/></b></center></td>
                                                                 </tr>
                                                                 
                                                                 <tr>
                                                                     <td></td>
                                                                     <td></td>
-                                                                    <td><center><b>Amount Due</b></center></td>
-                                                                    <td><center><b><input type="number" class="form-control" name="totalAmount"  id="totalAmount" readonly required/></b></center></td>
+                                                                    <td></td>
+                                                                    <td><center><b>Total Amount</b></center></td>
+                                                                    <td><center><b><input type="number" class="form-control" name="totalAmount"  id="totalAmount" value="<?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo $object->tAmount; }}  ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>
@@ -654,6 +656,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
     var cancel = document.getElementsByClassName("btn");
     var notThis = document.getElementById("notThis");
+    var printer = document.getElementById("printer");   
+        printer.style.visibility ='hidden';
         notThis.style.visibility ='hidden';
     for(var i=0; i < cancel.length; i++){  
     cancel[i].style.visibility = 'hidden';
@@ -834,9 +838,10 @@ document.getElementById('submitOrder').onclick = function() {
        
 }); //END 
          
-    
+  
+        
    
-
+/*
 
   $(document).ready(function () {     
    var totalqty= $('input[name="qty[]"]').length;    
@@ -863,7 +868,16 @@ document.getElementById('submitOrder').onclick = function() {
         
         
         }    
-  });                
+  });     
+        
+  */      
+        
+        
+        
+        
+        
+        
+        
     
   /*
   $(document).ready(function () { 

@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="logo">
                 <img src="<?php echo base_url(); ?>assets/img/logo.png" alt="image1" width="250px" height="150px">
             </div>
-              <div class="sidebar-wrapper">
+            <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
                         <a href="<?php echo base_url(); ?>inventoryDashboard">
@@ -121,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                       <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li>
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-bell"></i>
+                                        <i class="glyphicon glyphicon-bell"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                         
                                        <span class="label-count"><b> <?php 
@@ -250,7 +250,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                                                    
-                                        
+              <!------------------------------                                FORM1                                        ----------------------------------------------->                            
                                                     
                                             
                                             <div class="col-md-4">
@@ -292,7 +292,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         
                                                                         
                                                                         
-                                                                       <input class="form-control" type="date" name="date" id ="poDate"  value="<?php if(!empty($tempExisting)){
+                                                                       <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="<?php if(!empty($tempExisting)){
                                                                                                                                       echo $tempExisting[0]->date; } ?>" required>
                                                                         
                                                                         
@@ -319,7 +319,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         
                                                                         
                                                          <input type="number" class="form-control"  min="1"  name = "truckingFee" value = "<?php if(!empty($tempExisting)){
-                                                                                                                                           echo number_format($tempExisting[0]->trucking_fee,2); } ?>" required>
+                                                                                                                                           echo $tempExisting[0]->trucking_fee; } ?>" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -338,12 +338,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div> 
                                             </div>                                                
                                
-                              
-
-
-
-
-                                                   
+                                            
+              <!-------------------------------------------------              FORM2                                 ----------------------------------------------->                                     
                                       <div  id="printThis" >  
                                         <div class="col-md-8" id="form2" >
                                             <button class ="btn-print pull-right" id="printer">Generate PDF</button>
@@ -463,7 +459,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              
                                              
                                              
-                                   
+      <!------------------------------                                        FORM3                                ----------------------------------------------->                                              
                                              
                                              
                                   
@@ -489,10 +485,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                          foreach ($TempOrdered as $object) {
                                                                          echo '<tr>' ,
       '<td class="col-sm-3"><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required>   </td>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="qty[]"       id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
+      '<td class="col-sm-3"><input type="text" class="form-control" name="qty[]"       id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"      id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]" id="unitPrice'.$counter.'" value ="'.number_format($object->unitPrice,2) .'" readonly required>   </td>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="amount[]"    id="amount'.$counter.'" value ="'.number_format($object->amount,2)    .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]" id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
+      '<td class="col-sm-3"><input type="text" class="form-control" name="amount[]"    id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                                                                               '</tr>' ;
                                                                              $counter++;
                                                                              }
@@ -505,7 +501,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                                                                 <tr>
                                                                     <td><b>Total Grams/Qty</b></td>
-                                                                    <td><center><b><input type="number"  class="form-control" name="totalItem" id="totalItem" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="number"  class="form-control" name="totalItem" id="totalItem" value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->tQty; }}  ?>" readonly required/></b></center></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
@@ -513,23 +509,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             
                                                                 <tr>
                                                                      <td><b>Trucking Fee</b></td>
-                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo "" .number_format($object->trucking_fee,2); }}  ?>" readonly /></b></td>  
+                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo $object->trucking_fee; }}  ?>" readonly /></b></td>  
                                                                      <td></td>
-                                                                     <td><!--<center><b><input type="number"  class="form-control" name="" id="" readonly required/></b></center> --></td>
+                                                                     <td></td>
                                                                 </tr>
                                                             
                                                                 <tr>
                                                                     <td></td>
                                                                     <td></td>
+                                                                    <td></td>
                                                                     <td><center><b>Sub total</b></center></td>
-                                                                    <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  readonly required/></b></center></td>
+                                                                    <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->subTotal; }}  ?>"  readonly required/></b></center></td>
                                                                 </tr>
                                                                 
                                                                 <tr>
                                                                     <td></td>
                                                                     <td></td>
-                                                                    <td><center><b>Amount Due</b></center></td>
-                                                                    <td><center><b><input type="number" class="form-control" name="totalAmount"  id="totalAmount" readonly required/></b></center></td>
+                                                                    <td></td>
+                                                                    <td><center><b>Total Amount</b></center></td>
+                                                                    <td><center><b><input type="number" class="form-control" name="totalAmount"  id="totalAmount" value="<?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo $object->tAmount; }}  ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>
@@ -542,13 +540,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     </div>
                                                </form> 
                                             </div>    
-
+  <!------------------------------                                        End Form 3                                ----------------------------------------------->                                              
                                                   
                                    
                                                 
                                               
                                                 
-                                               </div>  
+                                               </div>  <!------------------------------END   FORM 2 and 3  DIV------------------------------------->  
                                             
                                             
              
@@ -658,6 +656,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
     var cancel = document.getElementsByClassName("btn");
     var notThis = document.getElementById("notThis");
+    var printer = document.getElementById("printer");   
+        printer.style.visibility ='hidden';
         notThis.style.visibility ='hidden';
     for(var i=0; i < cancel.length; i++){  
     cancel[i].style.visibility = 'hidden';
@@ -762,7 +762,7 @@ document.getElementById('submitOrder').onclick = function() {
               data:{itemName : itemName , itemType : itemType , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
-                  //alert("success");
+                 // alert("success");
                   
                 $('#unitPrice').val(data['unitPrice']);  //use this syntax when returning a single row only data['unitPrice']  column name in the query
                     var category = data['category'];       //use this syntax when returning a single row only data['category']  column name in the query
@@ -770,7 +770,7 @@ document.getElementById('submitOrder').onclick = function() {
                   
                   if(category == 1){
                     var y =  parseFloat($('#qty').val());
-                    var x = (y/100) * parseFloat($('#unitPrice').val());
+                    var x = (y/1000) * parseFloat($('#unitPrice').val());
                     $('#amount').val(x);
                   }else{
                     var y =  parseFloat($('#qty').val());
@@ -798,7 +798,7 @@ document.getElementById('submitOrder').onclick = function() {
                   
               },
               error: function(){
-               //  alert('error');
+                 //alert('error');
               }
           });
       }); 
@@ -838,9 +838,10 @@ document.getElementById('submitOrder').onclick = function() {
        
 }); //END 
          
-    
+  
+        
    
-
+/*
 
   $(document).ready(function () {     
    var totalqty= $('input[name="qty[]"]').length;    
@@ -867,7 +868,16 @@ document.getElementById('submitOrder').onclick = function() {
         
         
         }    
-  });                
+  });     
+        
+  */      
+        
+        
+        
+        
+        
+        
+        
     
   /*
   $(document).ready(function () { 

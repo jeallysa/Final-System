@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="logo">
                 <img src="<?php echo base_url(); ?>assets/img/logo.png" alt="image1" width="250px" height="150px">
             </div>
-            <div class="sidebar-wrapper">
+             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
                         <a href="<?php echo base_url(); ?>inventoryDashboard">
@@ -120,8 +120,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </li>
                            
                             <li>
-                               <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li>
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
+                                        <i class="glyphicon glyphicon-bell"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                         
                                        <span class="label-count"><b> <?php 
@@ -337,7 +337,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <thead>
                                                 <tr>
                                                     <th>Date Delivered</th>
+                                                    <th>DR No. <th>
                                                     <th>Item Name <th>
+                                                    
                                                     <th>Type <th>
                                                     <th>Quantity/Weight(g) Delivered<th>
                                                     <th>Yield Weight</th>
@@ -351,7 +353,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
       <?php
 
-                             $retrieveDetails ="SELECT date_received , item , type ,supp_delivery.received as received , yield_weight , yields, received_by FROM supp_delivery join supp_po_ordered  using(supp_po_id) where supp_po_id =".$temp  ;  
+                             $retrieveDetails ="SELECT date_received, drNo, item, type,supp_delivery.received, yield_weight,yields, received_by FROM supp_delivery left join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id =".$temp  ;  
                
                                               $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
@@ -360,7 +362,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                   
                                            echo '<tr>' ,
                                                 '<td>'  . $object->date_received. '</td>' ,
-                                                '<td>'  . $object->item .         '</td>' ,
+                                                      '<td>'  . $object->drNo   .        '</td>' ,
+                                              
+                                                   '<td>'  ,                         '</td>' ,
+                                              '<td>'  . $object->item .         '</td>' ,
                                                 '<td>'  ,                         '</td>' ,
                                                   
                                                 '<td>'  . $object->type .         '</td>' ,  

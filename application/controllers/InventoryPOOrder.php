@@ -49,14 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        
   if ($_POST)  {
         
- for ($i = 0; $i < count($this->input->post('itemId')); $i++){                                                       // i need these two condition first look at the post if there is no problem and all are good..
- //     if((!empty($yield_weightv[$i]))&&($datev[$i] <= date('Y-m-d'))){                                              // because if the next for loop returns false nothing will be inserted and will cause error
-   if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) && !empty($datev[$i]) )&&($datev[$i] <= date('Y-m-d'))){     //The only thing that can go to the 2nd loop are the one that passes the validation
+ for ($x = 0; $x < count($this->input->post('itemId')); $x++){                                                       // i need these two condition first look at the post if there is no problem and all are good..
+                                                                                                                    // because if the next for loop returns false nothing will be inserted and will cause error
+   if((!empty($receivedv[$x]) && !empty($yield_weightv[$x]) && !empty($datev[$x]) && !empty($receivedByv[$x]) )){     //The only thing that can go to the 2nd loop are the one that passes the validation
       
       
       
         for ($i = 0; $i < count($this->input->post('itemId')); $i++){
-           if((!empty($receivedv[$i]) && !empty($yield_weightv[$i])  && !empty($datev[$i]) )&&($datev[$i] <= date('Y-m-d'))){   
+           if((!empty($receivedv[$i]) && !empty($yield_weightv[$i])  && !empty($datev[$i]) && !empty($receivedByv[$i]) )){   
               
                                    //Data used for mapping 
               $data3[$i] = array(
@@ -122,6 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $DRNO=$this->input->post('DRNO');   
         $itemIdv=$this->input->post('itemId');
         $itemNamev=$this->input->post('item');
+        $fullRemaining = $this->input->post('fullRemaining');       // using the quantity to be inserted in the received. because its full delivery. 
         $itemTypev=$this->input->post('itemType');
         $yield_weightv=$this->input->post('yield_weight');
         $yieldsv = $this->input->post('yield');
@@ -133,21 +134,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
  if ($_POST)  {
             
- for ($x = 0; $x < count($this->input->post('itemId')); $x++){   
-      if($datev[$x] <= date('Y-m-d')){
+
                       
         for ($i = 0; $i < count($this->input->post('itemId')); $i++){
        
                                      //Date used for mapping 
               $data3[$i] = array(
-                                     "drNo"=>$DRNO,
+                                    "drNo"=>$DRNO,
                                     "itemId"=>$itemIdv[$i],
                                     "item" => $itemNamev[$i],
                                     "itemType" => $itemTypev[$i],
                                     "supp_po_ordered_id" => $itemIdv[$i],
                                     "yield_weight" => $yield_weightv[$i],
-                                    "date_received" => $datev[$i],
-                                    "received_by" =>$receivedByv[$i],
+                                    "received" => $fullRemaining[$i], 
+                                    "date_received" => $datev,
+                                    "received_by" =>$receivedByv,
                                     "supp_po_id"    => $temp,
             );
             
@@ -161,8 +162,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     'supp_po_ordered_id' => $itemIdv[$i],
                                     'yield_weight' => $yield_weightv[$i],
                                     'yields' => $yieldsv[$i],
-                                    'date_received' => $datev[$i],
-                                    'received_by' =>$receivedByv[$i],
+                                    'received' => $fullRemaining[$i], 
+                                    'date_received' => $datev,
+                                    'received_by' =>$receivedByv,
                                     'supp_po_id'    => $temp,
         
                                  );
@@ -171,15 +173,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            
     }
         $this->inventoryPOOrder_model->insertORDER($data);
-            
-       
+   
         $this->inventoryPOOrder_model->updateStockFull($data3, $supp_po_id); 
           
         $this->inventoryPOOrder_model->updateOrderStatusFull($data2, $supp_po_id); //updating the status first before refreshing.  
           
-    }
- }
-            
+         
             
     }
             

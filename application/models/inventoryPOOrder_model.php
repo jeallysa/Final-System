@@ -47,9 +47,7 @@
       
 
       
-      
-      
-      
+
       
       
       
@@ -121,7 +119,7 @@ function updateSuppPoOrderReceived($data3, $supp_po_id){
 foreach($data3 as $key => $object){ 
   
 $loc = 0;
-   $query = $this->db->query("SELECT received FROM supp_po_ordered where item = '".$object['item']."' and type = '".$object['itemType']."'and supp_po_id = ".$supp_po_id);     
+   $query = $this->db->query("SELECT received FROM supp_po_ordered where  supp_po_ordered_id = '".$object['itemId']."' and  item = '".$object['item']."' and type = '".$object['itemType']."' and supp_po_id = ".$supp_po_id);     
       
      if($query->num_rows() > 0){
         
