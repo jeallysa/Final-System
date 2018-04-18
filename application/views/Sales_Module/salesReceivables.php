@@ -157,7 +157,9 @@
                                              <tr>
                                                  <td><?php echo $row->client_deliverDate; ?></td>
                                                  <td><?php echo $row->client_company; ?></td>
-                                                 <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
+                                                 <td><?php 
+                                                    $bal = $row->client_balance - $row->amount_paid;
+                                                 echo 'Php '.number_format($bal,2); ?></td>
                                              </tr>
                                              <?php 
                                                 }
