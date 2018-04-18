@@ -280,6 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $(document).ready(function() {
     $('#fresh-datatables').DataTable({
         "pagingType": "full_numbers",
+        "aaSorting": [0,'desc'],
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
