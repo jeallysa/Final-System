@@ -221,14 +221,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h4><?php echo $pckg; ?> bag (<?php echo $size; ?>g)</h4>
                                                                 <hr>
                                                             </div>
-                                        <div class="form-group col-xs-3">
-                                    <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                        <input type="text" id="min<?php echo $details; ?>" class="form-control" value="2000-01-01" >
-                                        <span class="input-group-addon">to</span>
-                                        <input type="text" id="max<?php echo $details; ?>" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                    </div>
-                                </div>
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
@@ -243,12 +235,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
                                                 
                                              <?php
-                                              $retrieveDetails1 ="SELECT walkin_id, blend_id, walkin_date, walkin_qty FROM jhcs.walkin_sales NATURAL JOIN coffee_blend WHERE blend_id = ".$id ;
+                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
                                            echo '<tr>' ,
-                                                '<td> </td>' ,
+                                                '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
                                                 '<td>'  . number_format($object->walkin_qty)  . ' </td>' ;
                                                 ?>
@@ -261,7 +253,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT contractPO_id, client_company, contractPO_date, contractPO_qty FROM jhcs.contracted_po NATURAL JOIN contracted_client WHERE delivery_stat = 'delivered' AND blend_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -279,7 +271,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT blend_id, client_company, coff_returnDate, coff_returnQty FROM jhcs.client_coffreturn NATURAL JOIN client_delivery NATURAL JOIN contracted_client NATURAL JOIN contracted_po NATURAL JOIN coffee_blend WHERE blend_id = ".$id ;
+                                              $retrieveDetails4 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE coffee_blend.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -288,7 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->coff_returnDate  . '</td>' ,
                                                 '<td>'  . number_format($object->coff_returnQty)  . '</td>' ;
                                                 ?>
-                                                    <td>Return</td>
+                                                    <td>Client Return</td>
                                                     <td>In</td>
                                                  <?php   
                                                 '</tr>' ;

@@ -218,14 +218,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h3><b><?php echo $coff; ?></b></h3>
                                                                 <hr>
                                                             </div>
-                                                            <div class="form-group col-xs-3">
-                                    <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                        <input type="text" id="min<?php echo $details; ?>" class="form-control" value="2000-01-01" >
-                                        <span class="input-group-addon">to</span>
-                                        <input type="text" id="max<?php echo $details; ?>" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                    </div>
-                                </div>
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
@@ -237,28 +229,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
-                                                
-                                                
-                    <?php
-                     $retrieveCompreturn ="SELECT * FROM company_returns NATURAL JOIN supplier WHERE sup_returnItem = ".$id ; 
-                                     $query = $this->db->query($retrieveCompreturn);
-                                        if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                               echo '<tr>' ,
-                                               
-                                                '<td>'  . $object->sup_company   . '</td>' ,
-                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' g</td>' ,
-                                                '<td> Company Return </td>' ,
-                                                '<td> Out </td>' ,
-                                                '</tr>' ;
-                                              }
-                                            }
-                                           
-                                        ?>
 
-                                        <?php
+                                                <?php
                      $retrieveCompdel ="SELECT item, qty, date_received, yield_weight, sup_company, raw_id FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id ; 
                                      $query = $this->db->query($retrieveCompdel);
                                         if ($query->num_rows() > 0) {
@@ -270,6 +242,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format($object->yield_weight)  . ' g</td>' ,
                                                 '<td> Company Delivery </td>' ,
                                                 '<td> In </td>' ,
+                                                '</tr>' ;
+                                              }
+                                            }
+                                           
+                                        ?>
+                                                
+                                                
+                                                
+                    <?php
+                     $retrieveCompreturn ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id; 
+                                     $query = $this->db->query($retrieveCompreturn);
+                                        if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                               echo '<tr>' ,
+                                               
+                                                '<td>'  . $object->sup_company   . '</td>' ,
+                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' g</td>' ,
+                                                '<td> Company Return </td>' ,
+                                                '<td> Out </td>' ,
                                                 '</tr>' ;
                                               }
                                             }
@@ -399,6 +391,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Name</b></th>
                                             <th><b class="pull-left">Type</b></th>
+                                            <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
                                             <th><b class="pull-left">Physical Count</b></th>
                                             <th><b class="pull-left">Discrepancy</b></th>
@@ -421,6 +414,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->raw_id . '</td>' ,
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
                                                 '<td>'  . $object->raw_type . ' roast</td>' ,
+                                                '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td><b>'  . number_format($object->raw_stock)   . ' g</b></td>' ,
                                                 '<td>'  . number_format($object->raw_physcount)   . ' g</td>' ,
                                                 '<td>'  . number_format($object->raw_discrepancy)   . ' g</td>' ,

@@ -13,7 +13,7 @@ class InventoryStickers_Model extends CI_model
 	}
 
 	function retrieveSticker(){
-      $query = $this->db->query("SELECT * FROM jhcs.sticker NATURAL JOIN supplier WHERE sticker_activation = '1';");
+      $query = $this->db->query("SELECT * FROM jhcs.sticker INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE sticker_activation = '1';");
             
       if($query->num_rows() > 0){
           return $query-> result();

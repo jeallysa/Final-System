@@ -1,4 +1,3 @@
-
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
@@ -22,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css"/>
+    <link href="<?php echo base_url(); ?>assets/css/responsive.bootstrap.min.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" >
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
@@ -220,16 +220,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h4><?php echo $brwrtype; ?></h4>
                                                                 <hr>
                                                             </div>
-                                                           
-                                    <div class="form-group col-xs-3">
-                                    <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                        <input type="text" id="min<?php echo $details; ?>" class="form-control" value="2000-01-01" >
-                                        <span class="input-group-addon">to</span>
-                                        <input type="text" id="max<?php echo $details; ?>" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                    </div>
-                                </div>
-                                        <table class="table table-striped" id="table-mutasi<?php echo $details ?>">
+                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
@@ -260,7 +251,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.client_machreturn NATURAL JOIN contracted_client WHERE mach_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.client_machreturn NATURAL JOIN contracted_client WHERE mach_returnQty != '0' AND  mach_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -269,13 +260,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->mach_returnDate  . '</td>' ,
                                                 '<td>'  . number_format($object->mach_returnQty)  . ' pc/s</td>' ;
                                                 ?>
-                                                    <td>Return</td>
+                                                    <td>Client Return</td>
                                                     <td>In</td>
                                                  <?php   
                                                 '</tr>' ;
                                               }
                                             }
                                         ?>  
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE mach_id = ".$id;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pc/s</td>' ;
+                                                ?>
+                                                    <td>Company Return</td>
+                                                    <td>Out</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
 
                                         <?php
                                               $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer_type WHERE mach_id = ".$id ;
@@ -413,11 +422,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
                                 <div class="card-content ">
                                     <br>
-                                    <table id="example" class="table hover order-column" cellspacing="0" width="100%">
+                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
+                                            <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
                                             <th><b class="pull-left">Physical Count</b></th>
                                             <th><b class="pull-left">Discrepancy</b></th>
@@ -440,6 +450,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->mach_id . '</td>' ,
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
+                                                '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td><b>'  . number_format($object->mach_stocks)   . ' pc/s</b></td>' ,
                                                 '<td>'  . number_format($object->mach_physcount)   . ' pc/s</td>' ,
                                                 '<td>'  . number_format($object->mach_discrepancy)   . ' pc/s</td>' ,
@@ -503,6 +514,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="../assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/js/demo.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 <script>
 $(document).ready(function() {
     $('#example').DataTable({
