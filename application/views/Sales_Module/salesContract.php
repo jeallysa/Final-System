@@ -315,13 +315,13 @@
                                                 <div class="form-group">
                                                     <label class="col-md-6 control">Machine Price: </label>
                                                     <div class="col-md-3">
-                                                        <p><b>Php <?php echo number_format($row->mach_price,2); ?></b></p>
+                                                        <p><b>Php <?php echo number_format($row->unitPrice,2); ?></b></p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-6 control">Total Amount: </label>
                                                     <div class="col-md-3">
-                                                        <?php $price = $row->mach_price;
+                                                        <?php $price = $row->unitPrice;
                                                               $qty = $row->mach_qty;
                                                         ?>
                                                         <p><b><?php echo 'Php' .number_format($price * $qty, 2) ?></b></p>
