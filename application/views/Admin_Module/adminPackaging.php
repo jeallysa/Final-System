@@ -240,12 +240,6 @@ a:focus {
                                             <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
-                                     <div class="col-lg-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Number of Stocks</label>
-                                            <input class="form-control" type="number" name="stocks" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Supplier</label>
