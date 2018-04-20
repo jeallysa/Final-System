@@ -151,17 +151,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                                 foreach ($receivable as $row) {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->client_deliverDate; ?></td>
                                                  <td><?php echo $row->client_company; ?></td>
-                                                 <td><?php 
+                                                 <td><?php
                                                     $bal = $row->client_balance - $row->amount_paid;
                                                  echo 'Php '.number_format($bal,2); ?></td>
                                              </tr>
-                                             <?php 
+                                             <?php
                                                 }
                                               ?>
                                         </tbody>
@@ -214,7 +214,7 @@ $(document).ready(function() {
         "info":     false,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
+			{ "extend": 'csv', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
         ]
     });
