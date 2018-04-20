@@ -57,6 +57,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              
          $this->inventoryPOUnpaidDelivery_model->insertPayment($data);
          $this->inventoryPOUnpaidDelivery_model->updatePOPayment($data2 , $supp_po_id);
+        $this->inventoryPOUnpaidDelivery_model->activity_logs('inventory', "Record Partial Payment ");
+
              
          redirect(base_url('inventoryPOUnpaidDelivery'));
      }     
@@ -80,6 +82,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              
          $this->inventoryPOUnpaidDelivery_model->insertPayment($data);
          $this->inventoryPOUnpaidDelivery_model->updatePOPayment($data2 , $supp_po_id);
+        $this->inventoryPOUnpaidDelivery_model->activity_logs('inventory', "Record Full Payment ");
+
              
          redirect(base_url('inventoryPOUnpaidDelivery'));
      }     

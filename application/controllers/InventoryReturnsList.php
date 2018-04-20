@@ -30,6 +30,8 @@
                 
                 
 				$this->load->view('Inventory_Module/inventoryReturnsList', ["poList" => $poList , "reorder" => $reorder, 'data1' => $data1, 'data2' => $data2, 'data3' => $data3, 'data4' => $data4, 'data5' => $data5] );
+                $this->InventoryReturnsList_Model->activity_logs('inventory', "Record a Returns ");
+
 			} else {
 				redirect('login');
 			}

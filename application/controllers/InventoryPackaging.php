@@ -33,7 +33,8 @@
                 
         
             $this->InventoryPackaging_Model->update($data , $id);    
-        
+        	
+        	$this->InventoryPackaging_Model->activity_logs('inventory', "Record Physical Count under Packaging Inventory Stocks ");   
             
             redirect('inventoryPackaging');
         }  

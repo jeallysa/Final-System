@@ -153,6 +153,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
            
         $this->inventoryPOAdd_model->insertOrder($data);
+        $this->inventoryPOAdd_model->activity_logs('inventory', "Purchased Order ");
     }
          
        redirect(base_url('inventoryPOAdd'));   

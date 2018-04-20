@@ -29,4 +29,20 @@ class InventoryPackaging_Model extends CI_model
         
   }
 
+  function activity_logs($module, $activity){
+    $username = $this->session->userdata('username');
+        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
+        foreach ($query ->result() as $row) {
+          $id = $row->user_no;
+        }
+
+        $data = array(
+            'user_no' => $id,
+            'timestamp' => date('Y\-m\-d\ H:i:s A'),
+            'message' => $activity,
+            'type' => $module
+        );
+        $this->db->insert('activitylogs', $data);
+  }  
+
 }

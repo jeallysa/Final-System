@@ -32,7 +32,9 @@
                     );              
                 
         
-            $this->InventoryStocks_Model->update($data , $id);    
+            $this->InventoryStocks_Model->update($data , $id);
+
+        	$this->InventoryStocks_Model->activity_logs('inventory', "Record Physical Count under Raw Coffee Stocks ");    
         
             
             redirect('inventorystocks');
