@@ -9,7 +9,7 @@
     <title>Sales Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, wal-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />   
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -23,12 +23,12 @@
     }
 		.no-border{
 			border: none !important;
-			
+
 		}
-		
-		
-		
-		
+
+
+
+
 
     </style>
 </head>
@@ -97,7 +97,9 @@
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
+
                             <li class="dropdown">
+
                                 <li>
                                     <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
                                 </li>
@@ -126,6 +128,7 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
+                    <!-- <p style="text-align:left"> <?php echo "Today is " . date("m-d-Y") . "<br>" ?> </p> -->
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -133,20 +136,20 @@
                                      <i class="glyphicon glyphicon-signal"></i>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Sales</p>
+                                    <p class="category">Sales of the Day</p>
                                     <h3 class="title">
-										<?php 
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=now() ;")->row()->total;
-										
+										<?php
+											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=curdate() ;")->row()->total;
+
 										if(!empty($total)){
 											echo number_format($total);
 										}else{
 											echo 0;
 										}
-										
+
 										 ?>
                                     </h3>
-									
+
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
@@ -161,17 +164,17 @@
                                    <i class="glyphicon glyphicon-usd"></i>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Collections</p>
+                                    <p class="category">Total Collections</p>
                                     <h3 class="title">
 
-                                    <?php 
+                                    <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery  WHERE  payment_remarks='paid'; ")->row()->total;
 										if(!empty($total)){
 											echo number_format($total);
 										}else{
 											echo 0;
 										}
-										
+
 										 ?>
                                     </h3>
 
@@ -189,10 +192,10 @@
                                     <i class="glyphicon glyphicon-credit-card"></i>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Receivables</p>
+                                    <p class="category">Total Receivables</p>
                                     <h3 class="title">
 
-                                    <?php 
+                                    <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
 											if(!empty($total)){
 												echo number_format($total);
@@ -218,7 +221,7 @@
                                     <p class="category">Clients</p>
                                     <h3 class="title">
 
-                                    <?php 
+                                    <?php
 											$total = $this->db->query("SELECT COUNT(client_company) AS total FROM contracted_client NATURAL JOIN contract WHERE client_activation='1';")->row()->total;
 											if(!empty($total)){
 												echo number_format($total);
@@ -245,14 +248,14 @@
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <tbody>
-											
-												
+
+
 											<?php
-										
+
 												$query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client WHERE seen='0'");
 												$date = date('Y-m-d');
-												
-												
+
+
 												if(!empty($query)){
 													foreach($query->result() as $object){
 														if($object->date_expiration == $date){
@@ -266,8 +269,8 @@
 														</td >
 														<td class="td-actions text-right"><button type="submit" class="btn btn-primary pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
 													</tr>
-											
-													
+
+
 													<?php
 															}elseif($object->seen == '1'){
 													?>
@@ -279,7 +282,7 @@
 														<td class="td-actions text-right"><button type="submit" class="btn btn-default pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
 													</tr>
 													<?php
-																
+
 															}
 														}else{
 
@@ -289,7 +292,7 @@
 												}
 
 										 	?>
-												
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -322,9 +325,9 @@
 	$(document).ready(function() {
 		demo.initDashboardPageCharts();
 
-		$(document).on('click', '#check', function(e){   
+		$(document).on('click', '#check', function(e){
 			e.preventDefault();
-			var id = $(this).data('id'); 
+			var id = $(this).data('id');
 				$.ajax({
 					url:'<?=base_url()?>AdminDashboard/updateNotif/' +id,
 					method: 'POST',
@@ -337,7 +340,7 @@
 
 		});
 
-	});	
+	});
 </script>
 
 </html>
