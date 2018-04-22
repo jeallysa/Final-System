@@ -33,6 +33,84 @@
                
         
         
+    function resolveIssue($data , $supp_po_id){    //$tempReturnId,$tempItem,$tempPoId,$tempQty
+        
+        
+ 
+   
+      $query = $this->db->query("SELECT * FROM supp_po_ordered where supp_po_id = ".$supp_po_id." and supp_po_ordered_id = ".$data['returnItem']);
+    
+  if($query->num_rows() > 0){    
+        $result = $query->row();
+         $item = $result->item;
+         $type = $result->type;
+  }
+   
+      
+
+   
+      $arrayTable = array("raw_coffee","sticker","packaging","machine");  
+         $arrayNameOfItem = array("raw_coffee","sticker","package_type","brewer");  
+           $arrayTypeOfItem = array("raw_type","sticker_type", "package_size" , "brewer_type");   
+                $stockColumn= array("raw_stock","sticker_stock","package_stock","mach_stocks");
+      
+      
+      $query1  = $this->db->query('SELECT supp_id FROM supp_po where supp_po_id='.$supp_po_id);
+              $res = $query1->row();
+      
+      
+//foreach($data3 as $key => $object){      
+ 
+
+for($i = 0 ; $i <= 3 ; $i++){      
+   $query2 = $this->db->query("SELECT sum(".$stockColumn[$i].") as sumx FROM ".$arrayTable[$i]. " where ". $arrayNameOfItem[$i]." LIKE '%".$item."%' and ". $arrayTypeOfItem[$i]." LIKE '%".$type."%' and sup_id = ".$res->supp_id);     
+      
+     if($query2->num_rows() > 0){
+        
+         $stockCount = $query2->row(); 
+         $newStock = $stockCount->sumx + $data['qty'] ;
+ 
+         $dataRes1 = array($stockColumn[$i] => $newStock );  //passing the value of the new Stock
+            
+         
+        $where = array( $arrayNameOfItem[$i] =>$item , $arrayTypeOfItem[$i] =>$type , 'sup_id' => $res->supp_id ,''); // multiple where
+        $this->db->where($where);  //used the where here
+        $this->db->update($arrayTable[$i], $dataRes1);   
+         
+         
+         
+         
+         $dataRes2 = array('res' => 'resolved' );
+         
+        $where = array('company_returnID' =>$data['returnId']); // multiple where
+        $this->db->where($where);  //used the where here
+        $this->db->update('company_returns', $dataRes2);    
+         
+       
+        }
+     
+     
+    
+}
+//}
+ 
+      
+      
+      
+      
+      
+      
+      
+      
+  }
+        
+        
+        
+        
+        
+        
+        
+        
            function updateStocks($return){ 
          
            $query1 = $this->db->query("SELECT * from supp_po_ordered where supp_po_ordered_id = ".$return['sup_returnItem']." and supp_po_id = ".$return['poNo']);
@@ -94,21 +172,47 @@
             
                
 		public function get_maxModel($item, $poNo){
-			$query = $this->db->query("SELECT yield_weight-sup_returnQty as max  FROM company_returns join supp_delivery on poNo = supp_po_id where poNo = ".$poNo. " and sup_returnItem = ".$item);
-		
-                if($query->num_rows() > 0){
-                               return $query->row();
+            
+		//	$query = $this->db->query("SELECT sum(yield_weight)  - (sum(sup_returnQty) / count(sup_returnQty))  as max  FROM company_returns join supp_delivery on poNo = supp_po_id where  supp_po_id = ".$poNo." and supp_po_ordered_id = ".$item." and poNo= ".$poNo." and sup_returnItem = ".$item);
+
+            
+            $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item);
+            
+            $queryLimit = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item);
+            
+            $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item);
+            
+            
+		 
+                if($queryCheck->num_rows() > 0){
+                    
+                            $limit = $queryLimit->row();
+                            $deduc = $queryDeduc->row();
+                    
+                    $limitT  = $limit->max;
+                    $deducT  = $deduc->max;
+                    
+                    $result = $limitT - $deducT;
+                    
+                 //   $result = $deducT;
                     
                     
-                    
-                    
-                    
+                    return $result;
                     
                 }else{
                     
-                      $query2 = $this->db->query("SELECT yield_weight as max FROM supp_delivery where supp_po_id = ".$poNo. " and supp_po_ordered_id =".$item);
+                      $query2 = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item);
                          if($query2->num_rows() > 0){
-                                    return $query2-> row();
+                                        
+                                      $limit = $queryLimit->row();
+                              $limitT  = $limit->max;
+                             
+                             
+                             
+                                    return  $limitT;
+                             
+                             
+                             
                               }
                 }
         }
@@ -145,7 +249,7 @@
 			
 		}
 		public function get_clientmachinereturns(){
-			$query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id WHERE mach_returnQty != '0';");
+			$query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id;");
 			return $query->result();
 			
 		}
@@ -197,22 +301,6 @@
 			
 		
 		}
-
-		function activity_logs($module, $activity){
-	    	$username = $this->session->userdata('username');
-	        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
-	        foreach ($query ->result() as $row) {
-	          $id = $row->user_no;
-	        }
-
-	        $data = array(
-	            'user_no' => $id,
-	            'timestamp' => date('Y\-m\-d\ H:i:s A'),
-	            'message' => $activity,
-	            'type' => $module
-	        );
-	        $this->db->insert('activitylogs', $data);
-  		}  
 	}
 
 ?>

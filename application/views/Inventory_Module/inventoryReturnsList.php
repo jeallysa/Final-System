@@ -249,6 +249,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
                 </div>
             </nav>
+            
+            
+            
+            
+            
+       
+            
+            
+            
+            
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -275,6 +285,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
+                                
+                                
+                                
+                                
+  
+                     
+                                
+                                
+                                
                                 <div class="card-content">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="companyreturn">
@@ -290,14 +309,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>DR No.</b></th>
                                                     <th><b>Item Returned</b></th>
                                                     <th><b>Qty/Weight(g)</b></th>
+                                                    <th><b>Issue</b></th>
                                                     <th><b>Remarks</b></th>
+                                                    <th></th>
                                                     
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                    foreach($data1['get_companyreturns'] as $row)
-                                                    {
+                                                  $returnModal = 1;
+                                                    if(!empty($data1['get_companyreturns'])){
+                                                    foreach($data1['get_companyreturns'] as $row){
+                                                  
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $row->company_returnID; ?></td>
@@ -307,10 +330,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
                                                     <td><?php echo $row->sup_returnQty ?></td>
                                                     <td><?php echo $row->sup_returnRemarks ?></td>
-                                                    
+                                                    <td><?php echo $row->res ?></td>
+                                            <?php 
+                                                    if($row->res == "unresolved"){
+                                                 ?>   
+                                                    <td>
+                                                    <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a>
+                                                   <td>
+                                                <?php       
+                                                    }
+                                                       ?>
+                                                       
                                                 </tr>
                                                 <?php
+                                                    $returnModal++;
                                                     }
+                                                        
+                                                 } 
                                                 ?>
                                             </tbody>
                                         </table>
@@ -503,7 +539,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             
             
+                                  
+        
+     <?php
+        $returnModal = 1;
+
+           foreach($data1['get_companyreturns'] as $row){
+               
+              $returnId   = $row->company_returnID;
+              $returnItem = $row->sup_returnItem;
+              $supp_po_id = $row->poNo;
+              $qty        = $row->sup_returnQty;
+             
+               //<?php echo $returnId/$returnItem/$supp_po_id/$qty
+?>
+                                                      
+                                    
+                                
+                                    
+    <div class="modal fade" id="<?php echo "returnModal" . $returnModal   ?>" role="dialog">
+      <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
+        </div>
+          
+    <form action="InventoryReturnsList/resolveIssue/<?php echo $supp_po_id ?>" method="post" accept-charset="utf-8">    
+        <div class="modal-body">
+            <center><h3><b><p>Is the Issue Resolved?</p></b></h3></center>.
+           
+            <input type="hidden" class="form-control" name="returnId"  value = "<?php echo $returnId ?>" > 
+            <input type="hidden" class="form-control" name="returnItem"  value = "<?php echo $returnItem ?>" > 
+            <input type="hidden" class="form-control" name="supp_po_id"  value = "<?php echo $supp_po_id ?>" > 
+            <input type="hidden" class="form-control" name="qty"         value = "<?php echo $qty ?>" > 
             
+        </div>
+       
+        
+     
+      
+               <div  align="center">
+                                 <button type="submit" class="btn btn-success accept">Yes</button>
+                                 <button type="button" class="btn btn-default btn-close" data-dismiss="modal">No</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+      
+    </div>
+  </div>                                         
+           
+            
+ <?php      
+         $returnModal++;        
+        }
+?>    
+                   
             
             
             
@@ -543,6 +638,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.datatables.js"></script>
 <script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 $(document).ready(function() {
     $('table.table').DataTable({
         select: {
@@ -595,7 +712,7 @@ $(document).ready(function() {
               success: function(data){
                // alert("success"); 
               
-                  var newData = data['max']; 
+                  var newData = data; //data['max']; 
                 //  alert(newData);
                  $('#returnQty').attr("max", newData);
                  $('#returnQty').attr("placeholder",newData);

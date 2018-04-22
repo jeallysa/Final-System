@@ -230,7 +230,7 @@ a:focus {
                                                 <th><b>Position</b></th>
                                                 <th><b>Address</b></th>
                                                 <th><b>Email</b></th>
-                                                <th><b>Cellphone No.</b></th>
+                                                <th><b>Contact No.</b></th>
                                                 <th><b class="pull-left">Contract</b></th>
                                                 <th class="disabled-sorting"><b>Edit</b></th>
                                                 <th><b class="pull-left">Activation</b></th>
@@ -363,7 +363,7 @@ a:focus {
                                                                               
                                                                                 <div class="form-group row">
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
-                                                                                    <label for="type">Cellphone Number</label>
+                                                                                    <label for="type">Contact Number</label>
                                                                                     <input class="form-control" name="cell_no" type="number" value="<?php echo $row->client_contact; ?>" id="example-number-input" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                                 </div>
                                                                             </div>

@@ -18,7 +18,7 @@
     <link href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet" />
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="<?php echo base_url(); ?>assets/css/demo.css" rel="stylesheet" />
-    <link href="<?php echo base_url(); ?>assets/css/responsive.bootstrap.min.css" rel="stylesheet" />
+   <link href="<?php echo base_url(); ?>assets/css/responsive.bootstrap.min.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -304,7 +304,7 @@ a:focus {
                                             </div>
                                     </div><hr>  
                                     <h3 style="text-align: center;"> PROPORTIONS </h3>  
-                                    <table class="table table-striped table-bordered dt-responsive nowrap" id="example" cellspacing="0" width="100%">
+                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                          <?php
@@ -377,6 +377,7 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
+
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 <script type="text/javascript">

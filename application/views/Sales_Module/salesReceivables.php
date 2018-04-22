@@ -214,8 +214,29 @@ $(document).ready(function() {
         "info":     false,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
+<<<<<<< HEAD
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs' },
+=======
+<<<<<<< HEAD
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
+			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                orientation: 'portrait',
+                exportOptions: {
+                columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'left';
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.pageMargins = [50,50,50,50];
+                        doc.defaultStyle.fontSize = 10;
+                         doc.content[1].table.widths = [ '30%', '34%', '36%']; }
+            }
+=======
+			{ "extend": 'csv', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
+>>>>>>> ff5d65271c50387273174ff0e43908d20f73503a
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
+>>>>>>> 357271e19507cc9d532b1cf2f64910b202981fd8
         ]
     });
 });

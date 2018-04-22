@@ -452,13 +452,6 @@ a:focus {
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6 form-group">
-                                                                            <div class="form-group label-floating">
-                                                                                <label for="email">Number of Stocks</label>
-                                                                                <input class="form-control" type="number" name="stock_level" value="<?php echo $row->mach_stocks; ?>" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                                                            
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
                                                                                 <select class="form-control" name="sup_company" required>
