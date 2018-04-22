@@ -9,7 +9,7 @@ class AdminReceivableReport_model extends CI_MODEL
 	}
 
 	Public function getReceivable(){
-		$query=$this->db->query("SELECT * from payment_contracted RIGHT JOIN client_delivery ON payment_contracted.client_deliveryID = client_delivery.client_deliveryID NATURAL JOIN contracted_client WHERE payment_remarks = 'unpaid'");
+		$query=$this->db->query("SELECT * from client_delivery NATURAL JOIN contracted_client WHERE payment_remarks = 'unpaid' OR payment_remarks = 'partially paid'");
 		return $query->result();
 	}
 }
