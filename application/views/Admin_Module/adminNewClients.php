@@ -169,7 +169,7 @@ a:focus {
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="green">
-                                    <h4 class="title">Add New Client</h4>
+                                    <h4 class="title">Create New Client</h4>
                                     <p class="category">Fill in the client's details</p>
                                 </div>
                                 <div class="card-content">
@@ -209,7 +209,7 @@ a:focus {
                                 </div>
                                  <div class="row">
                                     <div class="col-lg-12 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-                                        <input class="form-control" name="tel_number" placeholder="Cellphone Number" type="number"  min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required />
+                                        <input class="form-control" name="tel_number" placeholder="Contact Number" type="number"  min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required />
                                     </div>
                                 </div>
                                 

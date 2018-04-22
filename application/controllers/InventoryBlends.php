@@ -33,7 +33,9 @@
                     );              
                 
         
-            $this->InventoryBlends_Model->update($data , $id);    
+            $this->InventoryBlends_Model->update($data , $id); 
+
+        	$this->InventoryBlends_Model->activity_logs('inventory', "Record Physical Count under Coffee Blends Inventory Stocks ");      
         
             
             redirect('inventoryBlends');

@@ -33,7 +33,8 @@
                 
         
             $this->InventoryStickers_Model->update($data , $id);    
-        
+        	
+        	$this->InventoryStickers_Model->activity_logs('inventory', "Record Physical Count under Stickers Invetory Stocks ");   
             
             redirect('inventoryStickers');
         }  

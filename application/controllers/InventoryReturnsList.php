@@ -74,11 +74,11 @@
         
         $result = $this->InventoryReturnsList_Model->get_maxModel($item, $poNo);
         
-        if(count($result)>0){
+     
           
             echo json_encode($result);
             
-        } else return null;
+        
       
     }     
         
@@ -107,6 +107,46 @@
           
         redirect(base_url('inventoryReturnsList'));
       }
+        
+        
+        
+        
+       public function resolveIssue($supp_po_id){ //$returnId,$returnItem,$supp_po_id,$qty
+           
+        $data = array(      "returnId"        => $this->input->post('returnId'),
+                             "returnItem"     => $this->input->post('returnItem'),
+                             "supp_po_id"     => $this->input->post('supp_po_id'),
+                             "qty"            => $this->input->post('qty'),
+                        
+                            );       
+           
+           
+        //$tempReturnId = $returnId;
+       // $tempItem     = $returnItem;
+      //  $tempPoId     = $supp_po_id;
+       // $tempQty      = $qty;
+            
+        $this->InventoryReturnsList_Model->resolveIssue($data,$supp_po_id);
+
+             
+        redirect(base_url('inventoryReturnsList'));
+     }   
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         

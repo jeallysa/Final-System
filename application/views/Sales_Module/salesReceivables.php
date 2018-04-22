@@ -151,17 +151,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                                 foreach ($receivable as $row) {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->client_deliverDate; ?></td>
                                                  <td><?php echo $row->client_company; ?></td>
-                                                 <td><?php 
+                                                 <td><?php
                                                     $bal = $row->client_balance - $row->amount_paid;
                                                  echo 'Php '.number_format($bal,2); ?></td>
                                              </tr>
-                                             <?php 
+                                             <?php
                                                 }
                                               ?>
                                         </tbody>
@@ -214,6 +214,7 @@ $(document).ready(function() {
         "info":     false,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
+<<<<<<< HEAD
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
                 orientation: 'portrait',
@@ -228,6 +229,10 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                          doc.content[1].table.widths = [ '30%', '34%', '36%']; }
             }
+=======
+			{ "extend": 'csv', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
+			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
+>>>>>>> 357271e19507cc9d532b1cf2f64910b202981fd8
         ]
     });
 });

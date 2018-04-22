@@ -153,7 +153,7 @@
                                             <th><b class="pull-left">Remarks</b></th>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                                 foreach ($collections as $row) {
                                              ?>
                                              <tr>
@@ -167,7 +167,7 @@
                                                  <td><?php echo 'Php '.number_format($row->withheld,2); ?></td>
                                                  <td><?php echo $row->remarks; ?></td>
                                              </tr>
-                                             <?php 
+                                             <?php
                                                 }
                                               ?>
                                         </tbody>
@@ -215,9 +215,9 @@
 <script src="../assets/js/demo.js"></script>
 
 
-<script>   
-    
-    
+<script>
+
+
     $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
@@ -240,13 +240,13 @@
     }
 
 
-    var oTable = $('#example').dataTable({ 
+    var oTable = $('#example').dataTable({
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
+			{ "extend": 'csv', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
         ]
     });
@@ -261,12 +261,12 @@
 
     // Event Listeners
     $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw(); 
+        oTable.fnDraw();
     });
-    $("#max").datepicker().on( 'changeDate', function() { 
-        oTable.fnDraw(); 
+    $("#max").datepicker().on( 'changeDate', function() {
+        oTable.fnDraw();
     });
-    
+
 
 
 </script>

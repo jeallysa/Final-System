@@ -41,7 +41,7 @@
 			margin-top: 1%;
 		}
 		.table td {
-		   text-align: center;   
+		   text-align: center;
 		}
 
     </style>
@@ -166,13 +166,14 @@
                                                     <td>
                                                     <a href="<?php echo base_url(); ?>salesClients/salesClientsInfo?id=<?php echo $row->client_id;?>" class="btn btn-primary btn-round btn-sm">View Details<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
                                                     <div class="btn btn-primary btn-sm" data-background-color="green" data-toggle="modal" data-target="#PurchaseOrder" data-id="<?php echo $row->client_id; ?>" id="getDetails" > Purchase Order</div>
-													
-													</td>
+                                                    <a class="btn btn-warning btn-sm" href="<?php echo base_url(); ?>salesClients/salesMultipleOrders/<?php echo $row->client_id;?>">Other Order</a>
+
+													                          </td>
                                                 </tr>
                                                 <?php
                                                     }
                                                 ?>
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -201,7 +202,7 @@
                                 </div>
                                 <hr>
                                 <div class="row" >
-									<input name="client_id" class="no-border" type="hidden" readonly /> 
+									<input name="client_id" class="no-border" type="hidden" readonly />
                                     <div class="col-lg-6 col-md-6 col-offset-6">
                                         <div class="form-group">
                                             <label class="col-md-4 control">Item Code :</label>
@@ -236,7 +237,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6">
-                                  
+
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Purchase Date :</label>
                                                 <div class="col-md-4">
@@ -259,10 +260,10 @@
                                     </div>
                                 </div>
                                 <hr>
-                 
+
                             </div>
                             <div class="panel-footer" align="right">
-                           
+
                                 <?php echo form_submit(['name'=>'AddPO', 'value'=>'Add Purchase Order','class'=>'btn btn-primary','id'=>'subButton']) ?>
                             </div>
                         <?php echo form_close(); ?>
@@ -299,13 +300,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
     var table = $('#example').DataTable();
-	
-	
+
+
 	product();
 	$("#UnitPrice, #quantityAvailed").on("keydown keyup", function() {
 		 product();
     });
-	
+
 
 	function product() {
             var num1 = document.getElementById('UnitPrice').value;
@@ -317,10 +318,10 @@ $(document).ready(function() {
 				document.getElementById('product').value = result;
             }
       }
-	
-	
-	
-	
+
+
+
+
 	});
 function numberWithCommas(x) {
     var parts = x.toString().split(".");
@@ -370,8 +371,8 @@ $(document).ready(function() {
 </script>
 
 <script>
-		$(document).ready(function(){  
-			$(document).on('click', '#getDetails', function(e){   
+		$(document).ready(function(){
+			$(document).on('click', '#getDetails', function(e){
 				e.preventDefault();
 				var id = $(this).data('id');   // it will get id of clicked row
 
@@ -379,7 +380,7 @@ $(document).ready(function() {
 					method: 'GET',
 					type: 'ajax',
 					dataType: 'json',
-					url: '<?=base_url()?>SalesClients/salesClientDetails/' + id ,			
+					url: '<?=base_url()?>SalesClients/salesClientDetails/' + id ,
 					success: function(data)
 						{
 							$('[name="client_id"]').val(data.client_id);
@@ -388,17 +389,17 @@ $(document).ready(function() {
 							$('[name="CoffeeBlend"]').val(data.blend);
 							$('[name="Bag"]').val(data.package_type);
 							$('[name="Size"]').val(data.package_size);
-                            $('[name="QTY"]').val(data.contractPO_qty);
+              $('[name="QTY"]').val(data.contractPO_qty);
 							$('[placeholder="reqQty"]').val(data.required_qty);
 							$('[name="UnitPrice"]').val(data.blend_price);
-							/*$('#resolve_coffee').modal('show');*/			
+							/*$('#resolve_coffee').modal('show');*/
 						},
 					error: function (jqXHR, textStatus, errorThrown)
 						{
 							alert('Error get data from ajax');
-						}         
-						});        
-			});   
+						}
+						});
+			});
 		});
 
 </script>

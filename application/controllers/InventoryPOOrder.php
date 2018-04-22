@@ -53,43 +53,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                                                                     // because if the next for loop returns false nothing will be inserted and will cause error
    if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) && !empty($datev[$i]) && !empty($receivedByv[$i]) )){     //The only thing that can go to the 2nd loop are the one that passes the validation
       
-      
-      
         for ($i = 0; $i < count($this->input->post('itemId')); $i++){
            if((!empty($receivedv[$i]) && !empty($yield_weightv[$i])  && !empty($datev[$i]) && !empty($receivedByv[$i]) )){   
               
                                    //Data used for mapping 
-              $data3[$i] = array(
-                                    "drNo"=>$DRNO,
-                                    "itemId"=>$itemIdv[$i],
-                                    "item" => $itemNamev[$i],
-                                    "itemType" => $itemTypev[$i],
-                                    "supp_po_ordered_id" => $itemIdv[$i],
-                                    "yield_weight" => $yield_weightv[$i],
-                                    'received' => $receivedv[$i],
-                                    "date_received" => $datev[$i],
-                                    "received_by" =>$receivedByv[$i],
-                                    "supp_po_id"    => $temp,
-            );
+                $data3[$i] = array(
+                    "drNo"=>$DRNO,
+                    "itemId"=>$itemIdv[$i],
+                    "item" => $itemNamev[$i],
+                    "itemType" => $itemTypev[$i],
+                    "supp_po_ordered_id" => $itemIdv[$i],
+                    "yield_weight" => $yield_weightv[$i],
+                    'received' => $receivedv[$i],
+                    "date_received" => $datev[$i],
+                    "received_by" =>$receivedByv[$i],
+                    "supp_po_id"    => $temp,
+                );
             
               
               
                                //Data to be inserted in the Delivery table
-                             $data[$i] = array(
-                                    'drNo'=>$DRNO,
-                                    'supp_po_ordered_id' => $itemIdv[$i],
-                                    'yield_weight' => $yield_weightv[$i],
-                                    'yields' => $yieldsv[$i],
-                                    'received' => $receivedv[$i],
-                                    'date_received' => $datev[$i],
-                                    'received_by' =>$receivedByv[$i],
-                                    'supp_po_id'    => $temp,
-        
-                                 );
-                               
-                             
-                           
-          
+                $data[$i] = array(
+                    'drNo'=>$DRNO,
+                    'supp_po_ordered_id' => $itemIdv[$i],
+                    'yield_weight' => $yield_weightv[$i],
+                    'yields' => $yieldsv[$i],
+                    'received' => $receivedv[$i],
+                    'date_received' => $datev[$i],
+                    'received_by' =>$receivedByv[$i],
+                    'supp_po_id'    => $temp,
+
+                );
         }
     }
         $this->inventoryPOOrder_model->insertORDER($data);
@@ -100,6 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           
         $this->inventoryPOOrder_model->updateOrderStatus($data3, $supp_po_id); //updating the status first before refreshing.      
               
+        $this->inventoryPOOrder_model->activity_logs('inventory', "Record Partial Delivery ");
   }
       
 }
@@ -177,6 +172,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->inventoryPOOrder_model->updateStockFull($data3, $supp_po_id); 
           
         $this->inventoryPOOrder_model->updateOrderStatusFull($data2, $supp_po_id); //updating the status first before refreshing.  
+
+        $this->inventoryPOOrder_model->activity_logs('inventory', "Record Full Delivery ");
           
          
             

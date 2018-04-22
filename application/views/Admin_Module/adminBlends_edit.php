@@ -321,7 +321,7 @@ a:focus {
                                                 
                                     </div><hr>
                                     <h3 style="text-align: center;"> PROPORTIONS </h3>  
-                                    <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi">
+                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <?php

@@ -190,7 +190,7 @@
             <?php
                 foreach($data1['get_delivery_list'] as $row1)
                 {
-                    
+
             ?>
             <tr>
                 <td><?php echo $row1->contractPO_id; ?></td>
@@ -199,7 +199,7 @@
                 <td><?php echo "$row1->blend/ $row1->package_type/ $row1->package_size g"; ?></td>
                 <td><?php echo $row1->contractPO_qty; ?></td>
                 <td>Php <?php echo number_format($row1->blend_price,2); ?></td>
-                <td><?php 
+                <td><?php
                         $price = $row1->blend_price;
                         $qty = $row1->contractPO_qty;
                         $amount = $price * $qty;
@@ -208,8 +208,8 @@
                 </td>
                 <td><?php echo $row1->contractPO_date; ?></td>
                 <td><?php echo $row1->delivery_stat; ?></td>
-                <td><?php 
-                        $dbStat = $row1->delivery_stat; 
+                <td><?php
+                        $dbStat = $row1->delivery_stat;
                         if ($dbStat != 'delivered') {
                             echo '<center>
                            <a class="btn btn-info btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'">Deliver</a>
@@ -308,8 +308,8 @@
                                                 <label class="col-md-6 control">Sales Invoice No. :</label>
                                                 <div class="col-md-6">
                                                     <input id="" name="invoice" type="text" class="form-control" required>
-                                                   
-													
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-6 control">Remaining quantity to be delivered :</label>
                                                 <div class="col-md-6">
-                                                    <input id="" name="delivered_qty" type="number" value="<?php 
+                                                    <input id="" name="delivered_qty" type="number" value="<?php
 
                                                     $full_delivery = $row1->contractPO_qty;
                                                     $delivered_qty = $row1->delivered_qty;
@@ -346,8 +346,9 @@
                         </div>
                     </div>
                 </div>
+              </div>
             </tr>
-            
+
             <?php
                 }
             ?>
@@ -372,7 +373,7 @@
             <th>Action</th>
         </thead>
         <tbody>
-            <?php 
+            <?php
                 foreach($data2['get_delivered'] as $row2)
                 {
             ?>
@@ -385,7 +386,7 @@
                 <td><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></td>
                 <td><?php echo $row2->deliver_quantity; ?></td>
                 <td>Php <?php echo number_format($row2->blend_price,2); ?></td>
-                <td><?php 
+                <td><?php
                         $price = $row2->blend_price;
                         $qty = $row2->deliver_quantity;
                         $amount = $price * $qty;
@@ -395,16 +396,16 @@
                 <td><?php echo $row2->client_receive; ?></td>
                 <td><?php echo $row2->payment_remarks; ?></td>
                 <td><?php echo $row2->coff_returnQty; ?></td>
-                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php 
-                        $payment_remarks = $row2->payment_remarks; 
+                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
+                        $payment_remarks = $row2->payment_remarks;
                         if ($payment_remarks == 'paid') {
                             echo "disabled";
                         }
 
                      ?>>Pay</button>
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php 
-                        $resolved = $row2->resolved; 
-                        $return = $row2->return; 
+                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php
+                        $resolved = $row2->resolved;
+                        $return = $row2->return;
                         if ($resolved == 'Yes' || $resolved == 'No') {
                             echo "disabled";
                         }
@@ -422,48 +423,48 @@
                                 <div class="card-block">
                                      <form action="<?php echo base_url(); ?>SalesDelivery/insert1" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
-											<h3><center><?php echo $row2->client_company; ?></center></h3>
-                                            
+											                         <h3><center><?php echo $row2->client_company; ?></center></h3>
+
                                             <div class="row">
                                                 <div class="col-lg-12" style="padding-bottom: 20px;">
                                                     <div class="form-group label-floating">
                                                         <div class="form-group">
 
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                             <div class="form-group">
-                                                <label class="col-md-6 control">DR/SI No.:</label>
-                                                <div class="col-md-6">
-                                                    <p><b><?php echo $row2->client_dr.' / '.$row2->client_invoice;
-                                                    ?></b></p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-6 control">Delivery Date:</label>
-                                                <div class="col-md-5">
-                                                    <p><b><?php echo $row2->client_deliverDate;
-                                                    ?></b></p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-6 control">Quantity :</label>
-                                                <div class="col-md-6">
-                                                    <p><b><?php echo $row2->contractPO_qty; ?></b></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control">Coffee Blend</label>
-                                                    <div class="col-md-7">
-                                                        <p><b><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></b></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
+                                                          <div class="row">
+                                                              <div class="col-lg-6">
+                                                                   <div class="form-group">
+                                                                      <label class="col-md-6 control">DR/SI No.:</label>
+                                                                      <div class="col-md-6">
+                                                                          <p><b><?php echo $row2->client_dr.' / '.$row2->client_invoice;
+                                                                          ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="form-group">
+                                                                      <label class="col-md-6 control">Delivery Date:</label>
+                                                                      <div class="col-md-5">
+                                                                          <p><b><?php echo $row2->client_deliverDate;
+                                                                          ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="form-group">
+                                                                      <label class="col-md-6 control">Quantity :</label>
+                                                                      <div class="col-md-6">
+                                                                          <p><b><?php echo $row2->contractPO_qty; ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                            </div>
+                                                              <div class="row">
+                                                                  <div class="col-lg-6">
+                                                                      <div class="form-group">
+                                                                          <label class="col-md-5 control">Coffee Blend</label>
+                                                                          <div class="col-md-7">
+                                                                              <p><b><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></b></p>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          <hr>
                                                             <div class="row">
                                                                 <div class="col-md-6">
 
@@ -476,31 +477,31 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Quantity Returned:</label>
-																		<div class="col-md-6">
-                                                                        <input class="form-control" type="number" name="qty_returned" min="1" max="<?php  
+																		                                    <div class="col-md-6">
+                                                                        <input class="form-control" type="number" name="qty_returned" min="1" max="<?php
                                                                         $fulqty = $row2->deliver_quantity;
                                                                         $retqty = $row2->coff_returnQty;
                                                                         $retdif = $fulqty - $retqty;
                                                                         echo $retdif;
 
                                                                         ?>" required="" oninput="validity.valid||(value='');" >
-																		</div>
+																		                                    </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-        
+
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Remarks:</label>
-																		<div class="col-md-6">
+																		                                    <div class="col-md-6">
                                                                         <input class="form-control col-md-3" type="text" name="remarks" required="">
                                                                          <input name="deliveryID" type="hidden" class="form-control" value="<?php echo $row2->client_deliveryID; ?>" >
                                                                         <input name="client_dr" type="hidden" class="form-control" value="<?php echo $row2->client_dr; ?>" >
                                                                         <input name="blend_id" type="hidden" class="form-control" value="<?php echo $row2->blend_id; ?>" >
                                                                         <input class="form-control" type="hidden" name="client_company" value="<?php echo $row2->client_company; ?>" required>
 
-																		</div>
+																		                                    </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -598,12 +599,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </tr>
             <?php
                 }
@@ -626,7 +629,7 @@
             <th><b class="pull-left">Remarks</b></th>
         </thead>
         <tbody>
-            <?php 
+            <?php
                 foreach($data3['get_paid'] as $row)
                 {
             ?>
@@ -641,7 +644,7 @@
                 <td><?php echo 'Php '.number_format($row->withheld,2); ?></td>
                 <td><?php echo $row->payment_remarks; ?></td>
             </tr>
-            <?php 
+            <?php
                 }
             ?>
 
@@ -680,10 +683,10 @@
 <script src="../assets/js/demo.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-     
+
     $('table.display').DataTable( {
         scrollCollapse: true,
-        
+
     } );
 
     $('#datePicker')
