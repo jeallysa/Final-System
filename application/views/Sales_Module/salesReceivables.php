@@ -215,7 +215,19 @@ $(document).ready(function() {
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
+			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                orientation: 'portrait',
+                exportOptions: {
+                columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'left';
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.pageMargins = [50,50,50,50];
+                        doc.defaultStyle.fontSize = 10;
+                         doc.content[1].table.widths = [ '30%', '34%', '36%']; }
+            }
         ]
     });
 });
