@@ -415,8 +415,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
                                                 '<td>'  . $object->raw_type . ' roast</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td><b>'  . number_format($object->raw_stock)   . ' g</b></td>' ,
-                                                '<td>'  . number_format($object->raw_physcount)   . ' g</td>' ,
+                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' kg</b></td>' ,
+                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' kg</td>' ,
                                                 '<td>'  . number_format($object->raw_discrepancy)   . ' g</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->raw_remarks   . '</td>' ;
