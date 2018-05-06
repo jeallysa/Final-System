@@ -323,10 +323,10 @@ a:focus {
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Sticker</b></th>
-                                            <th><b class="pull-left">Reorder Level (g)</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
+                                            <th><b class="pull-left">Reorder Level (pc)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc)</b></th>
                                             <th><b class="pull-left">Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
@@ -337,10 +337,10 @@ a:focus {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->sticker; ?></td>
-                                                 <td><?php echo $row->sticker_reorder; ?></td>
-                                                  <td><?php echo $row->unitPrice; ?></td>
+                                                  <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                 <td><?php echo $row->sticker_stock; ?></td>
+                                                 <td><?php echo number_format($row->sticker_reorder); ?></td>
+                                                 <td><?php echo number_format($row->sticker_stock); ?></td>
                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updatestickers<?php echo $row->sticker_id;?>">Edit</a>
                                                 </td>

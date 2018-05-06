@@ -230,7 +230,7 @@ a:focus {
                                                     <th><b>Department</b></th>
                                                     <th><b>Address</b></th>
                                                     <th><b>Email</b></th>
-                                                    <th><b>Contact Number</b></th>
+                                                    <th><b>Contact No.</b></th>
                                                     <th class="disabled-sorting"><b>Edit</b></th>
                                                     <th><b class="pull-left">Activation</b></th>
                                                 </tr>

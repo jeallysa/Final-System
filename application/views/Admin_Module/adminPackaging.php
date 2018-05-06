@@ -329,9 +329,9 @@ a:focus {
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Size</b></th>
                                             <th><b class="pull-left">Price</b></th>
-                                            <th><b class="pull-left">Reorder Level (g)</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>   
                                             <th><b class="pull-left">Supplier</b></th> 
+                                             <th><b class="pull-left">Reorder Level (pc)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc)</b></th>   
                                             <th><b class="pull-left">Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
 
@@ -342,12 +342,12 @@ a:focus {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->package_type; ?></td>
-                                                 <td><?php echo $row->package_size; ?></td>
-                                                  <td><?php echo $row->unitPrice; ?></td>
-                                                 <td><?php echo $row->package_reorder; ?></td>
-                                                 <td><?php echo $row->package_stock; ?></td>
+                                                 <td><?php echo number_format($row->package_size); ?></td>
+                                                  <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                <td>
+                                                 <td><?php echo number_format($row->package_reorder); ?></td>
+                                                 <td><?php echo number_format($row->package_stock); ?></td>                    
+                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updatepackaging<?php echo $row->package_id;?>">Edit</a>
                                                 </td>
                                                  <td>
