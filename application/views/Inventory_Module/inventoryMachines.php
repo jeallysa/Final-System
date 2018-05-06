@@ -287,7 +287,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer_type WHERE mach_id = ".$id ;
+                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE mach_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -428,6 +428,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
+                                            <th><b class="pull-left">Reorder Level</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
                                             <th><b class="pull-left">Physical Count</b></th>
                                             <th><b class="pull-left">Discrepancy</b></th>
@@ -451,6 +452,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
+                                                '<td><b>'  . number_format($object->mach_reorder)   . ' pc/s</b></td>' ,
                                                 '<td><b>'  . number_format($object->mach_stocks)   . ' pc/s</b></td>' ,
                                                 '<td>'  . number_format($object->mach_physcount)   . ' pc/s</td>' ,
                                                 '<td>'  . number_format($object->mach_discrepancy)   . ' pc/s</td>' ,
