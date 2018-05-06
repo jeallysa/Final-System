@@ -36,9 +36,9 @@
 		.table tbody, tbody td{
 			text-align: center;
 		}
-		.navbar-default { 
+		.navbar-default {
 			text-align: center !important;
-			
+
 		}
 		.navbar-default > li.active > a, .navbar-default > li.active > a:focus, .navbar-default > li.active > a:hover {
 			border-top: 1px solid #4cb1d1 !important;
@@ -49,46 +49,46 @@
 			color: white !important;
 		}
 		.navbar-default > li.active > a {
-			color: white!important; 
+			color: white!important;
 			float: none !important;
 			display: inline-block!important;
 		}
 		.navbar-default > li > a, .navbar-default > li > a:hover {
 			border: none;
-			color: #4cb1d1 !important; 
-			background: transparent; 
+			color: #4cb1d1 !important;
+			background: transparent;
 		}
 		.navbar-default > li > a::after {
 			content: "";
-			background: transparent; 
-			height: 2px; 
-			position: absolute; 
-			width: 100%; 
+			background: transparent;
+			height: 2px;
+			position: absolute;
+			width: 100%;
 			left: 0px;
 			bottom: -1px;
 			transition: all 250ms ease 0s;
-			transform: scale(0); 
+			transform: scale(0);
 			color: white;
 		}
 		.navbar-default > li.active > a::after, .navbar-default > li:hover > a::after {
-			transform: scale(1); 
+			transform: scale(1);
 		}
 		.tab-nav > li > a::after {
 			background: #4cb1d1 none repeat scroll 0% 0%; color: #fff;
 		}
-		.tab-pane { 
+		.tab-pane {
 			padding: 15px 0;
 		}
-		.tab-color{	
+		.tab-color{
 			padding:20px;
 			border-top: 3px solid #4cb1d1;
 			border-left: 2px solid #4cb1d1;
 		}
-		
+
 		.select-pane {
         	display: none;
     	}
-		
+
 		.no-border{
 			border: none !important;
 			font-weight: bold;
@@ -97,11 +97,11 @@
 			font-size: 150%;
 			font-weight: bold;
 			border: none !important;
-			
-		}
-		
 
-		
+		}
+
+
+
 
     </style>
 </head>
@@ -267,10 +267,10 @@
                                                         <td><?php echo number_format($row->package_size); ?> g</td>
                                                         <td><?php echo $row->coff_remarks; ?></td>
                                                         <td>
-                                                            <button class="btn btn-danger btn-sm viewCoffeeReturns" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee" id="getDetails" data-id="<?php echo $row->client_id; ?>" > 
+                                                            <button class="btn btn-danger btn-sm viewCoffeeReturns" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee" id="getDetails" data-id="<?php echo $row->client_deliveryID; ?>" >
                                                             Resolve</button>
-                                                            <input value="<?php echo $row->client_deliveryID; ?> " id='delID' type="hidden" />
-                                                            <input value="<?php echo $row->client_coffReturnID; ?> " id='retID' type="hidden" />
+                                                            <!-- <input value="<?php echo $row->client_deliveryID; ?> " id='delID' type="hidden" />
+                                                            <input value="<?php echo $row->client_coffReturnID; ?> " id='retID' type="hidden" /> -->
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -279,7 +279,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                   
+
                                                 <div class="tab-pane" id="walkin">
                                                  <table id="fresh-datatables" class="display table-striped table-hover cell-border" cellspacing="0" width="100%" style="width:100%">
                                                 <thead>
@@ -319,12 +319,12 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h4 class="panel-title" id="contactLabel"><center>Resolve Coffee Returns</center></h4>
                             </div>
-                                     
+
                             <div class="modal-body" style="padding: 10px;">
                                 <form action="<?php echo base_url(); ?>SalesReturns/resolve_walkin" method="post" accept-charset="utf-8">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        
+
                                         <div class="row">
                                             <div class="form-group">
                                                 <input type="hidden" name="walkin_id" value="<?php echo $row->walkin_id; ?>">
@@ -360,7 +360,7 @@
                                 <br>
                                 <div class="modal-footer">
                                     <div class="form-group">
-                              
+
                                         <div class="col-md-8">
                                             <button type="submit" class="btn btn-danger btn-md">Resolve</button>
                                         </div>
@@ -370,7 +370,7 @@
                             </form>
                             </div>
                     </div>
-                         
+
                 </div>
             </div>
                                                     </tr>
@@ -511,20 +511,20 @@
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 										<h4 class="panel-title" id="contactLabel"><center>Resolve Coffee Returns</center></h4>
 									</div>
-									
+
 										<div class="modal-body" style="padding: 10px;">
 
 											<?php echo form_open('SalesReturns/resolveReturns', array('method'=>'POST')); ?>
                                         <div class="row">
                                             <div class="col-lg-7">
-												
+
 												<div class="row">
 													<div class="form-group">
 														<label class="col-md-5 control">Coffee Blend :</label>
 														<div class="col-md-7" >
 
 															<p><b> <input name="blendName" class="no-border" type="disabled"  readonly></b></p>
-													
+
 														</div>
 													</div>
                                                     <div class="form-group">
@@ -532,7 +532,7 @@
                                                         <div class="col-md-7" >
 
                                                             <p><b> <input name="company" class="no-border" type="disabled"  readonly></b></p>
-                                                    
+
                                                         </div>
                                                     </div>
 													<div class="form-group">
@@ -570,21 +570,21 @@
 											<input type="hidden" name="client_id" readonly />
 											<input type="hidden" name="SINo" readonly />
 											<input type="hidden" name="RID" readonly />
-  
+
 							<br>
 										<div class="modal-footer">
 											<!--<button type="submit" class="btn btn-primary" name="submit">Save changes</button>-->
 											<?php echo form_submit(['name'=>'ResolveReturn', 'value'=>'Resolve','class'=>'btn btn-primary']) ?>
-											
+
 										</div>
 									<?php echo form_close(); ?>
 						</div>
-						 
+
 					</div>
 				 </div></div>
-				
 
-				
+
+
 		<!--modal for machine returns-->
 				<div class="modal fade" id="resolve_machine" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 							<div class="modal-dialog modal-md">
@@ -610,7 +610,7 @@
 													<input class="ClientName" type="text" name="company" readonly />
 													</div>
 												</div>
-												
+
 												<div class="row">
 													<div class="form-group">
 														<label class="col-md-5 control">Machine :</label>
@@ -653,7 +653,7 @@
 					</div>
 				</div>
 
-			
+
         </div>
 	</div>
 
@@ -680,25 +680,25 @@
 <script src="../assets/js/demo.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-     
-    $('table.display').DataTable( {		
+
+    $('table.display').DataTable( {
     } );
 });
-	
+
 
 </script>
 <script>
-$(document).ready(function(){  
-    $(document).on('click', '#getDetails', function(e){   
+$(document).ready(function(){
+    $(document).on('click', '#getDetails', function(e){
         e.preventDefault();
-        var id = $(this).data('id'); 
-        var delID = document.getElementById('delID').value;
-  
+        var id = $(this).data('id');
+
+
         jQuery.ajax({
             method: 'GET',
             type: 'ajax',
 			dataType: 'json',
-            url: '<?=base_url()?>SalesReturns/getDetails/' + id + '/' + delID ,			
+            url: '<?=base_url()?>SalesReturns/getDetails/' + id ,
 			success: function(data)
 				{
 					$('[name="PO_ID"]').val(data.contractPO_id);
@@ -718,24 +718,24 @@ $(document).ready(function(){
 			error: function (jqXHR, textStatus, errorThrown)
 				{
 					alert('Error get data from ajax');
-				}         
+				}
                 });
-           
-    });   
+
+    });
 });
 
 </script>
 <script>
-$(document).ready(function(){  
-    $(document).on('click', '#getMachineDetails', function(e){   
+$(document).ready(function(){
+    $(document).on('click', '#getMachineDetails', function(e){
         e.preventDefault();
-        var id = $(this).data('id');   
-  
+        var id = $(this).data('id');
+
         jQuery.ajax({
             method: 'GET',
             type: 'ajax',
 			dataType: 'json',
-            url: '<?=base_url()?>SalesReturns/getMachineDetails/' + id ,			
+            url: '<?=base_url()?>SalesReturns/getMachineDetails/' + id ,
 			success: function(data)
 				{
 					$('[name="company"]').val(data.client_company);
@@ -754,9 +754,9 @@ $(document).ready(function(){
 			error: function (jqXHR, textStatus, errorThrown)
 				{
 					alert('Error get data from ajax');
-				}         
-                });        
-    });   
+				}
+                });
+    });
 });
 
 </script>

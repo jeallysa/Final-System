@@ -6,9 +6,9 @@
 			parent::__construct();
 			$this->load->model('SalesReturns_model');
 		}
-		
-		public function index() 
-		{ 
+
+		public function index()
+		{
 
 			if ($this->session->userdata('username') != '')
             {
@@ -16,7 +16,7 @@
 				$coffeewalkin['coffee'] = $this->SalesReturns_model->get_coffee_walkin_return();
 				$data1['coffee'] = $this->SalesReturns_model->get_coffee_return();
 				$data2['machine'] = $this->SalesReturns_model->get_machine_return();
-				$data3['resolved_coffee'] = $this->SalesReturns_model->get_resolved_coffee(); 
+				$data3['resolved_coffee'] = $this->SalesReturns_model->get_resolved_coffee();
 				$data4['resolved_machine'] = $this->SalesReturns_model->get_resolved_machine();
 				$this->load->view('Sales_Module/salesReturns', ['coffeewalkin' => $coffeewalkin, 'data1' => $data1, 'data2' => $data2, 'data3' => $data3, 'data4' => $data4]);
 			} else {
@@ -28,24 +28,24 @@
 		function getDetails()
 		{
 			/*$id=$this->input->post('id');*/
-			$id = $this->uri->segment(3,1);
-			$id2 = $this->uri->segment(4);
 
-			
+			$id2 = $this->uri->segment(3);
+
+
 			/*$id = array('id'=> $this->input->post('id'));	*/
 
-			$data = $this->SalesReturns_model->getDetailsCoffee($id, $id2);
+			$data = $this->SalesReturns_model->getDetailsCoffee($id2);
 			/*$coffee = json_decode($coffeee);*/
 			/*$this->load->view('Sales_Module/SalesReturns',$data);*/
-			
-			  echo json_encode($data);		
+
+			  echo json_encode($data);
 		}
 		//Get Machine Details
 		function getMachineDetails()
 		{
 			$id = $this->uri->segment(3,1);
 			$data = $this->SalesReturns_model->getDetailsMachine($id);
-			  echo json_encode($data);		
+			  echo json_encode($data);
 		}
 
 		function resolveReturns()
@@ -54,8 +54,8 @@
 		  $ret_id = $this->input->post('retID');
 		  $client = $this->input->post('company');
 		  $quantity = $this->input->post('quantity');
-		  $blend_id = $this->input->post('blend_id');	
-		  $date = $this->input->post('date_resolved');	
+		  $blend_id = $this->input->post('blend_id');
+		  $date = $this->input->post('date_resolved');
 
 		  $this->SalesReturns_model->activity_logs('sales', "Resolved ".$client." from Contracted Client Order ");
 		  $this->SalesReturns_model->update_return($id);
@@ -86,7 +86,7 @@
 
 
 		}
-		
+
 		function resolveMachines(){
 			$c_id= $this->input->post('client_id');
 			$m_id= $this->input->post('mach_id');
@@ -109,8 +109,8 @@
 			echo "<script>alert('Blend Return has been resolved!');</script>";
 			redirect('SalesReturns/index');
 		}
-		
-		
+
+
 	}
 
 ?>
