@@ -322,7 +322,7 @@ a:focus {
                                                 ?>
                                             <th><b class="pull-left">Size</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
-                                            <th><b class="pull-left">Price Per Unit</b></th>
+                                            <th><b class="pull-left">Price</b></th>
                                            <th><b class="pull-left">Quantity</b></th>
                                             <th><b class="pull-left">Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
@@ -350,9 +350,9 @@ a:focus {
                                                 }
                                                 
                                                 ?>
-                                                <td><?php echo $row->package_size; ?></td>
+                                                <td><?php echo number_format($row->package_size); ?></td>
                                                 <td><?php echo $row->package_type; ?></td>
-                                                <td>Php<?php echo number_format($row->blend_price,2); ?></td>
+                                                <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                 <td><?php echo $row->blend_qty; ?></td>
 
                                                 <!--

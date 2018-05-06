@@ -344,7 +344,7 @@ a:focus {
                                             <th><b class="pull-left">Type of Roast</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (g)</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
+                                            <th><b class="pull-left">Number of Stocks (g)</b></th>
                                             <th><b class="pull-left">Price/kg</b></th>
                                             <th class="disabled-sorting"><b>Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
@@ -358,9 +358,9 @@ a:focus {
                                                  <td><?php echo $row->raw_coffee; ?></td>
                                                  <td><?php echo $row->raw_type; ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                 <td><?php echo $row->raw_reorder; ?></td>
-                                                 <td><?php echo $row->raw_stock; ?></td>
-                                                 <td>Php<?php echo number_format($row->unitPrice,2); ?></td>
+                                                 <td><?php echo number_format($row->raw_reorder); ?></td>
+                                                 <td><?php echo number_format($row->raw_stock); ?></td>
+                                                 <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updateraw<?php echo $row->raw_id;?>">Edit</a>
                                                 </td>

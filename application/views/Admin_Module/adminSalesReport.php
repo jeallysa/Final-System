@@ -248,8 +248,8 @@ a:focus {
                                                  <td><?php echo $row->client_company; ?></td>
                                                  <td><?php echo $row->blend; ?></td>
                                                  <td><?php echo $row->package_type; ?></td>
-                                                 <td><?php echo number_format($row->package_size); ?> g</td>
-                                                 <td><?php echo $row->contractPO_qty; ?></td>
+                                                 <td><?php echo number_format($row->package_size); ?></td>
+                                                 <td><?php echo number_format($row->contractPO_qty); ?></td>
                                                  <td><?php echo 'Php '.number_format($row->blend_price,2); ?></td>
                                                  <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
                                                  <td><?php echo $row->client_type; ?></td>

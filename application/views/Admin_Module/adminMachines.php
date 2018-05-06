@@ -330,9 +330,9 @@ a:focus {
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Price</b></th>
-                                            <th><b class="pull-left">Reorder Level (g)</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Number of Stocks </b></th>
+                                            <th><b class="pull-left">Reorder Level (pc)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc)</b></th>
                                             <th><b class="pull-left">Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
@@ -345,10 +345,10 @@ a:focus {
                                                  <td><?php echo $row->mach_id; ?></td>
                                                  <td><?php echo $row->brewer; ?></td>
                                                  <td><?php echo $row->brewer_type; ?></td>
-                                                 <td>Php<?php echo number_format($row->unitPrice,2); ?></td>
-                                                 <td><?php echo $row->mach_reorder; ?></td>
+                                                 <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                 <td><?php echo $row->mach_stocks; ?></td>
+                                                 <td><?php echo number_format($row->mach_reorder); ?></td>
+                                                 <td><?php echo number_format($row->mach_stocks); ?></td>
                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updatemachines<?php echo $row->mach_id;?>">Edit</a>
                                                 </td>
@@ -429,7 +429,7 @@ a:focus {
                                                                         </div>
                                                                         <div class="col-md-6 form-group">
                                                                             <div class="form-group label-floating">
-                                                                                <label for="email">Brewer</label>
+                                                                                <label for="email">Machine</label>
                                                                                 <input class="form-control" type="text" name="brewer" value="<?php echo $row->brewer; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Brewer should only countain letters">
                                                                             </div>
                                                                         </div>
@@ -449,6 +449,12 @@ a:focus {
                                                                             <div class="form-group label-floating">
                                                                                 <label for="email">Price</label>
                                                                                 <input class="form-control" type="number" name="price" value="<?php echo $row->unitPrice; ?>" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
+                                                                            </div>
+                                                                        </div>
+                                                                         <div class="col-lg-6 form-group">
+                                                                            <div class="form-group label-floating">
+                                                                                <label for="email">Reorder Level</label>
+                                                                                <input class="form-control" type="number" name="reorder" value="<?php echo $row->mach_reorder; ?>" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6 form-group">
