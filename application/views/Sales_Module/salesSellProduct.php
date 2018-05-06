@@ -191,8 +191,8 @@
                                                         </td>
                                                          <td><?php echo $row->walkin_returns; ?></td>
                                                          <td><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#returnblend<?php echo $row->walkin_id; ?>" <?php 
-                                                            $coff_remark = $row->coff_remark; 
-                                                            if ($coff_remark == 'Returned') {
+                                                            $coff_remark = $row->resolved;
+                                                            if ($coff_remark == 'Yes' || $coff_remark == 'No') {
                                                                 echo "disabled";
                                                             }
 

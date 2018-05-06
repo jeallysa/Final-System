@@ -342,7 +342,7 @@
                                                 <p class="col-md-5 control"><b><?php echo number_format($row->package_size); ?> g</b></p>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-5 control">Returned Quantity :</label>
+                                                <label class="col-md-5 control">Quantity :</label>
                                                 <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?></b></p>
                                             </div>
                                             <div class="form-group">
@@ -685,23 +685,6 @@ $(document).ready(function() {
     } );
 });
 	
-/*	difference();
-	$("#Originalquantity, #deliveredCoffee").on("keydown keyup", function() {
-		 difference();
-    });
-	});
-
-	function difference() {
-            var num1 = document.getElementById('Originalquantity').value;
-            var num2 = document.getElementById('deliveredCoffee').value;
-			var result = parseInt(num1) - parseInt(num2);
-            if (!isNaN(result)) {
-				document.getElementById('subt').value = result;
-            }
-        }
-	*/
-	
-
 
 </script>
 <script>
@@ -725,7 +708,6 @@ $(document).ready(function(){
 					$('[name="size"]').val(data.package_size);
 					$('[name="quantity"]').val(data.coff_returnQty);
 					$('[name="bagType"]').val(data.package_type);
-					/*$('[name="DRReturns"]').val(data.client_dr);*/
 					$('[name="deliveryID"]').val(data.client_deliveryID);
 					$('[name="SINo"]').val(data.client_invoice);
 					$('[name="RID"]').val(data.client_coffReturnID);

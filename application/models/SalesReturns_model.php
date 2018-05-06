@@ -11,7 +11,7 @@
 			
 		}
 		public function get_coffee_return(){
-			$query = $this->db->query("SELECT * FROM client_coffreturn JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID  JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id JOIN contracted_po ON contracted_po.client_id = contracted_client.client_id JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE client_delivery.return='Returned' AND client_coffreturn.resolved = 'No';");
+			$query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID  INNER JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id INNER JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id INNER JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE client_delivery.return='Returned' AND client_coffreturn.resolved = 'No';");
 			return $query->result();
 			
 		}
@@ -33,7 +33,7 @@
 			
 		}
 		public function getDetailsCoffee($id, $id2){
-			$query = $this->db->query("SELECT * FROM client_coffreturn JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE contracted_client.client_id='$id'");
+			$query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID INNER JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id INNER JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id INNER JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE contracted_client.client_id='$id' AND client_coffreturn.resolved = 'No' AND client_delivery.client_deliveryID = '$id2'");
 			 return $query->row();
 			
 		}

@@ -9,7 +9,7 @@ class sellProduct_model extends CI_MODEL
 	}
 
 	Public function getSoldCoffee(){
-		$query=$this->db->query("SELECT * FROM walkin_sales a JOIN coffee_blend b ON a.blend_id = b.blend_id JOIN packaging c ON b.package_id = c.package_id");
+		$query=$this->db->query("SELECT * FROM walkin_sales a JOIN coffee_blend b ON a.blend_id = b.blend_id JOIN packaging c ON b.package_id = c.package_id LEFT OUTER JOIN client_coffreturn ON client_coffreturn.client_deliveryID = a.walkin_id");
 		return $query->result();
 	}
 

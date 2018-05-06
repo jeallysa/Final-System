@@ -449,7 +449,7 @@
                                                                   <div class="form-group">
                                                                       <label class="col-md-6 control">Quantity :</label>
                                                                       <div class="col-md-6">
-                                                                          <p><b><?php echo $row2->contractPO_qty; ?></b></p>
+                                                                          <p><b><?php echo $row2->deliver_quantity; ?></b></p>
                                                                       </div>
                                                                   </div>
                                                               </div>

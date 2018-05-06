@@ -231,7 +231,7 @@
                                         <div class="form-group">
                                             <label class="col-md-4 control">Unit Price :</label>
                                             <div class="col-md-7">
-                                                <p><b>Php <input name="UnitPrice" id="UnitPrice" class="no-border" type="disabled" readonly /></b></p>
+                                                <p><b>Php <input name= "UnitPrice" id="UnitPrice" class="no-border" type="disabled" readonly /></b></p>
                                             </div>
                                         </div>
                                     </div>
@@ -389,7 +389,7 @@ $(document).ready(function() {
 							$('[name="CoffeeBlend"]').val(data.blend);
 							$('[name="Bag"]').val(data.package_type);
 							$('[name="Size"]').val(data.package_size);
-              $('[name="QTY"]').val(data.contractPO_qty);
+                            $('[name="QTY"]').val(data.contractPO_qty);
 							$('[placeholder="reqQty"]').val(data.required_qty);
 							$('[name="UnitPrice"]').val(data.blend_price);
 							/*$('#resolve_coffee').modal('show');*/
