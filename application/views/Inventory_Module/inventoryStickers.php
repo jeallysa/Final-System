@@ -442,6 +442,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Sticker</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
+                                            <th><b class="pull-left">Reorder Level</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
                                             <th><b class="pull-left">Physical Count</b></th>
                                             <th><b class="pull-left">Discrepancy</b></th>
@@ -464,6 +465,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sticker_id . '</td>' ,
                                                 '<td>'  . $object->sticker . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
+                                                '<td><b>'  . number_format($object->sticker_reorder)   . ' pc/s</b></td>' ,
                                                 '<td><b>'  . number_format($object->sticker_stock)   . ' pc/s</b></td>' ,
                                                 '<td>'  . number_format($object->sticker_physcount)   . ' pc/s</td>' ,
                                                 '<td>'  . number_format($object->sticker_discrepancy)   . ' pc/s</td>' ,

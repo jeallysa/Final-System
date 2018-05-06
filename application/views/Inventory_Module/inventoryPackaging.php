@@ -445,6 +445,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Package</b></th>
                                             <th><b class="pull-left">Size</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
+                                            <th><b class="pull-left">Reorder Level</b></th>
                                             <th><b class="pull-left">Number of stocks</b></th>
                                             <th><b class="pull-left">Physical Count</b></th>
                                             <th><b class="pull-left">Discrepancy</b></th>
@@ -468,6 +469,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->package_type . ' bag</td>' ,
                                                 '<td>'  . number_format($object->package_size)   . ' g</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
+                                                '<td><b>'  . number_format($object->package_reorder)   . ' pc/s</b></td>' ,
                                                 '<td><b>'  . number_format($object->package_stock)   . ' pc/s</b></td>' ,
                                                 '<td>'  . number_format($object->package_physcount)   . ' pc/s</td>' ,
                                                 '<td>'  . number_format($object->package_discrepancy)   . ' pc/s</td>' ,
