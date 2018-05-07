@@ -347,10 +347,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         </div>
                                                                     </div>
                                                             </div>
-                                                            <input type="submit" class="btn btn-success" value="Save" >
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
                                                             <input type="reset" class="btn btn-danger" value="Clear" />
-                                                       
+                                                        
                                                     </center>  
+                                                    <!--modal for verification-->
+                    <div class="modal fade" id="verify<?php echo $details; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color: #990000;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 col-md-offset-1">
+                                        <h3>Do you wish to continue?</h3></div>
+                                </div>
+                                <hr>
+                              <div align="center">
+                                <button type="submit" class="btn btn-success">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              </div>
+                             </form> 
+                            </div>
+                            </div>
+                        </div>
                                                     </div>
                                     </div>
                                 
@@ -359,7 +380,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="panel-footer" align="center" style="margin-bottom:-14px;">
                                 <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -452,7 +472,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td><b>'  . number_format($object->mach_reorder)   . ' pc/s</b></td>' ,
+                                                '<td>'  . number_format($object->mach_reorder)   . ' pc/s</td>' ,
                                                 '<td><b>'  . number_format($object->mach_stocks)   . ' pc/s</b></td>' ,
                                                 '<td>'  . number_format($object->mach_physcount)   . ' pc/s</td>' ,
                                                 '<td>'  . number_format($object->mach_discrepancy)   . ' pc/s</td>' ,
@@ -546,8 +566,15 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=machstocks".$c."]'"?>).val());
-            var res = x - y ;
+            var res = x - y || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
+
+            if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
+                {
+                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", false);
+                } else {
+                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", true);
+                }
 });      
 });     
   
