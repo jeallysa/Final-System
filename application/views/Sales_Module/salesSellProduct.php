@@ -321,7 +321,6 @@
 														<th><b>Sold Quantity</b></th>
 														<th><b>Unit Price</b></th>
                                                         <th><b>Total Amount</b></th>
-														<th><b>Returns Quantity</b></th>
                                                         <th><b>Action</b></th>
 													</thead>
 													<tbody>
@@ -342,7 +341,6 @@
                                                                 echo 'Php' .number_format($price * $qty, 2);
                                                              ?>
                                                          </td>
-                                                         <td><?php echo $row->mach_returnQty; ?></td>
 
                                                          <td><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#return<?php echo $row->mach_salesID; ?>" <?php 
                                                             $mach_remark = $row->remarks; 
@@ -427,11 +425,7 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Quantity Returned:</label>
-                                                                        <input class="form-control col-md-6" type="number" name="qty_returned" min="1" max="<?php
-                                                                            $retqtymach = $row->mach_returnQty;
-                                                                            $solmach = $row->mach_qty;
-                                                                            $ret_mach = $solmach - $retqtymach;
-                                                                            echo $ret_mach;
+                                                                        <input class="form-control col-md-6" type="number" name="qty_returned" min="1" max="<?php echo $row->mach_qty;
                                                                          ?>" required="">
                                                                     </div>
                                                                 </div>
