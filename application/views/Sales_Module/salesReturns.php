@@ -267,10 +267,8 @@
                                                         <td><?php echo number_format($row->package_size); ?> g</td>
                                                         <td><?php echo $row->coff_remarks; ?></td>
                                                         <td>
-                                                            <button class="btn btn-danger btn-sm viewCoffeeReturns" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee" id="getDetails" data-id="<?php echo $row->client_deliveryID; ?>" >
+                                                            <button class="btn btn-success btn-sm viewCoffeeReturns" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee" id="getDetails" data-id="<?php echo $row->client_deliveryID; ?>" >
                                                             Resolve</button>
-                                                            <!-- <input value="<?php echo $row->client_deliveryID; ?> " id='delID' type="hidden" />
-                                                            <input value="<?php echo $row->client_coffReturnID; ?> " id='retID' type="hidden" /> -->
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -308,7 +306,7 @@
                                                         <td><?php echo $row->walkin_returns; ?></td>
                                                         <td><?php echo $row->coff_remarks; ?></td>
                                                         <td>
-                                                            <button class="btn btn-danger btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee_walkin<?php echo $row->walkin_id; ?>" id="getDetails" data-id="<?php echo $row->walkin_id; ?>"> Resolve</button>
+                                                            <button class="btn btn-success btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee_walkin<?php echo $row->walkin_id; ?>" id="getDetails" data-id="<?php echo $row->walkin_id; ?>"> Resolve</button>
                                                         </td>
 
         <!--modal for coffee walkin returns-->
@@ -344,25 +342,34 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
                                                 <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?></b></p>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-5 control">Date Resolved :</label>
-                                                <input type="date" name="date_resolved" class="form_control" required="">
-                                            </div>
+                                            </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
                                                 <p class="col-md-5 control"><b><?php echo $row->coff_remarks; ?></b></p>
                                             </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label class="col-md-5 control">Date Resolved :</label>
+                                                <div class="col-sm-6">
+                                                    <input type="date" name="date_resolved" class="form-control" required="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 control">Action Taken :</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" name="action_taken" class="form-control" required="">
+                                                </div>
+                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
-
                                 <br>
                                 <div class="modal-footer">
                                     <div class="form-group">
 
                                         <div class="col-md-8">
-                                            <button type="submit" class="btn btn-danger btn-md">Resolve</button>
+                                            <button type="submit" class="btn btn-success btn-md">Resolve</button>
                                         </div>
                                     </div>
                                     <br>
@@ -410,7 +417,7 @@
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>
                                                         <td>
-                                                            <button class="btn btn-danger btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_machine" id="getMachineDetails" data-id="<?php echo $row->client_id; ?>">Resolve</button>
+                                                            <button class="btn btn-success btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_machine" id="getMachineDetails" data-id="<?php echo $row->client_id; ?>">Resolve</button>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -515,9 +522,6 @@
 										<div class="modal-body" style="padding: 10px;">
 
 											<?php echo form_open('SalesReturns/resolveReturns', array('method'=>'POST')); ?>
-                                        <div class="row">
-                                            <div class="col-lg-7">
-
 												<div class="row">
 													<div class="form-group">
 														<label class="col-md-5 control">Coffee Blend :</label>
@@ -541,8 +545,7 @@
 															<p><b><input name="size" class="no-border" type="disabled"  readonly></b></p>
 														</div>
 													</div>
-												</div>
-												<div class="row">
+										
 													<div class="form-group">
 														<label class="col-md-5 control">Bag :</label>
 														<div class="col-md-6">
@@ -555,13 +558,20 @@
 															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly></b></p>
 														</div>
 													</div>
+                                                    <br>
                                                 <div class="form-group">
                                                     <label class="col-md-5 control">Date Resolved :</label>
-                                                    <input type="date" name="date_resolved" required="">
+                                                    <div class="col-sm-6">
+                                                        <input type="date" name="date_resolved" class="form-control" required="">
+                                                    </div>
                                                 </div>
-												</div>
-                                            </div>
-                                        </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control">Action Taken :</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="action_taken" class="form-control" required="">
+                                                    </div>
+                                                </div>
+											</div>
                                         <hr>
                                             <input type="hidden" name="deliveryID" readonly />
                                             <input type="hidden" name="blend_id" readonly />
@@ -570,16 +580,13 @@
 											<input type="hidden" name="client_id" readonly />
 											<input type="hidden" name="SINo" readonly />
 											<input type="hidden" name="RID" readonly />
-
-							<br>
-										<div class="modal-footer">
-											<!--<button type="submit" class="btn btn-primary" name="submit">Save changes</button>-->
-											<?php echo form_submit(['name'=>'ResolveReturn', 'value'=>'Resolve','class'=>'btn btn-primary']) ?>
-
-										</div>
-									<?php echo form_close(); ?>
+                                <div class="modal-footer">
+                                    <div class="form-group" align="center">
+                                        <?php echo form_submit(['name'=>'ResolveReturn', 'value'=>'Resolve','class'=>'btn btn-success']) ?>
+                                    </div>
+                                </div>
+                                    <?php echo form_close(); ?>
 						</div>
-
 					</div>
 				 </div></div>
 
@@ -639,6 +646,18 @@
 														</div>
 													</div>
 												</div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control">Date Resolved :</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="date" name="date_resolved" class="form-control" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control">Action Taken :</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="action_taken" class="form-control" required="">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr>
@@ -646,7 +665,9 @@
 
                                         </div>
 										<div class="modal-footer">
-											<button type="submit" class="btn btn-success">Resolve Machine Return</button>
+                                            <div class="form-group" align="center">
+											     <button type="submit" class="btn btn-success">Resolve</button>
+                                             </div>
 										</div>
 							<?php echo form_close(); ?>
 						</div>

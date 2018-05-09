@@ -55,13 +55,14 @@
 		  $client = $this->input->post('company');
 		  $quantity = $this->input->post('quantity');
 		  $blend_id = $this->input->post('blend_id');
-		  $date = $this->input->post('date_resolved');
+		  $date_resolved = $this->input->post('date_resolved');
+		  $action_taken = $this->input->post('action_taken');
 
 		  $this->SalesReturns_model->activity_logs('sales', "Resolved ".$client." from Contracted Client Order ");
-		  $this->SalesReturns_model->update_return($id);
+		  $this->SalesReturns_model->update_return($id, $date_resolved, $action_taken);
 		  $this->SalesReturns_model->update_delivery($id);
 		  $this->SalesReturns_model->update_less_return_coffee($quantity, $blend_id);
-		  $this->SalesReturns_model->less_raw_coffee_contracted($date, $quantity, $blend_id, $ret_id);
+		  $this->SalesReturns_model->less_raw_coffee_contracted($date_resolved, $quantity, $blend_id, $ret_id);
 		echo "<script>alert('Blend Return has been resolved!');</script>";
 		  redirect('SalesReturns/index', 'refresh');
 
@@ -95,6 +96,8 @@
 			$qty= $this->input->post('qty');
 			$MRID= $this->input->post('MRID');
 			$remarks = 'Received';
+			$resolved_date = $this->input->post('date_resolved');
+			$action_taken = $this->input->post('action_taken');
 
 			// $this->SalesReturns_model->ResolveMachineReturnsA($c_id, $m_id, $date, $remarks, $serial, $qty);
 			// $resolved = 'Yes';
@@ -104,7 +107,7 @@
 			$mach_type = $this->db->query("SELECT * FROM machine WHERE mach_id = '".$m_id."'")->row()->brewer_type;
 			$this->SalesReturns_model->activity_logs('sales', "Resolved ".$client."'s ".$machine." machine ".$mach_type." ");
 			$this->SalesReturns_model->less_machine($m_id, $qty);
-			$this->SalesReturns_model->update_mach_return($MRID);
+			$this->SalesReturns_model->update_mach_return($MRID, $resolved_date, $action_taken);
 			$this->SalesReturns_model->update_mach_return_rent($c_id, $remarks);
 			echo "<script>alert('Blend Return has been resolved!');</script>";
 			redirect('SalesReturns/index');

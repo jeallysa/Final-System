@@ -180,8 +180,8 @@
 
 		}
 
-		public function update_return($id){
-			$this->db->query("UPDATE client_coffreturn SET coff_returnQty = '0', resolved = 'Yes' WHERE client_deliveryID = '".$id."';");
+		public function update_return($id, $date_resolved, $action_taken){
+			$this->db->query("UPDATE client_coffreturn SET coff_returnQty = '0', resolved = 'Yes', coff_resolveDate = '".$date_resolved."', coff_returnAction = '".$action_taken."' WHERE client_deliveryID = '".$id."';");
 
 		}
 
@@ -191,8 +191,8 @@
 		}
 
 
-		public function update_mach_return($MRID){
-			$this->db->query("UPDATE client_machreturn SET client_machreturn.resolved = 'Yes', mach_returnQty = '0' WHERE client_machreturn.client_machReturnID = '".$MRID."';");
+		public function update_mach_return($MRID, $resolved_date, $action_taken){
+			$this->db->query("UPDATE client_machreturn SET client_machreturn.resolved = 'Yes', mach_returnQty = '0', mach_returnAction = '".$action_taken."', mach_resolveDate = '".$resolved_date."' WHERE client_machreturn.client_machReturnID = '".$MRID."';");
 
 		}
 
