@@ -190,7 +190,7 @@
                                                              ?>
                                                         </td>
                                                          <td><?php echo $row->walkin_returns; ?></td>
-                                                         <td><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#returnblend<?php echo $row->walkin_id; ?>" <?php 
+                                                         <td><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#returnblend<?php echo $row->walkin_id; ?>" <?php 
                                                             $coff_remark = $row->resolved;
                                                             if ($coff_remark == 'Yes' || $coff_remark == 'No') {
                                                                 echo "disabled";
@@ -342,7 +342,7 @@
                                                              ?>
                                                          </td>
 
-                                                         <td><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#return<?php echo $row->mach_salesID; ?>" <?php 
+                                                         <td><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#return<?php echo $row->mach_salesID; ?>" <?php 
                                                             $mach_remark = $row->remarks; 
                                                             if ($mach_remark == 'Returned') {
                                                                 echo "disabled";

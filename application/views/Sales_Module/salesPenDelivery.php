@@ -212,7 +212,7 @@
                         $dbStat = $row1->delivery_stat;
                         if ($dbStat != 'delivered') {
                             echo '<center>
-                           <a class="btn btn-info btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'">Deliver</a>
+                           <a class="btn btn-primary btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'">Deliver</a>
                         </center>';
                         }
                     ?>
@@ -403,7 +403,7 @@
                         }
 
                      ?>>Pay</button>
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php
+                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php
                         $resolved = $row2->resolved;
                         $return = $row2->return;
                         if ($resolved == 'Yes' || $resolved == 'No') {
