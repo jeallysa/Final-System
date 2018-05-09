@@ -523,6 +523,14 @@
 
 											<?php echo form_open('SalesReturns/resolveReturns', array('method'=>'POST')); ?>
 												<div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-md-5 control">Client :</label>
+                                                        <div class="col-md-7" >
+
+                                                            <p><b> <input class="ClientName" name="company" class="no-border" type="disabled"  readonly></b></p>
+
+                                                        </div>
+                                                    </div>
 													<div class="form-group">
 														<label class="col-md-5 control">Coffee Blend :</label>
 														<div class="col-md-7" >
@@ -531,14 +539,7 @@
 
 														</div>
 													</div>
-                                                    <div class="form-group">
-                                                        <label class="col-md-5 control">Client :</label>
-                                                        <div class="col-md-7" >
-
-                                                            <p><b> <input name="company" class="no-border" type="disabled"  readonly></b></p>
-
-                                                        </div>
-                                                    </div>
+                                                    
 													<div class="form-group">
 														<label class="col-md-5 control">Size :</label>
 														<div class="col-md-5">
@@ -611,14 +612,10 @@
 											<input  type="hidden" name="qty" readonly />
 
                                             <div class="col-lg-7">
-												<div class="row">
 													<label class="col-md-5 control">Client :</label>
-													<div class="col-md-7">
-													<input class="ClientName" type="text" name="company" readonly />
-													</div>
-												</div>
-
-												<div class="row">
+    													<div class="col-md-7">
+    													   <input class="ClientName" type="text" name="company" readonly />
+    													</div>
 													<div class="form-group">
 														<label class="col-md-5 control">Machine :</label>
 														<div class="col-md-7">
@@ -631,8 +628,6 @@
 															<input class="no-border" type="text" name="type" readonly />
 														</div>
 													</div>
-												</div>
-												<div class="row">
 													<div class="form-group">
 														<label class="col-md-5 control">Unit Price :</label>
 														<div class="col-md-6">
@@ -645,7 +640,7 @@
 															<input class="no-border" type="text" name="qty" readonly />
 														</div>
 													</div>
-												</div>
+                                                    <br>
                                                 <div class="form-group">
                                                     <label class="col-md-5 control">Date Resolved :</label>
                                                     <div class="col-sm-6">
