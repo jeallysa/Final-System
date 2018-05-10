@@ -26,6 +26,7 @@
             
             $data = array(
                         'blend_id'         => $this->input->post("blndid"),
+                        'blend_qty'  => $this->input->post("physcount"),
                         'blend_physcount'  => $this->input->post("physcount"),
                         'blend_discrepancy'=> $this->input->post("discrepancy"),
                         'blend_remarks'    => $this->input->post("remarks"),

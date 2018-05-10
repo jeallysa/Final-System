@@ -462,10 +462,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Sticker</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
-                                            <th><b class="pull-left">Physical Count</b></th>
-                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Reorder Level (pc/s)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc/s)</b></th>
+                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
+                                            <th><b class="pull-left">Discrepancy (pc/s)</b></th>
                                             <th><b class="pull-left">Date of Inventory</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
@@ -485,10 +485,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sticker_id . '</td>' ,
                                                 '<td>'  . $object->sticker . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->sticker_reorder)   . ' pc/s</td>' ,
-                                                '<td><b>'  . number_format($object->sticker_stock)   . ' pc/s</b></td>' ,
-                                                '<td>'  . number_format($object->sticker_physcount)   . ' pc/s</td>' ,
-                                                '<td>'  . number_format($object->sticker_discrepancy)   . ' pc/s</td>' ,
+                                                '<td>'  . number_format($object->sticker_reorder)   . '</td>' ,
+                                                '<td><b>'  . number_format($object->sticker_stock)   . '</b></td>' ,
+                                                '<td>'  . number_format($object->sticker_physcount)   . '</td>' ,
+                                                '<td>'  . number_format($object->sticker_discrepancy)   . '</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->sticker_remarks   . '</td>' ;
 

@@ -431,10 +431,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Blend</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
-                                            <th><b class="pull-left">Size</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
-                                            <th><b class="pull-left">Physical Count</b></th>
-                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Size (g)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc/s)</b></th>
+                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
+                                            <th><b class="pull-left">Discrepancy (pc/s</b></th>
                                             <th><b class="pull-left">Date of Inventory</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
@@ -454,10 +454,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->blend_id . '</td>' ,
                                                 '<td>'  . $object->blend . '</td>' ,
                                                 '<td>'  . $object->package_type   . ' bag</td>' ,
-                                                '<td>'  . number_format($object->package_size)  . ' g</td>' ,
-                                                '<td><b>'  . number_format($object->blend_qty)   . ' pc/s</b></td>' ,
-                                                '<td>'  . number_format($object->blend_physcount)  . ' pc/s</td>' ,
-                                                '<td>'  . number_format($object->blend_discrepancy)   . ' pc/s</td>' ,
+                                                '<td>'  . number_format($object->package_size)  . ' </td>' ,
+                                                '<td><b>'  . number_format($object->blend_qty)   . '</b></td>' ,
+                                                '<td>'  . number_format($object->blend_physcount)  . '</td>' ,
+                                                '<td>'  . number_format($object->blend_discrepancy)   . '</td>' ,
                                                 '<td>'  . $object->inventory_date  . '</td>' ,
                                                 '<td>'  . $object->blend_remarks  . '</td>' ;
 

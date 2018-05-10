@@ -463,12 +463,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <thead>
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Package</b></th>
-                                            <th><b class="pull-left">Size</b></th>
+                                            <th><b class="pull-left">Size (g)</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level</b></th>
-                                            <th><b class="pull-left">Number of stocks</b></th>
-                                            <th><b class="pull-left">Physical Count</b></th>
-                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Reorder Level (pc/s)</b></th>
+                                            <th><b class="pull-left">Number of stocks (pc/s)</b></th>
+                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
+                                            <th><b class="pull-left">Discrepancy (pc/s)</b></th>
                                             <th><b class="pull-left">Date of Inventory</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
@@ -487,12 +487,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
                                                 '<td>'  . $object->package_id . '</td>' ,
                                                 '<td>'  . $object->package_type . ' bag</td>' ,
-                                                '<td>'  . number_format($object->package_size)   . ' g</td>' ,
+                                                '<td>'  . number_format($object->package_size)   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->package_reorder)   . ' pc/s</td>' ,
-                                                '<td><b>'  . number_format($object->package_stock)   . ' pc/s</b></td>' ,
-                                                '<td>'  . number_format($object->package_physcount)   . ' pc/s</td>' ,
-                                                '<td>'  . number_format($object->package_discrepancy)   . ' pc/s</td>' ,
+                                                '<td>'  . number_format($object->package_reorder)   . '</td>' ,
+                                                '<td><b>'  . number_format($object->package_stock)   . '</b></td>' ,
+                                                '<td>'  . number_format($object->package_physcount)   . '</td>' ,
+                                                '<td>'  . number_format($object->package_discrepancy)   . '</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->package_remarks   . '</td>' ;
 

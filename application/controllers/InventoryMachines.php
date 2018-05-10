@@ -26,6 +26,7 @@
             
             $data = array(
                         'mach_id'         => $this->input->post("machid"),
+                        'mach_stocks'  => $this->input->post("physcount"),
                         'mach_physcount'  => $this->input->post("physcount"),
                         'mach_discrepancy'=> $this->input->post("discrepancy"),
                         'mach_remarks'    => $this->input->post("remarks"),

@@ -412,10 +412,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Name</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
-                                            <th><b class="pull-left">Physical Count</b></th>
-                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Reorder Level (kg)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (kg)</b></th>
+                                            <th><b class="pull-left">Physical Count (kg)</b></th>
+                                            <th><b class="pull-left">Discrepancy (g)</b></th>
                                             <th><b class="pull-left">Date of Inventory</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
@@ -436,10 +436,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
                                                 '<td>'  . $object->raw_type . ' roast</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td><b>'  . number_format($object->raw_reorder / 1000) . ' kg</b></td>' ,
-                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' kg</b></td>' ,
-                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' kg</td>' ,
-                                                '<td>'  . number_format($object->raw_discrepancy)   . ' g</td>' ,
+                                                '<td><b>'  . number_format($object->raw_reorder / 1000) . ' </b></td>' ,
+                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' </b></td>' ,
+                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' </td>' ,
+                                                '<td>'  . number_format($object->raw_discrepancy)   . ' </td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->raw_remarks   . '</td>' ;
 

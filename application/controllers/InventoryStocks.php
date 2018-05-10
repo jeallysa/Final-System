@@ -25,6 +25,7 @@
             
             $data = array(
                         'raw_id'         => $this->input->post("rawid"),
+                        'raw_stock'  => $this->input->post("physcount"),
                         'raw_physcount'  => $this->input->post("physcount"),
                         'raw_discrepancy'=> $this->input->post("discrepancy"),
                         'raw_remarks'    => $this->input->post("remarks"),

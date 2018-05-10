@@ -448,10 +448,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level</b></th>
-                                            <th><b class="pull-left">Number of Stocks</b></th>
-                                            <th><b class="pull-left">Physical Count</b></th>
-                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Reorder Level (pc/s)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (pc/s)</b></th>
+                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
+                                            <th><b class="pull-left">Discrepancy (pc/s)</b></th>
                                             <th><b class="pull-left">Date of Inventory</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
@@ -472,10 +472,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->mach_reorder)   . ' pc/s</td>' ,
-                                                '<td><b>'  . number_format($object->mach_stocks)   . ' pc/s</b></td>' ,
-                                                '<td>'  . number_format($object->mach_physcount)   . ' pc/s</td>' ,
-                                                '<td>'  . number_format($object->mach_discrepancy)   . ' pc/s</td>' ,
+                                                '<td>'  . number_format($object->mach_reorder)   . '</td>' ,
+                                                '<td><b>'  . number_format($object->mach_stocks)   . '</b></td>' ,
+                                                '<td>'  . number_format($object->mach_physcount)   . '</td>' ,
+                                                '<td>'  . number_format($object->mach_discrepancy)   . '</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->mach_remarks   . '</td>' ;
 
