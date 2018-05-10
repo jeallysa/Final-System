@@ -223,6 +223,18 @@ a:focus {
                                         </div>
                                     </div>
                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-12 form-group">
+                                          <div class="form-group label-floating">
+                                            <label for="email">Type of Sticker</label>
+                                            <select class="form-control" type="text" name="sticker_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
+                                               <option value="paper">Paper</option>
+                                                <option value="plastic">Plastic</option>
+                                                <option value="vinyl">Vinyl</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                      <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
@@ -323,6 +335,7 @@ a:focus {
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Sticker</b></th>
+                                            <th><b class="pull-left">Type of Sticker</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (pc)</b></th>
@@ -337,6 +350,7 @@ a:focus {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->sticker; ?></td>
+                                                 <td><?php echo $row->sticker_type; ?></td>
                                                   <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
                                                  <td><?php echo number_format($row->sticker_reorder); ?></td>
@@ -423,6 +437,18 @@ a:focus {
                                                                         <div class="form-group label-floating">
                                                                             
                                                                             <input class="form-control" type="hidden" name="sticker_id" value="<?php echo $row->sticker_id; ?>" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="row">
+                                                                    <div class="col-md-12 form-group">
+                                                                        <div class="form-group label-floating">
+                                                                            <label for="email">Type of Sticker</label>
+                                                                            <select class="form-control" type="text" name="sticker_type" value="<?php echo $row->sticker_type; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
+                                                                                <option value="paper">Paper</option>
+                                                                                <option value="plastic">Plastic</option>
+                                                                                <option value="vinyl">Vinyl</option>
+                                                                              </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>

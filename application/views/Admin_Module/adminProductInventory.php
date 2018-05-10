@@ -233,9 +233,9 @@ a:focus {
                                         <div class="form-group label-floating">
                                             <label for="email">Type of Roast</label>
                                             <select class="form-control" type="text" name="raw_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
-                                               <option value="city">City</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="light">Light</option>
+                                                <option value="city roast">City Roast</option>
+                                                <option value="medium roast">Medium Roast</option>
+                                                <option value="light roast">Light Roast</option>
                                               </select>
                                         </div>
                                     </div>
@@ -343,8 +343,8 @@ a:focus {
                                             <th><b class="pull-left">Raw Coffee</b></th>
                                             <th><b class="pull-left">Type of Roast</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level (g)</b></th>
-                                            <th><b class="pull-left">Number of Stocks (g)</b></th>
+                                            <th><b class="pull-left">Reorder Level (kg)</b></th>
+                                            <th><b class="pull-left">Number of Stocks (kg)</b></th>
                                             <th><b class="pull-left">Price/kg</b></th>
                                             <th class="disabled-sorting"><b>Edit</b></th>
                                             <th><b class="pull-left">Activation</b></th>
@@ -358,8 +358,8 @@ a:focus {
                                                  <td><?php echo $row->raw_coffee; ?></td>
                                                  <td><?php echo $row->raw_type; ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                 <td><?php echo number_format($row->raw_reorder); ?></td>
-                                                 <td><?php echo number_format($row->raw_stock); ?></td>
+                                                 <td><?php echo number_format($row->raw_reorder/1000); ?></td>
+                                                 <td><?php echo number_format($row->raw_stock/1000); ?></td>
                                                  <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updateraw<?php echo $row->raw_id;?>">Edit</a>
@@ -442,9 +442,9 @@ a:focus {
                                                                         <div class="form-group label-floating">
                                                                             <label for="email">Type of Roast</label>
                                                                             <select class="form-control" type="text" name="raw_type" value="<?php echo $row->raw_coffee; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
-                                                                                 <option value="city">City</option>
-                                                                                <option value="medium">Medium</option>
-                                                                                <option value="light">Light</option>
+                                                                                 <option value="city roast">City Roast</option>
+                                                                                <option value="medium roast">Medium Roast</option>
+                                                                                <option value="light roast">Light Roast</option>
                                                                               </select>
                                                                         </div>
                                                                     </div>

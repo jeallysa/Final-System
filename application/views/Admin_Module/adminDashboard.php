@@ -179,8 +179,8 @@ a:focus {
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Raw Coffee</p>
-                                    <h3 class="title"> <?php echo number_format($data1['rawcoffeestock']); ?>
-                                        <small>grams</small>
+                                    <h3 class="title"> <?php echo number_format($data1['rawcoffeestock']/1000); ?>
+                                        <small>kilograms</small>
                                     </h3>
                                 </div>
                                 <a href="<?php echo base_url(); ?>adminProductInventory">

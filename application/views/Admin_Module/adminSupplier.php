@@ -225,6 +225,7 @@ a:focus {
                                             <tr>
                                                 <th><b>Supplier No.</b></th>
                                                 <th><b>Supplier</b></th>
+                                                <th><b>Date Registered</b></th>
                                                 <th><b>Contact Personnel</b></th>
                                                 <th><b>Position</b></th>
                                                 <th><b>Address</b></th>
@@ -248,6 +249,7 @@ a:focus {
                                                     <tr>
                                                     <td>SP-<?php echo $row->sup_id; ?></td>
                                                     <td><?php echo $row->sup_company; ?></td>
+                                                     <td><?php echo $row->date_reg; ?></td>
                                                     <td><?php echo $row->contact_personnel; ?></td>
                                                     <td><?php echo $row->sup_position; ?></td>
                                                     <td><?php echo $row->sup_address; ?></td>
@@ -333,7 +335,12 @@ a:focus {
                                                                             <input name="sup_id" class="form-control" type="hidden" value="<?php echo $row->sup_id; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Supplier should only countain letters">
                                                                         </div>
                                                                     </div>
-                                                                        
+                                                                          <p><div class="form-group row">
+                                                                        <div for="example-number-input" class="col-2 col-form-label">
+                                                                            <label for="type">Date Registered</label>
+                                                                            <input name="date_reg" class="form-control" type="date" value="<?php echo $row->date_reg; ?>" id="example-number-input" required>
+                                                                        </div>
+                                                                    </div>
                                                                          <p><div class="form-group row">
                                                                         <div for="example-number-input" class="col-2 col-form-label">
                                                                             <label for="type">Address</label>
