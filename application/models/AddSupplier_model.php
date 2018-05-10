@@ -12,7 +12,7 @@ class AddSupplier_model extends CI_model
 		echo "Sample function";
 	}
 
-	function add_data($supplier, $address, $cpfname, $cplname, $position, $email, $tel_number){
+	function add_data($supplier, $address, $cpfname, $cplname, $position, $email, $tel_number, $date_reg){
 		$data = array(
 			'sup_company' => $supplier,
 			'sup_address' => $address,
@@ -20,7 +20,8 @@ class AddSupplier_model extends CI_model
 			'sup_lname' => $cplname,
 			'sup_position' => $position,
 			'sup_email' => $email,
-			'sup_contact' => $tel_number
+			'sup_contact' => $tel_number,
+			'date_reg' => $date_reg
 		);
 		
 		$this->db->insert('supplier', $data);

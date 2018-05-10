@@ -30,8 +30,9 @@
 			$sup_position = $this->input->post("sup_position");
 			$sup_fname = $this->input->post("sup_fname");
 			$sup_lname = $this->input->post("sup_lname");
+			$date_reg = $this->input->post("date_reg");
 			$this->Admin_Suppliers_Model->activity_logs('admin', "Updated Supplier: '".$sup_company."'");
-			$this->Admin_Suppliers_Model->update($id, $sup_company, $sup_address, $sup_email, $sup_contact, $sup_position, $sup_fname, $sup_lname);
+			$this->Admin_Suppliers_Model->update($id, $sup_company, $sup_address, $sup_email, $sup_contact, $sup_position, $sup_fname, $sup_lname, $date_reg);
 			echo "<script>alert('Update successful!');</script>";
 			redirect('adminSupplier');
 		}

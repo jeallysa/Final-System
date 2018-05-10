@@ -178,7 +178,7 @@ a:focus {
                                        
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 15px;">
-                                        <input class="form-control" name="supplier" placeholder="Supplier" type="text" required autofocus required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Supplier should only countain letters"/>
+                                        <input class="form-control" name="supplier" placeholder="Supplier" type="text"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -186,7 +186,13 @@ a:focus {
                                         <textarea style="resize:vertical;" class="form-control" placeholder="Address" rows="2" name="address" required></textarea>
                                     </div>
                                 </div>
-                                    
+                                   <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
+                                        <label for="date">Date Registered</label>
+                                        <input class="form-control" name="date_reg" placeholder="Date" type="date"/>
+                                    </div>
+                                </div>
                                 
                                 <h6> Personal Information (Contact Personnel) </h6>
                                 <div class="row">
