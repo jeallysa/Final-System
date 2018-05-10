@@ -265,26 +265,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-sm-12">
                             <div class="card card-nav-tabs">
                                 <div class="card-header" data-background-color="blue">
-                                    <div class="nav-tabs-navigation">
-                                        <div class="nav-tabs-wrapper">
-                                            <span class="nav-tabs-title"> </span>
-                                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                                <li class="active">
-                                                    <a href="#companyreturn" data-toggle="tab">
-                                                      Company Returns
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="#clientreturn" data-toggle="tab">
-                                                     Client Returns
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        <div class="nav-tabs-navigation">
+                                            <div class="nav-tabs-wrapper">
+                                                <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
+                                                    <li class="active">
+                                                        <a href="#coffeereturns" data-toggle="tab">
+                                                             Company Returns
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#clientreturn" data-toggle="tab">
+                                                         Client Returns
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 
                                 
                                 
@@ -361,13 +360,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <table id="coffee" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th><b>#</b></th>
                                                                 <th><b>Delivery Receipt No.</b></th>
                                                                 <th><b>Date Returned</b></th>
                                                                 <th><b>Client</b></th>
-                                                                <th><b>Quantity</b></th>
+                                                                <th><b>Quantity (pc/s)</b></th>
                                                                 <th><b>Remarks</b></th>
                                                                 <th><b>Action Taken</b></th>
+                                                                <th><b>Resolve Date</b></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -376,13 +375,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         {
                                                     ?>
                                                             <tr>
-                                                                <td><?php echo $row->client_coffReturnID; ?></td>
                                                                 <td><?php echo $row->client_dr; ?></td>
                                                                 <td><?php echo $row->coff_returnDate; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
-                                                                <td><?php echo number_format($row->coff_returnQty); ?> g</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
                                                                 <td><?php echo $row->coff_remarks; ?></td>
                                                                 <td><?php echo $row->coff_returnAction; ?></td>
+                                                                <td><?php echo $row->coff_resolveDate; ?></td>
+                                                            </tr>
+                                                            <?php
+                                                        }
+                                                    ?>
+
+                                                    <?php 
+                                                        foreach($data6['get_coffee_walkin_return'] as $row)
+                                                        {
+                                                    ?>
+                                                            <tr>
+                                                                <td> - </td>
+                                                                <td><?php echo $row->coff_returnDate; ?></td>
+                                                                <td> Walk-in Client</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
+                                                                <td><?php echo $row->coff_remarks; ?></td>
+                                                                <td><?php echo $row->coff_returnAction; ?></td>
+                                                                <td><?php echo $row->coff_resolveDate; ?></td>
                                                             </tr>
                                                             <?php
                                                         }
@@ -637,28 +653,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.datatables.js"></script>
-<script>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+<script> 
     
 $(document).ready(function() {
     $('table.table').DataTable({
@@ -727,18 +722,36 @@ $(document).ready(function() {
         
    });  
     
-    
-    
-    
-    
- 
-    
-    
-    
-    
-    
-    
-    
+</script>
+
+<script type="text/javascript">
+$(document).on('change', 'select.nav', function() {
+    var $this = this;
+    var target = $this.value;
+    $('div.select-pane').hide();
+    $('div[id="' + target + '"]').show();
+})
+
+$(document).on('click', '.series-select', function() {
+    var $this = this;
+    var txt = $this.text + '<span class="caret"></span>';
+    $($this).closest('li.dropdown').find('a.dropdown-toggle').php(txt);
+
+
+})
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
 </script>
  
 </html>
