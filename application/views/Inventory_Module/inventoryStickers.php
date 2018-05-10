@@ -222,7 +222,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
-                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Quantity (pc/s)</b></th>
                                                     <th><b>Remarks</b></th>
                                                     <th><b>Type</b></th>
                                                 </tr>
@@ -237,7 +237,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' pc/s</td>' ;
+                                                '<td>'  . number_format($object->walkin_qty)  . '</td>' ;
                                                 ?>
                                                     <td>Walkin Sales</td>
                                                     <td>Out</td>
@@ -255,7 +255,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . ' pc/s</td>' ;
+                                                '<td>'  . number_format($object->contractPO_qty)  . '</td>' ;
                                                 ?>
                                                     <td>Sales</td>
                                                     <td>Out</td>
@@ -291,7 +291,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' pc/s</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty)  . '</td>' ;
                                                 ?>
                                                     <td>Company Return</td>
                                                     <td>Out</td>
@@ -309,7 +309,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' pc/s</td>' ;
+                                                '<td>'  . number_format($object->yield_weight)  . '</td>' ;
                                                 ?>
                                                     <td>Company Delivery</td>
                                                     <td>In</td>
@@ -651,7 +651,7 @@ $(document).ready(function() {
         "info":     false,
         buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs'},    
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs'},
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs'},
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs'}
         ]
 });

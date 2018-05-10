@@ -224,9 +224,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
-                                                    <th><b>Client/Supplier</b></th>
+                                                    <th><b>Client</b></th>
                                                     <th><b>Date</b></th>
-                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Quantity (pc/s)</b></th>
                                                     <th><b>Remarks</b></th>
                                                     <th><b>Type</b></th>
                                                 </tr>
@@ -242,7 +242,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' </td>' ;
+                                                '<td>'  . number_format($object->walkin_qty)  . '</td>' ;
                                                 ?>
                                                     <td>Walkin Sales</td>
                                                     <td>Out</td>
@@ -281,6 +281,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format($object->coff_returnQty)  . '</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?>
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> - </td>' ,
+                                                '<td>'  . $object->contractPO_date  . '</td>' ,
+                                                '<td>'  . number_format($object->contractPO_qty)  . '</td>' ;
+                                                ?>
+                                                    <td>Created</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails6 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails6);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> - </td>' ,
+                                                '<td>'  . $object->walkin_date  . '</td>' ,
+                                                '<td>'  . number_format($object->walkin_qty)  . '</td>' ;
+                                                ?>
+                                                    <td>Created</td>
                                                     <td>In</td>
                                                  <?php   
                                                 '</tr>' ;
@@ -621,7 +657,7 @@ $(document).ready(function() {
         "info":     false,
         buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs'},    
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs'},
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs'},
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs'}
         ]
 });

@@ -223,7 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
-                                                    <th><b>Weight</b></th>
+                                                    <th><b>Weight (kg)</b></th>
                                                     <th><b>Remarks</b></th>
                                                     <th><b>Type</b></th>
                                                 </tr>
@@ -239,7 +239,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' g</td>' ,
+                                                '<td>'  . number_format($object->yield_weight / 1000, 2)  . '</td>' ,
                                                 '<td> Company Delivery </td>' ,
                                                 '<td> In </td>' ,
                                                 '</tr>' ;
@@ -259,8 +259,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' g</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . '</td>' ,
                                                 '<td> Company Return </td>' ,
+                                                '<td> Out </td>' ,
+                                                '</tr>' ;
+                                              }
+                                            }
+                                           
+                                        ?>
+
+                                        <?php
+                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = ".$id; 
+                                     $query = $this->db->query($retrieveSales);
+                                        if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                               echo '<tr>' ,
+                                               
+                                                '<td>'  . $object->client_company   . '</td>' ,
+                                                '<td>'  . $object->transact_date  . '</td>' ,
+                                                '<td>'  . number_format($object->quantity / 1000, 2)  . '</td>' ,
+                                                '<td> Sales </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
                                               }
@@ -603,7 +621,7 @@ $(document).ready(function() {
         "info":     false,
         buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs'},    
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs'},
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs'},
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs'}
         ]
 });
