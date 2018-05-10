@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
@@ -280,7 +281,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="nav-tabs-wrapper">
                                                 <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
                                                     <li class="active">
-                                                        <a href="#coffeereturns" data-toggle="tab">
+                                                        <a href="#companyreturn" data-toggle="tab">
                                                              Company Returns
                                                             <div class="ripple-container"></div>
                                                         </a>
@@ -346,7 +347,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                  ?>   
                                                     <td>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a>
-                                                   <td>
+                                                   </td>
                                                 <?php       
                                                     }
                                                        ?>
@@ -422,8 +423,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <thead>
                                                             <tr>
                                                                 <th><b>Return No.</b></th>
-                                                                <th><b>Machine Serial No.</b></th>
                                                                 <th><b>Date Returned</b></th>
+                                                                <th><b>Machine Serial No.</b></th>
                                                                 <th><b>Client</b></th>
                                                                 <th><b>Machine</b></th>
                                                                 <th><b>Quantity</b></th>
@@ -438,8 +439,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     ?>
                                                             <tr>
                                                                 <td><?php echo $row->client_machReturnID; ?></td>
-                                                                <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->mach_returnDate; ?></td>
+                                                                <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
                                                                 <td><?php echo $row->machine; ?></td>
                                                                 <td><?php echo number_format($row->mach_returnQty); ?> pc/s</td>
@@ -455,12 +456,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                </div>
+                                  
             
             
    <!------------------------------------------------------------------------------------------------------------------------------------------
@@ -496,16 +493,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">PO#</label>
-                                            <select class="form-control" name="poList" id = "poList" required>
-                                                <option disabled selected value="">Select PO#</option>
-                                                <?php 
-
+                                            <select class="selectpicker" data-live-search="true" name="poList" id = "poList" required>
+                                                    <?php 
                                                     foreach($poList as $object)
                                                     { 
                                                         echo '<option value="'.$object->supp_po_id.'">'.$object->supp_po_id.'</option>';
+                                                        
                                                     }
-                                                 ?>
-                                            </select>
+                                                    ?>
+                                                  </select>
                                         </div>
                                     </div>
                                 </div>
@@ -516,7 +512,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group label-floating">
                                             <label for="email">Item Returned</label>
                                             <select class="form-control" name="item" id="item" required>
-                                                <option disabled selected value="">Select Item</option>
+                                                <option disabled selected value=""> Select Item </option>
                                                
 
                                             </select>
@@ -618,28 +614,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       
     </div>
-  </div>                                         
+                                          
            
             
  <?php      
          $returnModal++;        
         }
 ?>    
-                   
-            
-            
-            
-            
-            
-            
-            
-           
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+                  
+        
 </body>
 <!--   Core JS Files   -->
 <!--
@@ -664,13 +647,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.datatables.js"></script>
+<script src="../assets/js/bootstrap-select.js"></script>
 <script> 
     
 $(document).ready(function() {
     $('table.table').DataTable({
         select: {
             style: 'single'
-        }
+        },
+
+        "aaSorting": [1,'desc']
 
     });
 });
