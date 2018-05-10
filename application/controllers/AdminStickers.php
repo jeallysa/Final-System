@@ -25,12 +25,13 @@
 			$this->load->model('AdminStickers_model');
 			$id = $this->input->post("sticker_id");
 			$name = $this->input->post("name");
+			$sticker_type = $this->input->post("sticker_type");
 			$reorder = $this->input->post("reorder");
 			$stocks = $this->input->post("stocks");
 			$unitprice = $this->input->post("unitprice");
 			$sup_id = $this->input->post("sup_company");
 			$this->AdminStickers_model->activity_logs('admin', "Updated Sticker: '".$name."'");	
-			$this->AdminStickers_model->update($id, $name, $reorder, $stocks, $unitprice, $sup_id);
+			$this->AdminStickers_model->update($id, $name, $sticker_type, $reorder, $stocks, $unitprice, $sup_id);
 			echo "<script>alert('Update successful!');</script>";
 			redirect('adminStickers', 'refresh');
 		}
@@ -40,7 +41,8 @@
 			$this->load->model('AdminStickers_model');
 			$data = array(
 				"sticker" =>$this->input->post("name"),
-				"unitPrice" =>$this->input->post("unitprice"),
+                "sticker_type" =>$this->input->post("sticker_type"),
+                "unitPrice" =>$this->input->post("unitprice"),
 				"sticker_reorder" =>$this->input->post("reorder"),
                 "sticker_stock" =>$this->input->post("stocks"),
                 "sup_id" =>$this->input->post("sup_company")
