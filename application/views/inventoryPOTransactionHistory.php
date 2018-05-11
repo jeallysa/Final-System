@@ -233,6 +233,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
+                      <div class="panel-heading">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="panel-title" id="contactLabel"><center>Order Details</center> </h4>
+                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -328,6 +332,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "delivery" . $delivery   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
+                      <div class="panel-heading">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="panel-title" id="contactLabel"><center>Delivery Details</center> </h4>
+                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -471,6 +479,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "payment".$payment   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
+                      <div class="panel-heading">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="panel-title" id="contactLabel"><center>Payment Details</center> </h4>
+                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">

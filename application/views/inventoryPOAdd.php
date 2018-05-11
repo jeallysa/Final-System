@@ -15,6 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" />
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -267,15 +268,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <div class="col-md-12">
                                                                     <div class="form-group label-floating">
                                                                         <label class="control-label">Supplier</label>
-                                                                        
-                                                                        <select class="form-control" id="supplier" name = "dropdown" >
+                                                                        <select class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" required>
+                                                                      
                                                                     
                                            <?php
                                                          if(!empty($tempExisting)){
-                                                            echo '<option>'  .$tempExisting[0]->supp_name . '</option>' ; 
+                                                            echo '<option value="'.$tempExisting[0]->supp_name.'">'  .$tempExisting[0]->supp_name . '</option>' ; 
                                                          }else                  
                                                          foreach($suppliers as $object){ 
-                                                            echo '<option>'  . $object->sup_company . '</option>' ;
+                                                            echo '<option value="'.$object->sup_company.'">'  . $object->sup_company . '</option>' ;
                                
                                  
                                                           } 
@@ -396,8 +397,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <tr>
                                                    
                                                                <td class='col-sm-3'>
-                                                                      <select class="form-control" name="item" id ="item" required>
-                                                                            <option value = "">Choose Item</option>
+                                                                <select class="selectpicker" data-live-search="true" name="item" id ="item" required>
+                                                                      
                                                                            
                                                   <?php
                                                           
@@ -662,6 +663,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
  <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
+ <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script>
     
     
 
@@ -931,14 +933,36 @@ document.getElementById('addToTemp').onclick = function() {
           
        
 }); //END 
-         
-  
-        
-   
-
-    
-    
-           
- 
 </script>
+
+<script type="text/javascript">
+$(document).on('change', 'select.nav', function() {
+    var $this = this;
+    var target = $this.value;
+    $('div.select-pane').hide();
+    $('div[id="' + target + '"]').show();
+})
+
+$(document).on('click', '.series-select', function() {
+    var $this = this;
+    var txt = $this.text + '<span class="caret"></span>';
+    $($this).closest('li.dropdown').find('a.dropdown-toggle').php(txt);
+
+
+})
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
+</script>
+
 </html>
