@@ -360,12 +360,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                               foreach ($query->result() as $object) {
                                                   
+                                              // if($object->category == 1){          
                                            echo '<tr>' ,
                                                 '<td>'  . $object->date_received. '</td>' ,
-                                                      '<td>'  . $object->drNo   .        '</td>' ,
+                                                '<td>'  . $object->drNo   .        '</td>' ,
                                               
-                                                   '<td>'  ,                         '</td>' ,
-                                              '<td>'  . $object->item .         '</td>' ,
+                                                '<td>'  ,                         '</td>' ,
+                                                '<td>'  . $object->item .         '</td>' ,
                                                 '<td>'  ,                         '</td>' ,
                                                   
                                                 '<td>'  . $object->type .         '</td>' ,  
@@ -376,7 +377,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format($object->yields) .       '</td>' ,  
                                                 '<td>'  . $object->received_by  . '</td>' ,
                                                 '</tr>' ;
+                                     /*  }else{
+                                            
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->date_received. '</td>' ,
+                                                '<td>'  . $object->drNo   .        '</td>' ,
+                                              
+                                                '<td>'  ,                         '</td>' ,
+                                                '<td>'  . $object->item .         '</td>' ,
+                                                '<td>'  ,              
+                                                '<td>'  . $object->type .         '</td>' ,  
+                                                '<td>'                            ,'</td>' ,
+                                                '<td>'  . number_format($object->received) .     '</td>' ,  
+                                                '<td>'                            ,'</td>' ,  
+                                                '<td>'  . '</td>' ,
+                                                '<td>'  . '</td>' ,  
+                                                '<td>'  . $object->received_by  . '</td>' ,
+                                                '</tr>' ;
+}
+*/
                                               }
+                                               
+                                               
+                                               
+                                               
+                                               
+                                               
+                                               
                                             }
                                          
                                         ?>                     

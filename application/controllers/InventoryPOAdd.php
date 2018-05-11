@@ -50,8 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $pro_select_box = '';
             $pro_select_box .= '<option value="">Select Type</option>';
             
-          foreach ($results as $result) {  
-             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type.'</option>';
+          foreach ($results as $result) {
+            if($result->category == 1){  
+             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. " roast" .'</option>';
+            }else{
+             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. '</option>';   
+            }
          }
             echo json_encode($pro_select_box);
             
@@ -73,9 +77,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     public function get_selectItem_amount(){          //ajax part
         $item_name = $this->input->post('itemName');
         $item_type = $this->input->post('itemType');
+        
         $sup_id    = $this->input->post('sup_id');
         
-        $result = $this->inventoryPOAdd_model->querySelectedAmount($item_name , $sup_id , $item_type);
+        $result = $this->inventoryPOAdd_model->querySelectedAmount($item_name , $sup_id , $item_type );
         
         if(count($result)>0){
           
@@ -83,6 +88,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     }
     
+        
+        
+        
+                
+    public function checkReorder(){          //ajax part
+        $item_name = $this->input->post('itemName');
+        $item_type = $this->input->post('itemType');
+        $qty       = $this->input->post('qty');
+        $sup_id    = $this->input->post('sup_id');
+        
+        
+        $result    = $this->inventoryPOAdd_model->checkReorder($item_name , $item_type , $qty , $sup_id );
+        //$result = $this->inventoryPOAdd_model->cc();
+        if(count($result)>0){
+          
+            echo json_encode($result);
+        }
+    }     
+        
+        
+        
+        
+        
+        
+        
+        
+        
    
      
     
@@ -122,7 +154,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'suppPO_date' => $object->date,
                 'trucking_fee' => $object->trucking_fee,
                 'supp_creditTerm' => $object->credit_term,
-                'total_item' => $totalItemv,
                 'total_amount' =>$totalAmountv,
             );
             $i++;

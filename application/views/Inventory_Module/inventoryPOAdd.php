@@ -42,16 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     color: white;
 }
 
-.navbar .dropdown-menu li a:hover,
-.navbar .dropdown-menu li a:focus,
-.navbar .dropdown-menu li a:active,
-.navbar.navbar-default .dropdown-menu li a:hover,
-.navbar.navbar-default .dropdown-menu li a:focus,
-.navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #3399ff;
-    color: #FFFFFF;
-    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
-}
+
 </style>
 
 <body>
@@ -372,7 +363,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         
                                                          <?php     
                                                        if(!empty($tempExisting)){
-                                                            echo '<h4>Date Of Recording '   .$tempExisting[0]->date . '</h4>' ; 
+                                                              $oldDate = $tempExisting[0]->date;
+                                                              $arr = explode('-', $oldDate);
+                                                              $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                                           
+                                                           
+                                                           
+                                                           
+                                                            echo '<h4>Date Of Recording : '   .$newDate . '</h4>' ; 
                                                          } ?>
                                                         
                                                         
@@ -449,7 +447,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 </tr>
                                                          <tr>
                                                                     <td colspan="5" style="text-align: left;">
-                                                                        <button type="submit" class="btn btn-md btn-block" id="addToTemp" value="Add" />Add
+                                                                        <button type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add" />Add
                                                                        
                                                                     </td>
                                                          </tr>
@@ -470,7 +468,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              
       <!------------------------------                                        FORM3                                ----------------------------------------------->                                              
                                              
-                                             
+                                   <?php 
+                                           if(!empty($TempOrdered)){
+                                                       ?>           
                                   
                                     <div>          
                                          <form method="post" action="InventoryPOAdd/insertOrder" id="form3">
@@ -507,29 +507,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
                                                 
                                                         </tbody>
-                            
+                                                           
+                                                            <!--
                                                                 <tr>
                                                                     <td><b>Total Grams/Qty</b></td>
                                                                     <td><center><b><input type="number"  class="form-control" name="totalItem" id="totalItem" value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->tQty; }}  ?>" readonly required/></b></center></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
-                                                                </tr>
+                                                                </tr> -->
                                                             
-                                                                <tr>
-                                                                     <td><b>Trucking Fee</b></td>
-                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo $object->trucking_fee; }}  ?>" readonly /></b></td>  
-                                                                     <td></td>
-                                                                     <td></td>
-                                                                </tr>
-                                                            
-                                                                <tr>
+                                                                  <tr>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td><center><b>Sub total</b></center></td>
                                                                     <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->subTotal; }}  ?>"  readonly required/></b></center></td>
                                                                 </tr>
+                                                            
+                                                            
+                                                            
+                                                                <tr>
+                                                                     <td></td>
+                                                                     <td></td>
+                                                                     <td></td>
+                                                                    <td><b><center>Trucking Fee</center></b></td>
+                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo $object->trucking_fee; }}  ?>" readonly /></b></td>  
+                                                                    
+                                                                </tr>
+                                                            
+                                                             
                                                                 
                                                                 <tr>
                                                                     <td></td>
@@ -546,9 +553,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <button type="submit"  name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/resetOrder" value ="cancel" class="btn btn-danger decline">Cancel</button>
                                                             
                                                         </div>
+                                                    
                                                     </div>
                                                </form> 
                                             </div>    
+                                           <?php }   ?>
   <!------------------------------                                        End Form 3                                ----------------------------------------------->                                              
                                                   
                                    
@@ -679,7 +688,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
       
     for(var i=0; i < cancel.length; i++){  
-    cancel[i].style.visibility = 'visible';
+      cancel[i].style.visibility = 'visible';
        notThis.style.visibility ='visible';
     }
     
@@ -757,6 +766,82 @@ document.getElementById('submitOrder').onclick = function() {
 });
     
     
+     
+  
+$(document).ready(function () {
+
+
+document.getElementById('addToTemp').onclick = function() {
+    /*
+     if($('#subTotal').val()==""){
+           $("#invalidOrder").modal();
+        return false;
+      
+     }*/
+          var itemType = document.getElementById("itemType").value;
+          var itemName = document.getElementById("item").value;
+          var qty      = document.getElementById("qty").value;
+    
+     
+               
+            $.ajax({
+              url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
+              method:"POST",
+              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              dataType: 'json',
+              success: function(data){
+                  alert("success");
+                  //alert(data);
+
+
+                  
+                  
+                  
+              },
+              error: function(){
+                 alert('error');
+                   // alert(data);
+                  //alert(itemType);
+              }
+          });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+};  
+});
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -771,7 +856,7 @@ document.getElementById('submitOrder').onclick = function() {
               data:{itemName : itemName , itemType : itemType , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
-                 // alert("success");
+                  //alert("success");
                   
                 $('#unitPrice').val(data['unitPrice']);  //use this syntax when returning a single row only data['unitPrice']  column name in the query
                     var category = data['category'];       //use this syntax when returning a single row only data['category']  column name in the query
@@ -850,72 +935,7 @@ document.getElementById('submitOrder').onclick = function() {
   
         
    
-/*
 
-  $(document).ready(function () {     
-   var totalqty= $('input[name="qty[]"]').length;    
-   var totalItem = 0;
-   var subTotal = 0;
-   var totalAmount = 0;
-   var truckingFee =0;
-    for(var i = 1 ; i <= totalqty ; i++ ){
-        var x1 = parseFloat($('#qty'+i).val());
-        var y1 = parseFloat($('#amount'+i).val());
-        var z1 = parseFloat($('#truckingFee').val());
-        
-        subTotal = subTotal +y1;
-            $('#subTotal').val(subTotal);
-        totalItem = totalItem + x1;
-            $('#totalItem').val(totalItem);
-        
-        totalAmount = subTotal + z1;
-           $('#totalAmount').val(totalAmount);
-       
-        
-        
-        
-        
-        
-        }    
-  });     
-        
-  */      
-        
-        
-        
-        
-        
-        
-        
-    
-  /*
-  $(document).ready(function () { 
-      
-        $(' #qty1').keyup(function(){
-            alert("kaljsdlk");
-            var y = parseFloat($(this).val());
-            var x = 10000;
-            var z = x - y;
-			$('#unitPrice1').val(z);
-});      
-      
-      
-      
-      
-      
- });
-    
- */     
-
-       
-        
-/*
-$(document).ready(function() {    
-    $('#ajax #item').on('change', function(){
-        alert('Work...');
-    });
-});
-*/
     
     
            
