@@ -244,15 +244,22 @@ for($i = 0 ; $i <= 3 ; $i++){
             
             
 		public function get_clientcoffeereturns(){
-			$query = $this->db->query("SELECT client_coffReturnID, client_dr, coff_returnDate, client_company, coff_returnQty, coff_remarks, coff_returnAction FROM jhcs.client_coffreturn NATURAL JOIN client_delivery NATURAL JOIN contracted_client;");
-			return $query->result();
-			
-		}
+      $query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID  INNER JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id INNER JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id INNER JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id;");
+      return $query->result();
+    }
+
+    public function get_coffee_walkin_return(){
+      $query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN walkin_sales ON walkin_sales.walkin_id = client_coffreturn.client_deliveryID INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.coff_remark='Returned'");
+      return $query->result();
+
+    }
+
 		public function get_clientmachinereturns(){
-			$query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id;");
-			return $query->result();
-			
-		}
+      $query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id;");
+      return $query->result();
+      
+    }
+    
 		public function get_suppliers(){
 			$query = $this->db->query("SELECT sup_id, sup_company FROM jhcs.supplier;");
 			return $query->result();
