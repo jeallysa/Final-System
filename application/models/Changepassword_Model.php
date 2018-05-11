@@ -39,9 +39,8 @@ class Changepassword_Model extends CI_model
 		->update('user', $data);
 	}
 
-	function updatePassword($u_name, $new_password, $userid ){
+	function updatePassword($new_password, $userid ){
 		$data = array(
-			'username' => $u_name,
 			'password' => $new_password
 		);
 		return $this->db->where('user_no', $userid)
