@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
     <link rel="shortcut icon" href="favicon.ico">
 </head>
+  
 <style>
     /*
 		td.highlight {
@@ -277,25 +278,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-sm-12">
                             <div class="card card-nav-tabs">
                                 <div class="card-header" data-background-color="blue">
-                                        <div class="nav-tabs-navigation">
-                                            <div class="nav-tabs-wrapper">
-                                                <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
-                                                    <li class="active">
-                                                        <a href="#companyreturn" data-toggle="tab">
-                                                             Company Returns
-                                                            <div class="ripple-container"></div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="">
-                                                        <a href="#clientreturn" data-toggle="tab">
-                                                         Client Returns
-                                                            <div class="ripple-container"></div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <span class="nav-tabs-title"> </span>
+                                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                                <li class="active">
+                                                    <a href="#companyreturn" data-toggle="tab">
+                                                      Company Returns
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#clientreturn" data-toggle="tab">
+                                                     Client Returns
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
+                                </div>
                                 
                                 
                                 
@@ -456,8 +458,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                  
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             
    <!------------------------------------------------------------------------------------------------------------------------------------------
@@ -494,7 +500,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group label-floating">
                                             <label for="email">PO#</label>
                                             <select class="selectpicker" data-live-search="true" name="poList" id = "poList" required>
-                                                    <?php 
+                                                <?php 
                                                     foreach($poList as $object)
                                                     { 
                                                         echo '<option value="'.$object->supp_po_id.'">'.$object->supp_po_id.'</option>';
@@ -512,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group label-floating">
                                             <label for="email">Item Returned</label>
                                             <select class="form-control" name="item" id="item" required>
-                                                <option disabled selected value=""> Select Item </option>
+                                                <option disabled selected value="">Select Item</option>
                                                
 
                                             </select>
@@ -614,15 +620,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       
     </div>
-                                          
+  </div>                                         
            
             
  <?php      
          $returnModal++;        
         }
 ?>    
-                  
-        
+                   
+            
+            
+            
+            
+            
+            
+            
+           
+        </div>
+ 
+ 
+
+ 
+    
 </body>
 <!--   Core JS Files   -->
 <!--
@@ -648,20 +667,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.datatables.js"></script>
 <script src="../assets/js/bootstrap-select.js"></script>
-<script> 
     
-$(document).ready(function() {
-    $('table.table').DataTable({
-        select: {
-            style: 'single'
-        },
 
-        "aaSorting": [1,'desc']
-
-    });
-});
-    
-    
+<script>
     
     
    $(document).ready(function() { 
@@ -675,7 +683,7 @@ $(document).ready(function() {
               data:{poList : poList },
               dataType: 'json',
               success: function(data){
-                 // alert("success");
+                  //alert("success");
                   $('#item').html(data);
                  
                  
@@ -702,7 +710,7 @@ $(document).ready(function() {
               data:{itemList : itemList ,poNo : poNo },
               dataType: 'json',
               success: function(data){
-               // alert("success"); 
+                //alert("success"); 
               
                   var newData = data; //data['max']; 
                 //  alert(newData);
@@ -719,6 +727,19 @@ $(document).ready(function() {
         
    });  
     
+
+     
+$(document).ready(function() {
+    $('table.table').DataTable({
+        select: {
+            style: 'single'
+        },
+
+        "aaSorting": [1,'desc']
+
+    });
+});
+         
 </script>
 
 <script type="text/javascript">

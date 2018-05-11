@@ -43,16 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     color: white;
 }
 
-.navbar .dropdown-menu li a:hover,
-.navbar .dropdown-menu li a:focus,
-.navbar .dropdown-menu li a:active,
-.navbar.navbar-default .dropdown-menu li a:hover,
-.navbar.navbar-default .dropdown-menu li a:focus,
-.navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #3399ff;
-    color: #FFFFFF;
-    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
-}
+
 </style>
 
 <body>
@@ -229,7 +220,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
                                 
                                 
-                                
+                                 <!--------------------------- Not using  ------------------------------->       
                             
                                 
  <?php
@@ -467,7 +458,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group label-floating">
                                                                                   <label>Amount:</label>
-                                                                                  <input class="form-control" type="number" min="1"  max="" name="amount" id = "amount" required>
+                                                                                  <input class="form-control" type="number" min="0" step="0.01"  max="" name="amount" id = "amount" required>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-4">
@@ -483,9 +474,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div><center>
-                                                <button type="submit" class="btn btn-success accept">Record Payment</button></center>
-                                            </div>
+                                                </div>
+                                                <div class="panel-footer" align="center" style="margin-bottom:-14px;">
+                                                <center><button type="submit" class="btn btn-success accept">Record Payment</button>
+                                                    <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">CLOSE</button></center>
+                                                </div>
+                                                </div>
                                             </form>    
                                         </div>
                                     </div>
@@ -522,6 +516,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="panel panel-primary modal-content">
+                                          <div class="panel-heading">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="panel-title" id="contactLabel"><center>Details</center> </h4>
+                                            </div>
                                             <form action="#" method="post" accept-charset="utf-8">
                                                 <div class="modal-body" style="padding: 5px;">
                                                     <div id="page-wrapper">
@@ -535,11 +533,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <th>Item Name</th>
                                                                  
                                                                         <th>Type</th>
-                                                                        <th>Quantity/ Original Weight(g)</th>
+                                                                        <th>Quantity/ Weight(g)</th>
                                                                         <th>Yield Weight(g)</th>
                                                                         <th>Yield(g)</th>
-                                                                        <th>Unit Price</th>
-                                                                        <th>Amount</th>
+                                                                        
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -556,7 +553,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
                          for($table = 0 ; $table < 4 ; $table++){
                           
-                             $retrieveDetails ="SELECT distinct supp_po_ordered_id , date_received, drNo , item , type ,  qty , yield_weight , yields , unitPrice , amount   FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
+                             $retrieveDetails ="SELECT distinct supp_po_ordered_id , date_received, drNo , item , type ,  qty ,supp_delivery.received as received, yield_weight , yields , unitPrice , amount,category    FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
                              ".$sup_id ." and  type = ".$arrayType[$table]." and supp_po_ordered.supp_po_id = $temp"  ;  
                
                                               $query = $this->db->query($retrieveDetails);
@@ -564,21 +561,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               foreach ($query->result() as $object) {
                                                   
                                                    // $tempItemId = $object->supp_po_ordered_id;    can use later
-                                                  
+                                            if($object->category == 1){      
                                            echo '<tr>' ,
                                                 '<td>'  . $object->date_received   . '</td>' ,
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
-                                                '<td>'  . number_format($object->qty)  . '</td>' ,
+                                                '<td>'  . number_format($object->received)  . '</td>' ,
                                                 '<td>'  . number_format($object->yield_weight). '</td>' ,
                                                 '<td>'  . number_format($object->yields)  . '</td>' ,
-                                                '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
-                                                '<td>Php '  . number_format($object->amount,2)  . '</td>' ,
+                                             
                                                 '</tr>' ;
-                                                }
+                                                
+                                              }else{
+                                          echo '<tr>' ,
+                                                '<td>'  . $object->date_received   . '</td>' ,
+                                                '<td>'  . $object->drNo   . '</td>' , 
+                                                '<td>'  . $object->item  . '</td>' ,
+                                                '<td>'  . $object->type  . '</td>' ,
+                                               // '<td>'  . number_format($object->received)  . '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight). '</td>' ,
+                                             
+                                                '</tr>' ;
+                                                  
+                                              }
                                               }
                                             }
+                         }
                                         ?>                     
                                                                     
                                                                     
@@ -590,7 +599,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     </div>
                                                 </div>
                                                 <div class="panel-footer" align="center" style="margin-bottom:-14px;">
-                                                    <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
+                                                    <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">CLOSE</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -659,6 +668,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 
                                 
+                                
+                                
                                 <div class="card-content ">
                                     <br>
                                     <table id="example" class="table hover order-column" cellspacing="0" width="100%">
@@ -667,7 +678,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Payment type</b></th>
+                                            <th><b class="pull-left">Payment</b></th>
                                             <th><b class="pull-left">See Details</b></th>
                                             
                                         </thead>
@@ -692,11 +703,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                                                               
                                                <td>
-                                                    <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $full . $i   ?>">Full Payment</a>
-                                                    <a class=" btn btn-warning btn-sm" data-toggle="modal" data-target="#<?php echo $partial . $i   ?>">Partial Payment</a> </td>
+                                                   <!-- <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="# <?php echo $full . $i   ?>">Full Payment</a> -->
+                                                    <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $partial . $i   ?>">Payment</a> 
+                                              </td>
+                                            
                                                <td>
                                                     <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo $details . $i   ?>">Details</a>
-                                                </td>
+                                               </td>
                                             
                                     <?php                          
                                             '</tr>' ; 
@@ -705,17 +718,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  }
                ?>
                                      
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                         
                                     
                                         </tbody>
                                     </table>
                                 </div>
+                                
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -745,6 +756,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script type="text/javascript">
+    
+    
 $(document).ready(function() {
     var table = $('#example').DataTable({
         select: {

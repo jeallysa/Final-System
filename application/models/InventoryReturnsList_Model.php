@@ -244,8 +244,8 @@ for($i = 0 ; $i <= 3 ; $i++){
             
             
 		public function get_clientcoffeereturns(){
-			$query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID  INNER JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id INNER JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id INNER JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id;");
-			return $query->result();
+      $query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_delivery.client_deliveryID = client_coffreturn.client_deliveryID  INNER JOIN contracted_client ON contracted_client.client_id = client_delivery.client_id INNER JOIN contracted_po ON contracted_po.contractPO_id = client_delivery.contractPO_id INNER JOIN coffee_blend ON coffee_blend.blend_id = contracted_po.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id;");
+      return $query->result();
     }
 
     public function get_coffee_walkin_return(){
@@ -253,13 +253,13 @@ for($i = 0 ; $i <= 3 ; $i++){
       return $query->result();
 
     }
-			
-		
+
 		public function get_clientmachinereturns(){
-			$query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id;");
-			return $query->result();
-			
-		}
+      $query = $this->db->query("SELECT client_machReturnID, mach_serial, mach_returnDate, client_company, CONCAT(brewer,' ',brewer_type) AS machine, mach_returnQty, client_machreturn.mach_remarks, mach_returnAction FROM jhcs.client_machreturn NATURAL JOIN contracted_client INNER JOIN machine ON client_machreturn.mach_id = machine.mach_id;");
+      return $query->result();
+      
+    }
+    
 		public function get_suppliers(){
 			$query = $this->db->query("SELECT sup_id, sup_company FROM jhcs.supplier;");
 			return $query->result();

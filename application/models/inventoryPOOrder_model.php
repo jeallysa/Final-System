@@ -54,7 +54,7 @@
       
 function insertORDER($data){
          
-      $this->db->insert_batch("supp_delivery" , $data);        //USED BY BOTH FULL AND PARTIAL
+      $this->db->insert("supp_delivery" , $data);        //USED BY BOTH FULL AND PARTIAL
          
   }  
           
@@ -79,7 +79,8 @@ function updateStock($data3, $supp_po_id){
    
      $i=0;
        
-foreach($data3 as $key => $object){
+$object = $data3;
+//foreach($data3 as $key => $object){
       
     
 $loc = 0;                                  //QUERY THE REMAINING STOCK EACH ITEM-TYPE
@@ -91,7 +92,7 @@ $loc = 0;                                  //QUERY THE REMAINING STOCK EACH ITEM
          $whatTable = $i; //using the I to know which Table
         
          $stockCount = $query-> row(); 
-         $newStock[$loc] = $stockCount->sumx + $object['received'];
+         $newStock[$loc] = $stockCount->sumx + $object['yield_weight'];
  
          $data = array($stockColumn[$whatStock] => $newStock[$loc] );  //passing the value of the new Stock
             
@@ -106,7 +107,7 @@ $loc = 0;                                  //QUERY THE REMAINING STOCK EACH ITEM
      
             }
                 
-         }
+    //     }
       
    
 }
@@ -116,7 +117,8 @@ $loc = 0;                                  //QUERY THE REMAINING STOCK EACH ITEM
 function updateSuppPoOrderReceived($data3, $supp_po_id){
     
           
-foreach($data3 as $key => $object){ 
+//foreach($data3 as $key => $object){ 
+$object = $data3;
   
 $loc = 0;
    $query = $this->db->query("SELECT received FROM supp_po_ordered where  supp_po_ordered_id = '".$object['itemId']."' and  item = '".$object['item']."' and type = '".$object['itemType']."' and supp_po_id = ".$supp_po_id);     
@@ -140,7 +142,7 @@ $loc = 0;
      
   
      
-        }
+    //    }
                 
     }
       
@@ -148,7 +150,8 @@ $loc = 0;
 function updateOrderStatus($data3, $supp_po_id){
  
 
-foreach($data3 as $key => $object){ 
+//foreach($data3 as $key => $object){ 
+    $object = $data3;
  $loc = 0;
    $query = $this->db->query("SELECT * FROM supp_po_ordered where supp_po_ordered_id = '".$object['itemId']."' and supp_po_id = ".$supp_po_id." and qty = received");     
       
@@ -173,7 +176,7 @@ foreach($data3 as $key => $object){
     }
          
          
- }
+// }
      
      
     

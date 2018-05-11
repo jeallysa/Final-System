@@ -13,7 +13,7 @@
     $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
 
     for($table = 0 ; $table <= 3 ; $table++){          
-      $retrieveDetails ="SELECT ".$arrayType[$table]." as type  FROM ".$arrayTable[$table]." where ".$arrayOn[$table]." = '".$item_name."' AND sup_id =".$sup_id; 
+      $retrieveDetails ="SELECT ".$arrayType[$table]." as type , category FROM ".$arrayTable[$table]." where ".$arrayOn[$table]." = '".$item_name."' AND sup_id =".$sup_id; 
       $query = $this->db->query($retrieveDetails);
       if ($query->num_rows() > 0) {
         return $query->result();                   
@@ -35,21 +35,56 @@
     }
   } 
    
-      /*
-      public function querySelectedType($item_name, $sup_id){
-            $arrayTable = array("raw_coffee","sticker","packaging","machine");
-            $arrayOn = array("raw_coffee","sticker","package_name","brewer");
-                   for($table = 0 ; $table < 4 ; $table++){
+      
+      public function checkReorder($item_name , $item_type , $qty , $sup_id){
+        $currentStock = 0;
+          
+             $arrayTable = array("raw_coffee","sticker","packaging","machine");
+             $arrayOn = array("raw_coffee","sticker","package_type","brewer");
+             $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
+          
+            $arrayStock   = array("raw_stock"  ,"sticker_stock"  ,"package_stock"  ,"mach_stocks");
+            $arrayReorder = array("raw_reorder","sticker_reorder","package_reorder","mach_reorder");
+            
+          
+          
+        for($i = 0 ; $i < 4 ; $i++){
                           
-             $retrieveDetails ="SELECT * FROM ".$arrayTable[$table]." where ".$arrayOn[$table] ." = '".$item_name."' AND sup_id =".$sup_id; 
-             $query = $this->db->query($retrieveDetails);
-                      if ($query->num_rows() > 0) {
-                         return $query->result();      // im expecting only 1 row
-                           }
+        $retrieveDetails ="SELECT ".$arrayStock[$i]." as stock, ".$arrayReorder[$i]." as reorder FROM ".$arrayTable[$i]." where ".$arrayOn[$i] ." = '".$item_name."' and ".$arrayType[$i] ." = '".$item_type."' AND sup_id =".$sup_id; 
+             $query = $this->db->query($retrieveDetails); 
+                      
+                   if ($query->num_rows() > 0) {
+        return $query->row();      // im expecting only 1 row
+      }
                    
-                   }
+               }
          }   
-      */
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      public function cc(){
+          $retrieve="select * from raw_coffee";
+          $query = $this->db->query($retrieve);
+          
+          return $query->result();
+      }
+      
+      
+      
     
   function displayOrderedTemp(){
     $query = $this->db->query('SELECT * FROM supp_temp_po_order order by idsupp_temp_po_order desc ');      

@@ -208,7 +208,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-
+<!------------------                                          Full modal, currently NOT USED                   ---------------------------------->     
 
 
 
@@ -239,22 +239,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <center><b>Record Full Delivery</b>
                                             <br>
-                                            <b> <?php echo date('m-d-Y') ?></b></center>
+                                            <b> <?php echo date('m/d/Y') ?></b></center>
+                                        
+                                        
+                                        
+                                        
                                         
                                             <div class="row">
-                                                <div class="col-md-4 form-group">
-                                                    <div class="form-group label-floating">
-                                                        <label>Date Received:</label>
-                                                         <input type="date" class="form-control"  min="<?php echo $dateMin ?>"  max ="<?php echo date("Y-m-d")?>" name="date" required>
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-                                               
+                                                
+                                                             
 
                                         <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
@@ -264,7 +257,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
 
 
+ 
+                                                
+                                                
+                                                
+                                                <div class="col-md-4 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label>Date Received:</label>
+                                                         <input type="date" class="form-control"  min="<?php echo $dateMin ?>"  max ="<?php echo date("m/d/Y")?>" name="date" required>
+                                                    </div>
 
+
+
+
+                                                </div>
+
+
+                                 
 
 
                                                 <div class="col-md-4 form-group">
@@ -296,9 +305,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Item Name</th>
                                                         <th>Type</th>
                                                         <th>Original Qty/Weight(g)</th>
-                                                        <th>Remaining</th>
                                                         <th>Quantity / Yield Weight(g)</th>
-                                                        <th>Yield(g)</th>
+                                                    
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -323,11 +331,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               
                                               $tempItemId = $object->supp_po_ordered_id;
                                              
-                                        
+                                         if($object->category == 1){
+                                           echo  
+                                                '<tr>' ;
+                                             ?>
+                                                
+                                                <td>
+                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly> 
+                                                </td> 
+                                                    
+                                             <td>
+                                                      <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type ?>" readonly required/> 
+                                                </td>      
+                                                    
+                                                <td>
+                                            <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo $object->qty ?>" readonly> <!-- name of id=qty-->
+                                                  </td>
+                                                    
+                                             
+                                                    
+                                                    
+                                                    
+                                                  <td >
+                                            <input type="number" class="form-control" placeholder="<?php echo $object->qty - $object->received ?>" name="yield_weight[]"  min="0" max="<?php echo $object->qty-$object->received ?>" id="<?php echo "yield_weight".$i?>"  required>
+                                                  </td>  
+                                                    
+                                                   
+                                                    
+                                  
+                                             <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
+                                             <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
+                                                    
+                                                    
+                                                    
+                                                    <?php   
+                                                    
                                                   
-                                                  
-                                                 
-                                           echo        
+                                                '</tr>' ;
+                                         }else{
+                                             echo  
                                                 '<tr>' ;
                                              ?>
                                                 
@@ -343,22 +385,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo $object->qty ?>" readonly> <!-- name of id=qty-->
                                                   </td>
                                                     
-                                               <td>
-                                               
-                                    <input  type="number" class="form-control" maxlength="4" name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty - $object->received ?>" readonly/> 
-                                            
-                                          </td>        
+                                             
                                                     
                                                     
-                                                    
-                                                  <td >
-                                            <input type="number" class="form-control" name="yield_weight[]"  min="0" max="<?php echo $object->qty-$object->received ?>" id="<?php echo "yield_weight".$i?>"  required>
-                                                  </td>  
-                                                    
-                                                 <td>
-                                             <input type="number" class="form-control" name="yield[]"  min="0"  id="<?php echo "yield".$i?>" readonly></td>  
-                                                    
-                                                    
+        
                                   
                                              <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
                                              <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
@@ -369,6 +399,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                   
                                                 '</tr>' ;
+                                             
+                                             
+                                         }
                                                    $i++;
                                               }
                                             }
@@ -399,7 +432,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }      
  ?>
 
-
+<!------------------                                 End of         Full modal                  ---------------------------------->   
 
 
 
@@ -415,7 +448,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($order as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;   
-           
+            $dateMin = $object->suppPO_date;
 
 ?>
         
@@ -428,9 +461,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                        <center><b>Partial Delivery</b>
+                                        <center><b>Delivery</b>
                                             <br>
-                                            <b><?php echo date('m-d-Y') ?></b></center>
+                                            <b><?php echo date('m/d/Y') ?></b></center>
 
 
 
@@ -441,6 +474,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     </div>
                                                 </div>
                                   
+                                        
+                                             <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label>Date Received:</label>
+                                                          <input class="form-control" type="date"  min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" name="date" required>
+                                                    </div>
+
+
+
+
+                                             </div>
                                                             
                                                             
                                                             
@@ -454,12 +498,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Item Name</th>
                                                         <th>Type</th>
                                                         <th>Original Qty/Weight(g)</th>
-                                                        <th>Remaining</th>
                                                         <th>Qty/Weight</th>
                                                         <th>Yield Weight(g)</th>
-                                                         <th>Yield(g)</th>
                                                         
-                                                        <th>Date Received</th>
+                                                        
                                                         <th>Received By</th>
                                                     </tr>
                                                 </thead>
@@ -487,17 +529,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                   //used for the id counter in qty,yield_weild,yield
                                               foreach ($query->result() as $object) {
                                               $tempItemId = $object->supp_po_ordered_id;
+                                              $category   = $object->category;
                                               
                                            
                                                   
-                                               
+                                     if($category == 1){ 
+                                       
                                                 echo        
                                                 '<tr>' ;
                                              ?>
                                                
                                                     
                                                 <td>
-                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly /> 
+                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly />
+                                                  
                                                 </td> 
                                                     
                                                     
@@ -507,19 +552,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                          
                                                    <td>
                                                       <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
-                                                  
+                                                      
                                                     </td>   
                                                     
-                                                 
-                                           <td>
-                                               
-                                    <input  type="number" class="form-control"  name="delivered[]" id ="<?php echo "delivered".$i?>" value="<?php echo $object->qty-$object->received ?>" readonly/> 
-                                            
-                                          </td>   
+                              
                                                     
                                                 <td>
                                                      
-                                                    <input type="number" class="form-control"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                    <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
@@ -529,22 +569,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                     
                                                 <td>
-                                                      <input  type="number" class="form-control" maxlength="4" name="yield_weight[]" min="0"  id ="<?php echo "yield_weight".$i?>"> 
+                                                      <input  type="number" class="form-control" maxlength="4" name="yield_weight[]" min="0"  max= "<?php echo $object->qty-$object->received ?>"  id ="<?php echo "yield_weight".$i?>"> 
                                                 </td>   
                                                     
-                                                <td>
-                                                     
-                                                    <input type="number" class="form-control"  name="yield[]" id ="<?php echo "yield".$i?>" readonly />
-                                                     
-                                                </td>  
-                                                   
+                                    
                                                     
                                                     
                                                     
                                                     
-                                                <td >
-                                                            <input type="date" class="form-control " name="date[]"   min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" id ="<?php echo "poPartialDate".$i?>" />
-                                                </td>
+                                                
                                                 <td>
                                                          <select  class="form-control " name="receivedBy[]" >
                                                                 
@@ -565,16 +598,99 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                       
                              
                                                  <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
-                                                    
+                                                 <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" >    
                                                  <?php  
-                                                '</tr>';  
+                                                '</tr>'; 
+                                     }else{
+                                        
+                                         echo        
+                                                '<tr>' ;
+                                             ?>
+                                               
+                                                    
+                                                <td>
+                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly /> 
+                                                </td> 
+                                                    
+                                                    
+                                                 <td>
+                                                      <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type  ?>" readonly /> 
+                                                </td>     
+                                                         
+                                                   <td>
+                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
+                                                  
+                                                    </td>   
+                                                    
+                              
+                                                    
+                                                <td>
+                                                     
+                                                    <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                     
+                                                </td>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                <td>
+                                                      <input  type="hidden" class="form-control"  name="yield_weight[]" value="0" > 
+                                                </td>   
+                                          <!--          
+                                                    
+                                                <td>
+                                                     
+                                                    <input type="hidden" class="form-control"  name="yield[]"  value="0" readonly />
+                                                   
+                                                </td>  
+                                             -->      
+                                                    
+                                                    
+                                                    
+                                                    
+                                                
+                                                <td>
+                                                         <select  class="form-control " name="receivedBy[]" >
+                                                                
+                                                                
+                                          <?php
+                                                if(!empty($user)){ 
+                                                   
+                                                         foreach($user as $object){ 
+                                                           echo '<option>'  .$object->u_fname ." ".  $object->u_lname.  '</option>' ;
+                                                           }
+                                                             
+                                                }
+                                            ?> 
+                                                          </select>
+                                                     
+                                                     
+                                                   </td> 
+                                                      
+                             
+                                                 <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
+                                                 <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" readonly />   
+                                                 <?php  
+                                                '</tr>'; 
+                                     }
                                                               $i++;
                                         
                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
                                               }
+                                              
+                                                  
                                             }
-                   }
-                                        ?>   
+                                        }
+                                  ?>  
                                      
                                                 </tbody>
                                             </table>
@@ -624,6 +740,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="panel panel-primary">
+                      <div class="panel-heading">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="panel-title" id="contactLabel"><center>Details</center> </h4>
+                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -761,9 +881,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">PO #</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
-                                            
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Delivery Type</b></th>
+                                            <th><b class="pull-left">Delivery</b></th>
                                             <th><b class="pull-left">See Details</b></th>
                                             
                                         </thead>
@@ -775,20 +894,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                               if(!empty($order)) {                  
                                       $mapModal = 1;  
                                           foreach($order as $object){ 
-                                             
+                                              
+                                       
+                                             $oldDate = $object->suppPO_date;
+                                             $arr = explode('-', $oldDate);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                       
                                             
                                            echo '<tr>' ,
                                                 
                                                 '<td>'  . $object->supp_po_id . '</td>' ,
                                                 
-                                                '<td>'  . $object->suppPO_date   . '</td>' ,
+                                                '<td>'  . $newDate   . '</td>' ,
                                                 '<td>'  . $object->supp_creditTerm. ' day/s</td>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ;
                                         		                      
                                         ?>
                                                                               
                                                
-                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "full" . $mapModal   ?>">Full Delivery </a><a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Partial Delivery</a> </td>
+                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> </td>
                                                <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></td>
                                             
                                             
@@ -800,10 +924,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                ?>
                                             
                                             
-                                            
-                                            
-                                            
-                                            
                                         
                                         </tbody>
                                     </table>
@@ -813,14 +933,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            
                                 
                                 
-                            </div>
                         </div>
-                        
-                        
-                        
-                        
-                        
-                        
+                   </div>
               </div>
           </div>
      </div>   
@@ -849,15 +963,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script type="text/javascript">
     
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        select: {
-            style: 'single'
-        }
-    });
 
-});
- 
     
                                                   
       <?php
@@ -908,14 +1014,28 @@ $(document).ready(function() {
     });           
                
 
+      
+ 
+
+      
+      
+      
+      
+      
     
-    
+    /*  I removed the full
                                   
             $(<?php echo "'#full".$c." input[id=yield_weight".$i."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
 			var x = parseFloat($(<?php echo "'#full".$c." input[id=delivered".$i."]'"?>).val());
 			var res = x - y ;
 			$(<?php echo "'#full".$c." input[id=yield".$i."]'"?>).val(res);
+                
+    */   
+                
+                
+                
+                
                 
                 
      /*           
@@ -953,6 +1073,19 @@ $(document).ready(function() {
                
 ?>
     
+    
+ $(document).ready(function() {
+    var table = $('#example').DataTable({
+        select: {
+            style: 'single'
+        }
+    });
+
+});
+    
+    
+    
+       
     
 
     
