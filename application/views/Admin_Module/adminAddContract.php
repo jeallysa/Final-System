@@ -19,6 +19,7 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href="<?php echo base_url(); ?>assets/css/jquery-editable-select.min.css" rel="stylesheet">
 </head>
 <style>
 .title {
@@ -244,7 +245,7 @@ a:focus {
                                      <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Blends</label>
-                                            <select class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
+                                            <select id="editBlends" class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
                                                 <option disabled selected value> -- select a blend -- </option>
                                                 <?php 
                                                     $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client' UNION SELECT blend_id, blend FROM coffee_blend WHERE blend_id = '".$cli_id."';");
@@ -273,8 +274,8 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Packaging</label>
-                                            <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value> -- select a packaging -- </option>
+                                            <select id="editPackaging" class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
+                                                <option disabled selected value> -- select a bag -- </option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM packaging;");
                                                     foreach($query_pack->result() as $row)
@@ -288,7 +289,7 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Stickers</label>
-                                            <select class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
+                                            <select id="editStickers" class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
                                                 <option disabled selected value> -- select a sticker -- </option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM sticker;");
@@ -583,6 +584,13 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
 <script src="<?php echo base_url(); ?>assets/js/chartist.min.js"></script>
+<script>
+    jQuery(document).ready(function($){
+    $('#editBlends').editableSelect();
+    $('#editPackaging').editableSelect();
+    $('#editStickers').editableSelect();
+    });
+</script>
 <!--  Dynamic Elements plugin -->
 <script src="<?php echo base_url(); ?>assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
@@ -597,5 +605,7 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-editable-select.min.js"></script>
+
 
 </html>
