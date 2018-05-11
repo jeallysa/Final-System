@@ -26,11 +26,13 @@
         
         public function date_filt(){
             $df = $this->input->post('datefilt');
+            $rf = $this->input->post('roastfilt');
             $data['reorder'] = $this->notification_model->reorder();
-            $data1["coffeein"] = $this->InventoryInventoryReport_Model->get_coffeeinWithP($df);
-            $data6["coffeeout"] = $this->InventoryInventoryReport_Model->get_coffeeoutWithP($df);
+            $data1["coffeein"] = $this->InventoryInventoryReport_Model->get_coffeeinWithP($df, $rf);
+            $data6["coffeeout"] = $this->InventoryInventoryReport_Model->get_coffeeoutWithP($df, $rf);
             $data5["datav"] = $df;
-			$this->load->view("Inventory_Module/inventoryInventoryReport", ['data1' => $data1, 'data5' => $data5, 'data6' => $data6]);
+            $data7["dataz"] = $rf;
+			$this->load->view("Inventory_Module/inventoryInventoryReport", ['data1' => $data1, 'data5' => $data5, 'data6' => $data6, 'data7' => $data7]);
 			
         }
 

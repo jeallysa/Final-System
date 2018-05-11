@@ -42,26 +42,10 @@ input {
     text-align: center;
     color: white;
 }
-.title {
-    font-size: large;
-    padding-top: 15px;
-
-}
 @media print {
   .header-print {
     display: table-header-group;
   }
-}
-
-.navbar .dropdown-menu li a:hover,
-.navbar .dropdown-menu li a:focus,
-.navbar .dropdown-menu li a:active,
-.navbar.navbar-default .dropdown-menu li a:hover,
-.navbar.navbar-default .dropdown-menu li a:focus,
-.navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #3399ff;
-    color: #FFFFFF;
-    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
 </style>
 
@@ -222,8 +206,9 @@ input {
                                     <div class="row">
                                         <div class="pull-right">
                                     <?php $month_filt = $data5["datav"];
+                                            $roast_filt = $data7["dataz"];
                                     $year = $this->db->query("SELECT year(now()) AS year;")->row()->year;
-                                            $tomonth = $this->db->query("SELECT MONTH(NOW()) AS tomonth;")->row()->tomonth;
+                                    $tomonth = $this->db->query("SELECT MONTH(NOW()) AS tomonth;")->row()->tomonth;
                                     
                                         if(isset($month_filt)){
                                             $dateObj   = DateTime::createFromFormat('!m', $month_filt);
@@ -261,6 +246,20 @@ input {
                                                 <option value = "12" <?php if((isset($month_filt) && $month_filt == 12)){ echo 'selected="selected"'; }?>>December <?php echo $year; ?> </option>
                                             </select>
                                         </div>
+                                    
+                                    
+                                    
+                                        <div class="form-group mb-2">
+                                            <label>
+                                                <H4><b> Coffee Roast: </b></H4> </label>
+                                            <select class="form-control" onchange="this.form.submit()" id="" name="roastfilt" style="text-align: center;">
+                                                <option disabled selected value>  </option>
+                                                <option value = "all" <?php if((isset($roast_filt))){ echo 'selected="selected"'; }?>><?php echo $roast_filt;?></option>
+                                                <option value = "city" <?php if((isset($roast_filt) && $roast_filt =='city')){ echo 'selected="selected"'; }?>>City Roast</option>
+                                                <option value = "medium" <?php if((isset($roast_filt) && $roast_filt == 'medium')){ echo 'selected="selected"'; }?>>Medium Roast</option>
+                                                <option value = "light" <?php if(isset($roast_filt) && $roast_filt == 'light'){ echo 'selected="selected"'; }?>>Light Roast</option>
+                                            </select>
+                                        </div>
                                     </form>
                                     </div>
                                     <table id="coffeein" class="table hover order-column" cellspacing="0" width="100%">
@@ -269,7 +268,7 @@ input {
                                                 <th><b>Date In</b></th>
                                                 <th><b></b></th>
                                                 <?php
-                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
+                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_type = '".$roast_filt."'");
  
                                                     if ($query_head->num_rows() > 0) {
                                                         foreach($query_head->result() AS $row) {
@@ -290,7 +289,7 @@ input {
                                                 if (isset($month_filt)){
                                                     if($month_filt == '1'){
                                                         foreach ($query->result() AS $row){
-                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12;" ;
+                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12 ;" ;
                                                     
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
@@ -348,10 +347,12 @@ input {
                                                 <?php
                                                 $qcount1 = $this->db->query("SELECT * FROM raw_coffee");
                                                 foreach ($qcount1->result() as $row2){
-                                                    $colname1 = "coffin" . $row2->raw_id; ?>
-                                                        <td><?php echo number_format($row->$colname1); ?> g</td>
+                                                    $colname1 = "coffin" . $row2->raw_id; 
+                                                        if (!is_null($row->colname1)){ ?>
+                                                        <td><?php echo number_format($row->$colname1); 
+                                                    ?> g</td>
                                                 <?php
-
+                                                    }
                                                 }
                                                 
                                                 ?>
@@ -413,17 +414,31 @@ input {
                                                 <th><b>Date Out</b></th>
                                                 <th><b></b></th>
                                                <?php
-                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
- 
-                                                    if ($query_head->num_rows() > 0) {
-                                                        foreach($query_head->result() AS $row) {
-                                                ?>
-                                                <th><b><?php echo $row->type; ?></b></th>
-                                                <?php
+                                                    if (isset($roast_filt)){
+                                                        $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_type = '".$roast_filt."' ");
+     
+                                                            if ($query_head->num_rows() > 0) {
+                                                                foreach($query_head->result() AS $row) {
+                                                                ?>
+                                                                <th><b><?php echo $row->type; ?></b></th>
+                                                                <?php
+                                                                    }
+                                                             } else {
+                                                                    echo "0 results";
+                                                             }
+                                                    }else{
+                                                        $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
+     
+                                                            if ($query_head->num_rows() > 0) {
+                                                                foreach($query_head->result() AS $row) {
+                                                                ?>
+                                                                <th><b><?php echo $row->type; ?></b></th>
+                                                                <?php
+                                                                    }
+                                                             } else {
+                                                                    echo "0 results";
+                                                             }
                                                     }
-                                                } else {
-                                                    echo "0 results";
-                                                }
                                                 ?>
                                                 
                                             </tr>
@@ -443,10 +458,11 @@ input {
                                                 <?php
                                                 $qcount2 = $this->db->query("SELECT * FROM raw_coffee");
                                                 foreach ($qcount2->result() as $row3){
-                                                    $colname2 = "coffout" . $row3->raw_id; ?>
+                                                    $colname2 = "coffout" . $row3->raw_id;
+                                                    if (!is_null($row->$colname2)){ ?>
                                                         <td><?php echo number_format($row->$colname2); ?> g</td>
                                                 <?php
-
+                                                    }
                                                 }
                                                 
                                                 ?>
@@ -474,7 +490,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT * FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact NATURAL JOIN raw_coffee where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = '".$month_filt."' AND raw_type = '".$roast_filt."';" ;
                                                   $query8 = $this->db->query($totalout);
                                                   if ($query8->num_rows() > 0) {
                                                   foreach ($query8->result() as $object) {
@@ -485,7 +501,7 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT * FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = month(now());" ;
+                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact NATURAL JOIN raw_coffee where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = month(now()) AND raw_type = '".$roast_filt."';" ;
                                                   $query9 = $this->db->query($totalout);
                                                   if ($query9->num_rows() > 0) {
                                                   foreach ($query9->result() as $object) {
@@ -504,7 +520,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT * FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = '".$month_filt."';" ;
+                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` NATURAL JOIN raw_coffee WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = '".$month_filt."' AND raw_type = '".$roast_filt."';" ;
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
@@ -515,7 +531,7 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT * FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now());" ;
+                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` NATURAL JOIN raw_coffee WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now()) AND raw_type = '".$roast_filt."';" ;
                                                   $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {

@@ -40,15 +40,20 @@ class InventoryInventoryReport_model extends CI_Model {
 
 	}
     
-    public function get_coffeeinWithP($sdf){
+    public function get_coffeeinWithP($sdf, $srf){
 		$count = $this->db->count_all_results('raw_coffee');
         $qcount = $this->db->query("SELECT * FROM raw_coffee;");
+        if($srf == null || $srf == 'all'){
+            $roastf = "";
+        }else{
+            $roastf = "AND a.raw_type = '".$srf."'";
+        }
 		$query_append = "SELECT a.* FROM
                             (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, 'Company' as supplier";
 
 		foreach ($qcount->result() AS $row){
 			$query_append .= ", SUM(CASE
-							        WHEN b.raw_coffeeid = '". $row->raw_id ."' THEN b.quantity
+							        WHEN b.raw_coffeeid = '". $row->raw_id ."' ".$roastf." THEN b.quantity
 							        ELSE NULL
 							    END) AS coffin". $row->raw_id ."";
 		}
@@ -57,7 +62,7 @@ class InventoryInventoryReport_model extends CI_Model {
 
         foreach ($qcount->result() AS $row){
 			$query_append .= ", SUM(CASE
-							        WHEN b.raw_coffeeid = '". $row->raw_id ."' THEN b.quantity
+							        WHEN b.raw_coffeeid = '". $row->raw_id ."'  ".$roastf."  THEN b.quantity
 							        ELSE NULL
 							    END) AS coffin". $row->raw_id ."";
 		}
@@ -66,7 +71,7 @@ class InventoryInventoryReport_model extends CI_Model {
 
         foreach ($qcount->result() AS $row){
 			$query_append .= ", SUM(CASE
-							        WHEN b.raw_coffeeid = '". $row->raw_id ."' THEN b.quantity
+							        WHEN b.raw_coffeeid = '". $row->raw_id ."'  ".$roastf."  THEN b.quantity
 							        ELSE NULL
 							    END) AS coffin". $row->raw_id ."";
 		}
@@ -115,14 +120,19 @@ class InventoryInventoryReport_model extends CI_Model {
 
 	}
     
-    public function get_coffeeoutWithP($sdf){
+    public function get_coffeeoutWithP($sdf, $srf){
 				$count = $this->db->count_all_results('raw_coffee');
+         if($srf == null || $srf == 'all'){
+            $roastf = "";
+        }else{
+            $roastf = "AND a.raw_type = '".$srf."'";
+        }
 		$query_append = "SELECT a.* FROM
                             (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.po_client as dr_no, e.client_company as client";
 
 		for ($i = 0; $i <= $count; $i++){
 			$query_append .= ", SUM(CASE
-							        WHEN b.raw_coffeeid = '". $i ."' THEN b.quantity
+							        WHEN b.raw_coffeeid = '". $i ."' ".$roastf." THEN b.quantity
 							        ELSE NULL
 							    END) AS coffout".$i."";
 		}
@@ -131,7 +141,7 @@ class InventoryInventoryReport_model extends CI_Model {
         
         for ($i = 0; $i <= $count; $i++){
 			$query_append .= ", SUM(CASE 
-                                    WHEN b.raw_coffeeid = '". $i ."' THEN b.quantity
+                                    WHEN b.raw_coffeeid = '". $i ."' ".$roastf." THEN b.quantity
 							        ELSE NULL
 							    END) AS coffout".$i."";
 		}
@@ -140,7 +150,7 @@ class InventoryInventoryReport_model extends CI_Model {
         
         for ($i = 0; $i <= $count; $i++){
 			$query_append .= ", SUM(CASE 
-                                    WHEN b.raw_coffeeid = '". $i ."' THEN b.quantity
+                                    WHEN b.raw_coffeeid = '". $i ."' ".$roastf." THEN b.quantity
 							        ELSE NULL
 							    END) AS coffout".$i."";
 		}
