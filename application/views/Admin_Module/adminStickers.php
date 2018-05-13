@@ -22,6 +22,7 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href="<?php echo base_url(); ?>assets/css/jquery-editable-select.min.css" rel="stylesheet">
     </head>
     <style>
 
@@ -224,7 +225,7 @@ a:focus {
                                     </div>
                                 </div>
                                  <div class="row">
-                                    <div class="col-md-12 form-group">
+                                    <div class="col-md-6 form-group">
                                           <div class="form-group label-floating">
                                             <label for="email">Type of Sticker</label>
                                             <select class="form-control" type="text" name="sticker_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
@@ -234,25 +235,19 @@ a:focus {
                                               </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                     <div class="col-lg-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Reorder Level</label>
-                                            <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">Price</label>
                                             <input class="form-control" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Supplier</label>
-                                            <select class="form-control" name="sup_company" required>
-                                                <option disabled selected value> -- select a supplier -- </option>
+                                            <select id="editSupplier" class="form-control" name="sup_company" required>
+                                                <option disabled selected value></option>
                                                 <?php 
 
                                                     foreach($data1['getSupplier'] as $row)
@@ -261,6 +256,12 @@ a:focus {
                                                     }
                                                  ?>
                                             </select>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-6 form-group">
+                                        <div class="form-group label-floating">
+                                            <label for="email">Reorder Level</label>
+                                            <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +442,7 @@ a:focus {
                                                                     </div>
                                                                 </div>
                                                                  <div class="row">
-                                                                    <div class="col-md-12 form-group">
+                                                                    <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
                                                                             <label for="email">Type of Sticker</label>
                                                                             <select class="form-control" type="text" name="sticker_type" value="<?php echo $row->sticker_type; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
@@ -451,24 +452,18 @@ a:focus {
                                                                               </select>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                     <div class="col-lg-6 form-group">
-                                                                        <div class="form-group label-floating">
-                                                                            <label for="email">Reorder Level</label>
-                                                                            <input class="form-control" value="<?php echo $row->sticker_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                                                        </div>
-                                                                    </div>
                                                                     <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
                                                                             <label for="email">Price</label>
                                                                             <input class="form-control" value="<?php echo $row->unitPrice; ?>" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="row">
                                                                      <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
-                                                                                <select class="form-control" name="sup_company" required>
+                                                                                <select id="editSupplier" class="form-control" name="sup_company" required>
                                                                                     <option disabled selected value> -- select a supplier -- </option>
                                                                                     <?php 
 
@@ -482,6 +477,12 @@ a:focus {
                                                                                 </select>
                                                                             </div>
                                                                         </div>
+                                                                     <div class="col-lg-6 form-group">
+                                                                        <div class="form-group label-floating">
+                                                                            <label for="email">Reorder Level</label>
+                                                                            <input class="form-control" value="<?php echo $row->sticker_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
 
                                                             </div>
@@ -541,6 +542,7 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-editable-select.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable({
@@ -583,6 +585,11 @@ $(function() {
         off: 'Disabled'
     });
 })
+</script>
+<script>
+    jQuery(document).ready(function($){
+    $('#editSupplier').editableSelect();
+    });
 </script>
 
 </html>

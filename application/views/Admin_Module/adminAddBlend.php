@@ -22,6 +22,7 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href="<?php echo base_url(); ?>assets/css/jquery-editable-select.min.css" rel="stylesheet">
     <script type="text/javascript">
 
         function findTotal(){
@@ -273,7 +274,7 @@ a:focus {
                                                             
                                                             <label for="sel2">Sticker:</label>
 
-                                                              <select class="form-control" id="sel2" name="stick">
+                                                              <select id="editStickers" class="form-control" id="sel2" name="stick">
                                                                 <?php
                                                                     $stick = $this->db->query('SELECT * FROM sticker');
                                                                     foreach($stick->result() as $row6){
@@ -380,6 +381,7 @@ a:focus {
 
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-editable-select.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable({
@@ -398,6 +400,11 @@ $('table tbody tr  td').on('click', function() {
     $("#txtfname").val($(this).closest('tr').children()[0].textContent);
     $("#txtlname").val($(this).closest('tr').children()[1].textContent);
 });
+</script>
+<script>
+    jQuery(document).ready(function($){
+    $('#editStickers').editableSelect();
+    });
 </script>
 
 </html>
