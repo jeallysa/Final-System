@@ -64,7 +64,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>

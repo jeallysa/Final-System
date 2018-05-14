@@ -87,7 +87,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -206,40 +206,73 @@
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example').DataTable({
+<script>   
+    
+    
+    $.fn.dataTableExt.afnFiltering.push(
+        function(oSettings, aData, iDataIndex){
+            var dateStart = parseDateValue($("#min").val());
+            var dateEnd = parseDateValue($("#max").val());
+            var evalDate= parseDateValue(aData[4]);
+
+            if (evalDate >= dateStart && evalDate <= dateEnd) {
+                return true;
+            }
+            else {
+                return false;
+            }
+    });
+    //Date Converter
+    function parseDateValue(rawDate) {
+        var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        var dateArray = rawDate.split(" ");
+        var parsedDate = dateArray[2] + month + dateArray[0];
+        return parsedDate;
+    }
+
+
+    var oTable = $('#example').dataTable({ 
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
-		buttons: [
-            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
-<<<<<<< HEAD
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs' },
-=======
-<<<<<<< HEAD
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                orientation: 'portrait',
+        buttons: [
+            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {
-                columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'left';
-                        doc.styles.tableHeader.alignment = 'left';
-                        doc.pageMargins = [50,50,50,50];
-                        doc.defaultStyle.fontSize = 10;
-                         doc.content[1].table.widths = [ '30%', '34%', '36%']; }
+                    columns: [0, 1, 2]
+                }
+            },
+            
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2]
+                }
+            },
+            
+            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2]
+                }
             }
-=======
-			{ "extend": 'csv', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs' },
->>>>>>> ff5d65271c50387273174ff0e43908d20f73503a
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
->>>>>>> 357271e19507cc9d532b1cf2f64910b202981fd8
         ]
     });
-});
+
+    $('#min,#max').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        daysOfWeekHighlighted: "0",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    // Event Listeners
+    $("#min").datepicker().on( 'changeDate', function() {
+        oTable.fnDraw(); 
+    });
+    $("#max").datepicker().on( 'changeDate', function() { 
+        oTable.fnDraw(); 
+    });
+    
+
 
 </script>
 

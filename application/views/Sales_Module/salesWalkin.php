@@ -92,7 +92,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -153,7 +153,7 @@
                                                     <div class="col-md-6" >
                                                         <div class="form-group label-floating">
                                                             <label for="email">Date</label>
-                                                            <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" required="" id="datepicked">
+                                                            <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>"  max="<?php echo date("Y-m-d");?>"  required="" id="datepicked">
                                                         </div>
                                                     </div>
                                                 </div>

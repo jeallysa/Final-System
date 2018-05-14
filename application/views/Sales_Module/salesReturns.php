@@ -152,7 +152,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -351,7 +351,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Date Resolved :</label>
                                                 <div class="col-sm-6">
-                                                    <input type="date" name="date_resolved" class="form-control" required="">
+                                                    <input type="date" name="date_resolved" class="form-control" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" required="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -563,7 +563,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-5 control">Date Resolved :</label>
                                                     <div class="col-sm-6">
-                                                        <input type="date" name="date_resolved" class="form-control" required="">
+                                                        <input type="date" name="date_resolved" class="form-control" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" required="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -644,7 +644,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-5 control">Date Resolved :</label>
                                                     <div class="col-sm-6">
-                                                        <input type="date" name="date_resolved" class="form-control" required="">
+                                                        <input type="date" name="date_resolved" class="form-control" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>" required="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
