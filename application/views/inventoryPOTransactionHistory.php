@@ -599,6 +599,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            <!--   <th><b class="pull-left">Date Received</b></th> -->
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Total Amount</b></th>
+                                            <th colspan="3"><center><b>Actions</b></center></th>
                                           <!--  <th><b class="pull-left">Date of Payment</b></th> -->
                                             
                                             <th></th>

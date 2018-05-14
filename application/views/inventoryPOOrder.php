@@ -882,8 +882,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Delivery</b></th>
-                                            <th><b class="pull-left">See Details</b></th>
+                                            <th colspan="2"><center><b>Actions</b></center></th>
                                             
                                         </thead>
                                         <tbody>
@@ -912,8 +911,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                                                               
                                                
-                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> </td>
-                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></td>
+                                            <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a></center></td>
+                                            <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></center></td>
                                             
                                             
                                             

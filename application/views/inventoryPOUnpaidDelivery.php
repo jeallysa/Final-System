@@ -678,8 +678,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Payment</b></th>
-                                            <th><b class="pull-left">See Details</b></th>
+                                            <th colspan="2"><center><b>Actions</b></center></th>
                                             
                                         </thead>
                                         <tbody>
@@ -702,13 +701,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												                      
                                              ?>
                                                                               
-                                               <td>
+                                               <td><center>
                                                    <!-- <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="# <?php echo $full . $i   ?>">Full Payment</a> -->
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $partial . $i   ?>">Payment</a> 
-                                              </td>
+                                                   </center>
+                                            </td>
                                             
-                                               <td>
+                                               <td><center>
                                                     <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo $details . $i   ?>">Details</a>
+                                                   </center>
                                                </td>
                                             
                                     <?php                          
