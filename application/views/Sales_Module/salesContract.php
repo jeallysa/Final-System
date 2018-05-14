@@ -82,7 +82,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -336,7 +336,7 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Date Returned:</label>
-                                                                        <input class="form-control col-md-3" type="date" name="date_returned" required="">
+                                                                        <input class="form-control col-md-3" type="date" name="date_returned" max="<?php echo date("Y-m-d");?>" required="">
                                                                         <input type="hidden" name="mach_id" value="<?php echo $row->mach_id; ?>" required>
                                                                     </div>
                                                                 </div>

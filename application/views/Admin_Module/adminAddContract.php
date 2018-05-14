@@ -246,7 +246,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Blends</label>
                                             <select id="editBlends" class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
-                                                <option disabled selected value> -- select a blend -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client' UNION SELECT blend_id, blend FROM coffee_blend WHERE blend_id = '".$cli_id."';");
                                                     foreach($query_blend->result() as $row)
@@ -275,7 +275,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Packaging</label>
                                             <select id="editPackaging" class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value> -- select a bag -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM packaging;");
                                                     foreach($query_pack->result() as $row)
@@ -290,7 +290,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Stickers</label>
                                             <select id="editStickers" class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value> -- select a sticker -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM sticker;");
                                                     foreach($query_pack->result() as $row)
@@ -313,7 +313,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Machine</label>
                                             <select class="form-control" name="contract_machine" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Machine should only countain letters">
-                                                <option disabled selected value> -- select a machine -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
 
                                                     foreach($data3['getMachine'] as $row)
@@ -448,7 +448,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Blends</label>
                                             <select class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
-                                                <option disabled selected value> -- select a blend -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client';");
                                                     foreach($query_blend->result() as $row)
@@ -473,7 +473,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Packaging</label>
                                             <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value> -- select a packaging -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM packaging;");
                                                     foreach($query_pack->result() as $row)
@@ -488,7 +488,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Stickers</label>
                                             <select class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value> -- select a sticker -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM sticker;");
                                                     foreach($query_pack->result() as $row)
@@ -511,7 +511,7 @@ a:focus {
                                            <div class="form-group label-floating">
                                             <label for="email">Machine</label>
                                             <select class="form-control" name="contract_machine" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Machine should only countain letters">
-                                                <option disabled selected value> -- select a machine -- </option>
+                                                <option disabled selected value></option>
                                                 <?php 
 
                                                     foreach($data3['getMachine'] as $row)

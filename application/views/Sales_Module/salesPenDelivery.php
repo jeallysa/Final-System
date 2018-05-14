@@ -93,7 +93,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -297,7 +297,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-6 control">Delivery Date :</label>
                                                 <div class="col-md-6">
-                                                    <input class="form-control" name="delivery_date" placeholder="Date" type="date" required />
+                                                    <input class="form-control" name="delivery_date" placeholder="Date" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" type="date" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -540,7 +540,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="form-group label-floating">
                                                                         <label for="email">Payment Date:</label>
-                                                                        <input class="form-control" type="date" name="date_paid" required>
+                                                                        <input class="form-control" type="date" name="date_paid" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" required>
                                                                         <input class="form-control" type="hidden" name="deliver_id" value="<?php echo $row2->client_deliveryID; ?>" required>
                                                                     </div>
                                                                 </div>

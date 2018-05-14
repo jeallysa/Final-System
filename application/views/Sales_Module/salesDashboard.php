@@ -79,7 +79,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>salesCollections">
-                           <i class="glyphicon glyphicon-usd"></i>
+                           <i class="glyphicon glyphicon-inbox"></i>
                             <p>Collections</p>
                         </a>
                     </li>
@@ -161,7 +161,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="green">
-                                   <i class="glyphicon glyphicon-usd"></i>
+                                   <i class="glyphicon glyphicon-inbox"></i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Total Collections</p>
