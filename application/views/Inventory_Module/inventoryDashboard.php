@@ -29,6 +29,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3399ff;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -210,7 +221,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <p class="category">Raw Coffee</p>
                                     <h3 class="title"> <?php echo number_format($data1['rawcoffeestock'] / 1000, 2); ?>
-                                        <small>kilograms</small>
+                                        <br><small>kilograms</small>
                                     </h3>
                                 </div>
                                 <a href="<?php echo base_url(); ?>inventoryStocks">
@@ -231,7 +242,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <p class="category">Packaging</p>
                                     <h3 class="title"> <?php echo number_format($data2['packagingstock']); ?>
-                                        <small>pieces</small>
+                                        <br><small>pieces</small>
                                     </h3>
                                 </div>
                                 <a href="<?php echo base_url(); ?>inventoryPackaging">
@@ -251,7 +262,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <p class="category">Stickers</p>
                                     <h3 class="title"> <?php echo number_format($data3['stickerstock']); ?>
-                                    <small>pieces</small>
+                                        <br><small>pieces</small>
                                     </h3>
                                 </div>
                                 <a href="<?php echo base_url(); ?>inventoryStickers">
@@ -260,6 +271,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                        <i class="glyphicon glyphicon-circle-arrow-right"> Details</i>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -270,7 +282,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <p class="category">Machines</p>
                                     <h3 class="title"> <?php echo number_format($data4['machinestock']); ?>
-                                    <small>pieces</small>
+                                        <br><small>pieces</small>
                                     </h3>
                                 </div>
                                 <a href="<?php echo base_url(); ?>inventoryMachines">

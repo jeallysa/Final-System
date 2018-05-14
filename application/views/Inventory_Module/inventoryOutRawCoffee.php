@@ -28,11 +28,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <style>
-    /*
-		td.highlight {
-			background-color: whitesmoke !important;
-		}
-*/
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3399ff;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -267,21 +273,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-header" data-background-color="blue">
                                     <div class="nav-tabs-navigation">
                                         <div class="nav-tabs-wrapper">
-                                            <span class="nav-tabs-title"> </span>
-                                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                                <li class="active">
-                                                    <a href="#coffeeout" data-toggle="tab">
-                                                       Coffee
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="#machineout" data-toggle="tab">
-                                                        Machine
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
+													<li class="active">
+														<a href="#coffeeout" data-toggle="tab">
+															 Coffee
+															<div class="ripple-container"></div>
+														</a>
+													</li>
+													<li class="">
+														<a href="#machineout" data-toggle="tab">
+														 Machine
+															<div class="ripple-container"></div>
+														</a>
+													</li>
+												</ul>
                                         </div>
                                     </div>
                                 </div>
@@ -442,6 +447,31 @@ $(document).ready(function() {
     });
 });
 </script>
- 
+<script type="text/javascript">
+$(document).on('change', 'select.nav', function() {
+    var $this = this;
+    var target = $this.value;
+    $('div.select-pane').hide();
+    $('div[id="' + target + '"]').show();
+})
 
+$(document).on('click', '.series-select', function() {
+    var $this = this;
+    var txt = $this.text + '<span class="caret"></span>';
+    $($this).closest('li.dropdown').find('a.dropdown-toggle').php(txt);
+
+
+})
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
+</script>
 </html>
