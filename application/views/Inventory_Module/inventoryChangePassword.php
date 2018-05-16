@@ -230,6 +230,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 </style>
+            <div class="modal fade" id="newrawcoffee" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" >
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span> Change Username</h4>
+                        </div>
+                        <?php echo form_open('adminChangePassword/updateusername') ?>
+                            <div class="modal-body" style="padding: 5px;">
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <div class="form-group label-floating">
+                                            <?php 
+                                                $u_name = $this->session->userdata('username');
+                                            ?>
+                                            <label for="email">Username</label>
+                                            <?php echo form_input(['name' => 'u_name', 'id' => 'Username', 'placeholder' => 'Username', 'value' => $u_name, 'class' => 'form-control']); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <div class="form-group label-floating">
+                                            <label for="email">Password</label>
+                                            <?php echo form_password(['name' => 'password', 'id' => 'inputPassword', 'placeholder' => 'Please Insert your Password', 'class' => 'form-control']); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer" style="margin-bottom:-14px;">
+                                <input  style="float: center;" type="submit" class="btn btn-success" value="Update" />
+                                <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                <button style="float: center;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                            </div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -259,14 +297,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="modal-body" style="padding: 5px;">
                                             <div class="row">
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                     <div class="col-md-6">
                                                         <div class="form-group label-floating">
                                                             <?php 
                                                                 $u_name = $this->session->userdata('username');
                                                             ?>
 
                                                             <label for="email">Username:</label>
-                                                            <?php echo form_input(['name' => 'u_name', 'id' => 'Username', 'placeholder' => 'Username', 'value' => $u_name, 'class' => 'form-control']); ?>
+                                                            <input class="form-control" type="text" required pattern="[a-zA-Z][a-zA-Z\s]*" value=<?php echo $u_name ?> disabled="">
+                                                            
+                                                        </div>
+                                                    </div> 
+                                                    <div class="col-md-6">
+                                                         <div class="form-group label-floating">
+                                                            <a class="btn btn-info" data-toggle="modal" data-target="#newrawcoffee" data-original-title style="float: center">Change Username</a>
                                                         </div>
                                                     </div>
                                                 </div>
