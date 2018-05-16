@@ -23,8 +23,6 @@
 			$this->form_validation->set_rules('u_address', 'Address', 'required');
 			$this->form_validation->set_rules('u_type', 'Department', 'required');
 			$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[12]');
-			$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'alpha_numeric|min_length[6]|max_length[20]');
 			
 			if ($this->form_validation->run()) {
 				$u_fname = $this->input->post('u_fname');
@@ -34,8 +32,6 @@
 				$u_address = $this->input->post('u_address');
 				$u_type = $this->input->post('u_type');
 	            $username = $this->input->post('username');
-				$password = $this->input->post('password');
-				$confpassword = $this->input->post('cpassword');
 				
 				$this->AddAccounts_model->activity_logs('admin', "Inserted New Account: ".$u_lname.",".$u_fname." in ".$u_type." Department ");
 
@@ -46,17 +42,14 @@
 									redirect('adminNewAccounts');
 					}else {
 						if ($password == $confpassword) {
-							if ($this->AddAccounts_model->add_data($u_lname, $u_fname, $u_type, $u_address, $u_email, $u_contact, $username, $password)){
+							if ($this->AddAccounts_model->add_data($u_lname, $u_fname, $u_type, $u_address, $u_email, $u_contact, $username)){
 								$this->session->set_flashdata('success', 'Successfully Record new Account');
 								redirect('adminNewAccounts');
 							} else {
 								$this->session->set_flashdata('success', 'Successfully Record new Account');
 								redirect('adminNewAccounts');
 							}
-						} else {
-							$this->session->set_flashdata('error', 'Password and Confirmation Password does not Match');
-								redirect('adminNewAccounts');
-						}
+						} 
 					}
 			} else {
 				echo validation_errors();
