@@ -12,7 +12,7 @@ class AddAccounts_model extends CI_model
 		echo "Sample function";
 	}
 
-	function add_data($u_lname, $u_fname, $u_type, $u_address, $u_email, $u_contact, $username, $password){
+	function add_data($u_lname, $u_fname, $u_type, $u_address, $u_email, $u_contact, $username){
 		$data = array(
 			'u_lname' => $u_lname,
 			'u_fname' => $u_fname,
@@ -20,8 +20,7 @@ class AddAccounts_model extends CI_model
 			'u_address' => $u_address,
             'u_email' => $u_email,
 			'u_contact' => $u_contact,
-            'username' => $username,
-            'password' => $password
+            'username' => $username
 		);
 		
 		$this->db->insert('user', $data);
