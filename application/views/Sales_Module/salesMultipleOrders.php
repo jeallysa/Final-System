@@ -18,7 +18,7 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="<?php echo base_url(); ?>assets/css/demo.css" rel="stylesheet" />
     <link href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" rel="stylesheet" />
-	<link href="<?php echo base_url(); ?>assets/css/sales.css" rel="stylesheet" />
+<!--	<link href="<?php echo base_url(); ?>assets/css/sales.css" rel="stylesheet" />-->
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -166,14 +166,14 @@
                                     </div>
                                     <div class="card-content">
 										
-										<?php foreach($data['info'] as $row){ ?>
+										<!--<?php foreach($data['info'] as $row){ ?>
 											<br>
 											<p style="font-size: 180%; font-weight: bold;" ><?php echo $row->client_company; ?> </p>
 											<input id="client_id" value="<?php echo $row->client_id ?>" type="hidden" />
 										
 										<?php
 										
-										}?>
+										}?>-->
 										
 										<hr>
 										
@@ -184,7 +184,7 @@
 												<input class="form-control" id="date" type="date" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Delivery is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" required />
 											</div>
 											<div class="col-md-4 ">
-														<select class="form-control selectpicker" id="blend" data-live-search="true" multiple title="Choose Coffee Blend...">
+														<select class="form-control selectpicker" id="blend" data-live-search="true" title="Choose Coffee Blend...">
 															<?php foreach($data1['blends'] as $row){ ?>
 															<option value='<?php echo $row->blend_id ?>/<?php echo $row->blend ?>/<?php echo $row->package_type ?>/<?php echo $row->package_size ?>' ><?php echo $row->blend ?>/<?php echo $row->package_type ?>/<?php echo $row->package_size ?></option>
                                                             <?php 
@@ -214,7 +214,7 @@
 														
 													</tbody>
 												</table>
-												<button class="btn btn-primary btn-sm" type="submit" name="AddPO" id="AddPO">Add Purchase Order/s</button>
+												<button class="btn btn-success btn-sm" type="submit" name="AddPO" id="AddPO">Add Purchase Order/s</button>
 												
 											</div>
 											<div class="col-xs-7 col-7" style="margin-left:15px; margin-top:150px;">
@@ -257,20 +257,14 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
-		var id = $('#client_id').val();
 		var dateO = $('#date').val();
 		var blend = $('#blend').val();
-		/*var typeBag = $('#type').val();
-		var sizeBag = $('#size').val();*/
 		var qty = $('#qty').val();
 		
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
-				'<td contenteditable="true" class="blendName">'+id+'</td>'+
 				'<td contenteditable="true" class="blendName">'+dateO+'</td>'+
 			 	'<td contenteditable="true" class="blendName">'+blend+'</td>'+
-/*			 	'<td contenteditable="true" class="typeBag">'+typeBag+'</td>'+
-			 	'<td contenteditable="true" class="sizeBag">'+sizeBag+'</td>'+*/
 			 	'<td contenteditable="true" class="quantity">'+qty+'</td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
@@ -278,8 +272,6 @@
 		$("#data_table tbody:last-child").append(newRow);
 		
 		$('#blend').val('');
-/*		$('#type').val('');
-		$('#size').val('');*/
 		$('#qty').val('');
 		
 	});
@@ -297,17 +289,17 @@
 
 			}else{
 				var sub = {
-					'id' : $(tr).find('td:eq(0)').text(),
-					'dateO' : $(tr).find('td:eq(1)').text(),
-					'blend' : $(tr).find('td:eq(2)').text(),
-					'quantity' : $(tr).find('td:eq(3)').text(),
+					/*'id' : $(tr).find('td:eq(0)').text(),*/
+					'dateO' : $(tr).find('td:eq(0)').text(),
+					'blend' : $(tr).find('td:eq(1)').text(),
+					'quantity' : $(tr).find('td:eq(2)').text(),
 				}
 				table_data.push(sub);
 			}
 		});
 		
 		$.ajax({			
-			url:'<?=base_url()?>SalesClients/addMultipleOrders/',
+			url:'<?=base_url()?>salesMultipleOrders/addMultipleOrders/',
 			method: 'POST',
 			data: {table_data:table_data},
 			crossOrigin: false,

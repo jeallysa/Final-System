@@ -61,12 +61,11 @@
 
 		}
 		
-		public function salesMultipleOrders(){
-			$id = $this->uri->segment(3);
-			$data['info'] =  $this->SalesClients_model->getClientInfo($id);
+		/*public function salesMultipleOrders(){
+
 			$data1['blends'] =  $this->SalesClients_model->getBlends();
-			$this->load->view('Sales_Module/salesMultipleOrders', ['data' => $data, 'data1' => $data1 ]);
-		}
+			$this->load->view('Sales_Module/salesMultipleOrders', ['data1' => $data1 ]);
+		}*/
 
         function return_machine()
 		{
@@ -95,17 +94,7 @@
 		}
 		
 		
-		public function addMultipleOrders(){
-			$this->load->model('SalesClients_model');
-			$data = $this->input->post('table_data');
-
-			$this->SalesClients_model->activity_logs('sales', "Added other Purchase Order ");
-			$this->SalesClients_model->AddMultipleOrders($data);
-			$this->output->set_content_type('application/json');
-			echo json_encode(array('check'=>'check'));
-			
-			redirect('SalesClients/salesMultipleOrders');
-		}
+		
 		
 
 	}

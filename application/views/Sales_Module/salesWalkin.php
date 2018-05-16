@@ -42,6 +42,15 @@
 	.no-border{
 		border: none !important;	
 	}
+        .bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: rgba(255,255,255,0.9);
+}
+       
+
+        .btn, .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .open > .btn.dropdown-toggle, .open > .btn.dropdown-toggle:focus, .open > .btn.dropdown-toggle:hover, .btn.btn-default, .btn.btn-default:hover, .btn.btn-default:focus, .btn.btn-default:active, .btn.btn-default.active, .btn.btn-default:active:focus, .btn.btn-default:active:hover, .btn.btn-default.active:focus, .btn.btn-default.active:hover, .open > .btn.btn-default.dropdown-toggle, .open > .btn.btn-default.dropdown-toggle:focus, .open > .btn.btn-default.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.btn:hover, .navbar .navbar-nav > li > a.btn:focus, .navbar .navbar-nav > li > a.btn:active, .navbar .navbar-nav > li > a.btn.active, .navbar .navbar-nav > li > a.btn:active:focus, .navbar .navbar-nav > li > a.btn:active:hover, .navbar .navbar-nav > li > a.btn.active:focus, .navbar .navbar-nav > li > a.btn.active:hover, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn.btn-default, .navbar .navbar-nav > li > a.btn.btn-default:hover, .navbar .navbar-nav > li > a.btn.btn-default:focus, .navbar .navbar-nav > li > a.btn.btn-default:active, .navbar .navbar-nav > li > a.btn.btn-default.active, .navbar .navbar-nav > li > a.btn.btn-default:active:focus, .navbar .navbar-nav > li > a.btn.btn-default:active:hover, .navbar .navbar-nav > li > a.btn.btn-default.active:focus, .navbar .navbar-nav > li > a.btn.btn-default.active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:hover {
+			background-color: gray;
+			color: white;
+		}
 
     </style>
 </head>
@@ -145,6 +154,11 @@
                                 <div class="card-header" data-background-color="purple">
                                     <h3 class="title"><center>Walk-in Client Order</center></h3>
                                 </div>
+                                <div class="card-content">
+                                    <a href="<?php echo base_url(); ?>salesMultipleOrders" type="button" class="btn btn-success pull-right">
+                                          Create Multiple Purchase Orders
+                                        </a>
+                                </div>
 
                                 
                                     <div class="card-content">
@@ -178,7 +192,7 @@
                                             
                                             <div class="col-sm-6 nopadding">
                                               <div class="form-group">
-                                                  <select class="selectpicker" data-live-search="true" id="blend">
+                                                  <select class="selectpicker col-xs-9" data-live-search="true" id="blend" title="Choose Coffee Blend...">
                                                     <?php 
                                                     $query_blend = $this->db->query("SELECT * FROM coffee_blend JOIN packaging ON coffee_blend.package_id = packaging.package_id;");
                                                     foreach($query_blend->result() as $row)

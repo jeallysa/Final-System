@@ -174,17 +174,17 @@
 
 			for($x = 0; $x < count($data); $x++){
 				$orders[] = array(
-					'client_id' => $data[$x]['id'],
-					'contractPO_date' => $data[$x]['dateO'],
+					/*'client_id' => $data[$x]['id'],*/
+					'walkin_date' => $data[$x]['dateO'],
 					'blend_id' => $data[$x]['blend'],
-					'contractPO_qty' => $data[$x]['quantity'],
+					'walkin_qty' => $data[$x]['quantity'],
 				);
 			}
 
 			try{
 
 				for($x = 0; $x<count($data);$x++){
-					$this->db->insert('contracted_po', $orders[$x]);
+					$this->db->insert('walkin_sales', $orders[$x]);
 				}
 
 				return 'success';
