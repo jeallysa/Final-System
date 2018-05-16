@@ -31,7 +31,7 @@
 				$psword = $this->Changepassword_Model->getCurrPassword($userid);
 				if($this->db->query("SELECT IF (EXISTS (SELECT * FROM user WHERE username = '".$u_name."'), 1,  0) AS result")->row()->result == 1){
 					$this->session->set_flashdata('error', 'Username already exist');
-								redirect('adminChangePassword');
+								redirect('inventoryChangePassword');
 				}else{
 					if ($psword->password == $curr_password) {
 						if ($this->Changepassword_Model->updateUsername($u_name, $userid )){
@@ -39,14 +39,14 @@
 									redirect('login');
 							} else {
 								$this->session->set_flashdata('error', 'Failed to Update Password');
-									redirect('adminChangePassword');
+									redirect('inventoryChangePassword');
 							}
 					}
 				}
 			} else {
 				echo validation_errors();
 				$this->session->set_flashdata('error', validation_errors());
-							redirect('adminChangePassword');
+							redirect('inventoryChangePassword');
 			}
 		}
 
