@@ -227,16 +227,6 @@ a:focus {
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-                                                <?php echo form_password(['name' => 'password', 'id' => 'Password', 'placeholder' => 'Password', 'class' => 'form-control']); ?>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-                                                <?php echo form_password(['name' => 'cpassword', 'id' => 'Password', 'placeholder' => 'Confirm Password', 'class' => 'form-control']); ?>
-                                            </div>
-                                        </div>
                                         <input type="submit" class="btn btn-success" value="Save" />
                                         <!--<span class="glyphicon glyphicon-ok"></span>-->
                                         <input type="reset" class="btn btn-danger" value="Clear" />

@@ -233,6 +233,7 @@ a:focus {
                                                     <th><b>Contact No.</b></th>
                                                     <th class="disabled-sorting"><b>Edit</b></th>
                                                     <th><b class="pull-left">Activation</b></th>
+                                                    <th><b class="pull-left">Reset Password</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -274,6 +275,11 @@ a:focus {
                                                     ?>
                                                     </div>
                                                 </td>
+
+                                                <td>
+                                                                    <a href='#' class="btn btn-warning btn-sm" data-toggle="modal" data-target="#password<?php echo $row->user_no; ?>">Reset</a>
+                                                        </td>
+
                                                 <div class="modal fade" id="deactivate<?php echo $row->user_no;?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="panel panel-primary">
@@ -307,6 +313,10 @@ a:focus {
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+
+
                                                         <div class="modal fade" id="edit<?php echo $row->user_no; ?>" tabindex="1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="panel panel-primary">
@@ -378,6 +388,7 @@ a:focus {
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </tr>
 
                                                 <?php
