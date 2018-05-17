@@ -225,13 +225,13 @@ a:focus {
                                             <tr>
                                                 <th><b>Supplier No.</b></th>
                                                 <th><b>Supplier</b></th>
-                                                <th><b>Date Registered</b></th>
+                                                
                                                 <th><b>Contact Personnel</b></th>
                                                 <th><b>Position</b></th>
                                                 <th><b>Address</b></th>
                                                 <th><b>Email</b></th>
                                                 <th><b>Contact No.</b></th>
-                                                
+                                                <th><b>Supplied Items</b></th>
                                                 <th class="disabled-sorting"><b>Edit</b></th>
                                                 <th><b class="pull-left">Activation</b></th>
                                             </tr>
@@ -249,13 +249,13 @@ a:focus {
                                                     <tr>
                                                     <td>SP-<?php echo $row->sup_id; ?></td>
                                                     <td><?php echo $row->sup_company; ?></td>
-                                                     <td><?php echo $row->date_reg; ?></td>
+                                                     
                                                     <td><?php echo $row->contact_personnel; ?></td>
                                                     <td><?php echo $row->sup_position; ?></td>
                                                     <td><?php echo $row->sup_address; ?></td>
                                                     <td><?php echo $row->sup_email; ?></td>
                                                     <td><?php echo $row->sup_contact; ?></td>
-                                                        
+                                                        <td><a class="btn btn-success btn-sm" href="#" style="margin-top: 0px" data-toggle="modal" data-target="#items<?php echo $row->sup_id; ?>">Products</a></td>
                                                         
                                                      <td>
 
@@ -393,6 +393,30 @@ a:focus {
                                                                             <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
                                                                         </div>
                                                                     </div>
+                                                                      
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="items<?php echo $row->sup_id; ?>" tabindex="1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="panel panel-primary">
+                                                        <?php
+                                                            $selector = $this->db->query("SELECT CONCAT(raw_coffee, ' ', raw_type, ' roast') AS item FROM raw_coffee WHERE raw_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(package_type, ' bag ', package_size, 'g') AS item FROM packaging WHERE pack_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(brewer, ' ', brewer_type) AS item FROM machine WHERE mach_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT sticker AS item FROM sticker WHERE sticker_activation = 1 AND sup_id = ".$row->sup_id."");
+                                                        ?>
+                                                            <div class="panel-heading">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> All Products Supplied </h4>
+                                                            </div>
+                                                            <form action="<?php echo base_url(); ?>AdminSupplier/update" id="modalUpdate" method="post" accept-charset="utf-8">
+                                                                  <div class="modal-body" style="padding-left: 100px;">
+                                                                            <?php
+                                                                                foreach($selector->result() AS $items){
+                                                                                    echo $items->item . '<br>';
+                                                                                }
+                                                                            ?>
                                                                       
                                                                     </div>
                                                             </form>
