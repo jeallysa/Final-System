@@ -47,17 +47,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $results = $this->inventoryPOAdd_model->querySelectedType($item_name , $sup_id);
         
         if(count($results)>0){
+            
             $pro_select_box = '';
             $pro_select_box .= '<option value="">Select Type</option>';
+          
             
-          foreach ($results as $result) {
+           
+            
+          foreach ($results as $result){
             if($result->category == 1){  
              $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. " roast" .'</option>';
+             $category = 1;
             }else{
-             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. '</option>';   
+             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. '</option>';
+            $category = 0;
             }
          }
-            echo json_encode($pro_select_box);
+             $array = array("category" => $category,
+                             "type" => $pro_select_box);
+            
+            echo json_encode($array);
             
         }/*
          else{
@@ -99,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $sup_id    = $this->input->post('sup_id');
         
         
-        $result    = $this->inventoryPOAdd_model->checkReorder($item_name , $item_type , $qty , $sup_id );
+        $result   = $this->inventoryPOAdd_model->checkReorder($item_name , $item_type , $qty , $sup_id );
         //$result = $this->inventoryPOAdd_model->cc();
         if(count($result)>0){
           
@@ -107,6 +116,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     }     
         
+        
+        
+        
+       public function removeOrder($item){       
+        $this->inventoryPOAdd_model->removeOrder($item);
+         redirect(base_url('inventoryPOAdd'));
+    } 
         
         
         
@@ -207,6 +223,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   
         
       public function insertTempOrder(){
+          
+          //"category"    => $this->input->post('category'
+          
           
          $dataInsert = array("item_name" => $this->input->post('item'),
                              "qty"       => $this->input->post('qty'),

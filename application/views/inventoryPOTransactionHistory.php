@@ -26,17 +26,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-    background-color: #3399ff;
-    border-color: #9c27b0;
-    color: #FFFFFF;
-    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
-}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -244,10 +233,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Order Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -343,10 +328,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "delivery" . $delivery   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Delivery Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -490,10 +471,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "payment".$payment   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Payment Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -610,7 +587,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            <!--   <th><b class="pull-left">Date Received</b></th> -->
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Total Amount</b></th>
-                                            <th colspan="3"><center><b>Actions</b></center></th>
                                           <!--  <th><b class="pull-left">Date of Payment</b></th> -->
                                             
                                             <th></th>

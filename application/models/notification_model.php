@@ -23,7 +23,7 @@ function reorder(){
     
 for($i = 0 ; $i <= 3 ; $i++){    
     
-    $query = $this->db->query("select ".$arrayName[$i]." as name, ".$arrayType[$i]." as type from ".$arrayTable[$i]." where ".$arrayStock[$i]." <= ".$arrayreorder[$i]);
+    $query = $this->db->query("select ".$arrayName[$i]." as name, ".$arrayType[$i]." as type ,sup_company as supplier from ".$arrayTable[$i]." join supplier using(sup_id) where sup_activation = 1 and ".$arrayStock[$i]." <= ".$arrayreorder[$i]);
     
     if($query->num_rows() > 0){
           $result[$i] =  $query->result();

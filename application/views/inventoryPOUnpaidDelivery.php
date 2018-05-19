@@ -27,17 +27,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-    background-color: #3399ff;
-    border-color: #9c27b0;
-    color: #FFFFFF;
-    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
-}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -378,16 +367,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
                                 
-                                <div class="modal fade" id="<?php echo "partial" . $partial   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="panel panel-primary modal-content">
-                                            <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Balance</center> </h4>
-                                            </div>
-
+          <div class="modal fade" id="<?php echo "partial" . $partial   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="panel panel-primary">
                                             <form action="InventoryPOUnpaidDelivery/insertPartialPayment/<?php echo $temp ?>" method="post" accept-charset="utf-8">
                                             <div class="modal-body" style="padding: 0px;">
+                                            <center><b>Payment</b>
+                                            <br>
+                                            
+                                            <?php 
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             ?>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br>
+                                            <b><?php echo "PO #".$temp ?></b></center> 
+
+                                                
                                                 <table class="table table-striped" id="table-mutasi">
                                                     <thead>
                                                         <tr>
@@ -433,29 +430,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                      <tr>
                                                             <td>Trucking Fee</td>
                                                             <td></td>
-                                                         
-                                                            <td><input class="form-control" type="number"  id="truckingFee" readonly disabled /></td>
+                                                            <td><input class="form-control" type="text"  id="truckingFee" readonly disabled /></td>
                                                             
-                                                        </tr>      
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            
+                                                        </tr> 
                                                         
                                                     </tbody>
                                                 </table>
                                                 <div class="container"  >
                                                     <div class="row justify-content-end"  >
-                                                        <div class="col-md-6 form-group" >
+                                                        <div class="col-md-9 form-group" >
                                                             <div class="form-group label-floating">
                                                                     <div class="row">
                                                                         <div class="col-md-4">
                                                                             <div class="form-group label-floating">
                                                                             <label>Total Balance:</label>
-                                                                             <input class="form-control" type="number"  id="total" readonly disabled />
+                                                                             <input class="form-control" type="text"  id="total" readonly disabled />
                                                                              </div>
                                                                         </div>
                                                                         
                                                                         <div class="col-md-4">
                                                                              <div class="form-group label-floating">
                                                                             <label>Remaining Balance</label>
-                                                                             <input class="form-control" type="number"  value=" " id="remaining" readonly disabled />
+                                                                             <input class="form-control" type="text"  value=" " id="remaining" readonly disabled />
                                                                              </div>
                                                                         </div>    
                                                                    </div>      
@@ -527,24 +530,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="panel panel-primary modal-content">
-                                          <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Details</center> </h4>
-                                            </div>
                                             <form action="#" method="post" accept-charset="utf-8">
                                                 <div class="modal-body" style="padding: 5px;">
                                                     <div id="page-wrapper">
                                                         <div class="table-responsive">
-                                                          
+                                            <center><b>Details</b>
+                                            <br>
+                                            
+                                            <?php 
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             ?>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br>
+                                            <b><?php echo "PO #".$temp ?></b></center> 
                                                             <table class="table table-striped" id="table-mutasi">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Date Received</th>
                                                                        <th>DR No.</th>
                                                                         <th>Item Name</th>
-                                                                 
                                                                         <th>Type</th>
-                                                                        <th>Quantity/ Weight(g)</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Weight(g)</th>
                                                                         <th>Yield Weight(g)</th>
                                                                         <th>Yield(g)</th>
                                                                         
@@ -578,6 +587,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
+                                                '<td>'  .  '</td>' ,
                                                 '<td>'  . number_format($object->received)  . '</td>' ,
                                                 '<td>'  . number_format($object->yield_weight). '</td>' ,
                                                 '<td>'  . number_format($object->yields)  . '</td>' ,
@@ -689,7 +699,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th colspan="2"><center><b>Actions</b></center></th>
+                                            <th><b class="pull-left">Payment</b></th>
+                                            <th><b class="pull-left">See Details</b></th>
                                             
                                         </thead>
                                         <tbody>
@@ -701,26 +712,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             $partial = 'partial';
                                             $full    = 'full'; 
                                     if(!empty($unpaid)) {  
-                                          foreach($unpaid as $object){ 
+                                          foreach($unpaid as $object){
+                                              
+                                             $oldDate = $object->suppPO_date;
+                                             $arr = explode('-', $oldDate);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                              
                                             
                                            echo '<tr>' ,
                                                 '<td>'  . $object->supp_po_id. '</td>' ,
-                                                '<td>'  . $object->suppPO_date   . '</td>' ,
+                                                '<td>'  . $newDate   . '</td>' ,
                                                 '<td>'  . $object->supp_creditTerm. ' day/s</td>' ,
                                                 '<td>'  . $object->sup_company  . '</td>';
 												                      
                                              ?>
                                                                               
-                                               <td><center>
+                                               <td>
                                                    <!-- <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="# <?php echo $full . $i   ?>">Full Payment</a> -->
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $partial . $i   ?>">Payment</a> 
-                                                   </center>
-                                            </td>
+                                              </td>
                                             
-                                               <td><center>
+                                               <td>
                                                     <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo $details . $i   ?>">Details</a>
-                                                   </center>
                                                </td>
                                             
                                     <?php                          
@@ -811,18 +824,27 @@ $partial = 1;
               data:{poId : poId },
               dataType: 'json',
               success: function(data){
-                 // alert("success");
-                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); //use this syntax when returning a single row only data['total_amount'] column name in the query
-                   var total = data['total_amount']; 
+                   var total = data['total_amount'];  //use this syntax when returning a single row only data['total_amount'] column name in the query
+                   
+                  
+                  
                    var payment =  data['payment'];
+                  
+                  
+                  
+                  
                    var truckingFee =  data['trucking_fee'];
+                   var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+                   var tfee ="Php " +tfeex+ ".00" ; 
+                   
+                  
                   
                    var remaining = total - payment;
                    
-                  
+                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
+                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(tfee);
               },
               error: function(){
                   alert("error"); 
@@ -840,55 +862,7 @@ $partial = 1;
   
     
     
- ///FULL PAYMENT MODAL--------------------------------------  
-     
-    
-    
-   <?php     
-$full = 1;
-    
-     if(!empty($unpaid)) {                                
-           foreach($unpaid as $object){
-            $temp =  $object->supp_po_id;
-            $sup_id = $object->sup_id;   
-    
-   ?>
-//function getRealData() {    
-    var poId = parseFloat($(<?php echo "'#full".$full." input[id=poId]'" ?>).val());    
-    
-           $.ajax({
-              url:'<?php echo base_url(); ?>InventoryPOUnpaidDelivery/ajaxTotal',
-              method:"POST",
-              data:{poId : poId },
-              dataType: 'json',
-              success: function(data){
-                 // alert("success");
-                  $(<?php echo "'#full".$full." input[id=total]'" ?>).val(data['total_amount']); //use this syntax when returning a single row only data['total_amount'] column name in the query
-                   var total = data['total_amount']; 
-                   var payment =  data['payment'];
-                   var truckingFee =  data['trucking_fee'];
-                  
-                   var remaining = total - payment;
-                  
-                  $(<?php echo "'#full".$full." input[id=remaining]'" ?>).val(remaining);
-                  $(<?php echo "'#full".$full." input[id=amount]'" ?>).attr("max", remaining)
-                  $(<?php echo "'#full".$full." input[id=truckingFee]'" ?>).val(truckingFee);
-                  
-              },
-              error: function(){
-                  alert("error"); 
-                
-              }
-          });
-  //   }
-    <?php 
-           
-       $full++;
-    }
- }
-  
-  ?> 
-    
+ 
     
     
     

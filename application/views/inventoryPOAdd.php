@@ -15,29 +15,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" />
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css"/>
-    
+     <link href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="css.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" >
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-    background-color: #3399ff;
-    border-color: #9c27b0;
-    color: #FFFFFF;
-    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
-}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -182,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
                                                  
                                              }
                                       }
@@ -274,20 +262,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         
                                                    
                                                         
-                                        <form method ="post" action ="InventoryPOAdd/insertSupplierToTemp" id="form1" >
+                                        <form method ="post" action ="InventoryPOAdd/insertSupplierToTemp" id="form1"  >
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group label-floating">
                                                                         <label class="control-label">Supplier</label>
-                                                                        <select class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" required>
-                                                                      
+                                                                        
+                                                                        <select  class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" >
                                                                     
                                            <?php
-                                                         if(!empty($tempExisting)){
-                                                            echo '<option value="'.$tempExisting[0]->supp_name.'">'  .$tempExisting[0]->supp_name . '</option>' ; 
-                                                         }else                  
                                                          foreach($suppliers as $object){ 
-                                                            echo '<option value="'.$object->sup_company.'">'  . $object->sup_company . '</option>' ;
+                                                            echo '<option>'  . $object->sup_company . '</option>' ;
                                
                                  
                                                           } 
@@ -300,15 +285,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                               <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group label-floating">
-                                                                      <label for="email">Order Date:</label>
+                                                                      <label for="date">Order Date:</label>
                                                                         
-                                                                        
-                                                                        
-                                                                       <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="<?php if(!empty($tempExisting)){
+                                                                  <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="<?php if(!empty($tempExisting)){
                                                                                                                                       echo $tempExisting[0]->date; } ?>" required>
-                                                                        
-                                                                        
-                                                                        
                                                                         
                                                                     </div>
                                                                 </div>
@@ -317,16 +297,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group label-floating">
-                                                                        <label class="control-label">Credit Term:</label>
+                                                                        <!-- <label class="control-label">Credit Term:</label> -->
+                                                                        <label for=creditTerm>Credit Term:</label>
                                                                         
                                                                         
-                                                        <input type="number" class="form-control" name="creditTerms" min="1" max = "30"  value="<?php if(!empty($tempExisting)){
+                                                        <input type="number" class="form-control" placeholder = "days" name="creditTerms" placeholder ="days" min="1" max = "30"  value="<?php if(!empty($tempExisting)){
                                                                                                                                                 echo $tempExisting[0]->credit_term; } ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group label-floating">
-                                                              <label class="control-label">Trucking Fee</label>
+                                                              <label for="truckingFee">Trucking Fee</label>
                                                                         
                                                                         
                                                                         
@@ -337,10 +318,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             </div>
                                                             <div class="row">
                                                                 <div align="center">
-                                                                    
-                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
-                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">Cancel</button>
-                                                                    
+                                                <?php 
+                                           if(!empty($TempOrdered)){
+                                                       ?>                       
+                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' disabled>   
+                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline" disabled >Cancel</button>
+                                                   <?php 
+                                           }else{ ?>
+                                                <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
+                                                <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">Cancel</button>
+                                          <?php }
+                                                       ?>                
                                                                 </div>
                                                             </div>
                                         </form>
@@ -355,7 +343,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                       <div  id="printThis" >  
                                         <div class="col-md-8" id="form2" >
                                             <button class ="btn-print pull-right" id="printer">Generate PDF</button>
-                                                <form method = "post" action ="InventoryPOAdd/insertTempOrder" id ="form2"> 
+                                                <form method = "post" action ="InventoryPOAdd/insertTempOrder" id ="form2" > 
                                                     
                                                     <div >
                                                         <h1>John Hay Coffee Services Inc.</h1>
@@ -396,7 +384,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b>Quantity/weight</b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight</p></b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -408,8 +396,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <tr>
                                                    
                                                                <td class='col-sm-3'>
-                                                                <select class="selectpicker" data-live-search="true" name="item" id ="item" required>
-                                                                      
+                                                                      <select required class="form-control" name="item" id ="item">
+                                                                            <!-- <option value="" disabled selected>Choose Item</option> -->
+                                                                           <option value="" >Choose Item</option>
                                                                            
                                                   <?php
                                                           
@@ -436,30 +425,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     </select>
                                                            </td>
                                                           <td class="col-sm-3">
-                                                     <input type="number" class="form-control" min='1' name="qty" id = "qty" required/>
+                                                     <input type="number" class="form-control" min='1' name="qty" id = "qty" disabled required/>
                                                            </td>
                                                                     
                                                                     
                                                             <td class='col-sm-2'>
-                                                                      <select class="form-control" name = "itemType"  id = "itemType" required >
+                                                                      <select class="form-control" name = "itemType"  id = "itemType" disabled required>
                                                                             <option value="">Select Type</option>      
                                                                      </select>
                                                             </td>    
                                                                    
                                                                     
                                                            <td class="col-sm-2">
-                                                     <input type="text" class="form-control" name="unitPrice"  id = "unitPrice" readonly/> 
+                                                     <input type="number" class="form-control" name="unitPrice"  id = "unitPrice"  readonly/> <!-- When I put a disabled here I cant save the value -->
                                                            </td>
                                                                   
                                                                     
                                                             <td class="col-sm-3">
-                                                      <input type="text"  class="form-control" name="amount"   id = "amount" readonly/> 
+                                                      <input type="number"  class="form-control" name="amount"   id = "amount"  readonly/> <!-- When I put a disabled here I cant save the value -->
                                                             </td>
+                                                                    
+                                              <!--              <td class="col-sm-3">
+                                                      <input type="hidden"  class="form-control" name="category"   id = "category"  value ="<?php echo $object->category ?>" readonly/> 
+                                                            </td>       -->
                                                                   
                                                                 </tr>
                                                          <tr>
                                                                     <td colspan="5" style="text-align: left;">
-                                                                        <button type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add" />Add
+                                                                        <Button type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="savebutton"  />Add
                                                                        
                                                                     </td>
                                                          </tr>
@@ -491,7 +484,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b>Quantity/weight</b></th>
+                                                                    <th><b>Quantity|Weight</b></th>
+                                                                   <!-- <th><b>Weight</b></th> -->
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -504,19 +498,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 $counter = 1;
                                                                     if(!empty($TempOrdered)){
                                                                          foreach ($TempOrdered as $object) {
+                                                                          $item = $object->idsupp_temp_po_order;
                                                                          echo '<tr>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required>   </td>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="qty[]"       id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"      id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]" id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="amount[]"    id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+                                                                        
+      '<td class="col-sm-3 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
+      '<td class="col-sm-3"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
+      '<td class="col-sm-3"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+      '<td class="col-sm-1"><button type="submit"  formaction="InventoryPOAdd/removeOrder/'.$item.'" class="btn btn-danger decline">-</button> </td>' ,                                                               
                                                                               '</tr>' ;
                                                                              $counter++;
                                                                              }
                                                                   
                                                                         }
                                                                 ?>  
-                                                
+                                            
                                                 
                                                         </tbody>
                                                            
@@ -587,13 +584,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ERROR:</h4>
+            <b><h3 class="modal-title">Insufficient Order</h3></b>
         </div>
         <div class="modal-body">
-            <center><p>Invalid Order</p></center>
-        </div>
+       
+        <input type="text" class="form-control"  id = "modalOrderStatus" readonly/>  
+            
         <div class="modal-footer">
-            <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </center>
+            <center><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> </center>
         </div>
       </div>
       
@@ -673,8 +671,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
- <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
- <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script>
     
     
 
@@ -746,6 +744,11 @@ $(document).ready(function () {
     
  // I dont understand why it cant validate the first time  
     
+
+    
+    
+    
+    
     
 document.getElementById('submitInfo').onclick = function() {
    
@@ -785,73 +788,53 @@ $(document).ready(function () {
 
 
 document.getElementById('addToTemp').onclick = function() {
-    /*
-     if($('#subTotal').val()==""){
-           $("#invalidOrder").modal();
-        return false;
-      
-     }*/
+ 
+   
           var itemType = document.getElementById("itemType").value;
           var itemName = document.getElementById("item").value;
           var qty      = document.getElementById("qty").value;
     
      
-               
+    var returnvalue; 
+    
             $.ajax({
+              async: false,
               url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
               method:"POST",
               data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
-                  alert("success");
-                  //alert(data);
-
-
+                 // alert("punyeta kulang order brad");
+                  var status = data['status'];
+                  var reorder = data['reorder'];
+                  var stocks = data['stocks'];
+                  var total = reorder - stocks;
                   
                   
                   
+                  
+            if(status == "0"){
+                var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
+                $("#invalidOrder").modal();
+                
+                  returnvalue = false;
+                
+                
+                }
               },
-              error: function(){
-                 alert('error');
-                   // alert(data);
-                  //alert(itemType);
-              }
+          
           });
+
+     return returnvalue;
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-};  
+}; 
+                  
+ 
 });
-      
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
     
     
     
@@ -882,7 +865,10 @@ document.getElementById('addToTemp').onclick = function() {
                   }else{
                     var y =  parseFloat($('#qty').val());
                     var x = y * parseFloat($('#unitPrice').val());
-                    $('#amount').val(x);
+                      
+               
+                    
+                      $('#amount').val(x);
                  }
                     
                   
@@ -928,14 +914,25 @@ document.getElementById('addToTemp').onclick = function() {
               data:{item_name : item_name , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
-                 // alert("success");
-                  $('#itemType').html(data);
+                 var category = data['category'];
+                 var type     = data['type'];
+                  
+                  
+                  $('#itemType').removeAttr('disabled');
+                  $('#qty').removeAttr('disabled');
+                  $('#itemType').html(type);
                   $('#unitPrice').val('');
                   $('#amount').val('');
-                 
+                  if(category ==1){
+                   document.getElementById("qtywt").innerHTML = "Weight(Kg)";
+                  }else{
+                   document.getElementById("qtywt").innerHTML = "Quantity";   
+                  }
               },
               error: function(){
-                 // alert("error");
+                document.getElementById("qtywt").innerHTML = "Quantity|Weight";
+                $('#itemType').attr('disabled','disabled');
+                $('#qty').attr('disabled','disabled');
                 
               }
           });
@@ -944,36 +941,14 @@ document.getElementById('addToTemp').onclick = function() {
           
        
 }); //END 
+         
+  
+        
+   
+
+    
+    
+           
+ 
 </script>
-
-<script type="text/javascript">
-$(document).on('change', 'select.nav', function() {
-    var $this = this;
-    var target = $this.value;
-    $('div.select-pane').hide();
-    $('div[id="' + target + '"]').show();
-})
-
-$(document).on('click', '.series-select', function() {
-    var $this = this;
-    var txt = $this.text + '<span class="caret"></span>';
-    $($this).closest('li.dropdown').find('a.dropdown-toggle').php(txt);
-
-
-})
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){
-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-        localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    var activeTab = localStorage.getItem('activeTab');
-    if(activeTab){
-        $('#myTab a[href="' + activeTab + '"]').tab('show');
-    }
-});
-</script>
-
 </html>

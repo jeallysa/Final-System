@@ -54,40 +54,50 @@
              $query = $this->db->query($retrieveDetails); 
                       
                    if ($query->num_rows() > 0) {
-        return $query->row();      // im expecting only 1 row
-      }
+            $thisOne =  1;
+                       $result=$query->row();
+                       
+                       $x = $result->stock;
+                       $y = $result->reorder;
+                       $total = $x + $qty;
+                       
+                       if($total < $y){
+                           $status = "0";
+                           $arrayStocks = array("stocks" => $x,
+                                                "reorder" => $y,
+                                                "status" => $status);
+                           
+                          // return $thisOne;      // im expecting only 1 row
+                           return $arrayStocks;
+                       }else{
+                           $status = "1";
+                           $arrayStocks = array("stocks" =>$x,
+                                                "reorder" =>$y,
+                                                "status" => $status);
+                           
+                          // return $thisOne;      // im expecting only 1 row
+                           return $arrayStocks;
+                     
+                       }
+        
+                    }
                    
                }
          }   
+     
       
+    
       
-      
-      
-      
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      public function cc(){
-          $retrieve="select * from raw_coffee";
-          $query = $this->db->query($retrieve);
-          
-          return $query->result();
+      public function removeOrder($item){
+          $this->db->where('idsupp_temp_po_order', $item);
+          $this->db->delete('supp_temp_po_order');
       }
       
       
       
     
   function displayOrderedTemp(){
-    $query = $this->db->query('SELECT * FROM supp_temp_po_order order by idsupp_temp_po_order desc ');      
+    $query = $this->db->query('SELECT * FROM supp_temp_po_order order by idsupp_temp_po_order desc');      
     if($query->num_rows() > 0){
       return $query-> result();
     }else{
@@ -150,7 +160,7 @@
   } 
 
   function retrieveSuppliers(){
-    $query = $this->db->query('SELECT * from supplier');
+    $query = $this->db->query('SELECT * from supplier where sup_activation = 1 order by sup_company  asc');
           
     if($query->num_rows() > 0){
         return $query-> result();
@@ -165,7 +175,7 @@
       $arrayName = array("raw_coffee","sticker","package_type","brewer"); 
       $arrayActivation = array("raw_activation","sticker_activation","pack_activation","mach_activation");
        
-      $query = $this->db->query('SELECT distinct '. $arrayName[$i] .' from '. $array[$i] .' join supplier using(sup_id) join supp_temp_po on sup_company = supp_name where '. $arrayActivation[$i].' = 1');      
+      $query = $this->db->query('SELECT distinct '. $arrayName[$i] .' , category from '. $array[$i] .' join supplier using(sup_id) join supp_temp_po on sup_company = supp_name where '. $arrayActivation[$i].' = 1  order by 1 asc');      
       
       if($query->num_rows() > 0){
          $result[$i] =  $query->result();  

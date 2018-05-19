@@ -26,17 +26,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-    background-color: #3399ff;
-    border-color: #9c27b0;
-    color: #FFFFFF;
-    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
-}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -181,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
                                                  
                                              }
                                       }
@@ -474,11 +463,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <center><b>Delivery</b>
                                             <br>
-                                            <b><?php echo date('m/d/Y') ?></b></center>
+                                            
+                                            <?php 
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             ?>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br>
+                                            <b><?php echo "PO #".$temp ?></b></center> 
 
 
 
-                                        <div class="col-md-6 form-group">
+                                        <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>DR No.</label>
                                                          <input type="number" class="form-control" name="DRNO" required>
@@ -486,10 +483,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                   
                                         
-                                             <div class="col-md-6 form-group">
+                                             <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>Date Received:</label>
                                                           <input class="form-control" type="date"  min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" name="date" required>
+                                                    </div>
+
+
+
+
+                                             </div>
+                                        
+                                           <div class="col-md-4 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label>Received by:</label>
+                                                          <select  class="form-control " name="receivedBy" required >
+                                                                
+                                                                
+                                          <?php
+                                                if(!empty($user)){ 
+                                                   
+                                                         foreach($user as $object){ 
+                                                           echo '<option>'  .$object->u_fname ." ".  $object->u_lname.  '</option>' ;
+                                                           }
+                                                             
+                                                }
+                                            ?> 
+                                                          </select>
                                                     </div>
 
 
@@ -508,12 +528,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <tr>
                                                         <th>Item Name</th>
                                                         <th>Type</th>
-                                                        <th>Original Qty/Weight(g)</th>
-                                                        <th>Qty/Weight</th>
+                                                        <th>Original Qty</th>
+                                                        <th>Quantity</th>
+                                                        <th>Original Weight</th>
+                                                        <th>Weight(g)</th>
                                                         <th>Yield Weight(g)</th>
-                                                        
-                                                        
-                                                        <th>Received By</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -559,59 +578,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                  <td>
                                                       <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type  ?>" readonly /> 
-                                                </td>     
+                                                </td> 
+                                                    
+                                                    <td>
+                                                    </td>
+                                                            
+                                                    <td>
+                                                    </td>
+                                                    
                                                          
                                                    <td>
                                                       <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
                                                       
-                                                    </td>   
-                                                    
-                              
+                                                   </td>   
                                                     
                                                 <td>
                                                      
-                                                    <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                    <input type="number"  step="0.01" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
                                                 <td>
-                                                      <input  type="number" class="form-control" maxlength="4" name="yield_weight[]" min="0"  max= "<?php echo $object->qty-$object->received ?>"  id ="<?php echo "yield_weight".$i?>"> 
+                                                      <input  type="number"  step="0.01" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
                                                 </td>   
-                                                    
-                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                
-                                                <td>
-                                                         <select  class="form-control " name="receivedBy[]" >
-                                                                
-                                                                
-                                          <?php
-                                                if(!empty($user)){ 
-                                                   
-                                                         foreach($user as $object){ 
-                                                           echo '<option>'  .$object->u_fname ." ".  $object->u_lname.  '</option>' ;
-                                                           }
-                                                             
-                                                }
-                                            ?> 
-                                                          </select>
-                                                     
-                                                     
-                                                   </td> 
-                                                      
+                                                   <!--              <?php echo (($object->qty-$object->received)) ?>   -->
                              
                                                  <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
                                                  <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" >    
                                                  <?php  
                                                 '</tr>'; 
+                                         
+                                         
+                                         
+                                         
                                      }else{
                                         
                                          echo        
@@ -629,17 +628,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>     
                                                          
                                                    <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
+                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly  />
                                                   
                                                     </td>   
-                                                    
-                              
-                                                    
-                                                <td>
+                                        <td>
                                                      
-                                                    <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
-                                                </td>
+                                        </td>
                                                     
                                                     
                                                     
@@ -649,7 +645,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <td>
                                                       <input  type="hidden" class="form-control"  name="yield_weight[]" value="0" > 
                                                 </td>   
-                                          <!--          
+                                               <!--     
                                                     
                                                 <td>
                                                      
@@ -658,29 +654,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>  
                                              -->      
                                                     
-                                                    
-                                                    
-                                                    
-                                                
-                                                <td>
-                                                         <select  class="form-control " name="receivedBy[]" >
-                                                                
-                                                                
-                                          <?php
-                                                if(!empty($user)){ 
-                                                   
-                                                         foreach($user as $object){ 
-                                                           echo '<option>'  .$object->u_fname ." ".  $object->u_lname.  '</option>' ;
-                                                           }
-                                                             
-                                                }
-                                            ?> 
-                                                          </select>
-                                                     
-                                                     
-                                                   </td> 
-                                                      
-                             
                                                  <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
                                                  <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" readonly />   
                                                  <?php  
@@ -689,11 +662,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                               $i++;
                                         
                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
                                                   
                                                   
                                               }
@@ -711,7 +679,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="panel-footer" align="center" style="margin-bottom:-14px;">
                                 <button type="submit" name = "submit"  class="btn btn-success accept">Save</button>
-                                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
+                                <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">CLOSE</button>
                                 
                                 
                                 
@@ -744,22 +712,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($order as $object){
             $temp =  $object->supp_po_id; 
              $sup_id = $object->sup_id;   
-           
+           $dateMin = $object->suppPO_date;
 ?>
                                              
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="panel panel-primary">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                   
+                                       <center><b>Details</b>
+                                            <br>
+                                            
+                                            <?php 
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             ?>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br>
+                                            <b><?php echo "PO #".$temp ?></b></center> 
+
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
@@ -767,7 +742,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                    
                                                     <th>Item Name</th>
                                                     <th>Type</th>
-                                                    <th>Quantity/Weight(g)</th>
+                                                    <th>Quantity</th>
+                                                    <th>Weight(g)</th>
                                                     <th>Unit Price</th>
                                                     <th>Amount</th>
                                                 </tr>
@@ -787,17 +763,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               $query = $this->db->query($retrieveDetails);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
+                                              $category   = $object->category;   
+                                                  
+                                                  
+                                                  
+                                       if($category == 1){           
                                            echo '<tr>' ,
                                                
                                                 '<td>'  . $object->item   . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
+                                                '<td>'  .  '</td>' ,
                                                 '<td>'  .    number_format($object->qty)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->amount,2)  . '</td>' ,
                                                 '</tr>' ;
-                                              }
+                                              }else{
+                                                echo '<tr>' ,
+                                               
+                                                '<td>'  . $object->item   . '</td>' ,
+                                                '<td>'  . $object->type  . '</td>' ,
+                                                '<td>'  .    number_format($object->qty)  . '</td>' ,
+                                                '<td>'  .  '</td>' ,
+                                                '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
+                                                '<td>Php '  . number_format($object->amount,2)  . '</td>' ,
+                                                '</tr>' ;
+                                           
+                                       }
                                             }
                                            }
+                                         }
                                         ?>    
                                                 
                                                 
@@ -812,7 +806,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>
                             <div class="panel-footer" align="center" style="margin-bottom:-14px;">
-                                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
+                                <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">CLOSE</button>
                             </div>
                         </form>
                     </div>
@@ -893,7 +887,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th colspan="2"><center><b>Actions</b></center></th>
+                                            <th></th>
+                                            <th></th>
                                             
                                         </thead>
                                         <tbody>
@@ -922,8 +917,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                                                               
                                                
-                                            <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a></center></td>
-                                            <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></center></td>
+                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> </td>
+                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></td>
                                             
                                             
                                             
@@ -973,47 +968,93 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script type="text/javascript">
     
-
     
-                                                  
-      <?php
+<?php
+      $c = 1;
+        if(!empty($order)) {                                
+           foreach($order as $object){
+            $temp =  $object->supp_po_id;
+            $sup_id = $object->sup_id;   
+            $dateMin = $object->suppPO_date;
+
+
+        
+                        
            
-           $c = 1; 
-          
-    foreach($order as $object){
-       $temp =  $object->supp_po_id;
-          
-         
-        
-        
-         $i = 1; //after every PO it returns to 1
-         $arrayItem = array("raw_coffee","sticker","packaging","machine");
-         $arrayOn   = array("raw_coffee","sticker","package_type","brewer");
-         $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
-        
-        
-            for($table = 0 ; $table < 4 ; $table++){
-                 $retrieveDetails ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp." and sup_id = ".$sup_id." and type =".$arrayType[$table];
-                                    
-                        $query = $this->db->query($retrieveDetails);
-                                       
-                    
-                       if ($query->num_rows() > 0){
-                              foreach ($query->result() as $object){
-               ?>                               
+               
+
+             $i = 1;  
+                 $arrayItem = array("raw_coffee","sticker","packaging","machine");
+                 $arrayOn = array("raw_coffee","sticker","package_type","brewer");
+                 $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
+               
+                 for($table = 0 ; $table < 4 ; $table++){
+                          
+                     $retrievePartial ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id = ".$temp ." and supp_po_ordered.delivery_stat = 0 and sup_id = ".$sup_id." and received != qty and type =".$arrayType[$table];               
+                                                    
+                         
+                                              $query = $this->db->query($retrievePartial);
+                       
+                                              if ($query->num_rows() > 0) {
+                                                               
                                                   
-  $(document).ready(function(){   
+                                                  //used for the id counter in qty,yield_weild,yield
+                                              foreach ($query->result() as $object) {
+                                              $tempItemId = $object->supp_po_ordered_id;
+                                              $category   = $object->category;
+                                              
+                                           
+                                                  
+    if($category == 1){ 
+        ?>
+                                         $(document).ready(function(){   
+              
+           
       
-           $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).keyup(function(){
+      
+       $(<?php echo "'#partial".$c." input[id=received".$i."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
-			var x = parseFloat($(<?php echo "'#partial".$c." input[id=received".$i."]'"?>).val());
-			var res = x - y ;
-			$(<?php echo "'#partial".$c." input[id=yield".$i."]'"?>).val(res);
-               
-               
-    });           
-           
-            $(<?php echo "'#partial".$c." input[id=received".$i."]'"?>).keyup(function(){
+            var minimun = y * .80;
+            if($(this).val().length !=0){
+                $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).removeAttr('disabled');
+                $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).attr("min", minimun );
+                $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).attr("max", y );
+                
+           }else{
+               $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).attr('disabled', 'disabled');
+            }
+          });
+      
+      
+      
+      
+      
+      
+                            
+}); 
+                                             
+     <?php                                        
+             }
+                $i++;
+                                        
+                  }
+                                              
+                   }
+                  }
+                                  
+               $c++;
+              }
+           }      
+ ?>      
+    
+    
+    
+    
+    
+   
+   /*                    
+                            
+          $(<?php echo "'#partial".$c." input[id=received".$i."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
 			var x = parseFloat($(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).val());
 			var res = x - y ;
@@ -1021,67 +1062,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).attr("max", y )
                
                
-    });           
-               
-
-      
+    }); 
+    */
+    
+    
+    
+    
+    
  
-
-      
-      
-      
-      
-      
     
-    /*  I removed the full
-                                  
-            $(<?php echo "'#full".$c." input[id=yield_weight".$i."]'"?>).keyup(function(){
-            var y = parseFloat($(this).val());
-			var x = parseFloat($(<?php echo "'#full".$c." input[id=delivered".$i."]'"?>).val());
-			var res = x - y ;
-			$(<?php echo "'#full".$c." input[id=yield".$i."]'"?>).val(res);
-                
-    */   
-                
-                
-                
-                
-                
-                
-     /*           
-     document.getElementById(<?php echo "submitPartial".$c ?>).onclick = function() {
+    
+    
+    
+    
+    
+			
    
-	      var sendDate = document.getElementById(<?php echo "poPartialDate".$i ?>).value
-          sendDate = new Date(Date.parse(sendDate.replace(/-/g,' ')))
-	      today = new Date();
-	      today.setHours(0,0,0,0)
-	      if (sendDate < today) {
-		      alert('Invalid Date');
-		      return false;
-	       }  
-    
-}    
-    */            
-                
-                
-});      
-});   
     
     
     
     
-<?php                                                  
-                                                  
-                        $i++;
-                      }
-                       
-                 }
-                       
-            }
-       $c++;
-     }
-               
-?>
     
     
  $(document).ready(function() {
@@ -1093,8 +1093,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 });
     
-    
-    
+
        
     
 
