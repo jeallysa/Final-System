@@ -276,10 +276,6 @@ a:focus {
                                                     </div>
                                                 </td>
 
-                                                <td>
-                                                                    <a href='#' class="btn btn-warning btn-sm" data-toggle="modal" data-target="#password<?php echo $row->user_no; ?>">Reset</a>
-                                                        </td>
-
                                                 <div class="modal fade" id="deactivate<?php echo $row->user_no;?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="panel panel-primary">
@@ -376,10 +372,8 @@ a:focus {
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <div class="panel-footer" style="margin-bottom:-14px;">
+                                                                                <div class="panel-footer" style="margin-bottom:-14px;" align="right">
                                                                                     <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
-                                                                                    <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                                                                    <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                               

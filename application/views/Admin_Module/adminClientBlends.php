@@ -228,10 +228,8 @@ a:focus {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="panel-footer" style="margin-bottom:-14px;">
+                                    <div class="panel-footer" style="margin-bottom:-14px;" align="right">
                                         <input type="submit" class="btn btn-success" value="Add" style="float: right;" />
-                                        <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                        <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>

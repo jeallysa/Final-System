@@ -222,13 +222,16 @@ a:focus {
                                         </select>
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-success" value="Save" />
-                                <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                <input type="reset" class="btn btn-danger" value="Clear" />
-                                <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                 <a href="<?php echo base_url(); ?>adminClients" style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</a>
+                               
+                                 <div align="right">
+                                        <input type="submit" class="btn btn-success" value="Save" />
+                                        <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                        <input type="reset" class="btn btn-danger" value="Clear" />
+                                        <!--<span class="glyphicon glyphicon-remove"></span>-->
+                                    </div>
                             
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>

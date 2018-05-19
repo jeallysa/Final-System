@@ -225,7 +225,7 @@ a:focus {
                                             <tr>
                                                 <th><b>Supplier No.</b></th>
                                                 <th><b>Supplier</b></th>
-                                                
+                                                <th><b>Date Registered</b></th>
                                                 <th><b>Contact Personnel</b></th>
                                                 <th><b>Position</b></th>
                                                 <th><b>Address</b></th>
@@ -249,7 +249,7 @@ a:focus {
                                                     <tr>
                                                     <td>SP-<?php echo $row->sup_id; ?></td>
                                                     <td><?php echo $row->sup_company; ?></td>
-                                                     
+                                                     <td><?php echo $row->date_reg; ?></td>
                                                     <td><?php echo $row->contact_personnel; ?></td>
                                                     <td><?php echo $row->sup_position; ?></td>
                                                     <td><?php echo $row->sup_address; ?></td>
@@ -387,10 +387,8 @@ a:focus {
                                                                     </div>
 
                                                                     <div class="row">
-                                                                        <div class="panel-footer" style="margin-bottom:-14px;">
+                                                                        <div class="panel-footer" style="margin-bottom:-14px;" align="right">
                                                                             <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
-                                                                            <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                                                            <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
                                                                         </div>
                                                                     </div>
                                                                       
