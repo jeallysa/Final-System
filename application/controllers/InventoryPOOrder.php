@@ -30,6 +30,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
         
         
+        
+        
+        
+    public function archive(){
+        $supp_po_id = $this->input->post('supp_po_id');
+        $date       = $this->input->post('date');
+        
+        $this->inventoryPOOrder_model->archive($supp_po_id , $date);
+          
+          
+        redirect(base_url('inventoryPOOrder'));
+      }    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
    
         public function insertPartial($temp){
            

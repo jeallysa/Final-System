@@ -268,6 +268,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                            <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                             
                                         </ul>
                                     </div>
@@ -844,7 +851,7 @@ document.getElementById('addToTemp').onclick = function() {
                   var status = data['status'];
                   var reorder = data['reorder'];
                   var stocks = data['stocks'];
-                  var total = reorder - stocks;
+                  var total = reorder - stocks + 1;
                   
                   
                   

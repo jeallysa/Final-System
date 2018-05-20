@@ -189,7 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
                                                  
                                              }
                                       }
@@ -695,6 +695,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                <li class="">
                                                 <a href="<?php echo base_url(); ?>inventoryPOTransactionHistory">
                                                     Transaction History
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
+                                                <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>

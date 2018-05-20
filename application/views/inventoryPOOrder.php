@@ -723,6 +723,90 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
      
 
+            
+            
+            
+                 
+  <!----------------------------------------------------------Archive -------------------------------------->           
+          
+    <?php
+      $archive = 1;
+        if(!empty($order)) {                                
+           foreach($order as $object){
+            $temp =  $object->supp_po_id;
+            $sup_id = $object->sup_id;   
+            $dateMin = $object->suppPO_date;
+               
+               
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                           
+                                    
+?>                                                     
+                                    
+                                    
+    <div class="modal fade" id="<?php echo "archive" . $archive  ?>" role="dialog">
+      <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
+        </div>
+          
+    <form action="InventoryPOOrder/archive" method="post" accept-charset="utf-8">    
+        <div class="modal-body">
+            
+            
+            
+           <!-- <center><h3><b><p><?php echo $newDate ?></p></b></h3></center> -->
+            <center><h4><b><p>Are you sure you want to archive PO #<?php echo $temp ?></p></b></h4></center>
+           
+            
+             <input class="form-control" type="hidden"  name ="supp_po_id" value="<?php echo $temp ?>">
+             <input class="form-control" type="hidden"  name ="date" value="<?php echo $dateMin ?>">
+             
+            
+        </div>
+       
+               <div  align="center">
+                                 <button type="submit" class="btn btn-success accept">Yes</button>
+                                 <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">No</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+      
+    </div>
+                                          
+           
+            
+ <?php      
+         $archive++;        
+        }
+    }
+?>    
+                      
+ 
+            
+        <!----------------------------------------------------------END     OF     MODAL -------------------------------------->     
+            
+            
+                  
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    
 
 <?php
         $details = 1; 
@@ -884,6 +968,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                              <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                                 
                                                 
                                                 
@@ -906,6 +997,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
+                                            <th></th>
                                         </thead>
                                         <tbody>
                                             
@@ -931,10 +1023,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>' ;
                                         		                      
                                         ?>
-                                                                              
-                                               
-                                               <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
-                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></center></td>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+       <?php
+                 
+      
+                     $retrieveDetails ="select * from supp_po join supp_delivery using(supp_po_id) where supp_po.supp_po_id =" . $object->supp_po_id;
+                                              $query = $this->db->query($retrieveDetails);
+                                              if ($query->num_rows() > 0) { ?>
+                                            
+                                              <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                              </td>
+                                            <?php
+                                          
+                                              }else{ ?>
+                                              
+                                               <td>
+                                                   <center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                               </td>
+                                            
+                                               <td>
+                                                    <center><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a></center>
+                                               </td>
+                                            
+                                            
+                                            
+                                            <?php 
+                                            
+                                            }
+                                        ?>    
+                                                
+                                            
+                                            
+                                            
+                                            
                                             
                                             
                                             
