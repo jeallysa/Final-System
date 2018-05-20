@@ -51,7 +51,7 @@
 			$this->AdminStickers_model->activity_logs('admin', "Inserted Sticker: '".$name."'");	
 			$data = $this->security->xss_clean($data);
 			$this->AdminStickers_model->insert_data($data);
-			echo "<script>alert('Update successful!');</script>";
+			echo "<script>alert('Insert successful!');</script>";
 			redirect('adminStickers', 'refresh');
 		}
         
