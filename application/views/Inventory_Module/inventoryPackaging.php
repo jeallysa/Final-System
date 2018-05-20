@@ -251,11 +251,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
-                                                    <th><b>Client/Supplier</b></th>
-                                                    <th><b>Date</b></th>
-                                                    <th><b>Quantity (pc/s)</b></th>
-                                                    <th><b>Remarks</b></th>
-                                                    <th><b>Type</b></th>
+                                                    <th><b>CLIENT/SUPPLIER</b></th>
+                                                    <th><b>DATE</b></th>
+                                                    <th><b>QUANTITY (PC)</b></th>
+                                                    <th><b>REMARKS</b></th>
+                                                    <th><b>TYPE</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -490,17 +490,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
-                                            <th><b class="pull-left">Package</b></th>
-                                            <th><b class="pull-left">Size (g)</b></th>
-                                            <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level (pc/s)</b></th>
-                                            <th><b class="pull-left">Number of stocks (pc/s)</b></th>
-                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
-                                            <th><b class="pull-left">Discrepancy (pc/s)</b></th>
-                                            <th><b class="pull-left">Date of Inventory</b></th>
-                                            <th><b class="pull-left">Remarks</b></th>
-                                            <th><b class="pull-left">Stock Card</b></th>
+                                            <th><b class="pull-left">NO.</b></th>
+                                            <th><b class="pull-left">PACKAGING</b></th>
+                                            <th><b class="pull-left">SIZE (G)</b></th>
+                                            <th><b class="pull-left">SUPPLIER</b></th>
+                                            <th><b class="pull-left">REORDER LEVEL (PC)</b></th>
+                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
+                                            <th><b class="pull-left">PHYSICAL COUNT (PC)</b></th>
+                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
+                                            <th><b class="pull-left">INVENTORY DATE</b></th>
+                                            <th><b class="pull-left">REMARKS</b></th>
+                                            <th><b class="pull-left">STOCK CARD</b></th>
                                         </thead>
                                         <tbody>
                                             
