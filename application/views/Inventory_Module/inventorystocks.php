@@ -155,7 +155,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                        <i class="glyphicon glyphicon-bell"></i>
-                                        
                                        <span class="label-count"><b> <?php 
                                            
                               $total = 0;
@@ -173,21 +172,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                             
                                 <ul class="dropdown-menu">
-                                    
-                                   <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                   
+                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
                                 </ul>
-                            
+
                             </li>
+                            
 
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
@@ -231,7 +220,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           
            
 ?>
-                                             
+                               <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '</tr>' ;
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>              
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
