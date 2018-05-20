@@ -28,6 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
@@ -65,13 +72,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 		}
 		.navbar-default > li.active > a, .navbar-default > li.active > a:focus, .navbar-default > li.active > a:hover {
-			border-top: 1px solid #75DAE2 !important;
-			border-right: 1px solid #75DAE2 !important;
-			border-left: 1px solid #75DAE2 !important;
-			border-bottom: transparent !important;
-			background-color: #75DAE2 !important;
-			color: white !important;
-		}
+            border-top: transparent !important;
+            border-right: transparent !important;
+            border-left: transparent !important;
+            border-bottom: transparent !important;
+            background-color: #75DAE2 !important;
+            color: white !important;
+        }
 		.navbar-default > li.active > a {
 			color: white!important; 
 			float: none !important;
@@ -305,7 +312,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <tr>
                                                                 <th><b>Sales Invoice No.</b></th>
                                                                 <th><b>Purchase Date</b></th>
-                                                                <th><b>Client</b></th>
                                                                 <th><b>Coffee</b></th>
                                                                 <th><b>Packaging</b></th>
                                                                 <th><b>Size</b></th>
@@ -320,7 +326,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <tr>
                                                                 <td><?php echo $row->walkin_id; ?></td>
                                                                  <td><?php echo $row->walkin_date; ?></td>
-                                                                 <td>Walk-in</td>
                                                                  <td><?php echo $row->blend; ?></td>
                                                                  <td><?php echo $row->package_type; ?></td>
                                                                  <td><?php echo number_format($row->package_size); ?> g</td>
