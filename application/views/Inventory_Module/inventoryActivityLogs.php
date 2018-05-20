@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Activity Log</title>
+    <title>Activity Logs</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -148,26 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                                
        <!------------------                                          NOTIFICATION                    ---------------------------------->           
                             
@@ -175,7 +156,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-bell"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
                                         
                                        <span class="label-count"><b> <?php 
                                            
@@ -208,6 +188,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                    
                                 </ul>
                             
+                            </li>
+
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                         <i class="glyphicon glyphicon-user"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
+                                    </li>
+                                </ul>
                             </li>
                             
                             

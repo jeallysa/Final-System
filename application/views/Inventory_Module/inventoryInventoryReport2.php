@@ -145,26 +145,7 @@ input {
                                         ?>
                                 </li>
                            
-                            <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                                
        <!------------------                                          NOTIFICATION                    ---------------------------------->           
                             
@@ -172,7 +153,6 @@ input {
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="glyphicon glyphicon-bell"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
                                        <span class="label-count" style='background-color: #f44336;'> <?php 
                                            
                               $total = 0;
@@ -204,6 +184,27 @@ input {
                                    
                                 </ul>
                             
+                            </li>
+
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                         <i class="glyphicon glyphicon-user"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
+                                    </li>
+                                </ul>
                             </li>
                             
                             
