@@ -227,7 +227,7 @@ a:focus {
                                  <div class="row">
                                     <div class="col-md-6 form-group">
                                           <div class="form-group label-floating">
-                                            <label for="email">Type of Sticker</label>
+                                            <label for="email">Type</label>
                                             <select class="form-control" type="text" name="sticker_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
                                                <option value="paper">Paper</option>
                                                 <option value="plastic">Plastic</option>
@@ -246,7 +246,7 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Supplier</label>
-                                            <select id="editSupplier" class="form-control" name="sup_company" required>
+                                            <select class="form-control" name="sup_company" required>
                                                 <option disabled selected value></option>
                                                 <?php 
 
@@ -260,7 +260,7 @@ a:focus {
                                     </div>
                                      <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Reorder Level</label>
+                                            <label for="email">Reorder Level (pc)</label>
                                             <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -443,7 +443,7 @@ a:focus {
                                                                  <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Type of Sticker</label>
+                                                                            <label for="email">Type</label>
                                                                             <select class="form-control" type="text" name="sticker_type" value="<?php echo $row->sticker_type; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
                                                                                 <option value="paper">Paper</option>
                                                                                 <option value="plastic">Plastic</option>
@@ -478,7 +478,7 @@ a:focus {
                                                                         </div>
                                                                      <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Reorder Level</label>
+                                                                            <label for="email">Reorder Level (pc)</label>
                                                                             <input class="form-control" value="<?php echo $row->sticker_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
