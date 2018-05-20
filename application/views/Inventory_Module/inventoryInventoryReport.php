@@ -128,39 +128,8 @@ input {
                                         ?>
                                 </li>
                            
-                            
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
                             <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            
-                            
-                                <ul class="dropdown-menu">
-                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
-                                </ul>
-
-                            </li>
-                            
-
-                            <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
@@ -179,10 +148,50 @@ input {
                                     </li>
                                 </ul>
                             </li>
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                       <i class="glyphicon glyphicon-bell"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                       <span class="label-count" style='background-color: #f44336;'> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </span> </a>
                             
                             
                             
-    <!------------------                                          NOTIFICATION                    ---------------------------------->            
+                            
+                                <ul class="dropdown-menu">
+                                    
+                                   <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                   
+                                </ul>
+                            
+                            </li>
+                            
+                            
+                            
+    <!------------------                                          NOTIFICATION                    ---------------------------------->           
 
                         
                         </ul>
@@ -190,43 +199,6 @@ input {
                 
                 </div>
             </nav>
-            <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
-                                        </div>
-                                        <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
-                                                <thead>
-                                                <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
-                                                    <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '</tr>' ;
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -306,15 +278,17 @@ input {
                                                 $conntitle->close();
                                                 ?>
                                             </tr>
+                                            
                                             <tr id="dt-header">
                                                 <td><b>Beginning Inventory</b></td>
                                                 <td></td>
                                                 <?php
-                                                $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                
+                                                $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 if (isset($month_filt)){
                                                     if($month_filt == '1'){
                                                         foreach ($query->result() AS $row){
-                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12;" ;
+                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = 12;" ;
                                                     
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
@@ -325,7 +299,7 @@ input {
                                                         }
                                                     }else{
                                                         foreach ($query->result() AS $row){
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = ".$month_filt."- 1;" ;
+                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt."- 1;" ;
                                                     
                                                           $query3 = $this->db->query($begin);
                                                           if ($query3->num_rows() > 0) {
@@ -342,9 +316,9 @@ input {
                                                 foreach ($query->result() AS $row){
                                                     $query4 = $this->db->query("SELECT month(now()) AS this_month");
                                                     if($query4->row()->this_month == '1'){
-                                                $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12;" ;
+                                                $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE raw_coffee = '".$row->raw_coffee."' and month(transact_date) = 12;" ;
                                                     }else{
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now()) - 1;" ;
+                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1;" ;
                                                     }
                                               $query5 = $this->db->query($begin);
                                               if ($query5->num_rows() > 0) {
@@ -401,9 +375,9 @@ input {
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
                                                   $query6 = $this->db->query($totalin);
                                                   if ($query6->num_rows() > 0) {
                                                   foreach ($query6->result() as $object) {
@@ -412,9 +386,9 @@ input {
                                                     }
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'IN' and month(transact_date) = month(now());" ;
+                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now());" ;
                                                   $query7 = $this->db->query($totalin);
                                                   if ($query7->num_rows() > 0) {
                                                   foreach ($query7->result() as $object) {
@@ -423,12 +397,14 @@ input {
                                                     }
                                                 }
                                                 }
+                                                
                                                 ?>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                                 </div><hr>
+                                
                    <div class="row">
                         <div class="card-content table-responsive">
                             <table id="coffeeout" class="table hover order-column" cellspacing="0" width="100%">
@@ -494,6 +470,7 @@ input {
 
                                                 ?>
                                         </tbody>
+                                        
                                         <tfoot>
                                             <tr>
                                                 <th>Total</th>
@@ -501,9 +478,9 @@ input {
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalout ="SELECT sum(quantity) as totalout from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = '".$month_filt."';" ;
                                                   $query8 = $this->db->query($totalout);
                                                   if ($query8->num_rows() > 0) {
                                                   foreach ($query8->result() as $object) {
@@ -512,9 +489,9 @@ input {
                                                     }
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = month(now());" ;
+                                                  $totalout ="SELECT sum(quantity) as totalout from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = month(now());" ;
                                                   $query9 = $this->db->query($totalout);
                                                   if ($query9->num_rows() > 0) {
                                                   foreach ($query9->result() as $object) {
@@ -531,9 +508,9 @@ input {
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = '".$month_filt."';" ;
+                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."';" ;
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
@@ -542,9 +519,9 @@ input {
                                                     }
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now());" ;
+                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now());" ;
                                                   $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {
@@ -553,10 +530,12 @@ input {
                                                     }
                                                 }
                                                 }
+                                                
                                                 ?>
                                                 
                                             </tr>
                                         </tfoot>
+                                        -->
                                     </table>
                                 </div>
                             </div>
@@ -648,6 +627,7 @@ $(document).ready(function() {
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
+
 		buttons: [
             { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
                 customize: function ( win ) { 
@@ -675,7 +655,9 @@ $(document).ready(function() {
                         doc.styles.title.fontSize = 12;
                          doc.content[1].table.widths = [ '14%', '14%', '14%', '14%', '14%', '14%', '14%', '14%']; }
             }
-        ]
+        ];
+
+
       
     });
 
