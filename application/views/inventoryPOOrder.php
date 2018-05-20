@@ -137,40 +137,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
-                            <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            
-                            
-                                <ul class="dropdown-menu">
-                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
-                                </ul>
-
-                            </li>
-                            
-
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                        <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -188,10 +157,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </li>
                                 </ul>
                             </li>
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="glyphicon glyphicon-bell"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                        
+                                       <span class="label-count"><b> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </b></span> </a>
                             
                             
                             
-    <!------------------                                          NOTIFICATION                    ---------------------------------->         
+                            
+                                <ul class="dropdown-menu">
+                                    
+                                   <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                   
+                                </ul>
+                            
+                            </li>
+                            
+                            
+                            
+    <!------------------                                          NOTIFICATION                    ---------------------------------->           
 
                         
                         </ul>
@@ -203,43 +213,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-<div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
-                                        </div>
-                                        <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
-                                                <thead>
-                                                <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
-                                                    <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '</tr>' ;
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+
 
 
 
@@ -574,9 +548,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Type</th>
                                                         <th>Original Qty</th>
                                                         <th>Quantity</th>
-                                                        <th>Original Weight</th>
-                                                        <th>Weight(g)</th>
-                                                        <th>Yield Weight(g)</th>
+                                                        <th>Original Weight(Kg)</th>
+                                                        <th>Weight(Kg)</th>
+                                                        <th>Yield Weight(Kg)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -871,7 +845,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(g)</th>
+                                                    <th>Weight(Kg)</th>
                                                     <th>Unit Price</th>
                                                     <th>Amount</th>
                                                 </tr>
@@ -1023,7 +997,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
-                                            <th></th>
+                                            
+                                            
+                                           
                                         </thead>
                                         <tbody>
                                             
@@ -1051,14 +1027,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                             
                                             
-                                            
-                                            
-                                            
-                                            
        <?php
-                 
-      
-                     $retrieveDetails ="select * from supp_po join supp_delivery using(supp_po_id) where supp_po.supp_po_id =" . $object->supp_po_id;
+                 $retrieveDetails ="select * from supp_po join supp_delivery using(supp_po_id) where supp_po.supp_po_id =" . $object->supp_po_id;
                                               $query = $this->db->query($retrieveDetails);
                                               if ($query->num_rows() > 0) { ?>
                                             
@@ -1066,11 +1036,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
                                                    </center>
                                               </td>
+                                             
                                             <?php
                                           
                                               }else{ ?>
                                               
-                                               <td>
+                                                <td>
                                                    <center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
                                                    </center>

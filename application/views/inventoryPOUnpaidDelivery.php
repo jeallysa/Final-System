@@ -20,6 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css"/>
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" rel="stylesheet" />
     
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="css.css" />
@@ -138,40 +139,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
-                            <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            
-                            
-                                <ul class="dropdown-menu">
-                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
-                                </ul>
-
-                            </li>
-                            
-
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                        <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -189,10 +159,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </li>
                                 </ul>
                             </li>
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="glyphicon glyphicon-bell"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                        
+                                       <span class="label-count"><b> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </b></span> </a>
                             
                             
                             
-    <!------------------                                          NOTIFICATION                    ---------------------------------->          
+                            
+                                <ul class="dropdown-menu">
+                                    
+                                   <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                   
+                                </ul>
+                            
+                            </li>
+                            
+                            
+                            
+    <!------------------                                          NOTIFICATION                    ---------------------------------->           
 
                         
                         </ul>
@@ -205,43 +216,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-<div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
-                                        </div>
-                                        <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
-                                                <thead>
-                                                <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
-                                                    <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '</tr>' ;
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+
 
 
 
@@ -259,138 +234,124 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="card card-nav-tabs" >
                                 
-                                
+                          
                                 
                                 
                                 
                                 
                                  <!--------------------------- Not using  ------------------------------->       
-                            
-                                
- <?php
-     $full = 1;
+<?php
+     $return = 1;
      if(!empty($unpaid)) {                                
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
-?>                                 
-                                    
-                               <!--------------------------- MODAL Full Payment ------------------------------->
+            $dateMin = $object->suppPO_date;
+                
+                
+                                             $oldDate = $object->suppPO_date;
+                                             $arr = explode('-', $oldDate);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+?>                           
                                 
-                                <div class="modal fade" id="<?php echo "full" . $full   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="panel panel-primary modal-content">
-                                            <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Balance</center> </h4>
-                                            </div>
-
-                                            <form action="InventoryPOUnpaidDelivery/insertFullPayment/<?php echo $temp ?>" method="post" accept-charset="utf-8">
-                                            <div class="modal-body" style="padding: 0px;">
-                                                <table class="table table-striped" id="table-mutasi">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Item Name</th>
-                                                            <th>Type</th>
-                                                         <!--   <th>Yield Weight(g)</th> -->
-                                                            <th>Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                                         
-               <?php
-                 //$i = 1;
-                 $arrayItem = array("raw_coffee","sticker","packaging","machine");
-                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");
-                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
-                         for($table = 0 ; $table < 4 ; $table++){
-                          
-                             $retrieveDetails ="SELECT * FROM supp_po_ordered join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
-                             ".$sup_id ." and  type = ".$arrayType[$table]." and supp_po_ordered.supp_po_id = $temp"  ;  
+             
+        <div class="modal fade" id="<?php echo "return" . $return   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span>Add New Return</h4>
+                        </div>
+                        <form action="InventoryPOUnpaidDelivery/insertReturn" method="post" accept-charset="utf-8">
+                            <div class="modal-body" style="padding: 5px;">
+                                <div class="row">
                              
-                            $query = $this->db->query($retrieveDetails);
-                       
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                                  $tempItemId = $object->supp_po_ordered_id;
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->item   . '</td>' ,
-                                                '<td>'  . $object->type  . '</td>' ,
-                                              //  '<td>'  . $object->yield_weight. '</td>' ,
-                                                '<td>Php '  .number_format($object->amount,2)  . '</td>' ;
-                                            ?>
-                                                <td><input class="form-control" type="hidden"  id="poId" value="<?php echo $temp ?>" />   </td>       
-                                    <?php                    
-                                                '</tr>' ;
-                                                
-                                              }
-                                            }
-                                         } 
-                                            ?>
-                                                        <tr>
-                                                            <td>Trucking Fee</td>
-                                                            <td></td>
-                                                          
-                                                            <td><input class="form-control" type="number"  id="truckingFee" readonly disabled /></td>
-                                                            
-                                                        </tr>       
-                                                    </tbody>
-                                                </table>
-                                                <div class="container"  >
-                                                    <div class="row justify-content-end"  >
-                                                        <div class="col-md-6 form-group" >
-                                                            <div class="form-group label-floating">
-                                                                    <div class="row">
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group label-floating">
-                                                                            <label>Total Balance:</label>
-                                                           <input class="form-control" type="text" value="" id="total" readonly disabled />
-                                                                             </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="col-md-4">
-                                                                             <div class="form-group label-floating">
-                                                                            <label>Remaining Balance</label>
-                                                                             <input class="form-control" type="text" id="remaining" readonly disabled />
-                                                                             </div>
-                                                                        </div>    
-                                                                   </div>      
-                                                                 <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group label-floating">
-                                                                                  <label>Date of Payment:</label>
-                                                                                  <input class="form-control" type="date"  min="<?php echo $dateMin ?>" max ="<?php echo date("Y-m-d")?>" name="date" required>
-                                                                                </div>
-                                                                            </div>
-                                                                          
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group label-floating">
-                                                                                  <label>Bank:</label>
-                                                                                  <input class="form-control" type="text" name="bank" required>
-                                                                                </div>
-                                                                            </div>
-                                                                 </div>
-                                                                        <div class="row">
-                                                                        </div>
-                                                                    
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><center>
-                                                <button type="submit" class="btn btn-success accept">Record Payment</button></center>
-                                            </div>
-                                            </form>    
+                                      <div class="col-md-6 form-group">
+                                        <div class="form-group label-floating">
+                                            <label for="email">Date</label>
+                                            <input class="form-control" type="date" name="date" min="<?php echo $dateMin ?>" max="<?php   echo date("Y-m-d") ?>" required>
                                         </div>
                                     </div>
-                                </div>                  
+                                </div>
                                 
-          <?php                       
-                   $full++;
+                                <div class="row">
+                                         
+                                    <div class="col-md-6 form-group">
+                                        <div class="form-group label-floating">
+                                           <label>DR #</label>
+                                           <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
+                                                <option value="">Select DR#</option> -->
+                                        <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
+                                                <option disabled selected value="">Select DR#</option>
+                                                
+                   <?php                              
+                          $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
+                             $query = $this->db->query($retrieveDetails);
+                                         if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                               echo '<option>'  . $object->drNo . '</option>' ;
+                                              }
+                                         }
+                                            ?>
+                                                     
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="col-md-6 form-group">
+                                        <div class="form-group label-floating">
+                                            <label for="item">Item Returned</label>
+                                            <select class="form-control" name="item" id="<?php echo "item".$return ?>" required>
+                                                <option disabled selected value="">Select Item</option>
+                                               
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                 
+                                </div>
+                                
+                                
+                                
+                                <div class="row">
+                                    
+                                    <div class="col-sm-6">
+                                        <label> <p id="qtywt">Quantity|Weight(Kg)</p></label>
+                                        <input class="form-control" type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required />
+                                    </div> 
+                                    
+                                    
+                                    <div class="col-sm-6">
+                                        <label> <p id="qtywt">Remarks</p></label>
+                                        
+                                        <input class="form-control" type="text" name="remarks" id="remarks"   required />
+                                    </div>
+                                    
+                                </div>
+                                
+                                      <input class="form-control" type="hidden" name="poNo" value="<?php echo $temp ?>"/>
+                                
+                            </div>
+                            <div class="panel-footer" style="margin-bottom:-14px;">
+                                <input type="submit" class="btn btn-success" value="Add" />
+                                <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                <input type="reset" class="btn btn-danger" value="Clear" />
+                                <!--<span class="glyphicon glyphicon-remove"></span>-->
+                                <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        <?php                       
+                   $return++;
                                
            }  
      }
- ?>                               
+ ?>                              
                                     
                                 
                                <!---- END MODAL PO BALANCE 1 ------> 
@@ -597,9 +558,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <th>Item Name</th>
                                                                         <th>Type</th>
                                                                         <th>Quantity</th>
-                                                                        <th>Weight(g)</th>
-                                                                        <th>Yield Weight(g)</th>
-                                                                        <th>Yield(g)</th>
+                                                                        <th>Weight(Kg)</th>
+                                                                        <th>Yield Weight(Kg)</th>
+                                                                        <th>Yield(Kg)</th>
                                                                         
                                                                     </tr>
                                                                 </thead>
@@ -758,9 +719,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                 <?php
                                             $i = 1;
-                                            $details = 'details';
-                                            $partial = 'partial';
-                                            $full    = 'full'; 
+                                           
                                     if(!empty($unpaid)) {  
                                           foreach($unpaid as $object){
                                               
@@ -779,10 +738,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                               
                                                <td>
                                                    <center>
-                                                   <!-- <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="# <?php echo $full . $i   ?>">Full Payment</a> -->
-                                                    <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $partial . $i   ?>">Payment</a>
-                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo $details . $i   ?>">Details</a>
-                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#">Return</a>
+                                                    <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo 'partial' . $i   ?>">Payment</a>
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
+                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
                                                    </center>
                                                </td>
                                             
@@ -830,6 +788,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script>
 <script type="text/javascript">
     
     
@@ -846,7 +805,7 @@ $(document).ready(function() {
     
     
     
-$(document).ready(function() {
+//$(document).ready(function() {
    // setInterval(function () {getRealData()}, 1000);//request every x seconds
 
  //}); 
@@ -874,13 +833,10 @@ $partial = 1;
               data:{poId : poId },
               dataType: 'json',
               success: function(data){
+                  
                    var total = data['total_amount'];  //use this syntax when returning a single row only data['total_amount'] column name in the query
                    
-                  
-                  
                    var payment =  data['payment'];
-                  
-                  
                   
                   
                    var truckingFee =  data['trucking_fee'];
@@ -912,6 +868,107 @@ $partial = 1;
   
     
     
+    
+$(document).ready(function() { 
+   
+         
+   <?php
+     $return = 1;
+     if(!empty($unpaid)) {                                
+           foreach($unpaid as $object){
+           $temp =  $object->supp_po_id;
+                         
+?>      
+     $(<?php echo "'#drList".$return."'"?>).on('change', function(){
+          var drList = $(this).val();
+             
+           $.ajax({
+              url:'<?php echo base_url(); ?>InventoryPOUnpaidDelivery/get_itemList' ,
+              method:"POST",
+              data:{drList : drList , supp_po_id : <?php echo $temp ?> },
+              dataType: 'json',
+              success: function(data){
+                //  alert("success");
+                  $(<?php echo "'#item".$return."'"?>).html(data);
+                   var n=1234.567;
+                   var parts = total.toFixed(2).split(".");                                                         //searched this on  stackoverflow
+                   var num = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+(parts[1] ? "." + parts[1] : "");  //searched this on  stackoverflow
+                   alert(num);
+        
+              },
+              error: function(){
+                   alert("error");
+                
+              }
+          });
+      }); 
+         
+<?php   
+               $return++;
+      }
+         
+   }   
+   ?>
+         
+         
+         
+         
+             
+         
+});
+    
+         
+  
+         
+         
+         
+$(document).ready(function() {  
+    
+ <?php
+     $return = 1;
+     if(!empty($unpaid)) {                                
+           foreach($unpaid as $object){
+           $temp =  $object->supp_po_id;
+                         
+?> 
+    
+    $(<?php echo "'#item".$return."'"?>).on('change', function(){
+          var item = $(this).val();
+          var drNo = document.getElementById(<?php echo "'drList".$return."'"?>).value;
+             
+           $.ajax({
+              url:'<?php echo base_url(); ?>InventoryPOUnpaidDelivery/get_max' ,
+              method:"POST",
+              data:{ item : item ,drNo : drNo , poNo : <?php echo $temp ?> },
+              dataType: 'json',
+              success: function(data){
+                //alert("success"); 
+              
+                 var newData = data; //data['max']; 
+                 
+                 $(<?php echo "'#returnQty".$return."'"?>).attr("max", newData);
+                 $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",newData);
+               
+              },
+              error: function(){
+                  alert("error");
+                
+              }
+          });
+      });  
+        
+        
+     <?php   
+               $return++;
+      }
+         
+   }   
+   ?>
+        
+        
+        
+   });
+    
  
     
     
@@ -923,19 +980,7 @@ $partial = 1;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  });  
+  //});  
         
     
        

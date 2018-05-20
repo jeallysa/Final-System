@@ -43,6 +43,86 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
         
+        
+        
+        
+                 
+     public function get_itemList(){    
+        $dr = $this->input->post('drList');
+        $supp_po_id = $this->input->post('supp_po_id'); 
+        
+        $results = $this->inventoryPOUnpaidDelivery_model->get_itemList($dr,$supp_po_id);
+        
+        if(count($results)>0){
+            $pro_select_box = '';
+            $pro_select_box .= '<option value="">Select Item</option>';
+            
+          foreach ($results as $object) {  
+             $pro_select_box .=' <option value="'.$object->supp_po_ordered_id.'">'.$object->item. " " .$object->type.'</option>';
+         }
+            echo json_encode($pro_select_box);
+            
+        }
+        
+    }  
+        
+        
+        
+        
+        
+        
+    public function get_max(){  
+        $poNo = $this->input->post('poNo');
+        $item = $this->input->post('item');
+        $drNo = $this->input->post('drNo');
+        
+           
+        
+        $result = $this->inventoryPOUnpaidDelivery_model->get_maxModel($poNo , $item, $drNo);
+        
+     
+          
+            echo json_encode($result);
+            
+        
+      
+    }    
+        
+        
+        
+        
+        public function insertReturn(){
+        
+          
+         $data = array(      "poNo"               => $this->input->post('poNo'),
+                             "drNo"               => $this->input->post('drList'),
+                             "sup_returnDate"     => $this->input->post('date'),
+                             "sup_returnItem"     => $this->input->post('item'),
+                             "sup_returnRemarks"  => $this->input->post('remarks'),
+                             "sup_returnQty"      => $this->input->post('returnQty'),
+                            );    
+        
+        $this->inventoryPOUnpaidDelivery_model->insertReturns($data);
+          
+         $this->inventoryPOUnpaidDelivery_model->updateStocks($data);  
+          
+          
+          
+          
+          
+        redirect(base_url('inventoryPOUnpaidDelivery'));
+      }   
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          public function insertPartialPayment($temp){
          $supp_po_id = $temp;
          $data = array(   "supp_po_id" => $temp,

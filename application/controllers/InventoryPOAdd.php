@@ -129,10 +129,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
         
-        
-        
-   
-     
     
       public function cancelPO(){
         $this->inventoryPOAdd_model->cancelPO();
@@ -156,9 +152,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   //Populate First The supplier supp_po.   
 
         $data['tempPO'] = $this->inventoryPOAdd_model->retrieveTemp();
-        $totalItemv = $this->input->post('totalItem');
-        $totalAmountv = $this->input->post('totalAmount'); 
-            
+       
+        $totalAmount = $this->input->post('totalAmount'); 
+        $totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
+          
         $datax = array();
             
          $i=0;   
@@ -232,6 +229,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                              "type"      => $this->input->post('itemType'),
                              "unitPrice" => $this->input->post('unitPrice'),
                              "amount"    => $this->input->post('amount'),
+                             "categoryx"    => $this->input->post('category'),
                             );    
         
         $this->inventoryPOAdd_model->insertTempOrder($dataInsert);
@@ -243,6 +241,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
              
      public function insertSupplierToTemp(){
+         //Empty Temp then insert New
          $this->inventoryPOAdd_model->emptyTemp();   
          
          

@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
                                                                                                                     
  if($category[$i] == 1){                                                                                                                 
-           if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) && !empty($receivedByv[$i]) )){   
+           if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) )){   
               
                                    //Data used for mapping 
                 $data3 = array(
@@ -122,8 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  }  else{
      
      
-     if((!empty($receivedv[$i]) && !empty($receivedByv[$i]) )){   
-              
+     if((!empty($receivedv[$i]))){   
                                    //Data used for mapping 
                 $data3 = array(
                     "drNo"=>$DRNO,
@@ -134,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     "yield_weight" => $receivedv[$i],
                     'received' => $receivedv[$i],
                     "date_received" => $datev,
-                    "received_by" =>$receivedByv[$i],
+                    "received_by" =>$receivedByv,
                     "supp_po_id"    => $temp,
                 );
             
@@ -148,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     'yields' => " ",
                     'received' => $receivedv[$i],
                     'date_received' => $datev,
-                    'received_by' =>$receivedByv[$i],
+                    'received_by' =>$receivedByv,
                     'supp_po_id'    => $temp,
 
                 );

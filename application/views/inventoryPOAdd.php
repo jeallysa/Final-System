@@ -155,40 +155,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
-                            <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            
-                            
-                                <ul class="dropdown-menu">
-                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
-                                </ul>
-
-                            </li>
-                            
-
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
+                                       <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -206,10 +175,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </li>
                                 </ul>
                             </li>
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="glyphicon glyphicon-bell"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                        
+                                       <span class="label-count"><b> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </b></span> </a>
                             
                             
                             
-    <!------------------                                          NOTIFICATION                    ---------------------------------->         
+                            
+                                <ul class="dropdown-menu">
+                                    
+                                   <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                   
+                                </ul>
+                            
+                            </li>
+                            
+                            
+                            
+    <!------------------                                          NOTIFICATION                    ---------------------------------->           
 
                         
                         </ul>
@@ -218,43 +228,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>            </nav>
         
         
-        <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
-                                        </div>
-                                        <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
-                                                <thead>
-                                                <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
-                                                    <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '</tr>' ;
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+        
         
         <div class="content">
             <div class="container-fluid">
@@ -390,8 +364,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php 
                                            if(!empty($TempOrdered)){
                                                        ?>                       
-                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' disabled>   
-                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline" disabled >Cancel</button>
+                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-secondary accept' disabled>   
+                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >Cancel</button>
                                                    <?php 
                                            }else{ ?>
                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
@@ -514,9 +488,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                       <input type="number"  class="form-control" name="amount"   id = "amount"  readonly/> <!-- When I put a disabled here I cant save the value -->
                                                             </td>
                                                                     
-                                              <!--              <td class="col-sm-3">
-                                                      <input type="hidden"  class="form-control" name="category"   id = "category"  value ="<?php echo $object->category ?>" readonly/> 
-                                                            </td>       -->
+                                                           <td class="col-sm-3">
+                                                      <input type="hidden"  class="form-control" name="category"   id = "category"  readonly/> 
+                                                            </td>     
                                                                   
                                                                 </tr>
                                                          <tr>
@@ -553,8 +527,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b>Quantity|Weight</b></th>
-                                                                   <!-- <th><b>Weight</b></th> -->
+                                                                    <th><b>Quantity</b></th>
+                                                                    <th><b>Weight(Kg)</b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -568,15 +542,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     if(!empty($TempOrdered)){
                                                                          foreach ($TempOrdered as $object) {
                                                                           $item = $object->idsupp_temp_po_order;
+                                                                          $category = $object->categoryx;   
+                   if($category == 1){                                                          
                                                                          echo '<tr>' ,
-                                                                        
-      '<td class="col-sm-3 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
-      '<td class="col-sm-3"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,    
+      '<td class="col-sm-2" >  </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,                 
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
-      '<td class="col-sm-3"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+                       
+      '<td class="col-sm-3"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
       '<td class="col-sm-1"><button type="submit"  formaction="InventoryPOAdd/removeOrder/'.$item.'" class="btn btn-danger decline">-</button> </td>' ,                                                               
                                                                               '</tr>' ;
+                   }else{
+                       
+                       echo '<tr>' ,
+                         
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
+      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
+      '<td class="col-sm-2">  </td>',                
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+                       
+      '<td class="col-sm-2"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
+      '<td class="col-sm-1"><button type="submit"  formaction="InventoryPOAdd/removeOrder/'.$item.'" class="btn btn-danger decline">-</button> </td>' ,                                                               
+                                                                              '</tr>' ;
+                       
+                   }
                                                                              $counter++;
                                                                              }
                                                                   
@@ -599,8 +593,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
+                                                                    <td></td>
                                                                     <td><center><b>Sub total</b></center></td>
-                                                                    <td><center><b><input type="number"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo $object->subTotal; }}  ?>"  readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo number_format($object->subTotal,2); }}  ?>"  readonly required/></b></center></td>
                                                                 </tr>
                                                             
                                                             
@@ -609,8 +604,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                      <td></td>
                                                                      <td></td>
                                                                      <td></td>
-                                                                    <td><b><center>Trucking Fee</center></b></td>
-                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo $object->trucking_fee; }}  ?>" readonly /></b></td>  
+                                                                     <td></td>
+                                                                     <td><b><center>Trucking Fee</center></b></td>
+                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo number_format($object->trucking_fee,2); }}  ?>" readonly /></b></td>  
                                                                     
                                                                 </tr>
                                                             
@@ -620,8 +616,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
+                                                                    <td></td>
                                                                     <td><center><b>Total Amount</b></center></td>
-                                                                    <td><center><b><input type="number" class="form-control" name="totalAmount"  id="totalAmount" value="<?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo $object->tAmount; }}  ?>" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="<?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format($object->tAmount,2); }}  ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>
@@ -929,8 +926,10 @@ document.getElementById('addToTemp').onclick = function() {
                   
                   if(category == 1){
                     var y =  parseFloat($('#qty').val());
-                    var x = (y/1000) * parseFloat($('#unitPrice').val());
+                      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
+                    var x = y * parseFloat($('#unitPrice').val());
                     $('#amount').val(x);
+                     $('#category').val(category);   
                   }else{
                     var y =  parseFloat($('#qty').val());
                     var x = y * parseFloat($('#unitPrice').val());
@@ -938,6 +937,7 @@ document.getElementById('addToTemp').onclick = function() {
                
                     
                       $('#amount').val(x);
+                       $('#category').val(category);   
                  }
                     
                   
@@ -945,7 +945,8 @@ document.getElementById('addToTemp').onclick = function() {
                   $('#qty').keyup(function(){
                   if(category==1){
                   var y = parseFloat($(this).val());
-			      var x = (y / 1000) * parseFloat($('#unitPrice').val());
+			      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
+                var x = y * parseFloat($('#unitPrice').val());
 			      $('#amount').val(x);
                
                   }else{
@@ -1002,6 +1003,13 @@ document.getElementById('addToTemp').onclick = function() {
                 document.getElementById("qtywt").innerHTML = "Quantity|Weight";
                 $('#itemType').attr('disabled','disabled');
                 $('#qty').attr('disabled','disabled');
+                $('#unitPrice').attr('disabled','disabled');
+                $('#amount').attr('disabled','disabled');
+                  
+                $('#qty').val('');
+                $('#itemType').val('');
+                $('#unitPrice').val('');
+                $('#amount').val('');
                 
               }
           });
