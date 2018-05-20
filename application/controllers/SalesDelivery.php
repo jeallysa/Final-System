@@ -20,6 +20,19 @@
 			}
 		}
 
+		public function salesArchivedPO()
+		{ 
+
+			if ($this->session->userdata('username') != '')
+            {
+				$this->load->model('SalesDelivery_model');
+				$cancel['get_cancel_list'] = $this->SalesDelivery_model->get_cancel_list();
+				$this->load->view('Sales_Module/salesArchivedPO', ['cancel' => $cancel]);
+			} else {
+				redirect('login');
+			}
+		}
+
         function insert()
 		{
 			$this->load->model('SalesDelivery_model');
@@ -81,6 +94,22 @@
 
 			redirect('SalesDelivery', 'refresh');
 			
+		}
+
+        function undoDel()
+		{
+			$this->load->model('SalesDelivery_model');
+			$po = $this->input->post("po_undo");
+			$this->SalesDelivery_model->undoDel($po);
+			redirect('SalesDelivery', 'refresh');
+		}
+
+        function retDel()
+		{
+			$this->load->model('SalesDelivery_model');
+			$po = $this->input->post("po_undo");
+			$this->SalesDelivery_model->retDel($po);
+			redirect('SalesDelivery/salesArchivedPO', 'refresh');
 		}
 
         function insert1()

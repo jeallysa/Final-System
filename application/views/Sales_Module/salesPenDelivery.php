@@ -41,9 +41,10 @@
 	.select-pane {
         display: none;
     }
-		.no-border{
-			border: none !important;
-		}
+	.no-border{
+		border: none !important;
+	}
+
     </style>
 </head>
 
@@ -173,6 +174,7 @@
                                     <div class="tab-content">
 
 <div class="tab-pane active" id="purchaseorder">
+    <a href="<?php echo base_url(); ?>salesDelivery/salesArchivedPO"><button class="pull-right">Archived Purchase Order</button></a>
     <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
             <th><b class="pull-left">Purchase Order No.</b></th>
@@ -211,11 +213,35 @@
                 <td><?php
                         $dbStat = $row1->delivery_stat;
                         if ($dbStat != 'delivered') {
-                            echo '<center>
-                           <a class="btn btn-primary btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'">Deliver</a>
-                        </center>';
+                            echo '
+                           <a class="btn btn-success btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-ok"></span> Deliver</a>
+                        ';
                         }
+                        echo '
+                           <a class="btn btn-warning btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#undo'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-remove"></span> Cancel</a>
+                        ';
                     ?>
+                <!-- modal for undo -->
+
+                <div class="modal fade" id="undo<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="panel-title" id="contactLabel"><center>Cancel Purchase Order</center></h4>
+                            </div>
+                            <form action="<?php echo base_url(); ?>SalesDelivery/undoDel" method="post" accept-charset="utf-8">
+                                <div class="modal-body" style="padding: 5px;">
+                                   <h3>Are you sure to cancel Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                   <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
+                                    <div class="panel-footer" align="center">
+                                        <button type="submit" class="btn btn-success">Yes</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>    
                 </td>
 
                 <!--modal for pending delivery-->

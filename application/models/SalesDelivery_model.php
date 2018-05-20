@@ -6,10 +6,15 @@
 		}
 		
 		public function get_delivery_list(){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery'");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 0");
 			return $query->result();
-			
 		}
+
+		public function get_cancel_list(){
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 1");
+			return $query->result();
+		}
+
 		public function get_delivered(){
 			$query = $this->db->query("SELECT *, client_delivery.client_dr, client_delivery.payment_remarks, client_delivery.client_deliveryID FROM contracted_po JOIN client_delivery ON contracted_po.contractPO_id = client_delivery.contractPO_id JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id  JOIN packaging ON coffee_blend.package_id = packaging.package_id LEFT OUTER JOIN client_coffreturn ON client_coffreturn.client_dr = client_delivery.client_dr");
 			return $query->result();
@@ -30,6 +35,14 @@
 		function updateDel($deliver, $po_id, $delivered_quantity){
 
 			$this->db->query("UPDATE contracted_po SET delivery_stat ='".$deliver."', delivered_qty = delivered_qty + ".$delivered_quantity." WHERE contractPO_id = '".$po_id."';");
+		}
+
+		function undoDel($po){
+			$this->db->query("UPDATE contracted_po SET undoDel = 1 WHERE contractPO_id = '".$po."';");
+		}
+
+		function retDel($po){
+			$this->db->query("UPDATE contracted_po SET undoDel = 0 WHERE contractPO_id = '".$po."';");
 		}
 
 		function insert_dataA($dataA){ 

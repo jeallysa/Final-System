@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 05:25 AM
+-- Generation Time: May 20, 2018 at 09:14 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -497,7 +497,15 @@ INSERT INTO `activitylogs` (`activitylogs_id`, `user_no`, `timestamp`, `message`
 (456, '7', '2018-05-09 05:04:10', 'Resolved Marios Blend of Walkin Client Order ', 'sales'),
 (457, '7', '2018-05-09 05:21:03', 'Returned 1 Saeco Machine Double Cup Espresso from Walkin Sales ', 'sales'),
 (458, '7', '2018-05-09 05:21:20', 'Returned 2 Saeco Machine Double Cup Espresso from Walkin Sales ', 'sales'),
-(459, '7', '2018-05-09 05:22:50', 'Resolved Cafe de Seoul\'s Saeco machine Double Cup Espresso ', 'sales');
+(459, '7', '2018-05-09 05:22:50', 'Resolved Cafe de Seoul\'s Saeco machine Double Cup Espresso ', 'sales'),
+(460, '2', '2018-05-11 12:24:49', 'Record Partial Payment ', 'inventory'),
+(461, '2', '2018-05-11 12:31:55', 'Purchased Order ', 'inventory'),
+(462, '2', '2018-05-11 12:32:14', 'Record Partial Delivery ', 'inventory'),
+(463, '2', '2018-05-11 12:34:13', 'Purchased Order ', 'inventory'),
+(464, '3', '2018-05-14 04:13:54', 'Inserted New Supplier: X-po General Merchandise ', 'admin'),
+(465, '3', '2018-05-14 04:16:57', 'Inserted New Client: Cafe de Manor under Retail ', 'admin'),
+(466, '3', '2018-05-19 13:48:52', 'Inserted New Supplier: sample ', 'admin'),
+(467, '4', '2018-05-20 07:44:12', ' Mark \'s orders as Fully Delivered ', 'sales');
 
 -- --------------------------------------------------------
 
@@ -571,7 +579,8 @@ INSERT INTO `client_delivery` (`client_deliveryID`, `client_dr`, `contractPO_id`
 (11, 'dr221', 12, 'si221', '2018-05-06', 9000, 'Jan Albie', 25, 12, 9000, 'paid', 'Received'),
 (12, 'dr223', 12, 'si223', '2018-05-06', 9000, 'Ryan Bing', 25, 12, 9000, 'paid', 'Returned'),
 (13, 'dr333', 13, 'dr333', '2018-05-02', 43000, 'Ryan Bing', 100, 11, 0, 'unpaid', 'Received'),
-(14, 'dr331', 13, 'si331', '2018-05-06', 64500, 'Johny Bravo', 150, 11, 0, 'unpaid', 'Returned');
+(14, 'dr331', 13, 'si331', '2018-05-06', 64500, 'Johny Bravo', 150, 11, 0, 'unpaid', 'Returned'),
+(15, '', 0, '', '0000-00-00', 0, '', 0, 0, 0, 'unpaid', 'Received');
 
 --
 -- Triggers `client_delivery`
@@ -896,7 +905,8 @@ INSERT INTO `contracted_client` (`client_id`, `client_company`, `client_fname`, 
 (49, 'Mr. Hapi Bakery & Mami House', 'Tony', 'Ramos', 'Director', 'tony_ramos@gmail.com', 'Marcoville St, Baguio, Benguet', '09228081848', 'Coffee Service', 1),
 (50, 'Eurotel', 'Kim', 'Ballatong', 'Manager', 'kim22@gmail.com', 'Baguio City', '09053217558', 'Retail', 1),
 (51, 'ABS CBN', 'Justine', 'Cuadra', 'Purchasing Staff', 'justine@gmail.com', 'Manila', '09053286552', 'Retail', 1),
-(52, 'Grumpy Joe', 'Alvin ', 'San Jose', 'Crew', 'alvin@gmail.com', 'Leonard Wood Rd', '09268755641', 'Retail', 1);
+(52, 'Grumpy Joe', 'Alvin ', 'San Jose', 'Crew', 'alvin@gmail.com', 'Leonard Wood Rd', '09268755641', 'Retail', 1),
+(53, 'Cafe de Manor', 'Aye Grace', 'Dela Cruz', 'Crew', 'ayegrace@outlook.com', 'Camp John Hay, Baguio City', '09896755434', 'Retail', 1);
 
 -- --------------------------------------------------------
 
@@ -912,25 +922,26 @@ CREATE TABLE `contracted_po` (
   `contractPO_date` date NOT NULL,
   `contractPO_qty` int(11) NOT NULL,
   `delivered_qty` int(11) NOT NULL DEFAULT '0',
-  `delivery_stat` varchar(20) NOT NULL DEFAULT 'pending'
+  `delivery_stat` varchar(20) NOT NULL DEFAULT 'pending',
+  `undoDel` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `contracted_po`
 --
 
-INSERT INTO `contracted_po` (`contractPO_id`, `client_id`, `blend_id`, `sticker_id`, `contractPO_date`, `contractPO_qty`, `delivered_qty`, `delivery_stat`) VALUES
-(12, 12, 117, NULL, '2018-05-06', 250, 250, 'delivered'),
-(13, 11, 113, NULL, '2018-05-06', 250, 250, 'delivered'),
-(14, 17, 114, NULL, '2018-05-06', 300, 0, 'pending'),
-(15, 16, 60, NULL, '2018-05-06', 250, 0, 'pending'),
-(16, 14, 65, NULL, '2018-05-06', 200, 0, 'pending'),
-(17, 15, 116, NULL, '2018-05-06', 250, 0, 'pending'),
-(18, 22, 118, NULL, '2018-05-06', 300, 0, 'pending'),
-(19, 1, 42, NULL, '2018-05-06', 250, 0, 'pending'),
-(20, 40, 52, NULL, '2018-05-06', 300, 0, 'pending'),
-(21, 48, 1, NULL, '2018-05-06', 250, 250, 'delivered'),
-(22, 12, 117, NULL, '2018-05-06', 300, 0, 'pending');
+INSERT INTO `contracted_po` (`contractPO_id`, `client_id`, `blend_id`, `sticker_id`, `contractPO_date`, `contractPO_qty`, `delivered_qty`, `delivery_stat`, `undoDel`) VALUES
+(12, 12, 117, NULL, '2018-05-06', 250, 250, 'delivered', 0),
+(13, 11, 113, NULL, '2018-05-06', 250, 250, 'delivered', 0),
+(14, 17, 114, NULL, '2018-05-06', 300, 0, 'pending', 1),
+(15, 16, 60, NULL, '2018-05-06', 250, 0, 'pending', 0),
+(16, 14, 65, NULL, '2018-05-06', 200, 0, 'pending', 1),
+(17, 15, 116, NULL, '2018-05-06', 250, 0, 'pending', 1),
+(18, 22, 118, NULL, '2018-05-06', 300, 0, 'pending', 1),
+(19, 1, 42, NULL, '2018-05-06', 250, 0, 'pending', 0),
+(20, 40, 52, NULL, '2018-05-06', 300, 0, 'pending', 0),
+(21, 48, 1, NULL, '2018-05-06', 250, 250, 'delivered', 0),
+(22, 12, 117, NULL, '2018-05-06', 300, 0, 'pending', 0);
 
 --
 -- Triggers `contracted_po`
@@ -1030,16 +1041,16 @@ CREATE TABLE `machine` (
 --
 
 INSERT INTO `machine` (`mach_id`, `brewer`, `brewer_type`, `mach_reorder`, `mach_stocks`, `mach_physcount`, `mach_remarks`, `mach_discrepancy`, `inventory_date`, `unitPrice`, `sup_id`, `mach_activation`, `category`) VALUES
-(1, 'Saeco', 'Double Cup Espresso', 0, 320, 0, NULL, 0, NULL, '150', '1', 1, '4'),
-(2, '', '', 0, 310, 0, NULL, 0, NULL, NULL, '', 1, '4'),
-(3, 'Grato', 'Double Cup Espresso', 30, 0, 0, NULL, 0, NULL, '500', '3', 1, '4'),
-(4, 'Colet', 'Single Cup Espresso', 50, 0, 0, NULL, 0, NULL, '400', '9', 1, '4'),
-(5, 'Lirika', 'Double Cup Espresso', 40, 0, 0, NULL, 0, NULL, '470', '8', 1, '4'),
-(6, 'Piccolina', 'Double Cup Espresso', 30, 0, 0, NULL, 0, NULL, '530', '2', 1, '4'),
-(7, 'Bunn', 'Single Cup Espresso', 30, 0, 0, NULL, 0, NULL, '370', '1', 1, '4'),
-(8, 'Percolator', 'Double Cup Espresso', 20, 0, 0, NULL, 0, NULL, '470', '5', 1, '4'),
-(9, 'Bravilor', 'Triple Cup Espresso', 30, 0, 0, NULL, 0, NULL, '420', '8', 1, '4'),
-(10, 'AVR', 'Single Cup Espresso', 20, -2, 0, NULL, 0, NULL, '430', '11', 1, '4');
+(1, 'Saeco', 'Double Cup Espresso', 5, 10, 10, NULL, 0, NULL, '3000', '1', 1, '4'),
+(2, '', '', 5, 10, 10, NULL, 0, NULL, '2500', '', 1, '4'),
+(3, 'Grato', 'Double Cup Espresso', 5, 10, 10, NULL, 0, NULL, '7000', '3', 1, '4'),
+(4, 'Colet', 'Single Cup Espresso', 5, 10, 10, NULL, 0, NULL, '3500', '9', 1, '4'),
+(5, 'Lirika', 'Double Cup Espresso', 5, 10, 10, NULL, 0, NULL, '8000', '8', 1, '4'),
+(6, 'Piccolina', 'Double Cup Espresso', 5, 10, 10, NULL, 0, NULL, '5000', '2', 1, '4'),
+(7, 'Bunn', 'Single Cup Espresso', 5, 10, 10, NULL, 0, NULL, '4500', '1', 1, '4'),
+(8, 'Percolator', 'Double Cup Espresso', 5, 10, 10, NULL, 0, NULL, '6000', '5', 1, '4'),
+(9, 'Bravilor', 'Triple Cup Espresso', 5, 10, 10, NULL, 0, NULL, '6500', '8', 1, '4'),
+(10, 'AVR', 'Single Cup Espresso', 5, 10, 10, NULL, 0, NULL, '8900', '11', 1, '4');
 
 -- --------------------------------------------------------
 
@@ -1105,12 +1116,12 @@ CREATE TABLE `packaging` (
 --
 
 INSERT INTO `packaging` (`package_id`, `package_type`, `package_size`, `package_reorder`, `package_stock`, `package_physcount`, `package_remarks`, `package_discrepancy`, `inventory_date`, `unitPrice`, `sup_id`, `pack_activation`, `category`) VALUES
-(1, 'clear', '250', 500000, 999450, 0, NULL, 0, NULL, '5', 2, 1, '2'),
-(2, 'clear', '500', 500000, 999988, 0, NULL, 0, NULL, '5', 11, 1, '2'),
-(3, 'clear', '1000', 500000, 998196, 0, NULL, 0, NULL, '8', 8, 1, '2'),
-(4, 'brown', '250', 500000, 998221, 0, NULL, 0, NULL, '3', 11, 1, '2'),
-(5, 'brown', '500', 500000, 1000000, 0, NULL, 0, NULL, '5', 11, 1, '2'),
-(6, 'clear', '250', 500000, 999500, 0, NULL, 0, NULL, '250', 11, 1, '2');
+(1, 'clear', '250', 1000, 1200, 1200, NULL, 0, NULL, '5', 2, 1, '2'),
+(2, 'clear', '500', 1000, 1089, 1089, NULL, 0, NULL, '5', 11, 1, '2'),
+(3, 'clear', '1000', 1000, 1050, 1050, NULL, 0, NULL, '8', 8, 1, '2'),
+(4, 'brown', '250', 1000, 1900, 1900, NULL, 0, NULL, '3', 11, 1, '2'),
+(5, 'brown', '500', 1000, 2000, 2000, NULL, 0, NULL, '5', 11, 1, '2'),
+(6, 'clear', '250', 1000, 1978, 1978, NULL, 0, NULL, '7', 11, 1, '2');
 
 -- --------------------------------------------------------
 
@@ -3445,25 +3456,25 @@ CREATE TABLE `raw_coffee` (
 --
 
 INSERT INTO `raw_coffee` (`raw_id`, `raw_coffee`, `raw_reorder`, `raw_stock`, `unitPrice`, `sup_id`, `raw_physcount`, `raw_remarks`, `raw_discrepancy`, `inventory_date`, `raw_activation`, `raw_type`, `category`) VALUES
-(1, 'GUATEMALA', 1000000, 9753000, '318', 2, 0, 'null', 0, NULL, 1, 'city', '1'),
-(2, 'GUATEMALA', 1000000, 9591800, '250', 1, 0, 'null', 0, NULL, 1, 'city', '1'),
-(3, 'GUATEMALA', 1000000, 9592825, '320', 2, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(4, 'GUATEMALA', 1000000, 9714700, '299', 1, 0, 'null', 0, NULL, 1, 'light', '1'),
-(5, 'SUMATRA', 1000000, 9992500, '199', 2, 0, 'null', 0, NULL, 1, 'city', '1'),
-(6, 'SUMATRA', 1000000, 9847500, '300', 1, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(7, 'SUMATRA', 1000000, 9901250, '250', 2, 0, 'null', 0, NULL, 1, 'light', '1'),
-(8, 'ROBUSTA', 1000000, 9894250, '320', 3, 0, 'null', 0, NULL, 1, 'city', '1'),
-(9, 'ROBUSTA', 1000000, 9920125, '300', 1, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(10, 'ROBUSTA', 1000000, 10000000, '250', 4, 0, 'null', 0, NULL, 1, 'light', '1'),
-(11, 'BENGUET', 1000000, 9800500, '240', 5, 0, 'null', 0, NULL, 1, 'city', '1'),
-(12, 'BENGUET', 1000000, 9943750, '230', 5, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(13, 'BENGUET', 1000000, 9934550, '280', 4, 0, 'null', 0, NULL, 1, 'light', '1'),
-(14, 'COLOMBIA', 1000000, 9815000, '230', 5, 0, 'null', 0, NULL, 1, 'city', '1'),
-(15, 'COLOMBIA', 1000000, 9983500, '270', 3, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(16, 'COLOMBIA', 1000000, 9975000, '250', 3, 0, 'null', 0, NULL, 1, 'light', '1'),
-(17, 'BARAKO', 1000000, 10000000, '250', 4, 0, 'null', 0, NULL, 1, 'city', '1'),
-(18, 'BARAKO', 1000000, 9825000, '300', 3, 0, 'null', 0, NULL, 1, 'medium', '1'),
-(19, 'BARAKO', 1000000, 10000000, '260', 4, 0, 'null', 0, NULL, 1, 'light', '1');
+(1, 'GUATEMALA', 500000, 600000, '318', 2, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(2, 'GUATEMALA', 500000, 600000, '250', 1, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(3, 'GUATEMALA', 500000, 600000, '320', 2, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(4, 'GUATEMALA', 500000, 600000, '299', 1, 600000, 'null', 0, NULL, 1, 'light', '1'),
+(5, 'SUMATRA', 500000, 600000, '199', 2, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(6, 'SUMATRA', 500000, 600000, '300', 1, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(7, 'SUMATRA', 500000, 600000, '250', 2, 600000, 'null', 0, NULL, 1, 'light', '1'),
+(8, 'ROBUSTA', 500000, 600000, '320', 3, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(9, 'ROBUSTA', 500000, 600000, '300', 1, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(10, 'ROBUSTA', 500000, 600000, '250', 4, 600000, 'null', 0, NULL, 1, 'light', '1'),
+(11, 'BENGUET', 500000, 600000, '240', 5, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(12, 'BENGUET', 500000, 600000, '230', 5, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(13, 'BENGUET', 500000, 600000, '280', 4, 600000, 'null', 0, NULL, 1, 'light', '1'),
+(14, 'COLOMBIA', 500000, 600000, '230', 5, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(15, 'COLOMBIA', 500000, 600000, '270', 3, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(16, 'COLOMBIA', 500000, 600000, '250', 3, 600000, 'null', 0, NULL, 1, 'light', '1'),
+(17, 'BARAKO', 500000, 600000, '250', 4, 600000, 'null', 0, NULL, 1, 'city', '1'),
+(18, 'BARAKO', 500000, 600000, '300', 3, 600000, 'null', 0, NULL, 1, 'medium', '1'),
+(19, 'BARAKO', 500000, 600000, '260', 4, 600000, 'null', 0, NULL, 1, 'light', '1');
 
 -- --------------------------------------------------------
 
@@ -3482,7 +3493,7 @@ CREATE TABLE `sticker` (
   `unitPrice` decimal(11,0) DEFAULT NULL,
   `sup_id` int(11) NOT NULL,
   `sticker_activation` int(11) NOT NULL DEFAULT '1',
-  `sticker_type` varchar(45) NOT NULL DEFAULT 'sticker',
+  `sticker_type` varchar(45) DEFAULT NULL,
   `category` varchar(45) DEFAULT '3',
   `inventory_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3492,50 +3503,50 @@ CREATE TABLE `sticker` (
 --
 
 INSERT INTO `sticker` (`sticker_id`, `sticker`, `sticker_reorder`, `sticker_stock`, `sticker_physcount`, `sticker_remarks`, `sticker_discrepancy`, `unitPrice`, `sup_id`, `sticker_activation`, `sticker_type`, `category`, `inventory_date`) VALUES
-(1, 'Mario Sticker', 500000, 999204, 0, NULL, 0, '0', 0, 1, 'sticker', '3', NULL),
-(2, 'Guatamela Rainforest Sticker', 500000, 999488, 0, NULL, 0, '0', 0, 1, 'sticker', '3', NULL),
-(3, 'Cordillera Sunrise Sticker', 500000, 1000000, 0, NULL, 0, '0', 0, 1, 'sticker', '3', NULL),
-(4, 'Chefs Blend Sticker', 500000, 1000000, 0, NULL, 0, '0', 0, 1, 'sticker', '3', NULL),
-(5, 'Mario Sticker', 500000, 1000000, 0, NULL, 0, '0', 0, 1, 'sticker', '3', NULL),
-(6, 'Mario Sticker', 500000, 1000000, 0, NULL, 0, NULL, 0, 1, 'sticker', '3', NULL),
-(7, 'Mario Sticker', 500000, 1000000, 0, NULL, 0, NULL, 0, 1, 'sticker', '3', NULL),
-(8, 'Mario Sticker', 500000, 1000000, 0, NULL, 0, '5', 9, 1, 'sticker', '3', NULL),
-(9, 'Guatamela Rainforest Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(10, 'Cordillera Sunrise Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(11, 'Sumatra Night Sticker', 500000, 999992, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(12, 'Chefs Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 8, 1, 'sticker', '3', NULL),
-(13, 'Espresso Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(14, 'Breakfast Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(15, 'Mabuhay Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(16, 'Fiesta Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 11, 1, 'sticker', '3', NULL),
-(17, 'Kalayaan Blend Sticker', 500000, 1000000, 0, NULL, 0, '3', 10, 1, 'sticker', '3', NULL),
-(18, 'Best Western Oxford Suites Sticker', 500000, 1000000, 0, NULL, 0, '3', 4, 1, 'sticker', '3', NULL),
-(19, 'ATACOGMAC Sticker', 500000, 1000000, 0, NULL, 0, '3', 7, 1, 'sticker', '3', NULL),
-(20, 'BSU La Trinidad Benguet Sticker', 500000, 1000000, 0, NULL, 0, '3', 6, 1, 'sticker', '3', NULL),
-(21, 'Baguio Country Club Sticker', 500000, 1000000, 0, NULL, 0, '5', 5, 1, 'sticker', '3', NULL),
-(22, 'Bioessence Sticker', 500000, 1000000, 0, NULL, 0, '4', 7, 1, 'sticker', '3', NULL),
-(23, 'Blackwoods Sticker', 500000, 1000000, 0, NULL, 0, '4', 8, 1, 'sticker', '3', NULL),
-(24, 'Blue Rock Resort Sticker', 500000, 1000000, 0, NULL, 0, '4', 8, 1, 'sticker', '3', NULL),
-(25, 'Patch Cafe Bloomfield Hotel Sticker', 500000, 1000000, 0, NULL, 0, '4', 8, 1, 'sticker', '3', NULL),
-(26, 'Bread House Sticker', 500000, 999450, 0, NULL, 0, '5', 7, 1, 'sticker', '3', NULL),
-(27, 'Bowknot Brewery Incorporation Sticker', 500000, 999330, 0, NULL, 0, '2', 8, 1, 'sticker', '3', NULL),
-(28, 'Bote Central Roasting Machine Sticker', 500000, 1000000, 0, NULL, 0, '2', 8, 1, 'sticker', '3', NULL),
-(29, 'Camp John Hay Golf Club', 500000, 999800, 0, NULL, 0, '5', 7, 1, 'sticker', '3', NULL),
-(30, 'Canto Restaurant', 500000, 999500, 0, NULL, 0, '4', 8, 1, 'sticker', '3', NULL),
-(31, 'Cafe de Seoul', 500000, 1000000, 0, NULL, 0, '4', 7, 1, 'sticker', '3', NULL),
-(32, 'Cafe Caw', 500000, 999691, 0, NULL, 0, '4', 5, 1, 'sticker', '3', NULL),
-(33, 'Citrus Restaurant', 500000, 1000000, 0, NULL, 0, '5', 6, 1, 'sticker', '3', NULL),
-(34, 'Colleen Curran Sticker', 500000, 1000000, 0, NULL, 0, '5', 7, 1, 'sticker', '3', NULL),
-(35, 'CONNIES KITCHEN Sticker', 500000, 1000000, 0, NULL, 0, '4', 7, 1, 'sticker', '3', NULL),
-(36, 'Cosys Cafe and Roasterie Sticker', 500000, 1000000, 0, NULL, 0, '2', 6, 1, 'sticker', '3', NULL),
-(37, 'Eurotel Sticker', 500000, 1000000, 0, NULL, 0, '200', 8, 1, 'sticker', '3', NULL),
-(38, 'La Parilla Sticker', 500000, 1000000, 0, NULL, 0, '2', 7, 1, 'sticker', '3', NULL),
-(39, 'La Tienda  Sticker', 500000, 1000000, 0, NULL, 0, '4', 6, 1, 'sticker', '3', NULL),
-(40, 'Le Chef Manor', 500000, 1000000, 0, NULL, 0, '2', 6, 1, 'sticker', '3', NULL),
-(41, 'Le Chef Golf Sticker', 500000, 999700, 0, NULL, 0, '5', 6, 1, 'sticker', '3', NULL),
-(42, 'LightHouse Marina Resort', 500000, 1000000, 0, NULL, 0, '5', 6, 1, 'sticker', '3', NULL),
-(43, 'Cafe  de Soul Sticker', 500000, 999500, 0, NULL, 0, '2', 6, 1, 'sticker', '3', NULL),
-(44, 'Edwin Hui Sticker', 500000, 999700, 0, NULL, 0, '5', 7, 1, 'sticker', '3', NULL);
+(1, 'Mario Sticker', 500, 600, 600, NULL, 0, '0', 0, 1, 'paper', '3', NULL),
+(2, 'Guatamela Rainforest Sticker', 500, 600, 600, NULL, 0, '0', 0, 1, 'paper', '3', NULL),
+(3, 'Cordillera Sunrise Sticker', 500, 600, 600, NULL, 0, '0', 0, 1, 'plastic', '3', NULL),
+(4, 'Chefs Blend Sticker', 500, 600, 600, NULL, 0, '0', 0, 1, 'paper', '3', NULL),
+(5, 'Mario Sticker', 500, 600, 600, NULL, 0, '0', 0, 1, 'paper', '3', NULL),
+(6, 'Mario Sticker', 500, 600, 600, NULL, 0, NULL, 0, 1, 'paper', '3', NULL),
+(7, 'Mario Sticker', 500, 600, 600, NULL, 0, NULL, 0, 1, 'plastic', '3', NULL),
+(8, 'Mario Sticker', 500, 600, 600, NULL, 0, '5', 9, 1, 'paper', '3', NULL),
+(9, 'Guatamela Rainforest Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'vinyl', '3', NULL),
+(10, 'Cordillera Sunrise Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'vinyl', '3', NULL),
+(11, 'Sumatra Night Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'vinyl', '3', NULL),
+(12, 'Chefs Blend Sticker', 500, 600, 600, NULL, 0, '3', 8, 1, 'paper', '3', NULL),
+(13, 'Espresso Blend Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'vinyl', '3', NULL),
+(14, 'Breakfast Blend Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'vinyl', '3', NULL),
+(15, 'Mabuhay Blend Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'plastic', '3', NULL),
+(16, 'Fiesta Blend Sticker', 500, 600, 600, NULL, 0, '3', 11, 1, 'plastic', '3', NULL),
+(17, 'Kalayaan Blend Sticker', 500, 600, 600, NULL, 0, '3', 10, 1, 'sticker', '3', NULL),
+(18, 'Best Western Oxford Suites Sticker', 500, 600, 600, NULL, 0, '3', 4, 1, 'paper', '3', NULL),
+(19, 'ATACOGMAC Sticker', 500, 600, 600, NULL, 0, '3', 7, 1, 'vinyl', '3', NULL),
+(20, 'BSU La Trinidad Benguet Sticker', 500, 600, 600, NULL, 0, '3', 6, 1, 'paper', '3', NULL),
+(21, 'Baguio Country Club Sticker', 500, 600, 600, NULL, 0, '5', 5, 1, 'paper', '3', NULL),
+(22, 'Bioessence Sticker', 500, 600, 600, NULL, 0, '4', 7, 1, 'paper', '3', NULL),
+(23, 'Blackwoods Sticker', 500, 600, 600, NULL, 0, '4', 8, 1, 'vinyl', '3', NULL),
+(24, 'Blue Rock Resort Sticker', 500, 600, 600, NULL, 0, '4', 8, 1, 'vinyl', '3', NULL),
+(25, 'Patch Cafe Bloomfield Hotel Sticker', 500, 600, 600, NULL, 0, '4', 8, 1, 'paper', '3', NULL),
+(26, 'Bread House Sticker', 500, 600, 600, NULL, 0, '5', 7, 1, 'paper', '3', NULL),
+(27, 'Bowknot Brewery Incorporation Sticker', 500, 600, 600, NULL, 0, '2', 8, 1, 'plastic', '3', NULL),
+(28, 'Bote Central Roasting Machine Sticker', 500, 600, 600, NULL, 0, '2', 8, 1, 'paper', '3', NULL),
+(29, 'Camp John Hay Golf Club', 500, 600, 600, NULL, 0, '5', 7, 1, 'paper', '3', NULL),
+(30, 'Canto Restaurant', 500, 600, 600, NULL, 0, '4', 8, 1, 'vinyl', '3', NULL),
+(31, 'Cafe de Seoul', 500, 600, 600, NULL, 0, '4', 7, 1, 'paper', '3', NULL),
+(32, 'Cafe Caw', 500, 600, 600, NULL, 0, '4', 5, 1, 'plastic', '3', NULL),
+(33, 'Citrus Restaurant', 500, 600, 600, NULL, 0, '5', 6, 1, 'vinyl', '3', NULL),
+(34, 'Colleen Curran Sticker', 500, 600, 600, NULL, 0, '5', 7, 1, 'paper', '3', NULL),
+(35, 'CONNIES KITCHEN Sticker', 500, 600, 600, NULL, 0, '4', 7, 1, 'paper', '3', NULL),
+(36, 'Cosys Cafe and Roasterie Sticker', 500, 600, 600, NULL, 0, '2', 6, 1, 'plastic', '3', NULL),
+(37, 'Eurotel Sticker', 500, 600, 600, NULL, 0, '200', 8, 1, 'paper', '3', NULL),
+(38, 'La Parilla Sticker', 500, 600, 600, NULL, 0, '2', 7, 1, 'vinyl', '3', NULL),
+(39, 'La Tienda  Sticker', 500, 600, 600, NULL, 0, '4', 6, 1, 'paper', '3', NULL),
+(40, 'Le Chef Manor', 500, 600, 600, NULL, 0, '2', 6, 1, 'plastic', '3', NULL),
+(41, 'Le Chef Golf Sticker', 500, 600, 600, NULL, 0, '5', 6, 1, 'paper', '3', NULL),
+(42, 'LightHouse Marina Resort', 500, 600, 600, NULL, 0, '5', 6, 1, 'plastic', '3', NULL),
+(43, 'Cafe  de Soul Sticker', 500, 600, 600, NULL, 0, '2', 6, 1, 'plastic', '3', NULL),
+(44, 'Edwin Hui Sticker', 500, 600, 600, NULL, 0, '5', 7, 1, 'paper', '3', NULL);
 
 -- --------------------------------------------------------
 
@@ -3553,25 +3564,27 @@ CREATE TABLE `supplier` (
   `sup_address` varchar(100) NOT NULL,
   `sup_email` varchar(50) NOT NULL,
   `sup_contact` varchar(12) NOT NULL,
-  `sup_activation` int(11) NOT NULL DEFAULT '1'
+  `sup_activation` int(11) NOT NULL DEFAULT '1',
+  `date_reg` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`sup_id`, `sup_productID`, `sup_company`, `sup_lname`, `sup_fname`, `sup_position`, `sup_address`, `sup_email`, `sup_contact`, `sup_activation`) VALUES
-(1, 0, 'Alterra Coffee Roasters', 'Mars', 'Franklin', 'CEO', 'Milwaukee, Wisconsin, US', 'alterracoffee@gmail.com', '09562548963', 0),
-(2, 0, 'An Giang Coffee', 'Giang', 'An', 'Owner', 'Long Thành, Vietnam', 'angiangcoffee@gmail.com', '09369854625', 1),
-(3, 0, 'Bridgehead Coffee', 'Bradley', 'Simon', 'Owner', 'Ottawa, Ontario, Canada', 'bridgehead@gmail.com', '09635478523', 1),
-(4, 0, 'Cafe Bom Dia', 'Thompson', 'Olive', 'CEO', 'Brazil', 'cafebom@gmail.com', '09547863254', 1),
-(5, 0, 'Caffe Vita Coffee Roasting Company', 'Scott', 'Ervin', 'COO', 'Seattle, Washington, US', 'caffevitacoffee@gmail.com', '09645231569', 1),
-(6, 0, 'Allegro Beverage', 'Angala', 'Antonio', 'Sales Agent', '3803 Dayap cor. Cuenca St., Palanan, Makati City, Metro Manila 1235', 'antoioangeles@gmail.com', '09214271227', 1),
-(7, 0, 'Figaro Coffee Company', 'Verano', 'Crismel', 'CEO', 'Manila, Philippines', 'crismelverano@gmail.com', '09215644337', 1),
-(8, 0, 'Diedrich Coffee', 'McCarthy', 'Sean', 'Chief Financial Officer', 'Irvine, California, US', 'seanmccarthy@gmail.com', '09327861443', 1),
-(9, 0, 'Black Ivory Coffee', 'Dinkin', 'Blake', 'President', 'Bangkok Thailand ', 'blackivorycoffee@gmail.com', '09457654356', 1),
-(10, 0, 'Cafe Coffee Day', 'Ortega', 'Jana', 'CEO', 'Bengaluru India', 'janaortege@gmail.com', '09496574556', 1),
-(11, 0, 'Coop Kaffe', 'Pope', 'Woodrow', 'Sales Agent', 'Coop Kaffe', 'woodrow@gmail.com', '09578469884', 1);
+INSERT INTO `supplier` (`sup_id`, `sup_productID`, `sup_company`, `sup_lname`, `sup_fname`, `sup_position`, `sup_address`, `sup_email`, `sup_contact`, `sup_activation`, `date_reg`) VALUES
+(1, 0, 'Alterra Coffee Roasters', 'Mars', 'Franklin', 'CEO', 'Milwaukee, Wisconsin, US', 'alterracoffee@gmail.com', '09562548963', 0, '2016-10-22'),
+(2, 0, 'An Giang Coffee', 'Giang', 'An', 'Owner', 'Long Thành, Vietnam', 'angiangcoffee@gmail.com', '09369854625', 1, '2017-08-19'),
+(3, 0, 'Bridgehead Coffee', 'Bradley', 'Simon', 'Owner', 'Ottawa, Ontario, Canada', 'bridgehead@gmail.com', '09635478523', 1, '2015-02-02'),
+(4, 0, 'Cafe Bom Dia', 'Thompson', 'Olive', 'CEO', 'Brazil', 'cafebom@gmail.com', '09547863254', 1, '2017-12-08'),
+(5, 0, 'Caffe Vita Coffee Roasting Company', 'Scott', 'Ervin', 'COO', 'Seattle, Washington, US', 'caffevitacoffee@gmail.com', '09645231569', 1, '2017-03-27'),
+(6, 0, 'Allegro Beverage', 'Angala', 'Antonio', 'Sales Agent', '3803 Dayap cor. Cuenca St., Palanan, Makati City, Metro Manila 1235', 'antoioangeles@gmail.com', '09214271227', 1, '2016-11-18'),
+(7, 0, 'Figaro Coffee Company', 'Verano', 'Crismel', 'CEO', 'Manila, Philippines', 'crismelverano@gmail.com', '09215644337', 1, '2017-08-22'),
+(8, 0, 'Diedrich Coffee', 'McCarthy', 'Sean', 'Chief Financial Officer', 'Irvine, California, US', 'seanmccarthy@gmail.com', '09327861443', 1, '2018-02-15'),
+(9, 0, 'Black Ivory Coffee', 'Dinkin', 'Blake', 'President', 'Bangkok Thailand ', 'blackivorycoffee@gmail.com', '09457654356', 1, '2017-08-14'),
+(10, 0, 'Cafe Coffee Day', 'Ortega', 'Jana', 'CEO', 'Bengaluru India', 'janaortege@gmail.com', '09496574556', 1, '2018-03-28'),
+(11, 0, 'Coop Kaffe', 'Pope', 'Woodrow', 'Sales Agent', 'Coop Kaffe', 'woodrow@gmail.com', '09578469884', 1, '2017-05-12'),
+(12, 0, 'X-po General Merchandise', 'Balisi', 'Henry', 'owner', '#602 Bokawkan Rd. Baguio City', 'balisi@gmail.com', '09269044318', 1, '2018-05-13');
 
 -- --------------------------------------------------------
 
@@ -3634,7 +3647,8 @@ INSERT INTO `supp_delivery` (`supp_delivery_id`, `supp_po_ordered_id`, `supp_po_
 (1, 1, 1, '2018-04-02', 0, 50, 0, 'Jules Tomines', 255),
 (2, 2, 2, '2018-04-02', 3, 3, 0, 'Jules Tomines', 25),
 (3, 2, 2, '2018-04-02', 0, 9, 0, 'Jules Tomines', 25),
-(4, 3, 3, '2018-04-02', 0, 100, 0, 'Jules Tomines', 145);
+(4, 3, 3, '2018-04-02', 0, 100, 0, 'Jules Tomines', 145),
+(5, 4, 4, '2018-05-11', 123, 454123, -454000, 'Jules Tomines', 123);
 
 -- --------------------------------------------------------
 
@@ -3650,6 +3664,13 @@ CREATE TABLE `supp_payment` (
   `bank` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `supp_payment`
+--
+
+INSERT INTO `supp_payment` (`supp_payment_id`, `supp_po_id`, `date`, `amount`, `bank`) VALUES
+(1, 3, '2018-05-11', 16674, 'BDO');
+
 -- --------------------------------------------------------
 
 --
@@ -3662,7 +3683,6 @@ CREATE TABLE `supp_po` (
   `suppPO_date` date NOT NULL,
   `trucking_fee` double NOT NULL,
   `supp_creditTerm` varchar(45) NOT NULL,
-  `total_item` int(50) NOT NULL DEFAULT '0',
   `total_amount` double NOT NULL DEFAULT '0',
   `delivery_stat` varchar(45) DEFAULT '0',
   `payment_stat` varchar(45) DEFAULT '0',
@@ -3673,10 +3693,12 @@ CREATE TABLE `supp_po` (
 -- Dumping data for table `supp_po`
 --
 
-INSERT INTO `supp_po` (`supp_po_id`, `supp_id`, `suppPO_date`, `trucking_fee`, `supp_creditTerm`, `total_item`, `total_amount`, `delivery_stat`, `payment_stat`, `payment`) VALUES
-(1, 1, '2018-04-01', 25, '15', 50, 7525, '1', '0', NULL),
-(2, 1, '2018-04-02', 13, '13', 12, 1813, '1', '0', 13),
-(3, 1, '2018-04-01', 1674, '30', 100, 16674, '1', '0', NULL);
+INSERT INTO `supp_po` (`supp_po_id`, `supp_id`, `suppPO_date`, `trucking_fee`, `supp_creditTerm`, `total_amount`, `delivery_stat`, `payment_stat`, `payment`) VALUES
+(1, 1, '2018-04-01', 25, '15', 7525, '1', '0', NULL),
+(2, 1, '2018-04-02', 13, '13', 1813, '1', '0', 13),
+(3, 1, '2018-04-01', 1674, '30', 16674, '1', '1', 16674),
+(4, 1, '2018-04-02', 34, '30', 64.75, '1', '0', NULL),
+(5, 1, '2018-05-11', 12, '12', 48.9, '0', '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -3704,7 +3726,9 @@ CREATE TABLE `supp_po_ordered` (
 INSERT INTO `supp_po_ordered` (`supp_po_ordered_id`, `supp_po_id`, `item`, `qty`, `amount`, `type`, `delivery_stat`, `payment_stat`, `payment`, `received`) VALUES
 (1, 1, 'Saeco', 50, 7500, 'Double Cup Espresso', '1', '0', NULL, 0),
 (2, 2, 'Saeco', 12, 1800, 'Double Cup Espresso', '1', '0', NULL, 3),
-(3, 3, 'Saeco', 100, 15000, 'Double Cup Espresso', '1', '0', NULL, 0);
+(3, 3, 'Saeco', 100, 15000, 'Double Cup Espresso', '1', '0', NULL, 0),
+(4, 4, 'GUATEMALA', 123, 30.75, 'city', '1', '0', NULL, 123),
+(5, 5, 'SUMATRA', 123, 36.9, 'medium', '0', '0', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -3719,13 +3743,6 @@ CREATE TABLE `supp_temp_po` (
   `trucking_fee` double NOT NULL,
   `credit_term` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `supp_temp_po`
---
-
-INSERT INTO `supp_temp_po` (`id_supp_temp_PO`, `supp_name`, `date`, `trucking_fee`, `credit_term`) VALUES
-(1, 'Alterra Coffee Roasters', '2018-04-02', 34, '30');
 
 -- --------------------------------------------------------
 
@@ -4966,7 +4983,7 @@ ALTER TABLE `walkin_sales`
 -- AUTO_INCREMENT for table `activitylogs`
 --
 ALTER TABLE `activitylogs`
-  MODIFY `activitylogs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=460;
+  MODIFY `activitylogs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=468;
 --
 -- AUTO_INCREMENT for table `category`
 --
@@ -4981,7 +4998,7 @@ ALTER TABLE `client_coffreturn`
 -- AUTO_INCREMENT for table `client_delivery`
 --
 ALTER TABLE `client_delivery`
-  MODIFY `client_deliveryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `client_deliveryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `client_machreturn`
 --
@@ -5006,7 +5023,7 @@ ALTER TABLE `contract`
 -- AUTO_INCREMENT for table `contracted_client`
 --
 ALTER TABLE `contracted_client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `contracted_po`
 --
@@ -5061,7 +5078,7 @@ ALTER TABLE `sticker`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `supplier_delivery`
 --
@@ -5076,22 +5093,22 @@ ALTER TABLE `supplier_po`
 -- AUTO_INCREMENT for table `supp_delivery`
 --
 ALTER TABLE `supp_delivery`
-  MODIFY `supp_delivery_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `supp_delivery_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `supp_payment`
 --
 ALTER TABLE `supp_payment`
-  MODIFY `supp_payment_id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `supp_payment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `supp_po`
 --
 ALTER TABLE `supp_po`
-  MODIFY `supp_po_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `supp_po_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `supp_po_ordered`
 --
 ALTER TABLE `supp_po_ordered`
-  MODIFY `supp_po_ordered_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `supp_po_ordered_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `supp_temp_po`
 --
@@ -5101,7 +5118,7 @@ ALTER TABLE `supp_temp_po`
 -- AUTO_INCREMENT for table `supp_temp_po_order`
 --
 ALTER TABLE `supp_temp_po_order`
-  MODIFY `idsupp_temp_po_order` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `idsupp_temp_po_order` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `transac_history`
 --
