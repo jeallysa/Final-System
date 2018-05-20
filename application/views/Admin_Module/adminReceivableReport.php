@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-   <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Accounts Receivables Report</title>
+    <title>Accounts Receivable Report</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -211,7 +211,14 @@ a:focus {
                                 </div>
                                 
                                 <div class="card-content">
-
+                                     <div class="form-group col-xs-3">
+                                <label>Filter By:</label>
+                                    <div class="input-group input-daterange">
+                                        <input type="text" id="min" class="form-control" value="2000-01-01" >
+                                        <span class="input-group-addon">to</span>
+                                        <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+                                    </div>
+                                </div>
                                   <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                                 <th><b>Date</b></th>
@@ -241,19 +248,20 @@ a:focus {
         </div>
 </body>
 <!--   Core JS Files   -->
-<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="../assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script src="../assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/buttons.flash.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/FileExport/buttons.Html5.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/buttons.html5.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/buttons.print.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/jszip.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/pdfmake.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/vfs_fonts.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/material.min.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
 <script src="../assets/js/chartist.min.js"></script>
 <!--  Dynamic Elements plugin -->
@@ -275,11 +283,11 @@ a:focus {
 <script>   
     
     
-    $.fn.dataTableExt.afnFiltering.push(
+      $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
             var dateEnd = parseDateValue($("#max").val());
-            var evalDate= parseDateValue(aData[4]);
+            var evalDate= parseDateValue(aData[2]);
 
             if (evalDate >= dateStart && evalDate <= dateEnd) {
                 return true;
@@ -295,6 +303,7 @@ a:focus {
         var parsedDate = dateArray[2] + month + dateArray[0];
         return parsedDate;
     }
+
 
 
     var oTable = $('#example').dataTable({ 
@@ -322,7 +331,7 @@ a:focus {
         ]
     });
 
-    $('#min,#max').datepicker({
+   $('#min,#max').datepicker({
         format: "yyyy-mm-dd",
         weekStart: 1,
         daysOfWeekHighlighted: "0",

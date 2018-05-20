@@ -340,7 +340,7 @@ a:focus {
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Raw Coffee</b></th>
-                                            <th><b class="pull-left">Type of Roast</b></th>
+                                            <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Price/kg</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (kg)</b></th>

@@ -187,7 +187,7 @@ a:focus {
                                         <textarea style="resize:vertical;" class="form-control" placeholder="Address" rows="2" name="address" required></textarea>
                                     </div>                             
                                 </div>
-                                        <h6> Contact Personnel </h6>
+                                        <h6> Contact Personnel: </h6>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
                                         <input class="form-control" name="cpfname" placeholder="First Name" type="text" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="First Name should only countain letters" required />
