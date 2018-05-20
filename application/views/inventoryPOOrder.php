@@ -765,7 +765,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            
             
              <input class="form-control" type="hidden"  name ="supp_po_id" value="<?php echo $temp ?>">
-             <input class="form-control" type="hidden"  name ="date" value="<?php echo $dateMin ?>">
+             <input class="form-control" type="hidden"  name ="date" value="<?php echo date("Y-m-d")?>">
              
             
         </div>
