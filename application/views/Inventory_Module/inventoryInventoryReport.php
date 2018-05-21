@@ -35,7 +35,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s;
-}    
+} 
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3399ff;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 label,
 input {
     color: black;
@@ -205,13 +216,14 @@ input {
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="blue">
-                                    <h3 class="title"><center>Inventory Report</center></h3>
+                                    <h4 class="title">Inventory Report</h4>
                                 </div>
                         <div class="card-content">
                             <div class="row">
                                 <div class="card-content table-responsive">
                                     <div class="row">
-                                        <div class="pull-right">
+                                        <div>
+                                            <center>
                                     <?php $month_filt = $data5["datav"];
                                     $year = $this->db->query("SELECT year(now()) AS year;")->row()->year;
                                             $tomonth = $this->db->query("SELECT MONTH(NOW()) AS tomonth;")->row()->tomonth;
@@ -225,10 +237,11 @@ input {
                                             $dateObj   = DateTime::createFromFormat('!m', $tomonth);
                                             $monthName = $dateObj->format('F');
                                     ?>
-                                        <label><H4><b> Current Month: <?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>
+                                        <H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4>
                                     <?php
                                         }
                                     ?>
+                                            </center>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -536,7 +549,6 @@ input {
                                                 
                                             </tr>
                                         </tfoot>
-                                        -->
                                     </table>
                                 </div>
                             </div>
@@ -598,7 +610,7 @@ $(document).ready(function() {
                     $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
                 }
             },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs', footer: true },
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
                 orientation: 'portrait',
                         exportOptions: {
@@ -612,7 +624,7 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '14%', '14%', '14%', '14%', '14%', '14%', '14%', '14%']; }
+                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
             }
         ]
       
@@ -628,7 +640,6 @@ $(document).ready(function() {
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
-
 		buttons: [
             { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
                 customize: function ( win ) { 
@@ -640,7 +651,7 @@ $(document).ready(function() {
                     $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
                 }
             },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> Excel',"className": 'btn btn-success btn-xs', footer: true },
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
                 orientation: 'portrait',
                         exportOptions: {
@@ -654,11 +665,9 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '14%', '14%', '14%', '14%', '14%', '14%', '14%', '14%']; }
+                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
             }
-        ];
-
-
+        ]
       
     });
 
