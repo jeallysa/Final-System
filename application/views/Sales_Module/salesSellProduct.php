@@ -150,7 +150,7 @@
 									<div class="card-content">
 										<div class="tab-content">
 											<div class="tab-pane in active" id="sell">
-                                                <a href="<?php echo base_url(); ?>salesSellProduct/salesWalkin" class="btn btn-success btn-md" style="float: right">Add Sales</a>
+                                                <a href="<?php echo base_url(); ?>salesMultipleOrders" class="btn btn-success btn-md" style="float: right">Add Sales</a>
                                                 <?php if(isset($_SESSION['success'])){ ?>
                                                   <div class="alert alert-success"> <?php echo $_SESSION['success']; ?> </div>
                                                     <?php
@@ -310,7 +310,7 @@
                                             </table>
 											</div>
 											<div class="tab-pane" id="machine">
-                                                <a href="<?php echo base_url(); ?>salesSellProduct/salesMachine" class="btn btn-success btn-md" style="float: right">Add Sales</a>
+                                                <a href="<?php echo base_url(); ?>salesMachineOrders" class="btn btn-success btn-md" style="float: right">Add Sales</a>
 												<table id="masales" class="display table-striped table-hover cell-border" cellspacing="0" width="100%">
 													<thead>
                                                         <th><b>Item Code</b></th>

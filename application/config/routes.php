@@ -78,6 +78,7 @@ $route['login'] = 'Login_Controller/login';
 	$route['getSalesContract'] = 'salesClients/salesContract';
 	$route['getSalesCancel'] = 'salesDelivery/salesArchivedPO';
 	$route['getMultipleOrders'] = 'salesMultipleOrders';
+	$route['getMultipleOrdersMachine'] = 'salesMachineOrders';
  /*Inventory Module Routes*/
  	$route['getInventoryActivityLogs'] = 'inventoryActivityLogs';
 	$route['getInventoryBlends'] = 'inventoryBlends';

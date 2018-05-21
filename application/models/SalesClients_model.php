@@ -194,6 +194,7 @@
 			}
 
 		}
+		
 
 		public function load_PayClient($id){
 			$query = $this->db->query("SELECT * FROM contracted_client NATURAL JOIN contracted_po NATURAL JOIN client_delivery NATURAL JOIN payment_contracted WHERE client_id='$id'");
@@ -219,7 +220,9 @@
             'type' => $module
         );
         $this->db->insert('activitylogs', $data);
-	}
+		}
+
+		
 	}
 
 ?>
