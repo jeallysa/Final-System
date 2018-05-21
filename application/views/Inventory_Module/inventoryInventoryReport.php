@@ -253,7 +253,7 @@ input {
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }
@@ -362,7 +362,7 @@ input {
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
                                                           foreach ($query2->result() as $object) {
-                                                               echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
+                                                               echo '<td><b>'  . number_format($object->beginning / 1000, 2)  . ' kg </b></td>' ;
                                                                }
                                                             }
                                                         }
@@ -373,7 +373,7 @@ input {
                                                           $query3 = $this->db->query($begin);
                                                           if ($query3->num_rows() > 0) {
                                                           foreach ($query3->result() as $object) {
-                                                               echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
+                                                               echo '<td><b>'  . number_format($object->beginning / 1000, 2)  . ' kg</b></td>' ;
                                                                }
                                                             }
                                                         }
@@ -392,7 +392,7 @@ input {
                                               $query5 = $this->db->query($begin);
                                               if ($query5->num_rows() > 0) {
                                               foreach ($query5->result() as $object) {
-                                                   echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
+                                                   echo '<td><b>'  . number_format($object->beginning / 1000, 2)  . ' kg </b></td>' ;
                                                    }
                                                 }
                                                 }
@@ -416,7 +416,7 @@ input {
                                                 $qcount1 = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 foreach ($qcount1->result() as $row2){
                                                     $colname1 = $row2->raw_coffee; ?>
-                                                        <td><?php echo number_format($row->$colname1); ?> </td>
+                                                        <td><?php echo number_format($row->$colname1); ?>  g </td>
                                                 <?php
 
                                                 }
@@ -450,7 +450,7 @@ input {
                                                   $query6 = $this->db->query($totalin);
                                                   if ($query6->num_rows() > 0) {
                                                   foreach ($query6->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalin)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->totalin / 1000, 2)  . ' kg </th>' ;
                                                        }
                                                     }
                                                 }
@@ -461,7 +461,7 @@ input {
                                                   $query7 = $this->db->query($totalin);
                                                   if ($query7->num_rows() > 0) {
                                                   foreach ($query7->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalin)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->totalin / 1000, 2)  . ' kg </th>' ;
                                                        }
                                                     }
                                                 }
@@ -518,7 +518,7 @@ input {
                                                 $qcount2 = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 foreach ($qcount2->result() as $row3){
                                                     $colname2 = $row3->raw_coffee; ?>
-                                                        <td><?php echo number_format($row->$colname2); ?> </td>
+                                                        <td><?php echo number_format($row->$colname2); ?>  g </td>
                                                 <?php
 
                                                 }
@@ -553,7 +553,7 @@ input {
                                                   $query8 = $this->db->query($totalout);
                                                   if ($query8->num_rows() > 0) {
                                                   foreach ($query8->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalout)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->totalout / 1000, 2)  . ' kg</th>' ;
                                                        }
                                                     }
                                                     
@@ -565,7 +565,7 @@ input {
                                                   $query9 = $this->db->query($totalout);
                                                   if ($query9->num_rows() > 0) {
                                                   foreach ($query9->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalout)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->totalout / 1000, 2)  . ' kg</th>' ;
                                                        }
                                                     }
                                                 }
@@ -584,7 +584,7 @@ input {
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
-                                                       echo '<th>'  . number_format($object->ending)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->ending / 1000, 2)  . ' kg </th>' ;
                                                        }
                                                     }
                                                 }
@@ -595,7 +595,7 @@ input {
                                                  $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {
-                                                       echo '<th>'  . number_format($object->ending)  . '</th>' ;
+                                                       echo '<th>'  . number_format($object->ending / 1000, 2)  . ' kg </th>' ;
                                                        }
                                                     }
                                                 }
