@@ -34,11 +34,11 @@
 		}
         public function date_filt(){
             $df = $this->input->post('datefilt');
-            $this->load->model('InventoryDashboard_model');
-            $data1["coffeein"] = $this->InventoryDashboard_model->get_coffeeinWithP($df);
+            $reorder = $this->notification_model->reorder();
+            $data5["coffeein"] = $this->InventoryDashboard_model->get_coffeeinWithP($df);
             $data6["coffeeout"] = $this->InventoryDashboard_model->get_coffeeoutWithP($df);
-            $data5["datav"] = $df;
-			$this->load->view("Inventory_Module/inventoryDashboard", ['data1' => $data1, 'data5' => $data5, 'data6' => $data6]);
+            $data7["datav"] = $df;
+			$this->load->view("Inventory_Module/inventoryDashboard", ['data5' => $data5, 'data6' => $data6, 'data7' => $data7]);
         }
 
 	}

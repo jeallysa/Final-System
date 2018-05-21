@@ -18,15 +18,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-datepicker3.min.css">
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css"/>
-	
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" >
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 <style>
 .form-group.is-focused .form-control {
@@ -361,7 +360,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-content">
                             <div class="row">
                                 <div class="card-content table-responsive">
-                                        <div class="pull-right">
+                                        <div>
+                                            <center>
                                     <?php $month_filt = $data7["datav"];
                                     $year = $this->db->query("SELECT year(now()) AS year;")->row()->year;
                                             $tomonth = $this->db->query("SELECT MONTH(NOW()) AS tomonth;")->row()->tomonth;
@@ -375,10 +375,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             $dateObj   = DateTime::createFromFormat('!m', $tomonth);
                                             $monthName = $dateObj->format('F');
                                     ?>
-                                        <label><H4><b> Working File: <?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>
+                                            <H4><b><?php echo $monthName; ?> <?php echo $year; ?></b></H4>
                                     <?php
                                         }
                                     ?>
+                                            </center>
                                         </div>
                                     <div class="row">
                                     </div>
@@ -392,7 +393,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     if ($conntitle->connect_error) {
                                                         die("Connection failed: " . $conntitle->connect_error);
                                                     } 
-                                                    $sql="SELECT * FROM raw_coffee";
+                                                    $sql="SELECT distinct raw_coffee FROM raw_coffee where raw_activation = 1";
                                                     $result = $conntitle->query($sql);
                                                     if ($result->num_rows > 0) {
                                                         while($row = $result->fetch_assoc()) {
@@ -406,31 +407,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 $conntitle->close();
                                                 ?>
                                             </tr>
+                                            
                                             <tr id="dt-header">
                                                 <td><b>Beginning Inventory</b></td>
                                                 <td></td>
                                                 <?php
-                                                $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                
+                                                $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 if (isset($month_filt)){
                                                     if($month_filt == '1'){
                                                         foreach ($query->result() AS $row){
-                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12;" ;
+                                                            $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a;" ;
                                                     
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
                                                           foreach ($query2->result() as $object) {
-                                                               echo '<td><b>'  . number_format($object->beginning)  . ' g </b></td>' ;
+                                                               echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
                                                                }
                                                             }
                                                         }
                                                     }else{
                                                         foreach ($query->result() AS $row){
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = ".$month_filt."- 1;" ;
+                                                        $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1) a;" ;
                                                     
                                                           $query3 = $this->db->query($begin);
                                                           if ($query3->num_rows() > 0) {
                                                           foreach ($query3->result() as $object) {
-                                                               echo '<td><b>'  . number_format($object->beginning)  . ' g </b></td>' ;
+                                                               echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
                                                                }
                                                             }
                                                         }
@@ -442,14 +445,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 foreach ($query->result() AS $row){
                                                     $query4 = $this->db->query("SELECT month(now()) AS this_month");
                                                     if($query4->row()->this_month == '1'){
-                                                $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = 12;" ;
+                                                $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a;" ;
                                                     }else{
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now()) - 1;" ;
+                                                        $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())  - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())  - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1) a;" ;
                                                     }
                                               $query5 = $this->db->query($begin);
                                               if ($query5->num_rows() > 0) {
                                               foreach ($query5->result() as $object) {
-                                                   echo '<td><b>'  . number_format($object->beginning)  . ' g </b></td>' ;
+                                                   echo '<td><b>'  . number_format($object->beginning)  . '</b></td>' ;
                                                    }
                                                 }
                                                 }
@@ -470,10 +473,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <td><?php echo $row->transact_date; ?></td>
                                                 <td><?php echo $row->supplier; ?></td>
                                                 <?php
-                                                $qcount1 = $this->db->query("SELECT * FROM raw_coffee");
+                                                $qcount1 = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 foreach ($qcount1->result() as $row2){
-                                                    $colname1 = "coffin" . $row2->raw_id; ?>
-                                                        <td><?php echo number_format($row->$colname1); ?> g</td>
+                                                    $colname1 = $row2->raw_coffee; ?>
+                                                        <td><?php echo number_format($row->$colname1); ?> </td>
                                                 <?php
 
                                                 }
@@ -501,34 +504,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalin ="SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
                                                   $query6 = $this->db->query($totalin);
                                                   if ($query6->num_rows() > 0) {
                                                   foreach ($query6->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalin)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->totalin)  . '</th>' ;
                                                        }
                                                     }
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'IN' and month(transact_date) = month(now());" ;
+                                                  $totalin ="SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now());" ;
                                                   $query7 = $this->db->query($totalin);
                                                   if ($query7->num_rows() > 0) {
                                                   foreach ($query7->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalin)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->totalin)  . '</th>' ;
                                                        }
                                                     }
                                                 }
                                                 }
+                                                
                                                 ?>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                                 </div><hr>
+                                
                    <div class="row">
                         <div class="card-content table-responsive">
                             <table id="coffeeout" class="table hover order-column" cellspacing="0" width="100%">
@@ -541,7 +546,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     if ($conntitle->connect_error) {
                                                         die("Connection failed: " . $conntitle->connect_error);
                                                     } 
-                                                    $sql="SELECT * FROM raw_coffee";
+                                                    $sql="SELECT distinct raw_coffee FROM raw_coffee where raw_activation = 1";
                                                     $result = $conntitle->query($sql);
                                                     if ($result->num_rows > 0) {
                                                         while($row = $result->fetch_assoc()) {
@@ -570,10 +575,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <td><?php echo $row->transact_date; ?></td>
                                                 <td><?php echo $row->client; ?></td>
                                                 <?php
-                                                $qcount2 = $this->db->query("SELECT * FROM raw_coffee");
+                                                $qcount2 = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                 foreach ($qcount2->result() as $row3){
-                                                    $colname2 = "coffout" . $row3->raw_id; ?>
-                                                        <td><?php echo number_format($row->$colname2); ?> g</td>
+                                                    $colname2 = $row3->raw_coffee; ?>
+                                                        <td><?php echo number_format($row->$colname2); ?> </td>
                                                 <?php
 
                                                 }
@@ -594,6 +599,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                                 ?>
                                         </tbody>
+                                        
                                         <tfoot>
                                             <tr>
                                                 <th>Total</th>
@@ -601,24 +607,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalout ="SELECT sum(a.totalin) AS totalout FROM (SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id  where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = '".$month_filt."') a;";
                                                   $query8 = $this->db->query($totalout);
                                                   if ($query8->num_rows() > 0) {
                                                   foreach ($query8->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalout)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->totalout)  . '</th>' ;
                                                        }
                                                     }
+                                                    
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT raw_coffeeid, sum(quantity) as totalout from trans_raw NATURAL JOIN inv_transact where raw_coffeeid = '".$row->raw_id."' and type = 'OUT' and month(transact_date) = month(now());" ;
+                                                  $totalout ="SELECT sum(a.totalin) AS totalout FROM (SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id  where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = month(now())) a;" ;
                                                   $query9 = $this->db->query($totalout);
                                                   if ($query9->num_rows() > 0) {
                                                   foreach ($query9->result() as $object) {
-                                                       echo '<th>'  . number_format($object->totalout)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->totalout)  . '</th>' ;
                                                        }
                                                     }
                                                 }
@@ -631,28 +638,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php
                                                 
                                                 if (isset($month_filt)){
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = '".$month_filt."';" ;
+                                                  $end ="SELECT sum(a.ending) AS ending FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."') a" ;
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
-                                                       echo '<th>'  . number_format($object->ending)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->ending)  . '</th>' ;
                                                        }
                                                     }
                                                 }
                                                 }else{
-                                                    $query = $this->db->query("SELECT * FROM raw_coffee");
+                                                    $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM `trans_raw` NATURAL JOIN `inv_transact` WHERE  `raw_coffeeid` = '".$row->raw_id."' and month(transact_date) = month(now());" ;
-                                                  $query11 = $this->db->query($end);
+                                                    $end ="SELECT sum(a.ending) AS ending FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())) a" ;                                                 
+                                                 $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {
-                                                       echo '<th>'  . number_format($object->ending)  . ' g </th>' ;
+                                                       echo '<th>'  . number_format($object->ending)  . '</th>' ;
                                                        }
                                                     }
                                                 }
                                                 }
+                                                
                                                 ?>
                                                 
                                             </tr>
@@ -674,6 +682,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/dataTables.buttons.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/buttons.flash.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/buttons.Html5.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/buttons.print.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/jszip.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/pdfmake.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/vfs_fonts.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/datepicker.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/material.min.js" type="text/javascript"></script>
@@ -691,14 +706,86 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
-
-    // Javascript method's body can be found in assets/js/demos.js
-    demo.initDashboardPageCharts();
+    $('#coffeein').DataTable({
+        "responsive": true,
+        "orderCellsTop": true,
+        "dom":' fBrtip',
+        "lengthChange": false,
+        "info":     false,
+		buttons: [
+            { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
+                customize: function ( win ) { 
+                     $(win.document.body) .css( 'font-size', '10pt' )
+                    .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
+                }
+            },
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
+			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
+                orientation: 'portrait',
+                        exportOptions: {
+                         columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,100,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+            }
+        ]
+      
+    });
 
 });
 </script>
+<script>
+$(document).ready(function() {
+    $('#coffeeout').DataTable({
+        "responsive": true,
+        "orderCellsTop": true,
+        "dom":' fBrtip',
+        "lengthChange": false,
+        "info":     false,
+		buttons: [
+            { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
+                customize: function ( win ) { 
+                     $(win.document.body) .css( 'font-size', '10pt' )
+                    .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
+                }
+            },
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
+			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
+                orientation: 'portrait',
+                        exportOptions: {
+                         columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,100,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+            }
+        ]
+      
+    });
 
-
+});
+</script>
 </html>
