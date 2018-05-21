@@ -186,7 +186,7 @@
             <th><b class="pull-left">Gross Amount</b></th>
             <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Delivery Status</b></th>
-            <th class="disabled-sorting" width="20%"><b class="pull-center">Action</b></th>
+            <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
             <th class="hidden"></th>
         </thead>
         <tbody>
@@ -259,7 +259,7 @@
                                    <input class="form-control" type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required>
                                    <input class="form-control" type="hidden" name="po_qty" value="<?php echo $row1->contractPO_qty; ?>" required>
                                    <input class="form-control" type="hidden" name="po_blend" value="<?php echo $row1->blend_id; ?>" required>
-                                    <div class="panel-footer" align="center">
+                                    <div class="panel-footer" align="pull-right">
                                         <button type="submit" class="btn btn-success">Yes</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                                     </div>
@@ -307,7 +307,7 @@
                                     <div class="row">
                                         <div class="col-lg-7">
                                              <div class="form-group">
-                                                <label class="col-md-5 control">PO ID :</label>
+                                                <label class="col-md-5 control">PO No. :</label>
                                                 <div class="col-md-7">
                                                     <p><b><?php echo $row1->contractPO_id;
                                                     ?></b></p>
@@ -442,7 +442,7 @@
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
             <th><b>Quantity Returned</b></th>
-            <th width="70%">Action</th>
+            <th width="70%">Actions</th>
         </thead>
         <tbody>
             <?php
