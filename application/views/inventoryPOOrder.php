@@ -318,7 +318,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>DR No.</label>
-                                                         <input type="number" class="form-control" name="DRNO" required>
+                                                         <input type="text" class="form-control" name="DRNO" required>
                                                     </div>
                                                 </div>
 
@@ -626,11 +626,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               foreach ($query->result() as $object) {
                                               $tempItemId = $object->supp_po_ordered_id;
                                               $category   = $object->category;
+											  
                                               
                                            
                                                   
                                      if($category == 1){ 
-                                       
+                                                   $raw_id   = $object->raw_id;
                                                 echo        
                                                 '<tr>' ;
                                              ?>
@@ -654,13 +655,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                          
                                                    <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly />
+                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo ($object->qty)/1000 ?>" readonly />
                                                       
                                                    </td>   
                                                     
                                                 <td>
                                                      
-                                                    <input type="number"  step="0.01" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo ($object->qty/1000)-$object->received ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
@@ -670,7 +671,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                    <!--              <?php echo (($object->qty-$object->received)) ?>   -->
                              
                                                  <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
-                                                 <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" >    
+                                                 <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" >
+											     <input type="hidden" class="form-control"  name="raw_id[]"  value="<?php echo $category ?>" >
                                                  <?php  
                                                 '</tr>'; 
                                          
@@ -1213,6 +1215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
            }else{
                $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).attr('disabled', 'disabled');
+			   $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).val('');
             }
           });
       

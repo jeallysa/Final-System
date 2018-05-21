@@ -28,6 +28,19 @@
   }
       
       
+	   
+	  
+	  
+    function getLastTrans(){
+      $query = $this->db->query('SELECT trans_id FROM trans_raw order by 1 desc limit 1');
+            
+      if($query->num_rows() > 0){
+          return $query->row();
+      }else
+          return NULL;
+  }  
+	  
+	  
   function retrieveUsers(){
    
     $query = $this->db->query('SELECT * FROM user');      
@@ -58,7 +71,14 @@ function insertORDER($data){
          
   }  
           
-      
+   
+function insertTrans($data){
+         
+      $this->db->insert("trans_raw" , $data);        //USED BY BOTH FULL AND PARTIAL
+         
+  }    
+	  
+	  
       
       
       

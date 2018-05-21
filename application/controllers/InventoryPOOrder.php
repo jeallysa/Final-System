@@ -68,17 +68,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $receivedByv=$this->input->post('receivedBy');
         $supp_po_id = $temp;
         $category = $this->input->post('category');
+	    
             
        
   if ($_POST)  {
-        
+	 
+        $lastTrans = $this->inventoryPOOrder_model->getLastTrans();
+	    $newTrans = $lastTrans->trans_id;
+	    
+	    $new = $newTrans+1;
+	    
+	  
  for ($i = 0; $i < count($this->input->post('itemId')); $i++){
      
                                                                                                                     
- if($category[$i] == 1){                                                                                                                 
+ if($category[$i] == 1){ 
+	 
+	       $lastTrans = $this->inventoryPOOrder_model->getLastTrans();
+	       $raw_id = $this->input->post('raw_id');
+	 
            if((!empty($receivedv[$i]) && !empty($yield_weightv[$i]) )){   
               
                                    //Data used for mapping 
+			   
+			   
                 $data3 = array(
                     "drNo"=>$DRNO,
                     "itemId"=>$itemIdv[$i],
@@ -106,9 +119,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     'supp_po_id'    => $temp,
 
                 );
+			   
+			   
+			   
+		        $trans_raw = array(
+                    'trans_id' => $new,
+                    'raw_coffeeid' => $raw_id[$i],
+                    'quantity' => $yield_weightv[$i],
+                  
+
+                );
                
                
         $this->inventoryPOOrder_model->insertORDER($data);
+			   
+	    $this->inventoryPOOrder_model->insertTrans($trans_raw);
       
         $this->inventoryPOOrder_model->updateStock($data3, $supp_po_id); 
               

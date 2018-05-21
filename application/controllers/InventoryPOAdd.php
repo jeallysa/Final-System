@@ -182,18 +182,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $qtyv=$this->input->post('qty');
         $typev=$this->input->post('type');
         $amountv=$this->input->post('amount');
+		$categoryx=$this->input->post('category');
+		   
+		   
         $data = array();
+		   
+
+	
            
         for ($i = 0; $i < count($this->input->post('item_name')); $i++){
+			
+	if($categoryx[$i] == 1){
+			$newQty = $qtyv[$i] * 1000;
+				
             $data[$i] = array(
+               
+                'item' => $itemv[$i],
+                'qty' => $newQty,
+                'type' => $itemTypev[$i],
+                'amount' => $amountv[$i],
+                'supp_po_id' =>$lastPO[0]->supp_po_id,
+				'categoryx'  =>$categoryx[$i],
+               
+            );
+			
+	}else{
+		
+		$data[$i] = array(
                
                 'item' => $itemv[$i],
                 'qty' => $qtyv[$i],
                 'type' => $itemTypev[$i],
                 'amount' => $amountv[$i],
                 'supp_po_id' =>$lastPO[0]->supp_po_id,
-               
-            );
+				'categoryx'  =>$categoryx[$i],
+			);
+		
+	}
+			
+			
+			
         }
            
         $this->inventoryPOAdd_model->insertOrder($data);
