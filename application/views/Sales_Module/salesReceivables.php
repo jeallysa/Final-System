@@ -141,7 +141,14 @@
                                     <h3 class="title"><center>Receivables</center></h3>
                                 </div>
                                 <div class="card-content">
-                                    <h4>Generate Receivables Report</h4>
+                                <div class="form-group col-xs-3">
+                                <label>Filter By:</label>
+                                    <div class="input-group input-daterange">
+                                        <input type="text" id="min" class="form-control" value="2000-01-01" >
+                                        <span class="input-group-addon">to</span>
+                                        <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+                                    </div>
+                                </div>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
@@ -213,7 +220,7 @@
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
             var dateEnd = parseDateValue($("#max").val());
-            var evalDate= parseDateValue(aData[4]);
+            var evalDate= parseDateValue(aData[0]);
 
             if (evalDate >= dateStart && evalDate <= dateEnd) {
                 return true;
@@ -226,7 +233,7 @@
     function parseDateValue(rawDate) {
         var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         var dateArray = rawDate.split(" ");
-        var parsedDate = dateArray[2] + month + dateArray[0];
+        var parsedDate = dateArray[0] + month + dateArray[0];
         return parsedDate;
     }
 

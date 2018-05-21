@@ -227,7 +227,7 @@ a:focus {
                                                 <th><b>Client</b></th>
                                                 <th><b>Coffee</b></th>
                                                 <th><b>Bag</b></th>
-                                                <th><b>Size</b></th>
+                                                <th><b>Size (g)</b></th>
                                                 <th><b>Quantity</b></th>
                                                 <th><b>Unit Price</b></th>
                                                 <th><b>Total Amount</b></th>

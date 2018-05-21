@@ -287,7 +287,7 @@ a:focus {
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
             var dateEnd = parseDateValue($("#max").val());
-            var evalDate= parseDateValue(aData[2]);
+            var evalDate= parseDateValue(aData[0]);
 
             if (evalDate >= dateStart && evalDate <= dateEnd) {
                 return true;
@@ -300,7 +300,7 @@ a:focus {
     function parseDateValue(rawDate) {
         var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         var dateArray = rawDate.split(" ");
-        var parsedDate = dateArray[2] + month + dateArray[0];
+        var parsedDate = dateArray[0] + month + dateArray[0];
         return parsedDate;
     }
 
