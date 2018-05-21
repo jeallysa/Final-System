@@ -233,7 +233,6 @@ a:focus {
                                                     <th><b>Contact No.</b></th>
                                                     <th class="disabled-sorting"><b>Edit</b></th>
                                                     <th><b class="pull-left">Activation</b></th>
-                                                    <th><b class="pull-left">Reset Password</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>

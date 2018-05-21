@@ -103,12 +103,23 @@
 			$this->SalesDelivery_model->undoDel($po);
 			redirect('SalesDelivery', 'refresh');
 		}
+        function roastDel()
+		{
+			$this->load->model('SalesDelivery_model');
+			$po_id = $this->input->post("po_roast");
+			$date = $this->input->post("po_date");
+			$QTY = $this->input->post("po_qty");
+			$blend_id = $this->input->post("po_blend");
+
+			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id);
+			redirect('SalesDelivery', 'refresh');
+		}
 
         function retDel()
 		{
 			$this->load->model('SalesDelivery_model');
-			$po = $this->input->post("po_undo");
-			$this->SalesDelivery_model->retDel($po);
+			$po2 = $this->input->post("po_ret");
+			$this->SalesDelivery_model->retDel($po2);
 			redirect('SalesDelivery/salesArchivedPO', 'refresh');
 		}
 

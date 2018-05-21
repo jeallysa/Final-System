@@ -229,7 +229,7 @@
 
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row->contractPO_id; ?></td>
+                                                        <td><?php echo $row->contractPO_id;?></td>
                                                         <td><?php echo $row->contractPO_date; ?></td>
                                                         <td><?php echo $row->blend_id; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
@@ -243,7 +243,15 @@
                                                         $Amount = $qty * $Price;
                                                         echo 'Php '.number_format($Amount,2); ?></td>
                                                         <td><?php echo $row->contractPO_date; ?></td>
-                                                        <td><?php echo $row->delivery_stat; ?></td>
+                                                        <td><?php 
+                                                            $cancel = $row->undoDel;
+                                                            if ($cancel == 1) {
+                                                                echo " Cancelled";
+                                                            } else{
+                                                                echo $row->delivery_stat; 
+                                                            }
+
+                                                        ?></td>
                                                     </tr>
                                                 <?php
                                                     }

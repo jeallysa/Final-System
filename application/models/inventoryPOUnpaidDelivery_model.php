@@ -29,11 +29,134 @@
   }
       
       
+ 
+         public function get_itemList($dr,$supp_po_id){
+			$query = $this->db->query("select distinct supp_po_ordered.supp_po_ordered_id , item ,type  from supp_delivery join supp_po_ordered using(supp_po_id) where drNo = ".$dr." and supp_delivery.supp_po_id = ".$supp_po_id);
+			return $query->result();
+			
+		}  
+      
+      
+      
+      
+      
+      
+      
+      
+      public function get_maxModel($poNo, $item, $drNo){
+            
+            
+            $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = ".$drNo);
+            
+            $queryLimit = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = ".$drNo);
+            
+            $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = ".$drNo);
+            
+            
+		 
+                if($queryCheck->num_rows() > 0){
+                    
+                            $limit = $queryLimit->row();
+                            $deduc = $queryDeduc->row();
+                    
+                    $limitT  = $limit->max;
+                    $deducT  = $deduc->max;
+                    
+                    $result = $limitT - $deducT;
+                    
+                 //   $result = $deducT;
+                    
+                    
+                    return $result;
+                    
+                }else{
+                    
+                      $query2 = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item);
+                         if($query2->num_rows() > 0){
+                                        
+                                      $limit = $queryLimit->row();
+                              $limitT  = $limit->max;
+                             
+                             
+                             
+                                    return  $limitT;
+                             
+                             
+                             
+                              }
+                }
+        }
+      
+      
+      
+      
+      
+         function insertReturns($data){ 
+                  
+           $this->db->insert("company_returns" , $data);
+           }  
+      
+      
+      
+      
+                
+           function updateStocks($data){ 
+         
+           $query1 = $this->db->query("SELECT * from supp_po_ordered where supp_po_ordered_id = ".$data['sup_returnItem']." and supp_po_id = ".$data['poNo']);
+           $query2 = $this->db->query("SELECT * from supp_po where supp_po_id = ".$data['poNo']);        
+                        
+                        $result1= $query1->row();
+                        $result2= $query2->row();
+                        
+                        $itemName = $result1->item;//result1['item'];  //
+                        $itemType = $result1->type;//result1['type'];  //
+                        
+                        $sup_id = $result2->supp_id;// result2['supp_id']; //
+               
+               
+               
+             $arrayItem = array("raw_coffee","sticker","packaging","machine");
+                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");
+                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
+                           $stockColumn= array("raw_stock","sticker_stock","package_stock","mach_stocks");
+               
+               
+                         for($i= 0 ; $i <= 3 ; $i++){
+                          
+                     $retrieveDetails ="SELECT ".$stockColumn[$i]." as stock FROM ".$arrayItem[$i]." where ".$arrayOn[$i]." = '".$itemName."' and ".$arrayType[$i]." = '".$itemType."' and sup_id = ".$sup_id;  
+               
+                                       $query = $this->db->query($retrieveDetails);
+                                           if ($query->num_rows() > 0) {
+                                                  $tempResult = $query->row();
+                                                  $stock = $tempResult->stock - $data['sup_returnQty'];
+                                               
+                                       $where = array( $arrayOn[$i] =>$itemName, $arrayType[$i] =>$itemType, 'sup_id' => $sup_id ); // multiple where
+                                               
+                                       $toUpdate =array( $stockColumn[$i] => $stock);        
+                                               
+                                       $this->db->where($where);  //used the where here
+                                       $this->db->update($arrayItem[$i], $toUpdate);   
+                                               
+                                        $this->db->insert($arrayItem[$i] , $toUpdate);       
+                                              }
+                                            }
+                      
+                      
+                      
+                   
+                
+         
+         }
+      
+      
+      
+      
+      
       
       
       
     function getTotalAmount(){
-      $query = $this->db->query('SELECT total_amount FROM jhcs.supp_po');
+      $query = $this->db->query('SELECT total_amount FROM supp_po');
       if($query->num_rows() > 0){
           return $query->result();
       }else
@@ -42,7 +165,7 @@
      
       
    function getRemaining($supp_po_id){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
       if($query->num_rows() > 0){
           $result = $query->row();
            
@@ -57,7 +180,7 @@
   }  
       
     function getTotal($supp_po_id){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
       if($query->num_rows() > 0){
           $result = $query->row();
            
@@ -77,7 +200,7 @@
     }
       
     function updatePOPayment($data , $supp_po_id ){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
         if($query->num_rows() > 0){
            $result = $query->row();
            
@@ -92,7 +215,7 @@
          $this->db->update('supp_po',  $dataUpdate);  
             
          //after updating check if it is already equal to the total   
-            $queryCheckIfPaid = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+            $queryCheckIfPaid = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
                 if($queryCheckIfPaid->num_rows() > 0){
                     $result = $queryCheckIfPaid->row();
                     
@@ -121,7 +244,7 @@
    
   function activity_logs($module, $activity){
     $username = $this->session->userdata('username');
-        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
+        $query = $this->db->query("SELECT user_no from user where username ='".$username."';");
         foreach ($query ->result() as $row) {
           $id = $row->user_no;
         }

@@ -41,8 +41,92 @@
 			$this->db->query("UPDATE contracted_po SET undoDel = 1 WHERE contractPO_id = '".$po."';");
 		}
 
-		function retDel($po){
-			$this->db->query("UPDATE contracted_po SET undoDel = 0 WHERE contractPO_id = '".$po."';");
+		// function roastDel($po){
+		// 	$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po."';");
+		// }
+
+		public function roastDel($date, $quantity, $blend_id, $po_id){
+			$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po_id."';");
+
+			/* NEEDED QUERY for Section 4 */
+			$query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
+
+
+
+			/* validation of stock if less or not */
+
+			foreach($query->result() AS $row){
+				$raw_guide = $row->raw_id;
+			    $percentage = $row->percentage;
+			    $package = $row->package_size;
+				$stock = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';")->row()->raw_stock;
+				$taker = round($quantity*($package*($percentage * 0.01)));
+				if ($stock < $taker){
+					return;
+				}
+			}
+
+
+			/* UPDATE of stocks & insert into INV_TRANSACT*/
+			$pack_id = $query->row()->package_id;
+			$stick_id = $query->row()->sticker_id;
+			$pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
+			$sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
+			if ($pack_stock < $quantity){
+				echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
+				return;
+			}else if($sticker_stock < $quantity){
+				echo '<script> alert("Insufficient stocks for stickers! Transaction halted."); </script>';
+				return;
+			}else{
+				$this->db->query("UPDATE packaging SET package_stock = package_stock - ".$quantity." WHERE package_id =".$pack_id.";");
+				$this->db->query('UPDATE sticker SET sticker_stock = sticker_stock - '.$quantity.' WHERE sticker_id ='.$stick_id.';');
+				$this->db->query('UPDATE coffee_blend SET blend_qty = blend_qty + '.$quantity.' WHERE blend_id ='.$blend_id.';');
+				$data_trans = array(
+							'transact_date' => $date,
+							'po_client' => $po_id,
+				        	'type' => "OUT"
+				);
+				$this->db->insert('inv_transact', $data_trans);
+				$trans_id = $this->db->insert_id();
+
+				/* FOR TRANS_RAW */
+				foreach ($query->result() as $row)
+				{
+
+				        $raw_guide = $row->raw_id;
+				        $percentage = $row->percentage;
+				        $package = $row->package_size;
+				        $this->db->query('UPDATE raw_coffee SET raw_stock = raw_stock - '.$quantity*($package*($percentage * 0.01)).' WHERE raw_id ='.$raw_guide.';');
+
+				        $data_for = array(
+				        	'trans_id' => $trans_id,
+				        	'raw_coffeeid' => $raw_guide,
+				        	'quantity' => $quantity*($package*($percentage * 0.01))
+				        );
+				        $this->db->insert('trans_raw', $data_for);
+				}
+
+				/* FOR Trans (Machines, Packaging, Stickers..) */
+				$data_pack = array(
+				        	'trans_id' => $trans_id,
+				        	'package_id' => $pack_id,
+				        	'quantity' => $quantity
+				);
+				$data_stick = array(
+						'trans_id' => $trans_id,
+				        	'sticker_id' => $stick_id,
+				        	'quantity' => $quantity
+				);
+				$this->db->insert('trans_pack', $data_pack);
+				$this->db->insert('trans_stick', $data_stick);
+				$this->db->query('INSERT INTO trans_mach (trans_id) VALUES ('.$trans_id.')');
+			}
+
+		}
+
+		function retDel($po2){
+			$this->db->query("UPDATE contracted_po SET undoDel = 0 WHERE contractPO_id = '".$po2."';");
 		}
 
 		function insert_dataA($dataA){ 

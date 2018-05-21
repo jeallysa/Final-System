@@ -35,5 +35,40 @@ class Login_Model extends CI_Model
 		}
 	}
 
+	public function email_exists($email){
+		$sql = "SELECT username, u_email FROM user WHERE u_email = '".$email."' LIMIT 1;";
+		$result = $this->db->query($sql);
+		$row = $result->row();
+
+		return ($result->num_rows() === 1 && $row->u_email) ? $row->username : false;
+	}
+
+	public function updatePassword(){
+		$email = $this->input->post('email');
+        $password = $this->input->post('password');
+
+        $sql = "UPDATE user SET password = '".$password."' WHERE email = '".$email."' LIMIT 1";
+        $this->db->query($sql);
+
+        if($this->db->affected_rows() === 1){
+        	return true;
+        }else{
+        	return false;
+        }
+	}
+
+
+	public function verify_code($email, $code){
+		$sql = "SELECT username, u_email FROM user WHERE u_email = '".$email."' LIMIT 1;";
+		$result = $this->db->query($sql);
+		$row = $result->row();
+
+		if ($result->num_rows() === 1){
+			return ($code == md5($this->config->item('salt') . $row->username)) ? true : false;
+		}else{
+			return false;
+		}
+	}
+
 	
 }

@@ -26,6 +26,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#17bbd0, #17bbd0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #17bbd0;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -40,6 +58,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     background: red; 
     text-align: center;
     color: white;
+}
+
+.navbar .dropdown-menu li a:hover,
+.navbar .dropdown-menu li a:focus,
+.navbar .dropdown-menu li a:active,
+.navbar.navbar-default .dropdown-menu li a:hover,
+.navbar.navbar-default .dropdown-menu li a:focus,
+.navbar.navbar-default .dropdown-menu li a:active {
+    background-color: #17bbd0;
+    color: #FFFFFF;
+    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
 
 
@@ -119,9 +148,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
+                           <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                       <i class="glyphicon glyphicon-bell"></i>
+                                       <span class="label-count"><b> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </b></span> </a>
+                            
+                            
+                            <?php
+                            if($total != 0) {
+                            ?>
+                            
+                                <ul class="dropdown-menu">
+                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
+                                </ul>
+                            <?php
+                            } else {
+                            ?>
+                            <ul class="dropdown-menu">
+                                  <li align="center"> No new notification. </li>    
+                                </ul>
+                            <?php
+                            }
+                            ?>
+
+                            </li>
+                            
+
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-user"></i>
+                                         <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -138,47 +207,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
                                     </li>
                                 </ul>
-                            </li>
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
-                            <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-bell"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
-                                        
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            
-                            
-                                <ul class="dropdown-menu">
-                                    
-                                   <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "  " . $object->type. ' from<b> ' . $object->supplier.  ' </b>now drops below the re-order level</a></li>';
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                   
-                                </ul>
-                            
                             </li>
                             
                             
@@ -197,7 +225,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-
+<div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '</tr>' ;
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
@@ -530,9 +596,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Type</th>
                                                         <th>Original Qty</th>
                                                         <th>Quantity</th>
-                                                        <th>Original Weight</th>
-                                                        <th>Weight(g)</th>
-                                                        <th>Yield Weight(g)</th>
+                                                        <th>Original Weight(Kg)</th>
+                                                        <th>Weight(Kg)</th>
+                                                        <th>Yield Weight(Kg)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -705,6 +771,90 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
      
 
+            
+            
+            
+                 
+  <!----------------------------------------------------------Archive -------------------------------------->           
+          
+    <?php
+      $archive = 1;
+        if(!empty($order)) {                                
+           foreach($order as $object){
+            $temp =  $object->supp_po_id;
+            $sup_id = $object->sup_id;   
+            $dateMin = $object->suppPO_date;
+               
+               
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                           
+                                    
+?>                                                     
+                                    
+                                    
+    <div class="modal fade" id="<?php echo "archive" . $archive  ?>" role="dialog">
+      <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
+        </div>
+          
+    <form action="InventoryPOOrder/archive" method="post" accept-charset="utf-8">    
+        <div class="modal-body">
+            
+            
+            
+           <!-- <center><h3><b><p><?php echo $newDate ?></p></b></h3></center> -->
+            <center><h4><b><p>Are you sure you want to archive PO #<?php echo $temp ?></p></b></h4></center>
+           
+            
+             <input class="form-control" type="hidden"  name ="supp_po_id" value="<?php echo $temp ?>">
+             <input class="form-control" type="hidden"  name ="date" value="<?php echo date("Y-m-d")?>">
+             
+            
+        </div>
+       
+               <div  align="center">
+                                 <button type="submit" class="btn btn-success accept">Yes</button>
+                                 <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">No</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+      
+    </div>
+                                          
+           
+            
+ <?php      
+         $archive++;        
+        }
+    }
+?>    
+                      
+ 
+            
+        <!----------------------------------------------------------END     OF     MODAL -------------------------------------->     
+            
+            
+                  
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    
 
 <?php
         $details = 1; 
@@ -743,7 +893,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(g)</th>
+                                                    <th>Weight(Kg)</th>
                                                     <th>Unit Price</th>
                                                     <th>Amount</th>
                                                 </tr>
@@ -866,6 +1016,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                              <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                                 
                                                 
                                                 
@@ -887,9 +1044,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
-                                            <th></th>
-                                            <th></th>
+                                            <th><b><center>Action</center></b></th>
                                             
+                                            
+                                           
                                         </thead>
                                         <tbody>
                                             
@@ -915,10 +1073,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>' ;
                                         		                      
                                         ?>
-                                                                              
-                                               
-                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> </td>
-                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></td>
+                                            
+                                            
+       <?php
+                 $retrieveDetails ="select * from supp_po join supp_delivery using(supp_po_id) where supp_po.supp_po_id =" . $object->supp_po_id;
+                                              $query = $this->db->query($retrieveDetails);
+                                              if ($query->num_rows() > 0) { ?>
+                                            
+                                              <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                              </td>
+                                             
+                                            <?php
+                                          
+                                              }else{ ?>
+                                              
+                                                <td>
+                                                   <center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                               </td>
+                                            
+                                               <td>
+                                                    <center><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a></center>
+                                               </td>
+                                            
+                                            
+                                            
+                                            <?php 
+                                            
+                                            }
+                                        ?>    
+                                                
+                                            
+                                            
+                                            
+                                            
                                             
                                             
                                             

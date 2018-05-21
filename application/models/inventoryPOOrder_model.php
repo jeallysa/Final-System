@@ -19,7 +19,7 @@
   
   
   function retrieveOrder(){
-      $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where (delivery_stat) = 0 and (payment_stat = 0)');
+      $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where (delivery_stat) = 0 and (payment_stat = 0) and archive = 1');
             
       if($query->num_rows() > 0){
           return $query-> result();
@@ -62,6 +62,21 @@ function insertORDER($data){
       
       
       
+   function archive($supp_po_id,$date){    
+        $data = array(
+                                 'archive' => 0,
+                                 'date_archived' => $date
+                                        );
+    
+                           $this->db->where('supp_po_id', $supp_po_id);
+                           $this->db->update('supp_po', $data);    
+      
+         
+       
+        }     
+      
+      
+     
       
       
 function updateStock($data3, $supp_po_id){
@@ -305,7 +320,7 @@ $loc = 0;                                  //QUERY THE REMAINING STOCK PER OF EA
       
       function activity_logs($module, $activity){
     $username = $this->session->userdata('username');
-        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
+        $query = $this->db->query("SELECT user_no from user where username ='".$username."';");
         foreach ($query ->result() as $row) {
           $id = $row->user_no;
         }

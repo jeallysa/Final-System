@@ -186,7 +186,8 @@
             <th><b class="pull-left">Gross Amount</b></th>
             <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Delivery Status</b></th>
-            <th class="disabled-sorting"><b class="pull-left">Action</b></th>
+            <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
+            <th class="hidden"></th>
         </thead>
         <tbody>
             <?php
@@ -212,15 +213,64 @@
                 <td><?php echo $row1->delivery_stat; ?></td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
-                        if ($dbStat != 'delivered') {
+                        $roast = $row1->roast;
+
+                        if ($dbStat != 'delivered' && $roast == 'Yes') {
                             echo '
-                           <a class="btn btn-success btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-ok"></span> Deliver</a>
+                           <button type="button" data-toggle="modal" class="btn btn-secondary btn-xs" data-target="#roast'.$row1->contractPO_id.'"" title="roast order" disabled><span class="glyphicon glyphicon-fire" style="color:red"></span></button>
+                        ';
+                            echo '
+                           <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'" title="deliver order"><span class="glyphicon glyphicon-ok-sign" style="color:black"></span> </button>
+                        ';
+
+                        } else if ($dbStat != 'delivered' && $roast == 'No') {
+                            echo '
+                           <button type="button" data-toggle="modal" class="btn btn-secondary btn-xs" data-target="#roast'.$row1->contractPO_id.'"" title="roast order"><span class="glyphicon glyphicon-fire" style="color:red"></span></button>
+                        ';
+                            echo '
+                           <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'" title="deliver order" disabled><span class="glyphicon glyphicon-ok-sign" style="color:black"></span> </button>
                         ';
                         }
+
+                        if ($dbStat == 'partial delivery') {
                         echo '
-                           <a class="btn btn-warning btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#undo'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-remove"></span> Cancel</a>
+                           <button data-toggle="modal" class="btn btn-danger btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="cancel order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
+                        } else if ($dbStat == 'pending') {
+                        echo '
+                           <button data-toggle="modal" class="btn btn-danger btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="cancel order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
+                        ';
+                        }
                     ?>
+
+                <!-- modal for roast -->
+
+                <div class="modal fade" id="roast<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="panel-title" id="contactLabel"><center>Roast Purchase Order</center></h4>
+                            </div>
+                            <form action="<?php echo base_url(); ?>SalesDelivery/roastDel" method="post" accept-charset="utf-8">
+                                <div class="modal-body" style="padding: 5px;">
+                                   <h3>Are you sure to roast Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                   <input class="form-control" type="hidden" name="po_roast" value="<?php echo $row1->contractPO_id; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_qty" value="<?php echo $row1->contractPO_qty; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_blend" value="<?php echo $row1->blend_id; ?>" required>
+                                    <div class="panel-footer" align="pull-right">
+                                        <button type="submit" class="btn btn-success">Yes</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>    
+
+                </td>
+
+                <td style="border-color:white; background-color:white">
                 <!-- modal for undo -->
 
                 <div class="modal fade" id="undo<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -241,7 +291,7 @@
                             </form>
                         </div>
                     </div>
-                </div>    
+                </div> 
                 </td>
 
                 <!--modal for pending delivery-->
@@ -257,7 +307,7 @@
                                     <div class="row">
                                         <div class="col-lg-7">
                                              <div class="form-group">
-                                                <label class="col-md-5 control">PO ID :</label>
+                                                <label class="col-md-5 control">PO No. :</label>
                                                 <div class="col-md-7">
                                                     <p><b><?php echo $row1->contractPO_id;
                                                     ?></b></p>
@@ -371,10 +421,9 @@
                             </form>
                         </div>
                     </div>
-                </div>
-              </div>
+                </div>  
             </tr>
-
+ 
             <?php
                 }
             ?>
@@ -384,19 +433,16 @@
 <div class="tab-pane" id="deliveries">
     <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
-            <th><b class="pull-left">Delivery Receipt No.</b></th>
-            <th><b class="pull-left">Sales Invoice No.</b></th>
             <th><b class="pull-left">Purchase Order No.</b></th>
+            <th><b class="pull-left">Receipt No.</b></th>
             <th><b class="pull-left">Delivery Date</b></th>
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Coffee Blend</b></th>
             <th><b class="pull-left">Quantity Delivered</b></th>
-            <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
-            <th><b>Payment Status</b></th>
             <th><b>Quantity Returned</b></th>
-            <th>Action</th>
+            <th width="70%">Actions</th>
         </thead>
         <tbody>
             <?php
@@ -404,46 +450,154 @@
                 {
             ?>
             <tr>
-                <td><?php echo $row2->client_dr; ?></td>
-                <td><?php echo $row2->client_invoice; ?></td>
                 <td><?php echo $row2->contractPO_id; ?></td>
+                <td><?php echo $row2->client_dr.'-'.$row2->client_invoice; ?></td>
                 <td><?php echo $row2->client_deliverDate; ?></td>
                 <td><?php echo $row2->client_company; ?></td>
-                <td><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></td>
-                <td><?php echo $row2->deliver_quantity; ?></td>
-                <td>Php <?php echo number_format($row2->blend_price,2); ?></td>
-                <td><?php
+                <td><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g/ "; ?>
+                    <?php
                         $price = $row2->blend_price;
                         $qty = $row2->deliver_quantity;
                         $amount = $price * $qty;
                         echo 'Php '.number_format($amount,2);
                      ?>
                 </td>
+                <td><?php echo $row2->deliver_quantity; ?></td>
+                <td>Php <?php echo number_format($row2->blend_price,2); ?></td>
                 <td><?php echo $row2->client_receive; ?></td>
-                <td><?php echo $row2->payment_remarks; ?></td>
                 <td><?php echo $row2->coff_returnQty; ?></td>
-                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
+                <td><button type="button" title="pay order" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
                         $payment_remarks = $row2->payment_remarks;
                         if ($payment_remarks == 'paid') {
                             echo "disabled";
                         }
 
-                     ?>>Pay</button>
-                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php
+                     ?>><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                    <button type="button" title="return order" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#return<?php echo $row2->client_deliveryID;?>" <?php
                         $resolved = $row2->resolved;
                         $return = $row2->return;
                         if ($resolved == 'Yes' || $resolved == 'No') {
                             echo "disabled";
                         }
 
-                     ?>>Return</button>
+                     ?>><span class="glyphicon glyphicon-arrow-left"></button>
+
+       <!--              <button type="button" title="edit" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#edit<?php echo $row2->client_deliveryID;?>"><span class="glyphicon glyphicon-edit"></button>    -->
                 </td>
+                <!-- modal edit -->
+                <div class="modal fade" id="edit<?php echo $row2->client_deliveryID; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" id="contactLabel"><center>Edit Delivered Item</center> </h4>
+                            </div>
+                            <div class="modal-body" style="padding: 5px;">
+                                <div class="card-block">
+                                     <form action="<?php echo base_url(); ?>SalesDelivery/insert1" method="post" accept-charset="utf-8">
+                                        <div class="modal-body" style="padding: 5px;">
+                                                                     <h3><center><?php echo $row2->client_company; ?></center></h3>
+
+                                            <div class="row">
+                                                <div class="col-lg-12" style="padding-bottom: 20px;">
+                                                    <div class="form-group label-floating">
+                                                        <div class="form-group">
+
+                                                          <div class="row">
+                                                              <div class="col-lg-6">
+                                                                   <div class="form-group">
+                                                                      <label class="col-md-6 control">DR/SI No.:</label>
+                                                                      <div class="col-md-6">
+                                                                          <p><b><?php echo $row2->client_dr.' / '.$row2->client_invoice;
+                                                                          ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="form-group">
+                                                                      <label class="col-md-6 control">Delivery Date:</label>
+                                                                      <div class="col-md-5">
+                                                                          <p><b><?php echo $row2->client_deliverDate;
+                                                                          ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="form-group">
+                                                                      <label class="col-md-6 control">Quantity :</label>
+                                                                      <div class="col-md-6">
+                                                                          <p><b><?php echo $row2->deliver_quantity; ?></b></p>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                            </div>
+                                                              <div class="row">
+                                                                  <div class="col-lg-6">
+                                                                      <div class="form-group">
+                                                                          <label class="col-md-5 control">Coffee Blend</label>
+                                                                          <div class="col-md-7">
+                                                                              <p><b><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></b></p>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-6 control">Date Returned:</label>
+                                                                        <input class="col-md-6 control no-border" type="date" name="date_returned" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d')))?>"">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-6 control">Quantity Returned:</label>
+                                                                                                            <div class="col-md-6">
+                                                                        <input class="form-control" type="number" name="qty_returned" min="1" max="<?php
+                                                                        $fulqty = $row2->deliver_quantity;
+                                                                        $retqty = $row2->coff_returnQty;
+                                                                        $retdif = $fulqty - $retqty;
+                                                                        echo $retdif;
+
+                                                                        ?>" required="" oninput="validity.valid||(value='');" >
+                                                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-6 control">Remarks:</label>
+                                                                                                            <div class="col-md-6">
+                                                                        <input class="form-control col-md-3" type="text" name="remarks" required="">
+                                                                         <input name="deliveryID" type="hidden" class="form-control" value="<?php echo $row2->client_deliveryID; ?>" >
+                                                                        <input name="client_dr" type="hidden" class="form-control" value="<?php echo $row2->client_dr; ?>" >
+                                                                        <input name="blend_id" type="hidden" class="form-control" value="<?php echo $row2->blend_id; ?>" >
+                                                                        <input class="form-control" type="hidden" name="client_company" value="<?php echo $row2->client_company; ?>" required>
+
+                                                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <center>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-success">Save</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- modal coffee returns -->
                 <div class="modal fade" id="return<?php echo $row2->client_deliveryID; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h4 class="panel-title" id="contactLabel"><center>Return Delivered Item/s</center> </h4>
+                                <h4 class="panel-title" id="contactLabel"><center>Return Delivered Items</center> </h4>
                             </div>
                             <div class="modal-body" style="padding: 5px;">
                                 <div class="card-block">

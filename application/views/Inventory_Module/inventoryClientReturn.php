@@ -28,13 +28,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#17bbd0, #17bbd0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
 .pagination>.active>span,
 .pagination>.active>span:focus,
 .pagination>.active>span:hover {
-    background-color: #3399ff;
+    background-color: #17bbd0;
     border-color: #9c27b0;
     color: #FFFFFF;
     box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
@@ -61,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .navbar.navbar-default .dropdown-menu li a:hover,
 .navbar.navbar-default .dropdown-menu li a:focus,
 .navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #3399ff;
+    background-color: #17bbd0;
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
@@ -139,26 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                         <i class="glyphicon glyphicon-user"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                                
        <!------------------                                          NOTIFICATION                    ---------------------------------->           
                             
@@ -166,7 +154,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-bell"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
                                        <span class="label-count" style='background-color: #f44336;'> <?php 
                                            
                               $total = 0;
@@ -198,6 +185,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                    
                                 </ul>
                             
+                            </li>
+
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                         <i class="glyphicon glyphicon-user"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryUser">User Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryChangePassword">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>inventoryActivityLogs">Activity Logs</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url('Login/logout');  ?>">Logout</a>
+                                    </li>
+                                </ul>
                             </li>
                             
                             

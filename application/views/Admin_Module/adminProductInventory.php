@@ -232,7 +232,7 @@ a:focus {
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Type of Roast</label>
+                                            <label for="email">Type</label>
                                             <select class="form-control" type="text" name="raw_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
                                                 <option value="city roast">City Roast</option>
                                                 <option value="medium roast">Medium Roast</option>
@@ -265,7 +265,7 @@ a:focus {
                                     </div>
                                      <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Reorder Level</label>
+                                            <label for="email">Reorder Level (g)</label>
                                             <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -340,7 +340,7 @@ a:focus {
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Raw Coffee</b></th>
-                                            <th><b class="pull-left">Type of Roast</b></th>
+                                            <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Price/kg</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (kg)</b></th>
@@ -447,7 +447,7 @@ a:focus {
                                                                  <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Type of Roast</label>
+                                                                            <label for="email">Type</label>
                                                                             <select class="form-control" type="text" name="raw_type" value="<?php echo $row->raw_coffee; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
                                                                                  <option value="city roast">City Roast</option>
                                                                                 <option value="medium roast">Medium Roast</option>
@@ -466,7 +466,7 @@ a:focus {
                                                                     <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
-                                                                                <select id="editSupplier" class="form-control" name="sup_company" required>
+                                                                                <select class="form-control" name="sup_company" required>
                                                                                     <option disabled selected value></option>
                                                                                     <?php 
 
@@ -480,21 +480,20 @@ a:focus {
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                     <div class="col-lg-6 form-group">
+                                                                    <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Reorder Level</label>
+                                                                            <label for="email">Reorder Level (g)</label>
                                                                             <input class="form-control" value="<?php echo $row->raw_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                </div>
 
-                                                                 
-
-                                                            </div>
                                                             <div class="panel-footer" style="margin-bottom:-14px;" align="right">
                                                                 <input type="submit" class="btn btn-success" value="Save" />
                                                                 <!--<span class="glyphicon glyphicon-ok"></span>-->
                                                                 <input type="reset" class="btn btn-danger" value="Clear" />
+                                                            </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -580,11 +579,6 @@ $('table tbody tr  td').on('click', function() {
     $("#txtfname").val($(this).closest('tr').children()[0].textContent);
     $("#txtlname").val($(this).closest('tr').children()[1].textContent);
 });
-</script>
-<script>
-    jQuery(document).ready(function($){
-    $('#editSupplier').editableSelect();
-    });
 </script>
 
 </html>

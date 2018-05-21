@@ -203,7 +203,7 @@
                             <form action="<?php echo base_url(); ?>SalesDelivery/retDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
                                    <h3>Are you sure to retrieve Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
-                                   <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_ret" value="<?php echo $row1->contractPO_id; ?>" required>
                                     <div class="panel-footer" align="center">
                                         <button type="submit" class="btn btn-success">Yes</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>

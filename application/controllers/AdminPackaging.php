@@ -53,7 +53,7 @@
 			$this->AdminPackaging_model->activity_logs('admin', "Inserted New Packaging: '".$type." bag, ".$size."g'");
 			$data = $this->security->xss_clean($data);
 			$this->AdminPackaging_model->insert_data($data);
-			echo "<script>alert('Update successful!');</script>";
+			echo "<script>alert('Insert successful!');</script>";
 			redirect('adminPackaging', 'refresh');
 		}
 

@@ -25,13 +25,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#17bbd0, #17bbd0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
 .pagination>.active>span,
 .pagination>.active>span:focus,
 .pagination>.active>span:hover {
-    background-color: #3399ff;
+    background-color: #17bbd0;
     border-color: #9c27b0;
     color: #FFFFFF;
     box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
@@ -58,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .navbar.navbar-default .dropdown-menu li a:hover,
 .navbar.navbar-default .dropdown-menu li a:focus,
 .navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #3399ff;
+    background-color: #17bbd0;
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
@@ -136,8 +143,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
+                            
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
                             <li>
-                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                       <i class="glyphicon glyphicon-bell"></i>
+                                       <span class="label-count"><b> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </b></span> </a>
+                            
+                            <?php
+                            if($total != 0) {
+                            ?>
+                            
+                                <ul class="dropdown-menu">
+                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
+                                </ul>
+                            <?php
+                            } else {
+                            ?>
+                            <ul class="dropdown-menu">
+                                  <li align="center"> No new notification. </li>    
+                                </ul>
+                            <?php
+                            }
+                            ?>
+
+                            </li>
+                            
+
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
@@ -156,50 +204,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </li>
                                 </ul>
                             </li>
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
-                            <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-bell"></i>
-                                        <p class="hidden-lg hidden-md">Profile</p>
-                                       <span class="label-count" style='background-color: #f44336;'> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </span> </a>
                             
                             
                             
-                            
-                                <ul class="dropdown-menu">
-                                    
-                                   <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                   
-                                </ul>
-                            
-                            </li>
-                            
-                            
-                            
-    <!------------------                                          NOTIFICATION                    ---------------------------------->           
+    <!------------------                                          NOTIFICATION                    ---------------------------------->
 
                         
                         </ul>
@@ -207,6 +215,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
                 </div>
             </nav>
+            <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '</tr>' ;
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
