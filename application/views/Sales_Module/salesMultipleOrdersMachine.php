@@ -162,50 +162,64 @@
                             <div class="card">
                                 <center>
                                     <div class="card-header" data-background-color="purple">
-                                        <h2 class="title"><center>Walk-In Purchase Order/s</center></h2>
+                                        <h2 class="title"><center>Machine Purchase Orders</center></h2>
                                     </div>
                                     <div class="card-content">
-										
-										<!--<?php foreach($data['info'] as $row){ ?>
-											<br>
-											<p style="font-size: 180%; font-weight: bold;" ><?php echo $row->client_company; ?> </p>
-											<input id="client_id" value="<?php echo $row->client_id ?>" type="hidden" />
-										
-										<?php
-										
-										}?>-->
-										
-										<hr>
-										
-										<div class="col-sm-11 col-md-11 col-md-offset-1 well well-sm coll-centered" >
-											<legend><span class="glyphicon glyphicon-shopping-cart"></span> Order</legend><hr>
-											<div class="row">
-                                                <div class="col-md-2 col-md-offset-1">
-                                                    <input class="form-control" id="date" type="date" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Delivery is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" required />
-                                                </div>
-											<div class="col-md-4 ">
-														<select class="form-control selectpicker" id="blend" data-live-search="true" title="Choose Coffee Blend...">
-															<?php foreach($data1['blends'] as $row){ ?>
-															<option value='<?php echo $row->blend_id ?>/<?php echo $row->blend ?>/<?php echo $row->package_type ?>/<?php echo $row->package_size ?>' ><?php echo $row->blend ?>/<?php echo $row->package_type ?>/<?php echo $row->package_size ?></option>
+                                            <div class="col-sm-12 col-md-12 well well-sm coll-centered" ><br>
+                                                <div class="row">
+                                                    <div class="col-md-4 col-md-offset-1">
+                                                        <select class="form-control selectpicker" data-live-search="true" name="mach_id" id="machine_id" title="Choose Machine">
                                                             <?php 
-															} ?>
-                                                         </select>
-												</div>
-												<div class="col-md-2">
-													<input class="form-control" name="" id="qty" placeholder="Quantity" type="number" min="1" oninput="validity.valid||(value='');" data-validate="required" />
-												</div>
-												<input class="btn btn-lg btn-primary btn-sm" type="text" id="append_data" value="Add to Table" readonly>
-												</div>
-											</div><br>
-											<br>
-										
-										<div class="col-sm-10 col-md-10 col-md-offset-2 well well-sm coll-centered" >
+                                                            foreach($data5['machine'] as $row)
+                                                            { 
+                                                                ?>
+                                                                <option value="<?php echo $row->mach_id; ?>"><?php echo $row->brewer; ?> /<?php echo $row->brewer_type; ?></option>;
+                                                            <?php 
+                                                            }
+                                                            ?>
+                                                            </select>
+                                                            
+                                                    
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                            <select class="form-control selectpicker" data-live-search="true" name="client_id" id="client_id" title="Choose Client">
+                                                            <?php 
+                                                            foreach($data6['client'] as $row)
+                                                            { 
+                                                            ?>
+                                                                <option value='<?php echo $row->client_id ?>'><?php echo $row->client_company ?></option>;
+                                                            
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2 col-md-offset-2">
+                                                        
+                                                        <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" name="date" max="<?php echo date("Y-m-d");?>" required="" id="DatePO">
+                                                        <input type="hidden" name="sold" value="sold"> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="serial" name="serial" value="" required="" min="1" placeholder="Serial No.">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="number" class="form-control" id="qty" name="qty" placeholder="Quantity" required="" min="1" >
+                                                    </div>
+                                                    <br>
+                                                <input class="btn btn-lg btn-primary btn-sm" type="text" id="append_data" value="Add to Table" readonly>
+                                                </div>
+                                                
+                                            </div> <br>
+                                            <div class="col-sm-11 col-md-11 col-md-offset-2 well well-sm coll-centered" >
 												<table class="table" id="data_table">
 													<thead class="text-primary">
+                                                        <th>Serial No.</th>
 														<th>Date of Order</th>
-														<th>Coffee Blend/Type of Bag/Size of Bag</th>
-<!--													<th>Type of Bag</th>
-														<th>Size of Bag</th>-->
+														<th>Client</th>
+													    <th>Machine</th>
 														<th>Quantity</th>
 														<th></th>
 													</thead>
@@ -215,13 +229,11 @@
 												</table>
 												<button class="btn btn-success btn-sm" type="submit" name="AddPO" id="AddPO" disabled>Add Purchase Order/s</button>
 												
-											</div>
-											<div class="col-xs-7 col-7" style="margin-left:15px; margin-top:150px;">
-												<hr>
-												
-											</div>
-										
+									        </div> 
+                                            
                                     </div>
+                                    
+										
 								</center>
                             </div>
                         </div>
@@ -256,24 +268,26 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
-		var dateO = $('#date').val();
-		var blend = $('#blend').val();
-		var qty = $('#qty').val();
+		var dateOfPO = $('#DatePO').val();
+		var client_id = $('#client_id').val();
+		var mach_id = $('#machine_id').val();
+		var quantity = $('#qty').val();
+		var serial = $('#serial').val();
 		
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
-				'<td contenteditable="true" class="blendName">'+dateO+'</td>'+
-			 	'<td contenteditable="true" class="blendName">'+blend+'</td>'+
-			 	'<td contenteditable="true" class="quantity">'+qty+'</td>'+
+                '<td contenteditable="true">'+serial+'</td>'+
+				'<td contenteditable="true">'+dateOfPO+'</td>'+
+			 	'<td contenteditable="true">'+client_id+'</td>'+
+			 	'<td contenteditable="true">'+mach_id+'</td>'+
+			 	'<td contenteditable="true">'+quantity+'</td>'+
+			 	
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		
 		$("#data_table tbody:last-child").append(newRow);
-		
-		$('#blend').val('');
-		$('#qty').val('');
-
         document.getElementById('AddPO').disabled = false;
+
 		
 	});
 	
@@ -284,33 +298,35 @@
 	});
 	
 	$('#AddPO').click(function(){
-        
 		var table_data = [];
 		$('#data_table tr').each(function(row,tr){
 			if($(tr).find('td:eq(0)').text() == ""){
 
 			}else{
 				var sub = {
-					'dateO' : $(tr).find('td:eq(0)').text(),
-					'blend' : $(tr).find('td:eq(1)').text(),
-					'quantity' : $(tr).find('td:eq(2)').text(),
+					'serial' : $(tr).find('td:eq(0)').text(),
+					'dateOfPO' : $(tr).find('td:eq(1)').text(),
+					'client_id' : $(tr).find('td:eq(2)').text(),
+					'mach_id' : $(tr).find('td:eq(3)').text(),
+					'quantity' : $(tr).find('td:eq(4)').text(),
 				}
 				table_data.push(sub);
 			}
 		});
 		
 		$.ajax({			
-			url:'<?=base_url()?>salesMultipleOrders/addMultipleOrders/',
+			url:'<?=base_url()?>salesMachineOrders/addMultipleOrders/',
 			method: 'POST',
 			data: {table_data:table_data},
 			crossOrigin: false,
-           
+            
 			success:function(data){
 				$("td[contentEditable='true']").text("");
 				for(var i=1; i<=count; i++){
 					$('tr#'+i+'').remove();
+                    
 				}
-				console.log(data.check)
+				alert("Order Success");
 				location.reload();  
 			}	
 		});

@@ -168,6 +168,35 @@ class sellProduct_model extends CI_MODEL
         );
         $this->db->insert('activitylogs', $data);
 		}
+
+		function multipleOrderMachine($data)
+		{
+			for($x = 0; $x < count($data); $x++){
+				$orders[] = array(
+					'mach_id' => $data[$x]['mach_id'],
+					'mach_serial' => $data[$x]['serial'],
+					'date' => $data[$x]['dateOfPO'],
+					'mach_qty' => $data[$x]['quantity'],
+					'client_id' => $data[$x]['client_id'],
+				);
+			}
+
+			try{
+
+				for($x = 0; $x<count($data);$x++){
+					$this->db->insert("machine_out", $orders[$x]);
+				}
+
+				return 'success';
+
+			}
+			catch (MySQLException $e) {
+				$e->getMessage();
+			}
+			catch (Exception $e) {
+				$e->getMessage();
+			}
+		}
 		
 
 }
