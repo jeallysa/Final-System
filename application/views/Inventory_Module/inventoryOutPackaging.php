@@ -159,12 +159,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  } echo $total;
                                            ?>   </b></span> </a>
                             
-                            
-                            
+                            <?php
+                            if($total != 0) {
+                            ?>
                             
                                 <ul class="dropdown-menu">
                                   <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
                                 </ul>
+                            <?php
+                            } else {
+                            ?>
+                            <ul class="dropdown-menu">
+                                  <li align="center"> No new notification. </li>    
+                                </ul>
+                            <?php
+                            }
+                            ?>
 
                             </li>
                             

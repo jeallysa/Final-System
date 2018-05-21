@@ -168,12 +168,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  } echo $total;
                                            ?>   </b></span> </a>
                             
-                            
-                            
+                            <?php
+                            if($total != 0) {
+                            ?>
                             
                                 <ul class="dropdown-menu">
                                   <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
                                 </ul>
+                            <?php
+                            } else {
+                            ?>
+                            <ul class="dropdown-menu">
+                                  <li align="center"> No new notification. </li>    
+                                </ul>
+                            <?php
+                            }
+                            ?>
 
                             </li>
                             
@@ -353,7 +363,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="row">
                                     
                                     <div class="col-sm-6">
-                                        <label> <p id="qtywt">Quantity|Weight(Kg)</p></label>
+                                        <label> <p id="qtywt">Quantity | Weight(Kg)</p></label>
                                         <input class="form-control" type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required />
                                     </div> 
                                     
