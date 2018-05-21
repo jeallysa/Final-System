@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <style type="text/css">
 .form-group.is-focused .form-control {
     outline: none;
-    background-image: linear-gradient(#17bbd0, #17bbd0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s;
@@ -53,22 +53,6 @@ input {
   .header-print {
     display: table-header-group;
   }
-}
-.title {
-    font-size: large;
-    padding-top: 15px;
-
-}
-
-.navbar .dropdown-menu li a:hover,
-.navbar .dropdown-menu li a:focus,
-.navbar .dropdown-menu li a:active,
-.navbar.navbar-default .dropdown-menu li a:hover,
-.navbar.navbar-default .dropdown-menu li a:focus,
-.navbar.navbar-default .dropdown-menu li a:active {
-    background-color: #17bbd0;
-    color: #FFFFFF;
-    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
 </style>
 
@@ -143,49 +127,9 @@ input {
                                             }
                                         ?>
                                 </li>
-                               
-      <!------------------                                          NOTIFICATION                    ---------------------------------->           
-                            
+                           
                             <li>
-                            
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                       <i class="glyphicon glyphicon-bell"></i>
-                                       <span class="label-count"><b> <?php 
-                                           
-                              $total = 0;
-                                for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                              $total = $total+1;
-                                                 
-                                             }
-                                      }
-                                 } echo $total;
-                                           ?>   </b></span> </a>
-                            
-                            
-                            <?php
-                            if($total != 0) {
-                            ?>
-                            
-                                <ul class="dropdown-menu">
-                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
-                                </ul>
-                            <?php
-                            } else {
-                            ?>
-                            <ul class="dropdown-menu">
-                                  <li align="center"> No new notification. </li>    
-                                </ul>
-                            <?php
-                            }
-                            ?>
-
-                            </li>
-                            
-
-                            <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
@@ -204,6 +148,46 @@ input {
                                     </li>
                                 </ul>
                             </li>
+                               
+       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                            
+                            <li>
+                            
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                       <i class="glyphicon glyphicon-bell"></i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                       <span class="label-count" style='background-color: #f44336;'> <?php 
+                                           
+                              $total = 0;
+                                for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                              $total = $total+1;
+                                                 
+                                             }
+                                      }
+                                 } echo $total;
+                                           ?>   </span> </a>
+                            
+                            
+                            
+                            
+                                <ul class="dropdown-menu">
+                                    
+                                   <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                   
+                                </ul>
+                            
+                            </li>
                             
                             
                             
@@ -215,45 +199,6 @@ input {
                 
                 </div>
             </nav>
-            <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
-                                        </div>
-                                        <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
-                                                <thead>
-                                                <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
-                                                    <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
-                                                '</tr>' ;
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -343,7 +288,7 @@ input {
                                                 if (isset($month_filt)){
                                                     if($month_filt == '1'){
                                                         foreach ($query->result() AS $row){
-                                                            $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = 12;" ;
+                                                            $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a;" ;
                                                     
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
@@ -354,7 +299,7 @@ input {
                                                         }
                                                     }else{
                                                         foreach ($query->result() AS $row){
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt."- 1;" ;
+                                                        $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = ".$month_filt." - 1) a;" ;
                                                     
                                                           $query3 = $this->db->query($begin);
                                                           if ($query3->num_rows() > 0) {
@@ -371,9 +316,9 @@ input {
                                                 foreach ($query->result() AS $row){
                                                     $query4 = $this->db->query("SELECT month(now()) AS this_month");
                                                     if($query4->row()->this_month == '1'){
-                                                $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE raw_coffee = '".$row->raw_coffee."' and month(transact_date) = 12;" ;
+                                                $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a;" ;
                                                     }else{
-                                                        $begin ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) AS `beginning` FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1;" ;
+                                                        $begin ="SELECT sum(a.ending) AS beginning FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())  - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())  - 1 UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1) a;" ;
                                                     }
                                               $query5 = $this->db->query($begin);
                                               if ($query5->num_rows() > 0) {
@@ -432,7 +377,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalin ="SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."';" ;
                                                   $query6 = $this->db->query($totalin);
                                                   if ($query6->num_rows() > 0) {
                                                   foreach ($query6->result() as $object) {
@@ -443,7 +388,7 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT raw_coffeeid, sum(quantity) as totalin from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now());" ;
+                                                  $totalin ="SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now());" ;
                                                   $query7 = $this->db->query($totalin);
                                                   if ($query7->num_rows() > 0) {
                                                   foreach ($query7->result() as $object) {
@@ -535,18 +480,19 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT sum(quantity) as totalout from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = '".$month_filt."';" ;
+                                                  $totalout ="SELECT sum(a.totalin) AS totalout FROM (SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id  where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = '".$month_filt."' UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = '".$month_filt."') a;";
                                                   $query8 = $this->db->query($totalout);
                                                   if ($query8->num_rows() > 0) {
                                                   foreach ($query8->result() as $object) {
                                                        echo '<th>'  . number_format($object->totalout)  . '</th>' ;
                                                        }
                                                     }
+                                                    
                                                 }
                                                 }else{
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalout ="SELECT sum(quantity) as totalout from raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN inv_transact where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = month(now());" ;
+                                                  $totalout ="SELECT sum(a.totalin) AS totalout FROM (SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id  where raw_coffee = '".$row->raw_coffee."' and type = 'OUT' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = month(now()) UNION SELECT sum(quantity) as totalin FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."'  and type = 'OUT' and month(transact_date) = month(now())) a;" ;
                                                   $query9 = $this->db->query($totalout);
                                                   if ($query9->num_rows() > 0) {
                                                   foreach ($query9->result() as $object) {
@@ -565,7 +511,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."';" ;
+                                                  $end ="SELECT sum(a.ending) AS ending FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."') a" ;
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
@@ -576,8 +522,8 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee JOIN trans_raw ON raw_id = raw_coffeeid NATURAL JOIN `inv_transact` WHERE  raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now());" ;
-                                                  $query11 = $this->db->query($end);
+                                                    $end ="SELECT sum(a.ending) AS ending FROM (SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT sum(IF(`type`= 'IN', `quantity`, 0))-sum(IF(`type`= 'OUT', `quantity`, 0)) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())) a" ;                                                 
+                                                 $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {
                                                        echo '<th>'  . number_format($object->ending)  . '</th>' ;
