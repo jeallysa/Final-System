@@ -55,7 +55,7 @@
 			$this->SalesClients_model->activity_logs('sales', "Added Purchase Order for ".$client." ");
 			
 			$po_id = $this->SalesClients_model->addClientPO($date, $QTY, $id, $blend_id);
-			$this->SalesClients_model->stockDecrease($date, $QTY, $blend_id, $po_id);
+			// $this->SalesClients_model->stockDecrease($date, $QTY, $blend_id, $po_id);
 		  
 			redirect('SalesClients/index', 'refresh');
 

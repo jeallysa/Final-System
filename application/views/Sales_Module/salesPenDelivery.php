@@ -243,7 +243,7 @@
                         }
                     ?>
 
-                <!-- modal for undo -->
+                <!-- modal for roast -->
 
                 <div class="modal fade" id="roast<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -254,8 +254,11 @@
                             </div>
                             <form action="<?php echo base_url(); ?>SalesDelivery/roastDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
-                                   <h3>Are you sure to cancel Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
-                                   <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
+                                   <h3>Are you sure to roast Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                   <input class="form-control" type="hidden" name="po_roast" value="<?php echo $row1->contractPO_id; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_qty" value="<?php echo $row1->contractPO_qty; ?>" required>
+                                   <input class="form-control" type="hidden" name="po_blend" value="<?php echo $row1->blend_id; ?>" required>
                                     <div class="panel-footer" align="center">
                                         <button type="submit" class="btn btn-success">Yes</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>

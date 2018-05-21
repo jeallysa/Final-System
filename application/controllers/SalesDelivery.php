@@ -106,8 +106,12 @@
         function roastDel()
 		{
 			$this->load->model('SalesDelivery_model');
-			$po = $this->input->post("po_undo");
-			$this->SalesDelivery_model->roastDel($po);
+			$po_id = $this->input->post("po_roast");
+			$date = $this->input->post("po_date");
+			$QTY = $this->input->post("po_qty");
+			$blend_id = $this->input->post("po_blend");
+
+			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id);
 			redirect('SalesDelivery', 'refresh');
 		}
 
