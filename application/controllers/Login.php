@@ -70,34 +70,47 @@ class Login extends CI_Controller
         if (isset($email, $email_code)){
             $email = trim($email);
             $email_hash = sha1($email . $email_code);
-            $verified = $this->login_model->verify_code($email, $email_code);
+            $verified = $this->login_model->verify_reset_password_code($email, $email_code);
 
             if ($verified){
                 $this->load->view('login/updatePassword', array('email_hash' => $email_hash, 'email_code' => $email_code, 'email' => $email));
             }else{
-                 $this->session->set_flashdata('error', 'There was a problem with your link. Please chack it again or request to change your password again.');
-                $this->load->view('login/forgetPassword');
+                /*
+                $this->session->set_flashdata('error', 'There was a problem with your link. Please check it again or request to change your password again.');
+                $this->load->view('login/updatePassword', array('email_hash' => $email_hash, 'email_code' => $email_code, 'email' => $email));
+                */
+            }
+        }
+    }
+    
+    public function verify_test($email, $email_code){
+        if (isset($email, $email_code)){
+            $verified = $this->login_model->verify_reset_password_code($email, $email_code);
+            if ($verified){
+                echo "Works!";
+            }else{
+                echo "It doesn't!";
             }
         }
     }
 
-    public function newPass(){
+    public function update_password(){
         if (!isset($_POST['email'], $_POST['email_hash']) || $_POST['email_hash'] !== sha1($_POST['email'] . $_POST['email_code'])){
             die('Error updating password');
         }
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email_hash', 'Email Hash', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
-        $this->form_validation->set_rules('password_new', 'Password', 'trim|required|min_length[6]|max_length[50]|matches[password_conf]|xss_clean');
-        $this->form_validation->set_rules('password_confirm', 'Confirmed Password', 'trim|required|min_length[6]|max_length[50]|xss_clean');
+        
 
         if ($this->form_validation->run() == FALSE){
+                $this->session->set_flashdata('error', 'Not working.');
                 $this->load->view('login/updatePassword');
         } else{
             $result = $this->login_model->updatePassword();
             if($result){
                 $this->session->set_flashdata('success', 'Your password is now updated!');
-                $this->load->view('login/forgetPassword');
+                redirect(base_url());
             }else{
                 $this->session->set_flashdata('error', 'Problem updating your password.');
                 $this->load->view('login/updatePassword');
@@ -112,8 +125,8 @@ class Login extends CI_Controller
     private function send_email_reset($email, $username){
         $this->load->library('email');
         $email_code = md5($this->config->item('salt') . $username);
-        ini_set("SMTP","smtp.gmail.com");
-        ini_set("smtp_port","587");
+        //ini_set("SMTP","smtp.gmail.com");
+        //ini_set("smtp_port","587");
 
         $this->email->set_mailtype('html');
         $this->email->from('aeneid415@hotmail.com', 'John Hay Coffee Services');
@@ -122,7 +135,7 @@ class Login extends CI_Controller
 
         $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> </head> <body>';
         $message .= '<p> Dear '. $username . ',</p>';
-        $message .= '<p>We want to help you reset your password! Please <strong><a href="'. base_url() . 'login/reset_password_form' . $email . '/'. $email_code. '">click here</a> </strong> to reset your password.</p>';
+        $message .= '<p>We want to help you reset your password! Please <strong><a href="'. base_url() . 'login/reset_password_form' . '/' . $email . '/'. $email_code. '">click here</a> </strong> to reset your password.</p>';
         $message .= "<p>Thank you!</p>";
         $message .= '<p>JHCS Management</p>';
         $message .= '</body></html>';

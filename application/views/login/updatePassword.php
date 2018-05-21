@@ -10,10 +10,10 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>../../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>../../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="<?php echo base_url(); ?>../../assets/css/form-elements.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>../../assets/css/style.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>../../../../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>../../../../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="<?php echo base_url(); ?>../../../../assets/css/form-elements.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>../../../../assets/css/style.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,11 +23,11 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="<?php echo base_url(); ?>../../assets/ico/favicon.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>../../assets/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>../../assets/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>../../assets/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>../../assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="<?php echo base_url(); ?>../../../../assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>../../../../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>../../../../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>../../../../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>../../../../assets/ico/apple-touch-icon-57-precomposed.png">
 
     </head>
 
@@ -45,7 +45,7 @@
 						
                         <div class="col-sm-6 col-sm-offset-3 form-box">
 							<div>
-                            	<img src="../../assets/img/0000.png" width="100%">	
+                            	<img src="../../../../assets/img/0000.png" width="100%">	
                         		</div>
                         	<div class="form-top">
                         		<div class="form-top-left">
@@ -72,7 +72,8 @@
                                 
                             </div>
                             <div class="form-bottom">
-                                <?php echo form_open('login/newPass') ?>
+                                
+                                <form action="<?php echo base_url(); ?>login/update_password" method="post">
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="username">Email Address</label>
                                         <?php if (isset($email_hash, $email_code)) { ?>
@@ -80,21 +81,21 @@
                                                 <input type = "hidden" value = "<?php echo $email_code ?>" name="email_code" class="form-control" />
                                         <?php
                                         } ?>
-                                        <?php echo form_input(['name' => 'email', 'id' => 'email', 'value' => (isset($email)) ? $email : '', 'placeholder' => 'Email Address' ,'class' => 'form-control']); ?>
+                                        <input type="text" name = 'email' id = 'email' value='<?php echo $email ?>' placeholder = 'Email Address' class = 'form-control'>
 			                        </div>
                                     <div class="form-group">
-                                        <label class="sr-only" for="username">Email Address</label>
-                                        <?php echo form_input(['name' => 'password_new', 'id' => 'password', 'placeholder' => 'New Password' ,'class' => 'form-control']); ?>
+                                        <label class="sr-only" for="password">New Password</label>
+                                        <input type="password" name = 'password' id = 'password_new' placeholder = 'New Password' class = 'form-control'>
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only" for="username">Confirm Password</label>
-                                        <?php echo form_input(['name' => 'password_confirm', 'id' => 'password', 'placeholder' => 'Confirm Password' ,'class' => 'form-control']); ?>
+                                        <label class="sr-only" for="password_con">Confirm Password</label>
+                                        <input type="password" name = 'password' id = 'password_confirm' placeholder = 'Confirm Password' class = 'form-control'>
                                     </div>
 			                        
                                     <div class="row" style="display: flex; align-items: center; justify-content: center;color: red">
                                       </div>  
 			                        <button type="submit" class="btn">Update My Password</button>
-                                <?php echo form_close(); ?>
+                                </form>
                                 <br>
                                 <a href="<?php echo base_url(); ?>"> Go Back</a>
 			                    
@@ -108,9 +109,9 @@
 
 
         <!-- Javascript -->
-        <script src="<?php echo base_url(); ?>../../assets/js/jquery-3.2.1.min.js"></script>
-        <script src="<?php echo base_url(); ?>../../assets/js/bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>../../assets/js/jquery.backstretch.min.js"></script>
+        <script src="<?php echo base_url(); ?>../../../../assets/js/jquery-3.2.1.min.js"></script>
+        <script src="<?php echo base_url(); ?>../../../../assets/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url(); ?>../../../../assets/js/jquery.backstretch.min.js"></script>
         <script >
         	
 		jQuery(document).ready(function() {
@@ -118,7 +119,7 @@
 		    /*
 		        Fullscreen background
 		    */
-		    $.backstretch("../../assets/img/backg.jpg");
+		    $.backstretch("../../../../assets/img/backg.jpg");
 		    
 		    /*
 		        Form validation
