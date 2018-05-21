@@ -474,7 +474,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight(Kg)</p></b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(g)</p></b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -515,7 +515,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     </select>
                                                            </td>
                                                           <td class="col-sm-3">
-                                                     <input type="number" class="form-control" min='1' name="qty" id = "qty" disabled required/>
+                                                     <input type="number" class="form-control" step="0.01" min='1' name="qty" id = "qty" disabled required/>
                                                            </td>
                                                                     
                                                                     
@@ -575,7 +575,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <tr>
                                                                     <th><b>Item</b></th>
                                                                     <th><b>Quantity</b></th>
-                                                                    <th><b>Weight(Kg)</b></th>
+                                                                    <th><b>Weight(g)</b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -594,7 +594,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                          echo '<tr>' ,
       '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,    
       '<td class="col-sm-2" >  </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,                 
+      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,                 
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
@@ -927,7 +927,7 @@ document.getElementById('addToTemp').onclick = function() {
                   
                   
             if(status == "0"){
-                var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                var notif = "Your order should be atleast "+total+" g to reach the reorder level";
                 $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
                 $("#invalidOrder").modal();
                 
@@ -1041,7 +1041,7 @@ document.getElementById('addToTemp').onclick = function() {
                   $('#unitPrice').val('');
                   $('#amount').val('');
                   if(category ==1){
-                   document.getElementById("qtywt").innerHTML = "Weight(Kg)";
+                   document.getElementById("qtywt").innerHTML = "Weight(g)";
                   }else{
                    document.getElementById("qtywt").innerHTML = "Quantity";   
                   }

@@ -474,7 +474,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight(Kg)</p></b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(g)</p></b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -575,7 +575,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <tr>
                                                                     <th><b>Item</b></th>
                                                                     <th><b>Quantity</b></th>
-                                                                    <th><b>Weight(Kg)</b></th>
+                                                                    <th><b>Weight(g)</b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -927,7 +927,7 @@ document.getElementById('addToTemp').onclick = function() {
                   
                   
             if(status == "0"){
-                var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                var notif = "Your order should be atleast "+total+" g to reach the reorder level";
                 $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
                 $("#invalidOrder").modal();
                 
@@ -1041,7 +1041,7 @@ document.getElementById('addToTemp').onclick = function() {
                   $('#unitPrice').val('');
                   $('#amount').val('');
                   if(category ==1){
-                   document.getElementById("qtywt").innerHTML = "Weight(Kg)";
+                   document.getElementById("qtywt").innerHTML = "Weight(g)";
                   }else{
                    document.getElementById("qtywt").innerHTML = "Quantity";   
                   }
