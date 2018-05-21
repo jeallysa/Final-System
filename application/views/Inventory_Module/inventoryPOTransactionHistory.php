@@ -60,6 +60,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     color: white;
 }
 
+.navbar .dropdown-menu li a:hover,
+.navbar .dropdown-menu li a:focus,
+.navbar .dropdown-menu li a:active,
+.navbar.navbar-default .dropdown-menu li a:hover,
+.navbar.navbar-default .dropdown-menu li a:focus,
+.navbar.navbar-default .dropdown-menu li a:active {
+    background-color: #3399ff;
+    color: #FFFFFF;
+    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
+}
+
 
 </style>
 
@@ -137,14 +148,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                 </li>
                            
-                            
-                               
-       <!------------------                                          NOTIFICATION                    ---------------------------------->           
+                             <!------------------                                          NOTIFICATION                    ---------------------------------->           
                             
                             <li>
                             
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-bell"></i>
+                                       <i class="glyphicon glyphicon-bell"></i>
                                        <span class="label-count"><b> <?php 
                                            
                               $total = 0;
@@ -162,25 +171,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                             
                                 <ul class="dropdown-menu">
-                                    
-                                   <?php 
-                                 for($i = 0; $i <= 3 ;$i++){
-                                     if(!empty($reorder[$i])){
-                                          foreach($reorder[$i] as $object){
-                                            echo   '<li><a href="inventoryStocks">' . $object->name . "     " . $object->type. ' now drops below the re-order level</a></li>';
-                                                 
-                                             }
-                                      }
-                                 }
-                                    ?>
-                                   
+                                  <li><a data-target="#notifmodal" data-toggle="modal" href="#notifmodal"> <?php echo $total; ?> product/s have dropped to the re-order level</a></li>    
                                 </ul>
-                            
+
                             </li>
                             
+
                             <li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-user"></i>
+                                         <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -200,6 +199,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li>
                             
                             
+                            
     <!------------------                                          NOTIFICATION                    ---------------------------------->           
 
                         
@@ -213,7 +213,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-
+ <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    <?php 
+                                 for($i = 0; $i <= 3 ;$i++){
+                                     if(!empty($reorder[$i])){
+                                          foreach($reorder[$i] as $object){
+                                            echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '</tr>' ;
+                                                 
+                                             }
+                                      }
+                                 }
+                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
 
 
 
@@ -250,10 +286,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Order Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -264,13 +296,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <tr>
                                                     <th>Item Name</th>
                                                     <th>Type</th>
-                                                    <th>Qty/Original Weight(g)</th>
+                                                    <th>Quantity</th>
+                                                    <th>Weight(Kg)</th>
                                               <!--      <th>Yield Weight(g)</th>
                                                     <th>Yield(g)</th> -->
                                                     <th>Unit Price</th>
-                                                    
-                                                 <!--   <th>Amount</th>
-                                                    <th>Date Received</th>
+                                                    <th>Amount</th>
+                                            <!--        <th>Date Received</th>
                                                      <th>Received by</th> -->
                                                 </tr>
                                             </thead>
@@ -291,18 +323,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
-                                                  
+                                                 $category = $object->category; 
+                                   if($category==1){               
                                            echo '<tr>' ,
                                                 '<td>'  . $object->item. '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
-                                                '<td>'  . $object->qty  . '</td>' ,
-                                             //   '<td>'  . $object->yield_weight. '</td>' ,
-                                            //    '<td>'  . $object->yields  . '</td>' ,
+                                       
+                                                '<td>'   . '</td>',
+                                                '<td>'  . number_format($object->qty)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
-                                            //    '<td>'  . $object->amount  . '</td>' ,
-                                              //  '<td>'  . $object->date_received  . '</td>' ,         
-                                             //   '<td>'  . $object->received_by  . '</td>' , 
+                                                '<td>Php '  .  number_format($object->amount,2)  . '</td>' ,
                                                 '</tr>' ;
+                                              }else{
+                                       echo '<tr>' ,
+                                                '<td>'  . $object->item. '</td>' ,
+                                                '<td>'  . $object->type  . '</td>' ,
+                                                '<td>'  . number_format($object->qty)  . '</td>' ,
+                                       
+                                                '<td>'   . '</td>',
+                                                '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
+                                                '<td>Php '  .  number_format($object->amount,2)  . '</td>' ,
+                                                '</tr>' ;
+                                       
+                                   }
                                               }
                                             }
                                          } 
@@ -349,10 +392,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "delivery" . $delivery   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Delivery Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -362,13 +401,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <thead>
                                                 <tr>
                                                     <th>Date Delivered</th>
-                                                    <th>DR No. <th>
-                                                    <th>Item Name <th>
-                                                    
-                                                    <th>Type <th>
-                                                    <th>Quantity/Weight(g) Delivered<th>
-                                                    <th>Yield Weight</th>
-                                                    <th>Yields</th>
+                                                    <th>DR No. </th>
+                                                    <th>Item Name </th>
+                                                    <th>Type </th>
+                                                    <th>Quantity</th>
+                                                    <th>Weight(Kg)</th>
+                                                    <th>Yield Weight(Kg)</th>
+                                                    <th>Yield(Kg)</th>
                                                     <th>Received By</th>
                                                 </tr>
                                                 
@@ -378,50 +417,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
       <?php
 
-                             $retrieveDetails ="SELECT date_received, drNo, item, type,supp_delivery.received, yield_weight,yields, received_by FROM supp_delivery left join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id =".$temp  ;  
-               
-                                              $query = $this->db->query($retrieveDetails);
+             $retrieveDetails ="SELECT date_received, drNo, item, type,supp_delivery.received,categoryx, yield_weight,yields, received_by FROM supp_delivery left join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id =".$temp  ;  
+                         $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
-                                               
-                                              foreach ($query->result() as $object) {
+                                               foreach ($query->result() as $object) {
+                                                    $oldDate = $object->date_received;
+                                                    $arr = explode('-', $oldDate);
+                                                    $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                                   
-                                              // if($object->category == 1){          
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->date_received. '</td>' ,
+                                               if($object->categoryx == 1){          
+                                           echo 
+                                                '<tr>' ,
+                                                '<td>'  . $newDate. '</td>' ,
                                                 '<td>'  . $object->drNo   .        '</td>' ,
-                                              
-                                                '<td>'  ,                         '</td>' ,
                                                 '<td>'  . $object->item .         '</td>' ,
-                                                '<td>'  ,                         '</td>' ,
-                                                  
                                                 '<td>'  . $object->type .         '</td>' ,  
                                                 '<td>'                            ,'</td>' ,
                                                 '<td>'  . number_format($object->received) .     '</td>' ,  
-                                                '<td>'                            ,'</td>' ,  
                                                 '<td>'  . number_format($object->yield_weight) . '</td>' ,
                                                 '<td>'  . number_format($object->yields) .       '</td>' ,  
                                                 '<td>'  . $object->received_by  . '</td>' ,
                                                 '</tr>' ;
-                                     /*  }else{
+                                       }else{
                                             
                                            echo '<tr>' ,
-                                                '<td>'  . $object->date_received. '</td>' ,
-                                                '<td>'  . $object->drNo   .        '</td>' ,
-                                              
-                                                '<td>'  ,                         '</td>' ,
+                                                '<td>'  . $newDate. '</td>' ,
+                                                '<td>'  . $object->drNo .        '</td>' ,
                                                 '<td>'  . $object->item .         '</td>' ,
-                                                '<td>'  ,              
-                                                '<td>'  . $object->type .         '</td>' ,  
-                                                '<td>'                            ,'</td>' ,
-                                                '<td>'  . number_format($object->received) .     '</td>' ,  
-                                                '<td>'                            ,'</td>' ,  
-                                                '<td>'  . '</td>' ,
-                                                '<td>'  . '</td>' ,  
+                                                '<td>'  . $object->type .         '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight) .     '</td>' , 
+                                                '<td>'        . '</td>' ,
+                                                '<td>'        .  '</td>' ,  
+                                                '<td>'        . '</td>' ,  
                                                 '<td>'  . $object->received_by  . '</td>' ,
                                                 '</tr>' ;
-}
-*/
                                               }
+
+                                     }
                                                
                                                
                                                
@@ -496,10 +528,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <div class="modal fade" id="<?php echo "payment".$payment   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="panel panel-primary modal-content">
-                      <div class="panel-heading">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="panel-title" id="contactLabel"><center>Payment Details</center> </h4>
-                                            </div>
                         <form action="#" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
@@ -522,9 +550,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                      $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
+                                                   $oldDate = $object->date;
+                                                   $arr = explode('-', $oldDate);
+                                                   $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                                   
                                            echo '<tr>' ,
-                                                '<td>'  . $object->date. '</td>' ,
+                                                '<td>'  .$newDate . '</td>' ,
                                                 '<td>Php '  . number_format($object->amount,2) . '</td>' ,
                                                 '<td>'  . $object->bank  . '</td>' ,
                                                 '</tr>' ;
@@ -598,6 +629,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                                <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                                 
                                                 
                                                 
@@ -617,8 +655,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Total Amount</b></th>
                                           <!--  <th><b class="pull-left">Date of Payment</b></th> -->
+                                            <th><b><center>Action</center></b></th>
                                             
-                                            <th></th>
                                         </thead>
                                         <tbody>
                                             
@@ -627,19 +665,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                       if(!empty($Transactions)) {
                                                             $i = 1;
                                                             
-                                                                 foreach($Transactions as $object ){ 
+                                                                 foreach($Transactions as $object ){
+                                                                      $oldDate = $object->suppPO_date;
+                                                                      $arr = explode('-', $oldDate);
+                                                                      $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
             
                                                                          echo '<tr>' ,
                                                                               '<td>'  . $object->supp_po_id . '</td>' ,
-                                                                              '<td>'  . $object->suppPO_date   . '</td>' ,
+                                                                              '<td>'  . $newDate   . '</td>' ,
                                                                            //   '<td>'  . $object->date_received  . '</td>' ,
 																			  '<td>'  . $object->sup_company  . '</td>' ,
                                                                               '<td>Php '  . number_format($object->total_amount,2)  . '</td>' ;
                                                                              // '<td>'  . $object->date_payment     . '</td>'; 
                                                                       ?> 
-                                            <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details".$i   ?>">Order Details</a></center></td>
-                                             <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "delivery".$i   ?>">Delivery Details</a></center></td>  
-                                            <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "payment".$i   ?>">Payment Details</a></center></td> 
+                                            <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details".$i   ?>">Order Details</a>
+                                             <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "delivery".$i   ?>">Delivery Details</a>
+                                            <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "payment".$i   ?>">Payment Details</a></center></td> 
                                                                   <?php         '</tr>' ; 
                                                                          
                                                                        $i++;
