@@ -320,7 +320,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(Kg)</th>
+                                                    <th>Weight(g)</th>
                                               <!--      <th>Yield Weight(g)</th>
                                                     <th>Yield(g)</th> -->
                                                     <th>Unit Price</th>
@@ -438,9 +438,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name </th>
                                                     <th>Type </th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(Kg)</th>
-                                                    <th>Yield Weight(Kg)</th>
-                                                    <th>Yield(Kg)</th>
+                                                    <th>Weight(g)</th>
+                                                    <th>Yield Weight(g)</th>
+                                                    <th>Yield(g)</th>
                                                     <th>Received By</th>
                                                 </tr>
                                                 

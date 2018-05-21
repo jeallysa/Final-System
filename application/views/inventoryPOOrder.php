@@ -366,9 +366,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Type</th>
                                                         <th>Original Qty</th>
                                                         <th>Quantity</th>
-                                                        <th>Original Weight(Kg)</th>
-                                                        <th>Weight(Kg)</th>
-                                                        <th>Yield Weight(Kg)</th>
+                                                        <th>Original Weight(g)</th>
+                                                        <th>Weight(g)</th>
+                                                        <th>Yield Weight(g)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -666,7 +666,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(Kg)</th>
+                                                    <th>Weight(g)</th>
                                                     <th>Unit Price</th>
                                                     <th>Amount</th>
                                                 </tr>
