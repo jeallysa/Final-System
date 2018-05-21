@@ -62,6 +62,29 @@
 
 
     </style>
+		<style>
+		#data_table {
+			border-collapse: collapse ;
+			width: 100% ;
+		}
+
+		#data_table td, #data_tables th {
+			border: 1px solid #ddd ;
+			padding: 8px ;
+		}
+
+		#data_table tr:nth-child(even){background-color: #f2f2f2 ;}
+
+		#data_table tr:hover {background-color: #ddd;}
+
+		#data_table th {
+			padding-top: 12px ;
+			padding-bottom: 12px ;
+			text-align: center;
+			background-color: #962eaf ;
+			color: white ;
+		}
+	</style>
 </head>
 
 <body>
@@ -166,9 +189,11 @@
                                     </div>
                                     <div class="card-content">
                                             <div class="col-sm-12 col-md-12 well well-sm coll-centered" ><br>
+												<span id="errorMessage" style="color: red; font-weight: 900;"></span>
+												<form id="loginform" name="loginform">
                                                 <div class="row">
                                                     <div class="col-md-4 col-md-offset-1">
-                                                        <select class="form-control selectpicker" data-live-search="true" name="mach_id" id="machine_id" title="Choose Machine">
+                                                        <select class="form-control selectpicker" data-live-search="true" name="machine_id" id="machine_id" title="Choose Machine">
                                                             <?php 
                                                             foreach($data5['machine'] as $row)
                                                             { 
@@ -200,7 +225,7 @@
                                                     <div class="col-md-2 col-md-offset-2">
                                                         
                                                         <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" name="date" max="<?php echo date("Y-m-d");?>" required="" id="DatePO">
-                                                        <input type="hidden" name="sold" value="sold"> 
+                                                        <input type="hidden" name="sold" value="sold" id="sold"> 
                                                     </div>
                                                     <div class="col-md-2">
                                                         <input type="text" class="form-control" id="serial" name="serial" value="" required="" min="1" placeholder="Serial No.">
@@ -211,22 +236,24 @@
                                                     <br>
                                                 <input class="btn btn-lg btn-primary btn-sm" type="text" id="append_data" value="Add to Table" readonly>
                                                 </div>
-                                                
+                                                </form>
                                             </div> <br>
                                             <div class="col-sm-11 col-md-11 col-md-offset-2 well well-sm coll-centered" >
 												<table class="table" id="data_table">
 													<thead class="text-primary">
                                                         <th>Serial No.</th>
 														<th>Date of Order</th>
-														<th>Client</th>
-													    <th>Machine</th>
+														<th >Client ID</th>
+														<th>Client Name</th>
+													    <th >Machine ID</th>
+														<th>Machine Name</th>
 														<th>Quantity</th>
 														<th></th>
 													</thead>
 													<tbody>
 														
 													</tbody>
-												</table>
+												</table><br>
 												<button class="btn btn-success btn-sm" type="submit" name="AddPO" id="AddPO" disabled>Add Purchase Order/s</button>
 												
 									        </div> 
@@ -268,28 +295,56 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
+		
+		var machine_id = document.loginform.machine_id;
+		var client_id = document.loginform.client_id;
+		var serial = document.loginform.serial;
+		var qty = document.loginform.qty;
+
+
+
+      	if (machine_id.value == "" || client_id.value == "" || serial.value == "" || qty.value == "" )
+		{
+			document.getElementById("errorMessage").innerHTML = "please fill out all necessary field .. ";
+			return false;
+		}
+		
+
+    	else{
+		
+			addDataTable();
+		  }
+		
+	});
+	
+	function addDataTable(){
 		var dateOfPO = $('#DatePO').val();
 		var client_id = $('#client_id').val();
 		var mach_id = $('#machine_id').val();
 		var quantity = $('#qty').val();
 		var serial = $('#serial').val();
+		var sold = $('#serial').val();
+		
+		var e = document.getElementById("client_id");
+		var j = document.getElementById("machine_id");
+		var clientDetail = e.options[e.selectedIndex].text;
+		var machineDetail = j.options[j.selectedIndex].text;
 		
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
                 '<td contenteditable="true">'+serial+'</td>'+
 				'<td contenteditable="true">'+dateOfPO+'</td>'+
-			 	'<td contenteditable="true">'+client_id+'</td>'+
-			 	'<td contenteditable="true">'+mach_id+'</td>'+
+			 	'<td contenteditable="true" >'+client_id+'</td>'+
+				'<td contenteditable="true">'+clientDetail+'</td>'+
+			 	'<td contenteditable="true" >'+mach_id+'</td>'+
+				'<td contenteditable="true">'+machineDetail+'</td>'+
 			 	'<td contenteditable="true">'+quantity+'</td>'+
-			 	
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		
 		$("#data_table tbody:last-child").append(newRow);
         document.getElementById('AddPO').disabled = false;
-
-		
-	});
+	}
 	
 	$(document).on('click','.remove', function(){
 		var delete_row = $(this).data('row');
@@ -307,8 +362,8 @@
 					'serial' : $(tr).find('td:eq(0)').text(),
 					'dateOfPO' : $(tr).find('td:eq(1)').text(),
 					'client_id' : $(tr).find('td:eq(2)').text(),
-					'mach_id' : $(tr).find('td:eq(3)').text(),
-					'quantity' : $(tr).find('td:eq(4)').text(),
+					'mach_id' : $(tr).find('td:eq(4)').text(),
+					'quantity' : $(tr).find('td:eq(6)').text(),
 				}
 				table_data.push(sub);
 			}
@@ -326,7 +381,7 @@
 					$('tr#'+i+'').remove();
                     
 				}
-				alert("Order Success");
+				
 				location.reload();  
 			}	
 		});

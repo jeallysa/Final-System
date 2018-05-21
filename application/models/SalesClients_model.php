@@ -178,28 +178,7 @@
                     $quantity = $data[$x]['quantity'];
                 
                     $query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
-                    foreach($query->result() AS $row){
-                        $raw_guide = $row->raw_id;
-                        $percentage = $row->percentage;
-                        $package = $row->package_size;
-                        $stock = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';")->row()->raw_stock;
-                        $test_query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
-                        $pack_id = $query->row()->package_id;
-                        $stick_id = $query->row()->sticker_id;
-                        $pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
-                        $sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
-                        $taker = round($quantity*($package*($percentage * 0.01)));
-                        if ($stock < $taker){
-                            echo '<script> alert("Insufficient stocks for raw coffee beans! Transaction halted."); </script>';
-                            return;
-                        }else if ($pack_stock < $quantity){
-                        echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
-                            return;
-                        }else if($sticker_stock < $quantity){
-                        echo '<script> alert("Insufficient stocks for stickers! Transaction halted."); </script>';
-                            return;
-                        }
-                    }
+                   
                 
                 
                 
@@ -297,6 +276,8 @@
         );
         $this->db->insert('activitylogs', $data);
 		}
+		
+		
 
 		
 	}

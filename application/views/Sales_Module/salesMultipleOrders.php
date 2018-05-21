@@ -62,6 +62,29 @@
 
 
     </style>
+	<style>
+		#data_table {
+			border-collapse: collapse ;
+			width: 100% ;
+		}
+
+		#data_table td, #data_tables th {
+			border: 1px solid #ddd ;
+			padding: 8px ;
+		}
+
+		#data_table tr:nth-child(even){background-color: #f2f2f2 ;}
+
+		#data_table tr:hover {background-color: #ddd;}
+
+		#data_table th {
+			padding-top: 12px ;
+			padding-bottom: 12px ;
+			text-align: center;
+			background-color: #962eaf ;
+			color: white ;
+		}
+	</style>
 </head>
 
 <body>
@@ -178,39 +201,43 @@
 										<hr>
 										
 										<div class="col-sm-11 col-md-11 col-md-offset-1 well well-sm coll-centered" >
+											<form id="loginform" name="loginform">
 											<legend><span class="glyphicon glyphicon-shopping-cart"></span> Order</legend><hr>
+												<span id="errorMessage" style="color: red; font-weight: 900;"></span>
 											<div class="row">
                                                 <div class="col-md-2 col-md-offset-1">
                                                     <input class="form-control" id="date" type="date" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Delivery is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" required />
                                                 </div>
 											<div class="col-md-4 ">
-														<select class="form-control selectpicker" id="blend" data-live-search="true" title="Choose Coffee Blend...">
+														<select class="form-control selectpicker" id="blend" data-live-search="true" title="Choose Coffee Blend..." name="coffeeBlend">
 															<?php foreach($data1['blends'] as $row){ ?>
-															<option value='<?php echo $row->blend_id ?>' ><?php echo $row->blend ?>/<?php echo $row->package_type ?>/<?php echo $row->package_size ?></option>
+															<option value='<?php echo $row->blend_id; ?>' ><?php echo $row->blend; ?>/<?php echo $row->package_type; ?>/<?php echo $row->package_size; ?>  </option>
                                                             <?php 
 															} ?>
                                                          </select>
 												</div>
 												<div class="col-md-2">
-													<input class="form-control" name="" id="qty" placeholder="Quantity" type="number" min="1" oninput="validity.valid||(value='');" data-validate="required" />
+													<input class="form-control" name="number" id="qty" placeholder="Quantity" type="number" min="1" oninput="validity.valid||(value='');" data-validate="required" />
 												</div>
 												<input class="btn btn-lg btn-primary btn-sm" type="text" id="append_data" value="Add to Table" readonly>
 												</div>
+												</form>
 											</div><br>
 											<br>
 										
 										<div class="col-sm-10 col-md-10 col-md-offset-2 well well-sm coll-centered" >
 												<table class="table" id="data_table">
 													<thead class="text-primary">
-														<th>Date of Order</th>
-														<th>Coffee Blend/Type of Bag/Size of Bag</th>
-														<th>Quantity</th>
+														<th  >Date of Order</th>
+														<th  >Blend ID</th>
+														<th  >Quantity</th>
+														<th  >Coffee Blend/Type of Bag/Size of Bag</th>
 														<th></th>
 													</thead>
 													<tbody>
 														
 													</tbody>
-												</table>
+												</table><br>
 												<button class="btn btn-success btn-sm" type="submit" name="AddPO" id="AddPO" disabled>Add Purchase Order/s</button>
 												
 											</div>
@@ -247,6 +274,7 @@
 <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
 
 <script type="text/javascript">
+	$('document').ready(function(){
 	
 	$('.selectpicker').selectpicker({ 
 	});
@@ -254,15 +282,52 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
+
+		var username = document.loginform.blend;
+		var password = document.loginform.qty;
+
+
+
+      	if (username.value == "" && password.value != "")
+		{
+			document.getElementById("errorMessage").innerHTML = "There No Coffee Blend Selected";
+			return false;
+		}
+		
+		if (username.value != "" && password.value == "")
+		{
+			document.getElementById("errorMessage").innerHTML = "Please Enter Order Quantity ";
+			return false;
+		}
+		if(username.value == "" && password.value == "")
+		{
+				document.getElementById("errorMessage").innerHTML = "please fill out all necessary field  ";
+				return false;
+		}
+
+    	else{
+		
+			addDataTable();
+
+
+		
+		  }
+	});
+	
+	function addDataTable(){
 		var dateO = $('#date').val();
 		var blend = $('#blend').val();
 		var qty = $('#qty').val();
 		
+		var e = document.getElementById("blend");
+		var blendDetail = e.options[e.selectedIndex].text;
+
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
 				'<td contenteditable="true" class="blendName">'+dateO+'</td>'+
 			 	'<td contenteditable="true" class="blendName">'+blend+'</td>'+
 			 	'<td contenteditable="true" class="quantity">'+qty+'</td>'+
+			 	'<td contenteditable="true" class="quantity">' +blendDetail+ '</td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		
@@ -272,8 +337,7 @@
 		$('#qty').val('');
 
         document.getElementById('AddPO').disabled = false;
-		
-	});
+		}
 	
 	$(document).on('click','.remove', function(){
 		var delete_row = $(this).data('row');
@@ -313,6 +377,7 @@
 			}	
 		});
 	});
+		});
 </script>
 
 
