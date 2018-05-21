@@ -38,7 +38,7 @@
 			$this->AdminMachines_model->activity_logs('admin', "Inserted Coffee Machine: '".$brewer.", ".$type."'");
 			$data = $this->security->xss_clean($data);
 			$this->AdminMachines_model->insert_data($data);
-			echo "<script>alert('Inserted successful!');</script>";
+			echo "<script>alert('Insert successful!');</script>";
 			redirect('adminMachines', 'refresh');
 		}
 

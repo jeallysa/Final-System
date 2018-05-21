@@ -218,7 +218,7 @@
 
   function activity_logs($module, $activity){
     $username = $this->session->userdata('username');
-        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
+        $query = $this->db->query("SELECT user_no from user where username ='".$username."';");
         foreach ($query ->result() as $row) {
           $id = $row->user_no;
         }

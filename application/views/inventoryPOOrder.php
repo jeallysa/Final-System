@@ -26,6 +26,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3399ff;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -705,6 +723,90 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
      
 
+            
+            
+            
+                 
+  <!----------------------------------------------------------Archive -------------------------------------->           
+          
+    <?php
+      $archive = 1;
+        if(!empty($order)) {                                
+           foreach($order as $object){
+            $temp =  $object->supp_po_id;
+            $sup_id = $object->sup_id;   
+            $dateMin = $object->suppPO_date;
+               
+               
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                           
+                                    
+?>                                                     
+                                    
+                                    
+    <div class="modal fade" id="<?php echo "archive" . $archive  ?>" role="dialog">
+      <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
+        </div>
+          
+    <form action="InventoryPOOrder/archive" method="post" accept-charset="utf-8">    
+        <div class="modal-body">
+            
+            
+            
+           <!-- <center><h3><b><p><?php echo $newDate ?></p></b></h3></center> -->
+            <center><h4><b><p>Are you sure you want to archive PO #<?php echo $temp ?></p></b></h4></center>
+           
+            
+             <input class="form-control" type="hidden"  name ="supp_po_id" value="<?php echo $temp ?>">
+             <input class="form-control" type="hidden"  name ="date" value="<?php echo $dateMin ?>">
+             
+            
+        </div>
+       
+               <div  align="center">
+                                 <button type="submit" class="btn btn-success accept">Yes</button>
+                                 <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">No</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+      
+    </div>
+                                          
+           
+            
+ <?php      
+         $archive++;        
+        }
+    }
+?>    
+                      
+ 
+            
+        <!----------------------------------------------------------END     OF     MODAL -------------------------------------->     
+            
+            
+                  
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    
 
 <?php
         $details = 1; 
@@ -866,6 +968,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                              <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                                 
                                                 
                                                 
@@ -887,9 +996,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Date Ordered</b></th>
                                             <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
+                                            <th><b><center>Action</center></b></th>
                                             <th></th>
-                                            <th></th>
-                                            
                                         </thead>
                                         <tbody>
                                             
@@ -915,10 +1023,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>' ;
                                         		                      
                                         ?>
-                                                                              
-                                               
-                                               <td><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> </td>
-                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a></td>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+       <?php
+                 
+      
+                     $retrieveDetails ="select * from supp_po join supp_delivery using(supp_po_id) where supp_po.supp_po_id =" . $object->supp_po_id;
+                                              $query = $this->db->query($retrieveDetails);
+                                              if ($query->num_rows() > 0) { ?>
+                                            
+                                              <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                              </td>
+                                            <?php
+                                          
+                                              }else{ ?>
+                                              
+                                               <td>
+                                                   <center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   </center>
+                                               </td>
+                                            
+                                               <td>
+                                                    <center><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a></center>
+                                               </td>
+                                            
+                                            
+                                            
+                                            <?php 
+                                            
+                                            }
+                                        ?>    
+                                                
+                                            
+                                            
+                                            
+                                            
                                             
                                             
                                             

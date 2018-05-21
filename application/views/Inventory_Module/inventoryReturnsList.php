@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="<?php echo base_url(); ?>assets/img/apple-icon.png"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" />
     <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Returns</title>
@@ -31,6 +32,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
     
 <style>
+    
+    .pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3399ff;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+s}
+    
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}
     /*
 		td.highlight {
 			background-color: whitesmoke !important;
@@ -39,7 +60,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .title {
     font-size: large;
     padding-top: 15px;
+    border-top: 3px ;
+    border-left: 2px ;
 
+}
+    
+    .navbar .dropdown-menu li a:hover,
+.navbar .dropdown-menu li a:focus,
+.navbar .dropdown-menu li a:active,
+.navbar.navbar-default .dropdown-menu li a:hover,
+.navbar.navbar-default .dropdown-menu li a:focus,
+.navbar.navbar-default .dropdown-menu li a:active {
+    background-color: #3399ff;
+    color: #FFFFFF;
+    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
 
 .label-count {
@@ -281,7 +315,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="nav-tabs-navigation">
                                         <div class="nav-tabs-wrapper">
                                             <span class="nav-tabs-title"> </span>
-                                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
                                                 <li class="active">
                                                     <a href="#companyreturn" data-toggle="tab">
                                                       Company Returns
@@ -310,20 +344,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="companyreturn">
-                                            <a class="btn btn-success" data-toggle="modal" data-target="#return" data-original-title style="float: right">Add Returns</a>
                                             <br>
                                             <br>
                                              <table id="" class="table hover order-column" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th><b>#</b></th>
-                                                    <th><b>Date Returned</b></th>
-                                                    <th><b>PO No.</b></th>
-                                                    <th><b>DR No.</b></th>
-                                                    <th><b>Item Returned</b></th>
-                                                    <th><b>Qty/Weight(g)</b></th>
-                                                    <th><b>Remarks</b></th>
-                                                    <th></th>
+                                                    <th><b>DR NO.</b></th>
+                                                     <th><b>ITEM RETURNED</b></th>
+                                                     <th><b>QUANTITY/WEIGHT(G)</b></th>
+                                                    <th><b>ISSUE</b></th>
+                                                     <th><b>REMARKS</b></th>
+                                                     <th></th>
                                                     
                                                 </tr>
                                             </thead>
@@ -336,18 +367,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $row->company_returnID; ?></td>
-                                                    <td><?php echo $row->sup_returnDate; ?></td>
-                                                    <td><?php echo $row->poNo; ?></td>
-                                                    <td><?php echo $row->drNo; ?></td>
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
-                                                    <td><?php echo $row->sup_returnQty ?></td>
-                                                    <td><?php echo $row->sup_returnRemarks ?></td>
+                                                     <td><?php echo $row->sup_returnQty ?></td>
+                                                     <td><?php echo $row->sup_returnRemarks ?></td>
+                                                    <td><?php echo $row->res ?></td>
                                             <?php 
                                                     if($row->res == "unresolved"){
                                                  ?>   
                                                     <td>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a>
-                                                   <td>
+                                                    </td>
                                                 <?php       
                                                     }
                                                        ?>
@@ -372,13 +401,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <table id="coffee" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th><b>#</b></th>
-                                                                <th><b>Delivery Receipt No.</b></th>
-                                                                <th><b>Date Returned</b></th>
-                                                                <th><b>Client</b></th>
-                                                                <th><b>Quantity</b></th>
-                                                                <th><b>Remarks</b></th>
-                                                                <th><b>Action Taken</b></th>
+                                                                <th><b>DELIVERY RECEIPT NO.</b></th>
+                                                                <th><b>DATE RETURNED</b></th>
+                                                                <th><b>CLIENT</b></th>
+                                                                <th><b>QUANTITY (PC)</b></th>
+                                                                <th><b>REMARKS</b></th>
+                                                                <th><b>ACTION TAKEN</b></th>
+                                                                <th><b>DATE RESOLVED</b></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -387,32 +416,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         {
                                                     ?>
                                                             <tr>
-                                                                <td><?php echo $row->client_coffReturnID; ?></td>
                                                                 <td><?php echo $row->client_dr; ?></td>
                                                                 <td><?php echo $row->coff_returnDate; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
-                                                                <td><?php echo number_format($row->coff_returnQty); ?> g</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
                                                                 <td><?php echo $row->coff_remarks; ?></td>
                                                                 <td><?php echo $row->coff_returnAction; ?></td>
+                                                                <td><?php echo $row->coff_resolveDate; ?></td>
                                                             </tr>
                                                             <?php
                                                         }
                                                     ?>
+                                                            
+                                                        <?php 
+                                                        foreach($data6['get_coffee_walkin_return'] as $row)
+                                                        {
+                                                    ?>
+                                                            <tr>
+                                                                <td> - </td>
+                                                                <td><?php echo $row->coff_returnDate; ?></td>
+                                                                <td> Walk-in Client</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
+                                                                 <td><?php echo $row->coff_remarks; ?></td>
+                                                                 <td><?php echo $row->coff_returnAction; ?></td>
+                                                                <td><?php echo $row->coff_resolveDate; ?></td>
+                                                             </tr>
+                                                             <?php
+                                                         }
+                                                            ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                        
                                                 <div class="tab-pane fade" id="machine">
                                                     <table id="machine" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th><b>Return No.</b></th>
-                                                                <th><b>Machine Serial No.</b></th>
-                                                                <th><b>Date Returned</b></th>
-                                                                <th><b>Client</b></th>
-                                                                <th><b>Machine</b></th>
-                                                                <th><b>Quantity</b></th>
-                                                                <th><b>Remarks</b></th>
-                                                                <th><b>Action Taken</b></th>
+                                                                <th><b>RETURN NO.</b></th>
+                                                                <th><b>DATE RETURNED</b></th>
+                                                                <th><b>MACHINE SERIAL NO.</b></th>
+                                                                <th><b>CLIENT</b></th>
+                                                                <th><b>MACHINE</b></th>
+                                                                <th><b>QUANTITY (PC)</b></th>
+                                                                <th><b>REMARKS</b></th>
+                                                                <th><b>ACTION TAKEN</b></th>
+                                                                <th><b>RESOLVED DATE</b></th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -422,17 +471,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     ?>
                                                             <tr>
                                                                 <td><?php echo $row->client_machReturnID; ?></td>
-                                                                <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->mach_returnDate; ?></td>
+                                                                <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
                                                                 <td><?php echo $row->machine; ?></td>
-                                                                <td><?php echo number_format($row->mach_returnQty); ?> pc/s</td>
+                                                                <td><?php echo number_format($row->mach_returnQty); ?></td>
                                                                 <td><?php echo $row->mach_remarks; ?></td>
                                                                 <td><?php echo $row->mach_returnAction; ?></td>
+                                                                <th><?php echo $row->mach_resolveDate; ?></th>
                                                             </tr>
                                                             <?php
                                                         }
                                                     ?>
+                                                            
+                                                            
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -480,7 +532,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">PO#</label>
-                                            <select class="form-control" name="poList" id = "poList" required>
+                                            <select class="selectpicker" data-live-search="true" name="poList" id = "poList" required>
                                                 <option disabled selected value="">Select PO#</option>
                                                 <?php 
 
@@ -648,6 +700,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.datatables.js"></script>
+<script src="../assets/js/bootstrap-select.js"></script>
     
     
     
@@ -722,24 +775,50 @@ $(document).ready(function() {
     $('table.table').DataTable({
         select: {
             style: 'single'
-        }
+        },
+
+        "aaSorting": [1,'desc']
+
+    });
+});
+         
+</script>
+
+<script type="text/javascript">
+$(document).on('change', 'select.nav', function() {
+    var $this = this;
+    var target = $this.value;
+    $('div.select-pane').hide();
+    $('div[id="' + target + '"]').show();
+})
+
+$(document).on('click', '.series-select', function() {
+    var $this = this;
+    var txt = $this.text + '<span class="caret"></span>';
+    $($this).closest('li.dropdown').find('a.dropdown-toggle').php(txt);
+
+
+})
 
     });
 });
        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     
 </script>
+    
+    <script type="text/javascript">
+-$(document).ready(function(){
+-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+-        localStorage.setItem('activeTab', $(e.target).attr('href'));
+     });
+-    var activeTab = localStorage.getItem('activeTab');
+-    if(activeTab){
+-        $('#myTab a[href="' + activeTab + '"]').tab('show');
+-    }
+ });
+    </script>
+    
+    
  
 </html>

@@ -26,6 +26,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.btn, .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .open>.btn.dropdown-toggle, .open>.btn.dropdown-toggle:focus, .open>.btn.dropdown-toggle:hover, .btn.btn-default, .btn.btn-default:hover, .btn.btn-default:focus, .btn.btn-default:active, .btn.btn-default.active, .btn.btn-default:active:focus, .btn.btn-default:active:hover, .btn.btn-default.active:focus, .btn.btn-default.active:hover, .open>.btn.btn-default.dropdown-toggle, .open>.btn.btn-default.dropdown-toggle:focus, .open>.btn.btn-default.dropdown-toggle:hover, .navbar .navbar-nav>li>a.btn, .navbar .navbar-nav>li>a.btn:hover, .navbar .navbar-nav>li>a.btn:focus, .navbar .navbar-nav>li>a.btn:active, .navbar .navbar-nav>li>a.btn.active, .navbar .navbar-nav>li>a.btn:active:focus, .navbar .navbar-nav>li>a.btn:active:hover, .navbar .navbar-nav>li>a.btn.active:focus, .navbar .navbar-nav>li>a.btn.active:hover, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle:focus, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle:hover, .navbar .navbar-nav>li>a.btn.btn-default, .navbar .navbar-nav>li>a.btn.btn-default:hover, .navbar .navbar-nav>li>a.btn.btn-default:focus, .navbar .navbar-nav>li>a.btn.btn-default:active, .navbar .navbar-nav>li>a.btn.btn-default.active, .navbar .navbar-nav>li>a.btn.btn-default:active:focus, .navbar .navbar-nav>li>a.btn.btn-default:active:hover, .navbar .navbar-nav>li>a.btn.btn-default.active:focus, .navbar .navbar-nav>li>a.btn.btn-default.active:hover, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle:focus, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle:hover {
+    background-color: transparent;
+    color: #000000;
+}
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#337ab7, #337ab7), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #3399ff;
+    outline: 0;
+}
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #3399ff;
+    color: #FFFFFF;
+}
 .title {
     font-size: large;
     padding-top: 15px;
@@ -232,6 +268,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
+                                            <span></span>
+                                               <li class="">
+                                                <a href="<?php echo base_url(); ?>inventoryPOArchive">
+                                                    Archived PO
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
                                             
                                         </ul>
                                     </div>
@@ -266,7 +309,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group label-floating">
-                                                                        <label class="control-label">Supplier</label>
+                                                                        <label>Supplier</label>
                                                                         
                                                                         <select  class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" >
                                                                     
@@ -808,7 +851,7 @@ document.getElementById('addToTemp').onclick = function() {
                   var status = data['status'];
                   var reorder = data['reorder'];
                   var stocks = data['stocks'];
-                  var total = reorder - stocks;
+                  var total = reorder - stocks + 1;
                   
                   
                   

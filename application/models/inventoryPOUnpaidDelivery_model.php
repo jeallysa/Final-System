@@ -33,7 +33,7 @@
       
       
     function getTotalAmount(){
-      $query = $this->db->query('SELECT total_amount FROM jhcs.supp_po');
+      $query = $this->db->query('SELECT total_amount FROM supp_po');
       if($query->num_rows() > 0){
           return $query->result();
       }else
@@ -42,7 +42,7 @@
      
       
    function getRemaining($supp_po_id){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
       if($query->num_rows() > 0){
           $result = $query->row();
            
@@ -57,7 +57,7 @@
   }  
       
     function getTotal($supp_po_id){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
       if($query->num_rows() > 0){
           $result = $query->row();
            
@@ -77,7 +77,7 @@
     }
       
     function updatePOPayment($data , $supp_po_id ){
-      $query = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+      $query = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
         if($query->num_rows() > 0){
            $result = $query->row();
            
@@ -92,7 +92,7 @@
          $this->db->update('supp_po',  $dataUpdate);  
             
          //after updating check if it is already equal to the total   
-            $queryCheckIfPaid = $this->db->query("SELECT * FROM jhcs.supp_po where supp_po_id =".$supp_po_id);
+            $queryCheckIfPaid = $this->db->query("SELECT * FROM supp_po where supp_po_id =".$supp_po_id);
                 if($queryCheckIfPaid->num_rows() > 0){
                     $result = $queryCheckIfPaid->row();
                     
@@ -121,7 +121,7 @@
    
   function activity_logs($module, $activity){
     $username = $this->session->userdata('username');
-        $query = $this->db->query("SELECT user_no from jhcs.user where username ='".$username."';");
+        $query = $this->db->query("SELECT user_no from user where username ='".$username."';");
         foreach ($query ->result() as $row) {
           $id = $row->user_no;
         }

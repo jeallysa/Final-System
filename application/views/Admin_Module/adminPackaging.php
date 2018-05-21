@@ -238,7 +238,7 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                            <div class="form-group label-floating">
                                             <label for="email">Supplier</label>
-                                            <select id="editSupplier" class="form-control" name="sup_company" required>
+                                            <select class="form-control" name="sup_company" required>
                                                 <option disabled selected value> </option>
                                                 <?php 
 
@@ -252,7 +252,7 @@ a:focus {
                                     </div>
                                      <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Reorder Level</label>
+                                            <label for="email">Reorder Level (pc)</label>
                                             <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -491,7 +491,7 @@ a:focus {
                                                                         </div>
                                                                      <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Reorder Level</label>
+                                                                            <label for="email">Reorder Level (pc)</label>
                                                                             <input class="form-control" value="<?php echo $row->package_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
@@ -563,19 +563,19 @@ $(document).ready(function() {
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
+                    columns: [0, 1, 2, 3, 4, 5]
                 }
             },
             
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> csv',"className": 'btn btn-success btn-xs',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
+                    columns: [0, 1, 2, 3, 4, 5]
                 }
             },
             
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
+                    columns: [0, 1, 2, 3, 4, 5]
                 }
             }
         ]

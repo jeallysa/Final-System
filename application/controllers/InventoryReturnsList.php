@@ -18,6 +18,7 @@
 				$data3['get_clientmachinereturns'] = $this->InventoryReturnsList_Model->get_clientmachinereturns();
 				$data4['get_suppliers'] = $this->InventoryReturnsList_Model->get_suppliers();
 				$data5['get_coffee'] = $this->InventoryReturnsList_Model->get_coffee();
+                $data6['get_coffee_walkin_return'] = $this->InventoryReturnsList_Model->get_coffee_walkin_return();
                 
                 
                 
@@ -29,7 +30,7 @@
              
                 
                 
-				$this->load->view('Inventory_Module/inventoryReturnsList', ["poList" => $poList , "reorder" => $reorder, 'data1' => $data1, 'data2' => $data2, 'data3' => $data3, 'data4' => $data4, 'data5' => $data5] );
+				$this->load->view('Inventory_Module/inventoryReturnsList', ["poList" => $poList , "reorder" => $reorder, 'data1' => $data1, 'data2' => $data2, 'data3' => $data3, 'data4' => $data4, 'data5' => $data5, 'data6' => $data6] );
 			} else {
 				redirect('login');
 			}

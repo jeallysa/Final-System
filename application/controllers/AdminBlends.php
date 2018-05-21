@@ -159,7 +159,7 @@
 			        );
 			    $this->db->insert('proportions', $data_for);
 			}
-			echo "<script>alert('Update successful!');</script>";
+			echo "<script>alert('Insert successful!');</script>";
 			redirect('adminBlends', 'refresh');
 
 

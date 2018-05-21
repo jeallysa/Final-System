@@ -28,6 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <style type="text/css">
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,

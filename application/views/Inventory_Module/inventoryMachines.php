@@ -28,6 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <style>
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#3399ff, #3399ff), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
@@ -245,11 +252,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
-                                                    <th><b>Client/Supplier</b></th>
-                                                    <th><b>Date</b></th>
-                                                    <th><b>Quantity (pc/s)</b></th>
-                                                    <th><b>Remarks</b></th>
-                                                    <th><b>Type</b></th>
+                                                    <th><b>CLIENT/SUPPLIER</b></th>
+                                                    <th><b>DATE</b></th>
+                                                    <th><b>QUANTITY (PC)</b></th>
+                                                    <th><b>REMARKS</b></th>
+                                                    <th><b>TYPE</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -369,8 +376,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         </div>
                                                                     </div>
                                                             </div>
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
-                                                            <input type="reset" class="btn btn-danger" value="Clear" />
                                                         
                                                     </center>  
                                                     <!--modal for verification-->
@@ -378,7 +383,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="modal-dialog">
                             <div class="panel panel-primary">
                                 <div class="panel-heading" style="background-color: #990000;">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
                                 </div>
                                 <div class="modal-body">
@@ -386,11 +390,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <h3>Do you wish to continue?</h3></div>
                                 </div>
                                 <hr>
-                              <div align="center">
+                              <div align="right">
                                 <button type="submit" class="btn btn-success">Yes</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                               </div>
-                             </form> 
                             </div>
                             </div>
                         </div>
@@ -398,10 +401,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 
                             </div>
+                                <div align="right">
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
+                                                            <input type="reset" class="btn btn-danger" value="Clear" />
+                                                </div>
                         </div>
-                            <div class="panel-footer" align="center" style="margin-bottom:-14px;">
-                                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
-                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -466,17 +471,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
-                                            <th><b class="pull-left">Machine</b></th>
-                                            <th><b class="pull-left">Type</b></th>
-                                            <th><b class="pull-left">Supplier</b></th>
-                                            <th><b class="pull-left">Reorder Level (pc/s)</b></th>
-                                            <th><b class="pull-left">Number of Stocks (pc/s)</b></th>
-                                            <th><b class="pull-left">Physical Count (pc/s)</b></th>
-                                            <th><b class="pull-left">Discrepancy (pc/s)</b></th>
-                                            <th><b class="pull-left">Date of Inventory</b></th>
-                                            <th><b class="pull-left">Remarks</b></th>
-                                            <th><b class="pull-left">Stock Card</b></th>
+                                            <th><b class="pull-left">NO.</b></th>
+                                            <th><b class="pull-left">MACHINE</b></th>
+                                            <th><b class="pull-left">TYPE</b></th>
+                                            <th><b class="pull-left">SUPPLIER</b></th>
+                                            <th><b class="pull-left">REORDER LEVEL (PC)</b></th>
+                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
+                                            <th><b class="pull-left">PHYSICAL COUNT (PC)</b></th>
+                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
+                                            <th><b class="pull-left">INVENTORY DATE</b></th>
+                                            <th><b class="pull-left">REMARKS</b></th>
+                                            <th><b class="pull-left">STOCK CARD</b></th>
                                         </thead>
                                         <tbody>
                                             
