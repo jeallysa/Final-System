@@ -345,18 +345,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-20 col-md-12">
+                        <div class="col-lg-12 col-md-12">
                             <div class="card">
-                                <div class="card card-nav-tabs">
-                                    <div class="card-header" data-background-color="blue">
-                                        <span class="nav-tabs-title"> </span>
-                                        <ul class="nav nav-tabs" data-tabs="tabs">
-                                            <li>
-                                                <h3 class="title">Inventory Report</h3>
-                                                <div class="ripple-container"> </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div class="card-header" data-background-color="blue">
+                                    <h4 class="title">Inventory Report</h4>
+                                </div>
                         <div class="card-content">
                             <div class="row">
                                 <div class="card-content table-responsive">
@@ -669,7 +662,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>
                             </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -709,83 +701,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
-        "responsive": true,
-        "orderCellsTop": true,
-        "dom":' fBrtip',
-        "lengthChange": false,
-        "info":     false,
-		buttons: [
-            { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
-                customize: function ( win ) { 
-                     $(win.document.body) .css( 'font-size', '10pt' )
-                    .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
-                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
-                }
-            },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
-                        exportOptions: {
-                         columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
-                        doc.pageMargins = [50,50,100,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
-            }
-        ]
-      
+        "lengthMenu": [ 5, 10, 25, 50, 100 ],
+        select: {
+            style: 'single'
+        }
     });
-
 });
 </script>
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
-        "responsive": true,
-        "orderCellsTop": true,
-        "dom":' fBrtip',
-        "lengthChange": false,
-        "info":     false,
-		buttons: [
-            { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
-                customize: function ( win ) { 
-                     $(win.document.body) .css( 'font-size', '10pt' )
-                    .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
-                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
-                }
-            },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
-                        exportOptions: {
-                         columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
-                        doc.pageMargins = [50,50,100,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
-            }
-        ]
-      
+        "lengthMenu": [ 5, 10, 25, 50, 100 ],
+        select: {
+            style: 'single'
+        }
     });
-
 });
 </script>
 </html>
