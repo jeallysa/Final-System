@@ -114,7 +114,9 @@
         
        public function resolveIssue($supp_po_id){ //$returnId,$returnItem,$supp_po_id,$qty
            
-        $data = array(      "returnId"        => $this->input->post('returnId'),
+        $data = array(       "return_dr"        => $this->input->post('return_dr'),
+			                 "return_date"        => $this->input->post('return_date'),
+			                 "returnId"        => $this->input->post('returnId'),
                              "returnItem"     => $this->input->post('returnItem'),
                              "supp_po_id"     => $this->input->post('supp_po_id'),
                              "qty"            => $this->input->post('qty'),

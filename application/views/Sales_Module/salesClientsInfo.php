@@ -387,7 +387,7 @@
 																<td><?php echo $row->blend_id; ?></td>
 																<td><?php echo $row->client_deliverDate; ?></td>
 																<td class="text-primary"><?php echo $row->client_balance; ?> </td>
-                                <td><input type="checkbox" class="checks" /></td>
+                                                                <!-- <td><input type="checkbox" class="checks" /></td> -->
 															</tr>
 															<?php
 																}
@@ -397,11 +397,11 @@
                                                     </table>
 													<br><br>
                                                 </div>
-                                                <a class="btn btn-primary" data-toggle="collapse" href="#collapsePayment" aria-expanded="false" aria-controls="collapseExample" data-background-color="red" onclick="getValue()">Add Payment</a>
+                                                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#collapsePayment" aria-expanded="false" aria-controls="collapseExample" data-background-color="red" onclick="getValue()">Add Payment</a> -->
 
                                             </center>
                                         </p>
-                                        <div class="collapse" id="collapsePayment">
+                                        <!-- <div class="collapse" id="collapsePayment">
                                             <div class="card-block">
                                                 <form action="#" method="post" accept-charset="utf-8">
                                                     <div class="modal-body" style="padding: 5px;">
@@ -459,7 +459,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 <?php echo form_close(); ?>
                             </div>

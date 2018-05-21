@@ -80,7 +80,7 @@ for($i = 0 ; $i <= 3 ; $i++){
          
          
          
-         $dataRes2 = array('res' => 'resolved' );
+         $dataRes2 = array('res' => 'resolved' , 'return_dr' => $data['returnId']  , 'return_date' => $data['return_date'] );
          
         $where = array('company_returnID' =>$data['returnId']); // multiple where
         $this->db->where($where);  //used the where here

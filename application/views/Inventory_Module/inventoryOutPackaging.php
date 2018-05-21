@@ -236,7 +236,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }

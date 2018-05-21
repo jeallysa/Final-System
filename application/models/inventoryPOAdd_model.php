@@ -61,7 +61,7 @@
                        $y = $result->reorder;
                        $total = $x + $qty;
                        
-                       if($total < $y){
+                       if($total <= $y){
                            $status = "0";
                            $arrayStocks = array("stocks" => $x,
                                                 "reorder" => $y,
