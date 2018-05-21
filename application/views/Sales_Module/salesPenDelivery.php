@@ -175,6 +175,19 @@
 
 <div class="tab-pane active" id="purchaseorder">
     <a href="<?php echo base_url(); ?>salesDelivery/salesArchivedPO"><button class="pull-right">Archived Purchase Order</button></a>
+    <?php
+        $error = $this->session->flashdata('error');
+        $success = $this->session->flashdata('success');
+        if(!empty($error)){
+            ?>
+            <div class="alert alert-danger" style="margin: 0px; text-align: center; opacity: 0.8; width:50%;">
+                <strong><?php echo $error; ?></strong> 
+            </div>
+      <?php } else if(!empty($success)){ ?>
+            <div class="alert alert-success" style="margin: 0px; text-align: center; opacity: 0.8; width:50%">
+                <strong><?php echo $success; ?></strong> 
+            </div>
+      <?php } ?> 
     <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
             <th><b class="pull-left">Purchase Order No.</b></th>
@@ -283,6 +296,8 @@
                             <form action="<?php echo base_url(); ?>SalesDelivery/undoDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
                                    <h3>Are you sure to cancel Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                    <label>Admin Password:</label><br>
+                                    <input class="form-control" type="password" name="password" value="" required>
                                    <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
                                     <div class="panel-footer" align="center">
                                         <button type="submit" class="btn btn-success">Yes</button>

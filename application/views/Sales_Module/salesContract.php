@@ -336,7 +336,7 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Date Returned:</label>
-                                                                        <input class="form-control col-md-3" type="date" name="date_returned" max="<?php echo date("Y-m-d");?>" required="">
+                                                                        <input class="form-control col-md-3" type="date" name="date_returned" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>" required="">
                                                                         <input type="hidden" name="mach_id" value="<?php echo $row->mach_id; ?>" required>
                                                                     </div>
                                                                 </div>

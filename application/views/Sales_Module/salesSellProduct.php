@@ -163,7 +163,7 @@
                                                         <th><b>Purchase Date</b></th>
 														<th><b>Coffee</b></th>
 														<th><b>Bag</b></th>
-														<th><b>Size</b></th>
+														<th><b>Size (g)</b></th>
 														<th><b>Qty</b></th>
 														<th><b>Price</b></th>
                                                         <th><b>Total Amount</b></th>
@@ -180,7 +180,7 @@
                                                          <td><?php echo $row->walkin_date; ?></td>
                                                          <td><?php echo $row->blend; ?></td>
                                                          <td><?php echo $row->package_type; ?></td>
-                                                         <td><?php echo number_format($row->package_size); ?> g</td>
+                                                         <td><?php echo number_format($row->package_size); ?> </td>
                                                          <td><?php echo $row->walkin_qty; ?></td>
                                                          <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                          <td><?php 
@@ -262,7 +262,7 @@
 
                                                             <div class="form-group">
                                                                 <label class="col-md-6 control">Date Returned:</label>
-                                                                <input class="form-control col-md-12" type="date" name="date_blend_returned" required="">
+                                                                <input class="form-control col-md-12" type="date" name="date_blend_returned" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>" required="">
                                                                 <input type="hidden" name="blend_id" value="<?php echo $row->blend_id; ?>" required>
                                                                 <input type="hidden" name="walkin_id" value="<?php echo $row->walkin_id; ?>" required>
                                                             </div>
@@ -415,7 +415,7 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Date Returned:</label>
-                                                                        <input class="form-control col-md-6" type="date" name="date_returned" required="">
+                                                                        <input class="form-control col-md-6" type="date" name="date_returned" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>" required="">
                                                                         <input type="hidden" name="mach_id" value="<?php echo $row->mach_id; ?>" required>
                                                                         <input type="hidden" name="machine" value="<?php echo $row->brewer; ?>" required>
                                                                         <input type="hidden" name="machine_type" value="<?php echo $row->brewer_type; ?>" required>

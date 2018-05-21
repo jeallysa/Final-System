@@ -47,7 +47,7 @@ class Login_Model extends CI_Model
 		$email = $this->input->post('email');
         $password = $this->input->post('password');
 
-        $sql = "UPDATE user SET password = '".$password."' WHERE email = '".$email."' LIMIT 1";
+        $sql = "UPDATE user SET password = '".$password."' WHERE u_email = '".$email."' LIMIT 1";
         $this->db->query($sql);
 
         if($this->db->affected_rows() === 1){
@@ -58,7 +58,7 @@ class Login_Model extends CI_Model
 	}
 
 
-	public function verify_code($email, $code){
+	public function verify_reset_password_code($email, $code){
 		$sql = "SELECT username, u_email FROM user WHERE u_email = '".$email."' LIMIT 1;";
 		$result = $this->db->query($sql);
 		$row = $result->row();

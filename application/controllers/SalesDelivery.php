@@ -98,10 +98,18 @@
 
         function undoDel()
 		{
-			$this->load->model('SalesDelivery_model');
-			$po = $this->input->post("po_undo");
-			$this->SalesDelivery_model->undoDel($po);
-			redirect('SalesDelivery', 'refresh');
+            $password = $this->input->post("password");
+            if($this->db->query("SELECT IF (EXISTS (SELECT * FROM user WHERE password = '".$password."' and u_type = 'admin'), 1,  0) AS result")->row()->result == 1){
+                $this->load->model('SalesDelivery_model');
+                $po = $this->input->post("po_undo");
+                $this->SalesDelivery_model->undoDel($po);
+                $this->session->set_flashdata('success', 'Purchase order has been cancelled.');
+                redirect('SalesDelivery', 'refresh');	
+            }else{
+                $this->session->set_flashdata('error', 'Invalid password, failed to cancel order');
+                redirect('SalesDelivery');
+                }
+			
 		}
         function roastDel()
 		{
@@ -116,11 +124,18 @@
 		}
 
         function retDel()
-		{
-			$this->load->model('SalesDelivery_model');
-			$po2 = $this->input->post("po_ret");
-			$this->SalesDelivery_model->retDel($po2);
-			redirect('SalesDelivery/salesArchivedPO', 'refresh');
+		{   
+            $password = $this->input->post("password");
+            if($this->db->query("SELECT IF (EXISTS (SELECT * FROM user WHERE password = '".$password."' and u_type = 'admin'), 1,  0) AS result")->row()->result == 1){
+                $this->load->model('SalesDelivery_model');
+                $po2 = $this->input->post("po_ret");
+                $this->SalesDelivery_model->retDel($po2);
+                $this->session->set_flashdata('success', 'Purchase order has been retrieved');
+                redirect('SalesDelivery/salesArchivedPO', 'refresh');
+            }else{
+                $this->session->set_flashdata('error', 'Invalid password, failed to retrieve order');
+                        redirect('SalesDelivery/salesArchivedPO');
+                }
 		}
 
         function insert1()
