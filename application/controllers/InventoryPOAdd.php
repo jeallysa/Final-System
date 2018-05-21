@@ -52,15 +52,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $pro_select_box .= '<option value="">Select Type</option>';
           
             
-           
-            
           foreach ($results as $result){
+              
             if($result->category == 1){  
+                
              $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. " roast" .'</option>';
              $category = 1;
+                
             }else{
+                
              $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. '</option>';
-            $category = 0;
+             $category = 0;
+                
             }
          }
              $array = array("category" => $category,

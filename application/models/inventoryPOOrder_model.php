@@ -66,15 +66,30 @@
       
       
 function insertORDER($data){
-         
-      $this->db->insert("supp_delivery" , $data);        //USED BY BOTH FULL AND PARTIAL
+    
+        $object = $data;
+    
+        $dataInsert = array(
+                                 'partial_stat' => 1,        
+                                        );
+    
+        
+        $this->db->where('supp_po_id', $object['supp_po_id'] ); 
+        $this->db->update("supp_po" , $dataInsert);                   //once there is a delivery with the PO it will activate the partial stat.
+    
+    
+        $this->db->insert("supp_delivery" , $data);        
+     
+    
+    
+     
          
   }  
           
    
 function insertTrans($data){
          
-      $this->db->insert("trans_raw" , $data);        //USED BY BOTH FULL AND PARTIAL
+      $this->db->insert("trans_raw" , $data);        
          
   }    
 	  

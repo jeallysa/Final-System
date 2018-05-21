@@ -292,6 +292,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($Transactions as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+               
+            $oldDate = $object->suppPO_date;
+            $arr = explode('-', $oldDate);
+            $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
 
 ?>                          
                                 
@@ -302,7 +306,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                   
+                                           <center><b>Order Details</b>
+                                            <br>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                        
+                                        
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
@@ -342,7 +353,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->type  . '</td>' ,
                                        
                                                 '<td>'   . '</td>',
-                                                '<td>'  . number_format($object->qty)  . '</td>' ,
+                                                '<td>'  . number_format(($object->qty)/1000)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
                                                 '<td>Php '  .  number_format($object->amount,2)  . '</td>' ,
                                                 '</tr>' ;
@@ -398,6 +409,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($Transactions as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+               
+            $oldDate = $object->suppPO_date;
+            $arr = explode('-', $oldDate);
+            $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
 
 ?>                          
                                 
@@ -408,7 +423,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                   
+                                         <center><b>Delivery Details</b>
+                                            <br>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                        
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
@@ -445,9 +466,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item .         '</td>' ,
                                                 '<td>'  . $object->type .         '</td>' ,  
                                                 '<td>'                            ,'</td>' ,
-                                                '<td>'  . number_format($object->received) .     '</td>' ,  
-                                                '<td>'  . number_format($object->yield_weight) . '</td>' ,
-                                                '<td>'  . number_format($object->yields) .       '</td>' ,  
+                                                '<td>'  . number_format(($object->received)/1000) .     '</td>' ,  
+                                                '<td>'  . number_format(($object->yield_weight)/1000) . '</td>' ,
+                                                '<td>'  . number_format(($object->yields)/1000) .       '</td>' ,  
                                                 '<td>'  . $object->received_by  . '</td>' ,
                                                 '</tr>' ;
                                        }else{
@@ -535,6 +556,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if(!empty($Transactions)) {                                  
            foreach($Transactions as $object){
             $temp =  $object->supp_po_id;
+            
+            $oldDate = $object->suppPO_date;
+            $arr = explode('-', $oldDate);
+            $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
 
 ?>                                             
              <div class="modal fade" id="<?php echo "payment".$payment   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -544,7 +569,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                   
+                                        <center><b>Payment Details</b>
+                                            <br>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                        
+                                        
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>

@@ -304,12 +304,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal fade" id="<?php echo "return" . $return   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="panel panel-primary">
+                        <!--
                         <div class="panel-heading">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span>Add New Return</h4>
-                        </div>
+                        </div>-->
                         <form action="InventoryPOUnpaidDelivery/insertReturn" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
+                                
+                                        <center><b>Return</b>
+                                            <br>
+                                            
+                                            <?php 
+                                             $arr = explode('-', $dateMin);
+                                             $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             ?>
+                                            
+                                            <b><?php echo $newDate ?></b>
+                                            <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                
                                 <div class="row">
                              
                                       <div class="col-md-6 form-group">
@@ -328,7 +342,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
                                                 <option value="">Select DR#</option> -->
                                         <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
-                                                <option disabled selected value="">Select DR#</option>
+                                               <!-- <option disabled selected value="">Select DR#</option> -->
+                                                <option value="">Select DR#</option>
                                                 
                    <?php                              
                           $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
@@ -350,7 +365,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="item">Item Returned</label>
-                                            <select class="form-control" name="item" id="<?php echo "item".$return ?>" required>
+                                            <select class="form-control" name="item" id="<?php echo "item".$return ?>" required disabled>
                                                 <option disabled selected value="">Select Item</option>
                                                
 
@@ -366,14 +381,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     
                                     <div class="col-sm-6">
                                         <label> <p id="qtywt">Quantity | Weight(Kg)</p></label>
-                                        <input class="form-control" type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required />
+                                        <input class="form-control" type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required disabled/>
                                     </div> 
                                     
                                     
                                     <div class="col-sm-6">
                                         <label> <p id="qtywt">Remarks</p></label>
                                         
-                                        <input class="form-control" type="text" name="remarks" id="remarks"   required />
+                                        <input class="form-control" type="text" name="remarks" id="<?php echo "remarks".$return ?>"   required disabled />
                                     </div>
                                     
                                 </div>
@@ -382,11 +397,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
                             </div>
                             <div class="panel-footer" style="margin-bottom:-14px;">
-                                <input type="submit" class="btn btn-success" value="Add" />
+                               <center> <input type="submit" class="btn btn-success" value="Add" />
+                                <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">CLOSE</button></center>
                                 <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                <input type="reset" class="btn btn-danger" value="Clear" />
+                                <!--<input type="reset" class="btn btn-danger" value="Clear" />-->
                                 <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                                <!--<button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>-->
+                                
                             </div>
                         </form>
                     </div>
@@ -432,8 +449,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
+                                                <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
 
                                                 
                                                 <table class="table table-striped" id="table-mutasi">
@@ -594,8 +611,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
+                                                <br></center>
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
                                                             <table class="table table-striped" id="table-mutasi">
                                                                 <thead>
                                                                     <tr>
@@ -886,7 +903,9 @@ $partial = 1;
                   
                   
                    var truckingFee =  data['trucking_fee'];
+                  
                    var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+                  
                    var tfee ="Php " +tfeex+ ".00" ; 
                    
                   
@@ -896,10 +915,10 @@ $partial = 1;
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(tfee);
+                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
               error: function(){
-                  alert("error"); 
+                  //alert("error"); 
                 
               }
           });
@@ -935,15 +954,37 @@ $(document).ready(function() {
               dataType: 'json',
               success: function(data){
                 //  alert("success");
+                  
                   $(<?php echo "'#item".$return."'"?>).html(data);
-                   var n=1234.567;
-                   var parts = total.toFixed(2).split(".");                                                         //searched this on  stackoverflow
-                   var num = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+(parts[1] ? "." + parts[1] : "");  //searched this on  stackoverflow
-                   alert(num);
+                  $(<?php echo "'#item".$return."'"?>).removeAttr('disabled');
+                 
+               
+                  
+                  
+                   //var n=1234.567;
+                   //var parts = total.toFixed(2).split(".");                                                         //searched this on  stackoverflow
+                   //var num = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+(parts[1] ? "." + parts[1] : "");  //searched this on  stackoverflow
+                   //alert(num);
         
               },
               error: function(){
-                   alert("error");
+                  
+                  
+                  $(<?php echo "'#item".$return."'"?>).val('')
+                  $(<?php echo "'#returnQty".$return."'"?>).val('');
+                  $(<?php echo "'#remarks".$return."'"?>).val('');
+                  
+                  
+                  $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",'');
+                  $(<?php echo "'#remarks".$return."'"?>).attr("placeholder",'');
+                  
+                  
+                  $(<?php echo "'#item".$return."'"?>).attr('disabled' , 'disabled')
+                  $(<?php echo "'#returnQty".$return."'"?>).attr('disabled','disabled')
+                  $(<?php echo "'#remarks".$return."'"?>).attr('disabled','disabled')
+                  
+                  
+                   //alert("error");
                 
               }
           });
@@ -994,10 +1035,20 @@ $(document).ready(function() {
                  
                  $(<?php echo "'#returnQty".$return."'"?>).attr("max", newData);
                  $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",newData);
-               
+                  
+                 $(<?php echo "'#returnQty".$return."'"?>).removeAttr('disabled')
+                 $(<?php echo "'#remarks".$return."'"?>).removeAttr('disabled')
               },
               error: function(){
-                  alert("error");
+                  $(<?php echo "'#returnQty".$return."'"?>).val('');
+                  $(<?php echo "'#remarks".$return."'"?>).val('');
+                  
+                  $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",'');
+                  $(<?php echo "'#remarks".$return."'"?>).attr("placeholder",'');
+                  
+                  $(<?php echo "'#returnQty".$return."'"?>).attr('disabled','disabled')
+                  $(<?php echo "'#remarks".$return."'"?>).attr('disabled','disabled')
+                  //alert("error");
                 
               }
           });
@@ -1016,31 +1067,7 @@ $(document).ready(function() {
    });
     
  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  //});  
-        
-    
-       
-//}); //END 
- /*        
-$("#available_seats")
-    .attr("min", 10)
-    .attr("max", 20)
-    .val(15)
-   
-  */     
-    
-    
-    
+ 
     
     
     

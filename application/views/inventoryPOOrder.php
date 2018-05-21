@@ -274,236 +274,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-<!------------------                                          Full modal, currently NOT USED                   ---------------------------------->     
-
-
-
-<?php
-           $full = 1;
-                                            
-                                                
-                                                     
-                                                      
-                                                 
-           if(!empty($order)) {                                                                           
-           foreach($order as $object){
-           $temp =  $object->supp_po_id;
-           $sup_id = $object->sup_id; 
-           $dateMin = $object->suppPO_date;       
-
-?>
-
-
-            <div class="modal fade" id="<?php echo "full" . $full   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="panel panel-primary">
-                        
-                        
-                        <form action="InventoryPOOrder/insertFull/<?php echo $temp ?>" method="post" accept-charset="utf-8">
-                            <div class="modal-body" style="padding: 5px;">
-                                <div id="page-wrapper">
-                                    <div class="table-responsive">
-                                        <center><b>Record Full Delivery</b>
-                                            <br>
-                                            <b> <?php echo date('m/d/Y') ?></b></center>
-                                        
-                                        
-                                        
-                                        
-                                        
-                                            <div class="row">
-                                                
-                                                             
-
-                                        <div class="col-md-4 form-group">
-                                                    <div class="form-group label-floating">
-                                                        <label>DR No.</label>
-                                                         <input type="text" class="form-control" name="DRNO" required>
-                                                    </div>
-                                                </div>
-
-
- 
-                                                
-                                                
-                                                
-                                                <div class="col-md-4 form-group">
-                                                    <div class="form-group label-floating">
-                                                        <label>Date Received:</label>
-                                                         <input type="date" class="form-control"  min="<?php echo $dateMin ?>"  max ="<?php echo date("m/d/Y")?>" name="date" required>
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-                                 
-
-
-                                                <div class="col-md-4 form-group">
-                                                    <div class="form-group label-floating">
-                                                        <label>Received By: </label>
-                                                        <select class="form-control" name="receivedBy" required>
-                                                            
-                                                            
-                                      <?php
-                                                if(!empty($user)){ 
-                                                   
-                                                         foreach($user as $object){ 
-                                                           echo '<option>'  .$object->u_fname ." ".  $object->u_lname.  '</option>' ;
-                                                           }
-                                                             
-                                                }
-                                            ?>
-                                                            
-                                                            
-                                                            
-                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped" id="table-mutasi">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Item Name</th>
-                                                        <th>Type</th>
-                                                        <th>Original Qty/Weight(g)</th>
-                                                        <th>Quantity / Yield Weight(g)</th>
-                                                    
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    
-                                                    
-              
-              <?php
-                $i = 1;
-                 $arrayItem = array("raw_coffee","sticker","packaging","machine");
-                 $arrayOn = array("raw_coffee","sticker","package_type","brewer");
-                 $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
-                   for($table = 0 ; $table < 4 ; $table++){
-                          
-                             $retrieveDetails ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp."
-                                 and supp_po_ordered.delivery_stat = 0 and sup_id = ".$sup_id." and type =".$arrayType[$table];
-                       
-                                              $query = $this->db->query($retrieveDetails);
-                       
-                                              if ($query->num_rows() > 0) {
-                                                  
-                                              foreach ($query->result() as $object) {
-                                              
-                                              $tempItemId = $object->supp_po_ordered_id;
-                                             
-                                         if($object->category == 1){
-                                           echo  
-                                                '<tr>' ;
-                                             ?>
-                                                
-                                                <td>
-                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly> 
-                                                </td> 
-                                                    
-                                             <td>
-                                                      <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type ?>" readonly required/> 
-                                                </td>      
-                                                    
-                                                <td>
-                                            <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo $object->qty ?>" readonly> <!-- name of id=qty-->
-                                                  </td>
-                                                    
-                                             
-                                                    
-                                                    
-                                                    
-                                                  <td >
-                                            <input type="number" class="form-control" placeholder="<?php echo $object->qty - $object->received ?>" name="yield_weight[]"  min="0" max="<?php echo $object->qty-$object->received ?>" id="<?php echo "yield_weight".$i?>"  required>
-                                                  </td>  
-                                                    
-                                                   
-                                                    
-                                  
-                                             <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
-                                             <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
-                                                    
-                                                    
-                                                    
-                                                    <?php   
-                                                    
-                                                  
-                                                '</tr>' ;
-                                         }else{
-                                             echo  
-                                                '<tr>' ;
-                                             ?>
-                                                
-                                                <td>
-                                                      <input type="text" class="form-control" name="item[]" value="<?php echo $object->item ?>" readonly> 
-                                                </td> 
-                                                    
-                                             <td>
-                                                      <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type  ?>" readonly required/> 
-                                                </td>      
-                                                    
-                                                <td>
-                                            <input type="number" class="form-control" name="qty[]" id ="<?php echo "qty".$i?>" value="<?php echo $object->qty ?>" readonly> <!-- name of id=qty-->
-                                                  </td>
-                                                    
-                                             
-                                                    
-                                                    
-        
-                                  
-                                             <input type="hidden" class="form-control" name="fullRemaining[]"  value = "<?php echo $object->qty - $object->received ?>" >  
-                                             <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" >       
-                                                    
-                                                    
-                                                    
-                                                    <?php   
-                                                    
-                                                  
-                                                '</tr>' ;
-                                             
-                                             
-                                         }
-                                                   $i++;
-                                              }
-                                            }
-                   }
-                                        ?>                      
-                                                    
-                                                
-                                                </tbody>
-                                            </table>
-                                      
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="panel-footer" align="center" style="margin-bottom:-14px;">
-                                 <button type="submit" class="btn btn-success accept">Save</button>
-                                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">CLOSE</button>
-                        
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <?php                       
-                   $full++;
-                               
-           }                          
-        }      
- ?>
-
-<!------------------                                 End of         Full modal                  ---------------------------------->   
-
-
-
-
-
 
 
 
@@ -544,7 +314,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
                                                         <label>DR No.</label>
-                                                         <input type="number" class="form-control" name="DRNO" required>
+                                                         <input type="Text" class="form-control" name="DRNO" required>
                                                     </div>
                                                 </div>
                                   
@@ -661,7 +431,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo ($object->qty/1000)-$object->received ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),3) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
@@ -695,15 +465,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                       <input type="text" class="form-control" name="itemType[]" value="<?php echo $object->type  ?>" readonly /> 
                                                 </td>     
                                                          
-                                                   <td>
+                                                <td>
                                                       <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly  />
                                                   
-                                                    </td>   
-                                        <td>
+                                                </td> 
+                                                    
+                                                <td>
                                                      
-                                                <input type="number" class="form-control" placeholder="<?php echo $object->qty-$object->received ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                <input type="number" class="form-control" placeholder="<?php echo number_format($object->qty-$object->received) ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
-                                        </td>
+                                               </td>
                                                     
                                                     
                                                     

@@ -75,7 +75,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	 
         $lastTrans = $this->inventoryPOOrder_model->getLastTrans();
 	    $newTrans = $lastTrans->trans_id;
-	    
 	    $new = $newTrans+1;
 	    
 	  
@@ -83,7 +82,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
                                                                                                                     
  if($category[$i] == 1){ 
-	 
+     
+     
 	       $lastTrans = $this->inventoryPOOrder_model->getLastTrans();
 	       $raw_id = $this->input->post('raw_id');
 	 
@@ -98,8 +98,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     "item" => $itemNamev[$i],
                     "itemType" => $itemTypev[$i],
                     "supp_po_ordered_id" => $itemIdv[$i],
-                    "yield_weight" => $yield_weightv[$i],
-                    'received' => $receivedv[$i],
+                    "yield_weight" => ($yield_weightv[$i] * 1000),
+                    'received' => ($receivedv[$i] * 1000),
                     "date_received" => $datev,
                     "received_by" =>$receivedByv,
                     "supp_po_id"    => $temp,
@@ -111,9 +111,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $data = array(
                     'drNo'=>$DRNO,
                     'supp_po_ordered_id' => $itemIdv[$i],
-                    'yield_weight' => $yield_weightv[$i],
-                    'yields' => $receivedv[$i] - $yield_weightv[$i],
-                    'received' => $receivedv[$i],
+                    'yield_weight' => ($yield_weightv[$i] * 1000),
+                    'yields' => (($receivedv[$i] - $yield_weightv[$i]) * 1000),
+                    'received' => ($receivedv[$i] * 1000),
                     'date_received' => $datev,
                     'received_by' =>$receivedByv,
                     'supp_po_id'    => $temp,
@@ -125,7 +125,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		        $trans_raw = array(
                     'trans_id' => $new,
                     'raw_coffeeid' => $raw_id[$i],
-                    'quantity' => $yield_weightv[$i],
+                    'quantity' => $yield_weightv[$i] * 1000,
+                    'stat' => "In",
                   
 
                 );
@@ -148,7 +149,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
      
      if((!empty($receivedv[$i]))){   
-                                   //Data used for mapping 
+                        
+         
+         
+         //Data used for mapping 
                 $data3 = array(
                     "drNo"=>$DRNO,
                     "itemId"=>$itemIdv[$i],
@@ -170,7 +174,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     'supp_po_ordered_id' => $itemIdv[$i],
                     'yield_weight' => $receivedv[$i],
                     'yields' => " ",
-                    'received' => $receivedv[$i],
+                    'received' =>$receivedv[$i],
                     'date_received' => $datev,
                     'received_by' =>$receivedByv,
                     'supp_po_id'    => $temp,

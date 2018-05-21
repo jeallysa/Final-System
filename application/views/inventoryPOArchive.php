@@ -353,9 +353,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                              ?>
                                             
-                                            <b><?php echo $newDate ?></b>
+                                           <b><?php echo $newDate ?></b></center>
                                             <br>
-                                            <b><?php echo "PO #".$temp ?></b></center> 
+                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
 
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
