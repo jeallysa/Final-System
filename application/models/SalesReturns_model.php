@@ -57,7 +57,7 @@
 			$data_trans = array(
 						'transact_date' => $date,
 						'client_returnID' => $ret_id,
-			        	'type' => "OUT"
+			        	'type' => "IN"
 			);
 			$this->db->insert('inv_transact', $data_trans);
 			$trans_id = $this->db->insert_id();
@@ -111,7 +111,7 @@
 			$data_trans = array(
 						'transact_date' => $date,
 						'walkin_return' => $id,
-			        	'type' => "OUT"
+			        	'type' => "IN"
 			);
 			$this->db->insert('inv_transact', $data_trans);
 			$trans_id = $this->db->insert_id();
