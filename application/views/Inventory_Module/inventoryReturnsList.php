@@ -311,6 +311,7 @@ s}
                                                     <th align="center"><b>PRODUCT</b></th>
                                                     <th align="center"><b>TYPE</b></th>
                                                     <th align="center"><b>SUPPLIER</b></th>
+                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -322,6 +323,7 @@ s}
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }
