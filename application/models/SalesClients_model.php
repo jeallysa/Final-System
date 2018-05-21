@@ -173,6 +173,36 @@
 		public function addMultipleOrders($data){
 
 			for($x = 0; $x < count($data); $x++){
+                    $date = $data[$x]['dateO'];
+                    $blend_id = $data[$x]['blend'];
+                    $quantity = $data[$x]['quantity'];
+                
+                    $query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
+                    foreach($query->result() AS $row){
+                        $raw_guide = $row->raw_id;
+                        $percentage = $row->percentage;
+                        $package = $row->package_size;
+                        $stock = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';")->row()->raw_stock;
+                        $test_query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
+                        $pack_id = $query->row()->package_id;
+                        $stick_id = $query->row()->sticker_id;
+                        $pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
+                        $sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
+                        $taker = round($quantity*($package*($percentage * 0.01)));
+                        if ($stock < $taker){
+                            echo '<script> alert("Insufficient stocks for raw coffee beans! Transaction halted."); </script>';
+                            return;
+                        }else if ($pack_stock < $quantity){
+                        echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
+                            return;
+                        }else if($sticker_stock < $quantity){
+                        echo '<script> alert("Insufficient stocks for stickers! Transaction halted."); </script>';
+                            return;
+                        }
+                    }
+                
+                
+                
 				$orders[] = array(
 					/*'client_id' => $data[$x]['id'],*/
 					'walkin_date' => $data[$x]['dateO'],
@@ -185,6 +215,52 @@
 
 				for($x = 0; $x<count($data);$x++){
 					$this->db->insert('walkin_sales', $orders[$x]);
+                     $inserted_id = $this->db->insert_id();
+
+                    $pack_id = $query->row()->package_id;
+                    $stick_id = $query->row()->sticker_id;
+                    $this->db->query("UPDATE packaging SET package_stock = package_stock - ".$quantity." WHERE package_id =".$pack_id.";");
+                    $this->db->query('UPDATE sticker SET sticker_stock = sticker_stock - '.$quantity.' WHERE sticker_id ='.$stick_id.';'); 
+                    $data_trans = array(
+                                'transact_date' => $date,
+                                'sales_inv' => $inserted_id,
+                                'type' => "OUT"
+                    );
+                    $this->db->insert('inv_transact', $data_trans);
+                    $trans_id = $this->db->insert_id();
+
+
+                    foreach ($query->result() as $row)
+                    {
+
+                            $raw_guide = $row->raw_id;
+                            $percentage = $row->percentage;
+                            $package = $row->package_size;
+                            $this->db->query('UPDATE raw_coffee SET raw_stock = raw_stock - '.$quantity*($package*($percentage * 0.01)).' WHERE raw_id ='.$raw_guide.';'); 
+
+                            $data_for = array(
+                                'trans_id' => $trans_id,
+                                'raw_coffeeid' => $raw_guide,
+                                'quantity' => $quantity*($package*($percentage * 0.01))
+                            );
+                            $this->db->insert('trans_raw', $data_for);
+
+
+                    }
+                    $data_pack = array(
+                        'trans_id' => $trans_id,
+                        'package_id' => $pack_id,
+                        'quantity' => $quantity
+                    );
+                    $data_stick = array(
+                            'trans_id' => $trans_id,
+                                'sticker_id' => $stick_id,
+                                'quantity' => $quantity
+                    );
+                    $this->db->insert('trans_pack', $data_pack);
+                    $this->db->insert('trans_stick', $data_stick);
+                    $this->db->query('INSERT INTO trans_mach (trans_id) VALUES ('.$trans_id.')');
+
 				}
 
 				return 'success';
