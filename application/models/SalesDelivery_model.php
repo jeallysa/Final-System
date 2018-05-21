@@ -41,8 +41,12 @@
 			$this->db->query("UPDATE contracted_po SET undoDel = 1 WHERE contractPO_id = '".$po."';");
 		}
 
-		function retDel($po){
-			$this->db->query("UPDATE contracted_po SET undoDel = 0 WHERE contractPO_id = '".$po."';");
+		function roastDel($po){
+			$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po."';");
+		}
+
+		function retDel($po2){
+			$this->db->query("UPDATE contracted_po SET undoDel = 0 WHERE contractPO_id = '".$po2."';");
 		}
 
 		function insert_dataA($dataA){ 

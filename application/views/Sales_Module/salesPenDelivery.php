@@ -186,7 +186,8 @@
             <th><b class="pull-left">Gross Amount</b></th>
             <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Delivery Status</b></th>
-            <th class="disabled-sorting"><b class="pull-left">Action</b></th>
+            <th class="disabled-sorting" width="20%"><b class="pull-center">Action</b></th>
+            <th class="hidden"></th>
         </thead>
         <tbody>
             <?php
@@ -212,15 +213,61 @@
                 <td><?php echo $row1->delivery_stat; ?></td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
-                        if ($dbStat != 'delivered') {
+                        $roast = $row1->roast;
+
+                        if ($dbStat != 'delivered' && $roast == 'Yes') {
                             echo '
-                           <a class="btn btn-success btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-ok"></span> Deliver</a>
+                           <button type="button" data-toggle="modal" class="btn btn-secondary btn-xs" data-target="#roast'.$row1->contractPO_id.'"" title="roast order" disabled><span class="glyphicon glyphicon-fire" style="color:black"></span></button>
+                        ';
+                            echo '
+                           <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'" title="deliver order"><span class="glyphicon glyphicon-ok-sign" style="color:black"></span> </button>
+                        ';
+
+                        } else if ($dbStat != 'delivered' && $roast == 'No') {
+                            echo '
+                           <button type="button" data-toggle="modal" class="btn btn-secondary btn-xs" data-target="#roast'.$row1->contractPO_id.'"" title="roast order"><span class="glyphicon glyphicon-fire" style="color:black"></span></button>
+                        ';
+                            echo '
+                           <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#deliver'.$row1->contractPO_id.'" title="deliver order" disabled><span class="glyphicon glyphicon-ok-sign" style="color:black"></span> </button>
                         ';
                         }
+
+                        if ($dbStat == 'partial delivery') {
                         echo '
-                           <a class="btn btn-warning btn-xs" style="margin-top: 0px" data-toggle="modal" data-target="#undo'.$row1->contractPO_id.'"><span class="glyphicon glyphicon-remove"></span> Cancel</a>
+                           <button data-toggle="modal" class="btn btn-danger btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="cancel order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
+                        } else if ($dbStat == 'pending') {
+                        echo '
+                           <button data-toggle="modal" class="btn btn-danger btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="cancel order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
+                        ';
+                        }
                     ?>
+
+                <!-- modal for undo -->
+
+                <div class="modal fade" id="roast<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="panel-title" id="contactLabel"><center>Roast Purchase Order</center></h4>
+                            </div>
+                            <form action="<?php echo base_url(); ?>SalesDelivery/roastDel" method="post" accept-charset="utf-8">
+                                <div class="modal-body" style="padding: 5px;">
+                                   <h3>Are you sure to cancel Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                   <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
+                                    <div class="panel-footer" align="center">
+                                        <button type="submit" class="btn btn-success">Yes</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>    
+
+                </td>
+
+                <td>
                 <!-- modal for undo -->
 
                 <div class="modal fade" id="undo<?php echo $row1->contractPO_id;?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -241,7 +288,7 @@
                             </form>
                         </div>
                     </div>
-                </div>    
+                </div> 
                 </td>
 
                 <!--modal for pending delivery-->
@@ -371,10 +418,9 @@
                             </form>
                         </div>
                     </div>
-                </div>
-              </div>
+                </div>  
             </tr>
-
+ 
             <?php
                 }
             ?>
