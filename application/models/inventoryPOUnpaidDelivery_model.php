@@ -9,7 +9,7 @@
   
   
 
-  
+ /* 
   function retrieveUnpaid(){
       $query = $this->db->query('SELECT * FROM  supp_po join supplier on supp_id = sup_id   where delivery_stat = 1 and payment_stat = 0');
       if($query->num_rows() > 0){
@@ -17,8 +17,17 @@
       }else
           return NULL;
   }
-      
-      
+	  */
+   
+	  
+	  function retrieveUnpaid(){
+      $query = $this->db->query('SELECT * FROM  supp_po join supplier on supp_id = sup_id   where (delivery_stat = 1 and payment_stat = 0) or (delivery_stat = 0 and partial_stat = 1)');
+      if($query->num_rows() > 0){
+          return $query-> result();
+      }else
+          return NULL;
+  }
+     
       
    function ajaxTotal($poId){
       $query = $this->db->query('SELECT * from supp_po where supp_po_id ='.$poId);

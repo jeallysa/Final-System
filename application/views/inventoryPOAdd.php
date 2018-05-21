@@ -262,7 +262,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock +1) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }
@@ -474,7 +474,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight</p></b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(Kg)</p></b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>

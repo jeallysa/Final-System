@@ -249,7 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }
@@ -661,7 +661,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table hover order-column" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">PO #</b></th>
+                                            <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
                                            <!--   <th><b class="pull-left">Date Received</b></th> -->
                                             <th><b class="pull-left">Supplier</b></th>

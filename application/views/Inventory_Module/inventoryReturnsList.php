@@ -323,7 +323,7 @@ s}
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
                                                 '</tr>' ;
                                                  
                                              }
@@ -380,10 +380,10 @@ s}
                                              <table id="" class="table hover order-column" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th><b>DR NO.</b></th>
+                                                    <th><b>Delivery Receipt No.</b></th>
+													 <th><b>DATE RETURNED</b></th>
                                                      <th><b>ITEM RETURNED</b></th>
-                                                     <th><b>QUANTITY/WEIGHT(G)</b></th>
-                                                    <th><b>ISSUE</b></th>
+                                                     <th><b>QUANTITY/WEIGHT(Kg)</b></th>
                                                      <th><b>REMARKS</b></th>
                                                      <th></th>
                                                     
@@ -397,11 +397,11 @@ s}
                                                   
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $row->company_returnID; ?></td>
+                                                    <td><?php echo $row->drNo ?></td>
+                                                    <td><?php echo $row->sup_returnDate ?></td>
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
-                                                     <td><?php echo $row->sup_returnQty ?></td>
-                                                     <td><?php echo $row->sup_returnRemarks ?></td>
-                                                    <td><?php echo $row->res ?></td>
+                                                    <td><?php echo $row->sup_returnQty ?></td>
+                                                    <td><?php echo $row->sup_returnRemarks ?></td>
                                             <?php 
                                                     if($row->res == "unresolved"){
                                                  ?>   
@@ -409,7 +409,13 @@ s}
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a>
                                                     </td>
                                                 <?php       
-                                                    }
+                                                    }else{ ?>
+													<td>
+                                                    <a class=" btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "detailsModal" . $returnModal   ?>">Details</a>
+                                                    </td>	
+														
+												<?php 		
+													}
                                                        ?>
                                                        
                                                 </tr>
@@ -562,9 +568,9 @@ s}
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">PO#</label>
+                                            <label for="email">Purchase Order No.</label>
                                             <select class="selectpicker" data-live-search="true" name="poList" id = "poList" required>
-                                                <option disabled selected value="">Select PO#</option>
+                                                <option disabled selected value="">Select Purchase Order No.</option>
                                                 <?php 
 
                                                     foreach($poList as $object)
@@ -591,7 +597,7 @@ s}
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">DR No.</label>
+                                            <label for="email">Delivery Receipt No.</label>
                                             <input class="form-control" type="number" name="drNo" id="drNo"  min="1"required />
                                         </div>
                                     </div>
@@ -639,11 +645,11 @@ s}
         $returnModal = 1;
 
            foreach($data1['get_companyreturns'] as $row){
-               
-              $returnId   = $row->company_returnID;
-              $returnItem = $row->sup_returnItem;
-              $supp_po_id = $row->poNo;
-              $qty        = $row->sup_returnQty;
+              $date_returned =$row->sup_returnDate;
+              $returnId      = $row->company_returnID;
+              $returnItem    = $row->sup_returnItem;
+              $supp_po_id    = $row->poNo;
+              $qty           = $row->sup_returnQty;
              
                //<?php echo $returnId/$returnItem/$supp_po_id/$qty
 ?>
@@ -651,20 +657,29 @@ s}
                                     
                                 
                                     
-    <div class="modal fade" id="<?php echo "returnModal" . $returnModal   ?>" role="dialog">
-      <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
-        </div>
+    <div class="modal fade" id="<?php echo "returnModal" . $returnModal   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" id="contactLabel"><center>Resolve Company Returns</center> </h4>
+                            </div>
           
     <form action="InventoryReturnsList/resolveIssue/<?php echo $supp_po_id ?>" method="post" accept-charset="utf-8">    
         <div class="modal-body">
-            <center><h3><b><p>Is the Issue Resolved?</p></b></h3></center>.
+			
+			
+            <center><h3><b><p>Purchase Order No. <?php echo $supp_po_id ?></p></b></h3></center>
            
+			
+			<div>
+			<b><p>DR Number:</p></b>
+            <input type="text" class="form-control" name="return_dr" required> 
+			</div>
+			<br>
+			<div>
+			<b><p>Date Resolved:</p></b>
+            <input type="date" class="form-control" name="return_date" min="<?php echo $date_returned ?>" max="<?php echo date("Y-m-d")?>" required> 
+			</div>
             <input type="hidden" class="form-control" name="returnId"  value = "<?php echo $returnId ?>" > 
             <input type="hidden" class="form-control" name="returnItem"  value = "<?php echo $returnItem ?>" > 
             <input type="hidden" class="form-control" name="supp_po_id"  value = "<?php echo $supp_po_id ?>" > 
@@ -693,7 +708,98 @@ s}
         }
 ?>    
                    
+
+		
+		
+		
+		
+		
+		
+		
+	 <?php
+        $detailsModal = 1;
+
+           foreach($data1['get_companyreturns'] as $row){
+              $date_returned =$row->sup_returnDate;
+              $returnId      = $row->company_returnID;
+              $returnItem    = $row->sup_returnItem;
+              $supp_po_id    = $row->poNo;
+              $qty           = $row->sup_returnQty;
+             
+               //<?php echo $returnId/$returnItem/$supp_po_id/$qty
+?>
+                                                      
+                                    
+                                
+                                    
+    <div class="modal fade" id="<?php echo "detailsModal" . $detailsModal   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" id="contactLabel"><center>Resolved Details</center> </h4>
+                            </div>
+          
+    <form action="InventoryReturnsList/resolveIssue/<?php echo $supp_po_id ?>" method="post" accept-charset="utf-8">    
+        
+		<div class="modal-body">
+			
+			
+            <center><h3><b><p>Purchase Order No.<?php echo $supp_po_id ?></p></b></h3></center>
+           <hr>
+			
+			<div>
+				<b><p>Delivery Receipt No.</p></b>
+				<p><?php echo $row->return_dr ?></p>
+			</div>
+			<br>
+			<div>
+				<b><p>Date Resolved</p></b>
+				<p><?php echo $row->return_date ?></p>
+			</div>
             
+        </div>
+       
+        
+     
+      
+               <div  align="center">
+                                 <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">Close</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+		</div>
+	</div>                                         
+           
+            
+ <?php      
+         $detailsModal++;        
+        }
+?>    
+                   	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
             
             
             
