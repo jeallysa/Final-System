@@ -427,12 +427,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php 
                                            if(!empty($TempOrdered)){
                                                        ?>                       
-                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-secondary accept' disabled>   
-                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >Cancel</button>
+                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-default accept' disabled>   
+                                                 <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >
                                                    <?php 
                                            }else{ ?>
                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
-                                                <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">Cancel</button>
+                                                <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">
                                           <?php }
                                                        ?>                
                                                                 </div>
@@ -531,7 +531,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     </select>
                                                            </td>
                                                           <td class="col-sm-3">
-                                                     <input type="number" class="form-control" step="0.01" min='1' name="qty" id = "qty" disabled required/>
+                                                     <input type="number" class="form-control" step="0.001" min='1' name="qty" id = "qty" disabled required/>
                                                            </td>
                                                                     
                                                                     
@@ -556,12 +556,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             </td>     
                                                                   
                                                                 </tr>
+                                                                
+                                                                
+                                        <?php if(!empty($tempExisting)){
+                                                             ?>           
                                                          <tr>
-                                                                    <td colspan="5" style="text-align: left;">
-                                                                        <Button type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="savebutton"  />Add
+                                                              <td colspan="5" style="text-align: left;">
+                                                                 <input type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add"  />
                                                                        
-                                                                    </td>
+                                                               </td>
                                                          </tr>
+                                                    <?php            
+                                                           }else{
+                                                              ?>
+                                                        <tr>
+                                                                <td colspan="5" style="text-align: left;">
+                                                                 <input type="submit" class="btn btn btn-default accept btn-block" id="addToTemp" value="Add" disabled  />
+                                                                       
+                                                                 </td>
+                                                         </tr>
+                                                        <?php         
+                                                             } 
+                                                                
+                                                                ?>      
                                                                 
                                                             </tbody>
                                                         </table>
@@ -623,7 +640,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        echo '<tr>' ,
                          
       '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
-      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
       '<td class="col-sm-2">  </td>',                
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
@@ -1004,6 +1021,7 @@ document.getElementById('addToTemp').onclick = function() {
                 $('#unitPrice').val(data['unitPrice']);  //use this syntax when returning a single row only data['unitPrice']  column name in the query
                     var category = data['category'];       //use this syntax when returning a single row only data['category']  column name in the query
                      //alert(category);
+                    $('#qty').removeAttr('disabled');
                   
                   if(category == 1){
                     var y =  parseFloat($('#qty').val());
@@ -1018,7 +1036,8 @@ document.getElementById('addToTemp').onclick = function() {
                
                     
                       $('#amount').val(x);
-                       $('#category').val(category);   
+                      $('#category').val(category); 
+                      $('#qty').attr('step', 1);
                  }
                     
                   
@@ -1042,7 +1061,14 @@ document.getElementById('addToTemp').onclick = function() {
                   
               },
               error: function(){
-                 //alert('error');
+                  //alert('error');
+                $('#qty').attr('disabled','disabled');
+                $('#unitPrice').attr('disabled','disabled');
+                $('#amount').attr('disabled','disabled');
+                  
+                $('#qty').val('');
+                $('#unitPrice').val('');
+                $('#amount').val('');
               }
           });
       }); 
@@ -1072,6 +1098,8 @@ document.getElementById('addToTemp').onclick = function() {
                   $('#itemType').removeAttr('disabled');
                   $('#qty').removeAttr('disabled');
                   $('#itemType').html(type);
+                  
+                  $('#qty').val('');
                   $('#unitPrice').val('');
                   $('#amount').val('');
                   if(category ==1){
@@ -1083,7 +1111,7 @@ document.getElementById('addToTemp').onclick = function() {
               error: function(){
                 document.getElementById("qtywt").innerHTML = "Quantity|Weight(kg)";
                 $('#itemType').attr('disabled','disabled');
-                $('#qty').attr('disabled','disabled');
+                //$('#qty').attr('disabled','disabled');
                 $('#unitPrice').attr('disabled','disabled');
                 $('#amount').attr('disabled','disabled');
                   
