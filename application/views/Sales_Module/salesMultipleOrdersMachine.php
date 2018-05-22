@@ -185,7 +185,7 @@
                             <div class="card">
                                 <center>
                                     <div class="card-header" data-background-color="purple">
-                                        <h2 class="title"><center>Machine Purchase Orders</center></h2>
+                                        <h2 class="title"><center>Purchase Order <span class="glyphicon glyphicon-shopping-cart"></span></center></h2>
                                     </div>
                                     <div class="card-content">
                                             <div class="col-sm-12 col-md-12 well well-sm coll-centered" ><br>
@@ -301,8 +301,6 @@
 		var serial = document.loginform.serial;
 		var qty = document.loginform.qty;
 
-
-
       	if (machine_id.value == "" || client_id.value == "" || serial.value == "" || qty.value == "" )
 		{
 			document.getElementById("errorMessage").innerHTML = "please fill out all necessary field .. ";
@@ -382,7 +380,8 @@
                     
 				}
 				
-				location.reload();  
+				/*location.reload(); */ 
+				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
 			}	
 		});
 	});

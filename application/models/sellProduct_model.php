@@ -188,6 +188,7 @@ class sellProduct_model extends CI_MODEL
                         'date' => $data[$x]['dateOfPO'],
                         'mach_qty' => $data[$x]['quantity'],
                         'client_id' => $data[$x]['client_id'],
+						'status' => 'sold'
                     );
                 }
 			}
