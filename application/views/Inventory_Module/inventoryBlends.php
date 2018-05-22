@@ -308,7 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h4><?php echo $pckg; ?> bag (<?php echo $size; ?>g)</h4>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client</b></th>

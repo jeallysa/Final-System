@@ -303,7 +303,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h3><b><?php echo $pckg; ?> bag (<?php echo $size; ?> g)</b></h3>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
@@ -398,6 +398,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Company Delivery</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE res = 'resolved' AND package_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
                                                     <td>In</td>
                                                  <?php   
                                                 '</tr>' ;
