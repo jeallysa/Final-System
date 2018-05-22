@@ -345,7 +345,7 @@ a:focus {
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (kg)</b></th>
                                             <th><b class="pull-left">Number of Stocks (kg)</b></th>
-                                            <th class="disabled-sorting"><b>Edit</b></th>
+                                            <th class="disabled-sorting"><b>Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
                                         <tbody>
