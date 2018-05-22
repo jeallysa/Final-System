@@ -332,11 +332,11 @@
 		var newRow = '<tr id="row'+count+'">'+
                 '<td contenteditable="true">'+serial+'</td>'+
 				'<td contenteditable="true">'+dateOfPO+'</td>'+
-			 	'<td contenteditable="true" >'+client_id+'</td>'+
+			 	'<td contenteditable="true" > Client ID No.'+client_id+'</td>'+
 				'<td contenteditable="true">'+clientDetail+'</td>'+
-			 	'<td contenteditable="true" >'+mach_id+'</td>'+
+			 	'<td contenteditable="true" > Machine ID No.'+mach_id+'</td>'+
 				'<td contenteditable="true">'+machineDetail+'</td>'+
-			 	'<td contenteditable="true">'+quantity+'</td>'+
+			 	'<td contenteditable="true">'+quantity+' /unit</td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		

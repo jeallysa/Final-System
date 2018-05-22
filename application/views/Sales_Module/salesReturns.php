@@ -260,7 +260,7 @@
                                                     <tr>
                                                         <td><?php echo $row->client_dr; ?></td>
                                                         <td><?php echo $row->coff_returnDate; ?></td>
-                                                        <td><?php echo $row->coff_returnQty; ?></td>
+                                                        <td><?php echo $row->coff_returnQty; ?> bags</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
@@ -412,7 +412,7 @@
                                                     <tr>
                                                         <td><?php echo $row->mach_serial; ?></td>
                                                         <td><?php echo $row->mach_returnDate; ?></td>
-                                                        <td><?php echo $row->mach_returnQty; ?></td>
+                                                        <td><?php echo $row->mach_returnQty; ?> /unit</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>

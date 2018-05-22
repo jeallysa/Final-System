@@ -221,8 +221,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-4 control">Size :</label>
-                                            <div class="col-md-5">
+                                            <label class="col-md-4 control">Size(g) :</label>
+                                            <div class="col-md-6">
                                                 <p><b><input name="Size" class="no-border" type="disabled" readonly /></b></p>
                                             </div>
                                         </div>
