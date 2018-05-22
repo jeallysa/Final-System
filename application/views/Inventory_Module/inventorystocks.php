@@ -253,12 +253,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
+                                              $category = $object->category;
+                                              
+                                              if($category == 1){
+                                                  
                                             echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock +1) .  ' </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
+                                              
+                                              }else{
+                                                  echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '</tr>' ;
+                                              }
+                                              
+                                              
+                                              
                                                  
                                              }
                                       }
@@ -307,7 +323,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight / 1000, 2)  . '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight / 1000, 3)  . '</td>' ,
                                                 '<td> Company Delivery </td>' ,
                                                 '<td> In </td>' ,
                                                 '</tr>' ;
@@ -327,7 +343,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 3)  . '</td>' ,
                                                 '<td> Company Return </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -345,7 +361,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->client_company   . '</td>' ,
                                                 '<td>'  . $object->transact_date  . '</td>' ,
-                                                '<td>'  . number_format($object->quantity / 1000, 2)  . '</td>' ,
+                                                '<td>'  . number_format($object->quantity / 1000, 3)  . '</td>' ,
                                                 '<td> Used for Blend </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -522,8 +538,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->raw_type . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td><b>'  . number_format($object->raw_reorder / 1000) . ' </b></td>' ,
-                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' </b></td>' ,
-                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' </td>' ,
+                                                '<td><b>'  . number_format($object->raw_stock / 1000, 3) . ' </b></td>' ,
+                                                '<td>'  . number_format($object->raw_physcount / 1000, 3)   . ' </td>' ,
                                                 '<td>'  . number_format($object->raw_discrepancy)   . ' </td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->raw_remarks   . '</td>' ;

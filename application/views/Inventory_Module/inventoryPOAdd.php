@@ -258,12 +258,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
+                                              $category = $object->category;
+                                              
+                                              if($category == 1){
+                                                  
                                             echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock +1) .  ' </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
+                                              
+                                              }else{
+                                                  echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '</tr>' ;
+                                              }
+                                              
+                                              
+                                              
                                                  
                                              }
                                       }
@@ -411,11 +427,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php 
                                            if(!empty($TempOrdered)){
                                                        ?>                       
-                                                 <input type='submit' value='Draft'  id ='submitInfo'  class='btn btn-secondary accept' disabled>   
+                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-secondary accept' disabled>   
                                                  <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >Cancel</button>
                                                    <?php 
                                            }else{ ?>
-                                                <input type='submit' value='Draft'  id ='submitInfo'  class='btn btn-success accept' >   
+                                                <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">Cancel</button>
                                           <?php }
                                                        ?>                
@@ -474,7 +490,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight(g)</p></b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(kg)</p></b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -575,7 +591,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <tr>
                                                                     <th><b>Item</b></th>
                                                                     <th><b>Quantity</b></th>
-                                                                    <th><b>Weight(g)</b></th>
+                                                                    <th><b>Weight(kg)</b></th>
                                                                     <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
@@ -697,10 +713,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <b><h3 class="modal-title">Insufficient Order</h3></b>
+            <b><h1 class="modal-title">Insufficient Order</h1></b>
         </div>
+          
         <div class="modal-body">
-       
+        <input type="text" class="form-control"  id = "modalOrderStatusHeader" readonly/>
+           
         <input type="text" class="form-control"  id = "modalOrderStatus" readonly/>  
             
         <div class="modal-footer">
@@ -906,8 +924,18 @@ document.getElementById('addToTemp').onclick = function() {
           var itemType = document.getElementById("itemType").value;
           var itemName = document.getElementById("item").value;
           var qty      = document.getElementById("qty").value;
+          var qty1      = document.getElementById("qty").value;
     
-     
+    
+     var category      = document.getElementById("category").value;
+     if(category == 1 ){
+          var qty2       = qty1 * 1000;
+          var qty  = qty2.toPrecision(3);
+     }else{
+         var qty = qty1;
+     }
+    
+    
     var returnvalue; 
     
             $.ajax({
@@ -921,19 +949,25 @@ document.getElementById('addToTemp').onclick = function() {
                   var status = data['status'];
                   var reorder = data['reorder'];
                   var stocks = data['stocks'];
-                  var total = reorder - stocks + 1;
                   
-                  
+            if(category == 1){
+                  var total1 = ((reorder - stocks)/1000) + 0.1;
+                  var total  = total1.toPrecision(3);
+                 
+                  var notifHeader = itemName+" "+" "+itemType;
+                  var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
+            }else{
+                  var total = reorder - stocks  + 1 ;
+                  var notif = "Your order should be atleast "+total+" to reach the reorder level";
+            }
                   
                   
             if(status == "0"){
-                var notif = "Your order should be atleast "+total+" g to reach the reorder level";
+                $(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
                 $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
                 $("#invalidOrder").modal();
                 
                   returnvalue = false;
-                
-                
                 }
               },
           
@@ -1041,13 +1075,13 @@ document.getElementById('addToTemp').onclick = function() {
                   $('#unitPrice').val('');
                   $('#amount').val('');
                   if(category ==1){
-                   document.getElementById("qtywt").innerHTML = "Weight(g)";
+                   document.getElementById("qtywt").innerHTML = "Weight(kg)";
                   }else{
                    document.getElementById("qtywt").innerHTML = "Quantity";   
                   }
               },
               error: function(){
-                document.getElementById("qtywt").innerHTML = "Quantity|Weight";
+                document.getElementById("qtywt").innerHTML = "Quantity|Weight(kg)";
                 $('#itemType').attr('disabled','disabled');
                 $('#qty').attr('disabled','disabled');
                 $('#unitPrice').attr('disabled','disabled');
