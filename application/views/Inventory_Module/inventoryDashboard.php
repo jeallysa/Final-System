@@ -249,7 +249,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
+<<<<<<< HEAD
+                                                '<td>' . ($object->reorder-$object->stock) .  ' </b></td>' ,
+=======
                                                 '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+>>>>>>> ccc93a5995b33c2ff01ab4fafe7fcafee781d14c
                                                 '</tr>' ;
                                               
                                               }else{
