@@ -412,7 +412,7 @@
                                                     <tr>
                                                         <td><?php echo $row->mach_serial; ?></td>
                                                         <td><?php echo $row->mach_returnDate; ?></td>
-                                                        <td><?php echo $row->mach_returnQty; ?></td>
+                                                        <td><?php echo $row->mach_returnQty; ?> /unit</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>

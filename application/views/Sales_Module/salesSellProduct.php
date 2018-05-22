@@ -163,7 +163,7 @@
                                                         <th><b>Purchase Date</b></th>
 														<th><b>Coffee</b></th>
 														<th><b>Bag</b></th>
-														<th><b>Size (g)</b></th>
+														<th><b>Size</b></th>
 														<th><b>Qty</b></th>
 														<th><b>Price</b></th>
                                                         <th><b>Total Amount</b></th>
@@ -180,8 +180,8 @@
                                                          <td><?php echo $row->walkin_date; ?></td>
                                                          <td><?php echo $row->blend; ?></td>
                                                          <td><?php echo $row->package_type; ?></td>
-                                                         <td><?php echo number_format($row->package_size); ?> </td>
-                                                         <td><?php echo $row->walkin_qty; ?></td>
+                                                         <td><?php echo number_format($row->package_size); ?> g </td>
+                                                         <td><?php echo $row->walkin_qty; ?> bag/s</td>
                                                          <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                          <td><?php 
                                                                 $price = $row->blend_price;
@@ -333,7 +333,7 @@
                                                          <td><?php echo $row->date; ?></td>
                                                          <td><?php echo $row->client_company; ?></td>
                                                          <td><?php echo $row->brewer; ?></td>
-                                                         <td><?php echo $row->mach_qty; ?></td>
+                                                         <td><?php echo $row->mach_qty; ?> /unit</td>
                                                          <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                          <td><?php 
                                                                 $price = $row->unitPrice;

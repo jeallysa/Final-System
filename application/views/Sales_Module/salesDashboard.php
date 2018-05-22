@@ -128,7 +128,10 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
-                    <!-- <p style="text-align:left"> <?php echo "Today is " . date("m-d-Y") . "<br>" ?> </p> -->
+			
+                     <p style="text-align:right; font-weight: bold; font-size: 20px;"> <?php
+									echo "Today is " . date("M j, Y - l");
+									?> </p>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -136,6 +139,7 @@
                                      <i class="glyphicon glyphicon-signal"></i>
                                 </div>
                                 <div class="card-content">
+									
                                     <p class="category">Sales of the Day</p>
                                     <h3 class="title">
 										<?php

@@ -477,7 +477,7 @@
                         echo 'Php '.number_format($price,2);
                      ?>
                 </td>
-                <td><?php echo $row2->deliver_quantity; ?></td>
+                <td><?php echo $row2->deliver_quantity; ?> bags</td>
                 <td>Php                     
                     <?php
                         $price = $row2->blend_price;
@@ -486,7 +486,7 @@
                         echo 'Php '.number_format($amount,2);
                      ?></td>
                 <td><?php echo $row2->client_receive; ?></td>
-                <td><?php echo $row2->coff_returnQty; ?></td>
+                <td><?php echo $row2->coff_returnQty; ?> </td>
                 <td><button type="button" title="pay order" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
                         $payment_remarks = $row2->payment_remarks;
                         if ($payment_remarks == 'paid') {
