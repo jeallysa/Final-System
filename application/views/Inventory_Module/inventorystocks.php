@@ -395,6 +395,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         
                                                             <div class="row">
                                                                     <div class="form-group">
+                                                                        <label class="col-md-6 control">Total Out :</label>
+                                                                        <div class="col-md-4">
+
+                                                                            <?php
+                                              $retrieveTotalout ="Select SUM(Total) AS Total from
+(SELECT sup_returnQty AS Total FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
+SELECT quantity AS Total FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo 
+                                                '<input value="'  . $object->Total/1000  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              }
+                                            }
+                                        ?> 
+                                        </div>
+
+                                        <div class="col-md-4">
+
+                                        <?php
+                                              $retrieveTotalin ="Select SUM(Total) AS Total from
+(SELECT yield_weight AS Total FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS Total FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalin);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo 
+                                                '<input value="'  . $object->Total/1000  . ' kg" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ;
+                                              }
+                                            }
+                                        ?> 
+                                    </div>
+
+
+                                                                        
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
                                                                             <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
