@@ -40,6 +40,14 @@
           return NULL;
   }  
 	  
+    function getLastInvTrans(){
+      $query = $this->db->query('SELECT trans_id FROM inv_transact order by 1 desc limit 1');
+            
+      if($query->num_rows() > 0){
+          return $query->row();
+      }else
+          return NULL;
+  } 
 	  
   function retrieveUsers(){
    
@@ -93,7 +101,11 @@ function insertTrans($data){
          
   }    
 	  
-	  
+function insertInvTransact($data){
+         
+      $this->db->insert("inv_transact" , $data);        
+         
+  }	  
       
       
       

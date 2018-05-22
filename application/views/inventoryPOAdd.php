@@ -427,12 +427,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php 
                                            if(!empty($TempOrdered)){
                                                        ?>                       
-                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-secondary accept' disabled>   
-                                                 <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >Cancel</button>
+                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-default accept' disabled>   
+                                                 <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >
                                                    <?php 
                                            }else{ ?>
                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
-                                                <button type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">Cancel</button>
+                                                <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">
                                           <?php }
                                                        ?>                
                                                                 </div>
@@ -490,8 +490,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight(kg)</p></b></th>
                                                                     <th><b>Type</b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(kg)</p></b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
                                                                     
@@ -501,11 +501,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <tbody>
                                                                 <tr>
                                                    
-                                                               <td class='col-sm-3'>
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                <td class='col-sm-3'>
+                                                                   
+                                                                   
+                                                                   
+          <?php if(!empty($tempExisting)){
+                      ?>                                                         
+                                                                   
                                                                       <select required class="form-control" name="item" id ="item">
                                                                             <!-- <option value="" disabled selected>Choose Item</option> -->
                                                                            <option value="" >Choose Item</option>
-                                                                           
+                                                 
+                                                                          
                                                   <?php
                                                           
                                                     for($i=0; $i <= 3 ; $i++){ 
@@ -529,26 +540,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             ?>        
                                                                           
                                                                     </select>
-                                                           </td>
-                                                          <td class="col-sm-3">
-                                                     <input type="number" class="form-control" step="0.01" min='1' name="qty" id = "qty" disabled required/>
-                                                           </td>
-                                                                    
+        <?php                                                           
+                         }else{
+                                     ?>
+                                                             <select required class="form-control" name="item" id ="item" disabled>          
+                                                                   <option value="" >Choose Item</option>
+                                                                  <?php } ?>
+                                                                   
+                                                                  
+                                                </td>
+                                                    
+                                                        
                                                                     
                                                             <td class='col-sm-2'>
                                                                       <select class="form-control" name = "itemType"  id = "itemType" disabled required>
                                                                             <option value="">Select Type</option>      
                                                                      </select>
                                                             </td>    
+                                                                    
+                                                                    
+                                                                    
+                                                          
+                                                    
+                                                          <td class="col-sm-3">
+                                                     <input type="number" class="form-control" step="0.001" min='1' name="qty" id = "qty" disabled required/>
+                                                           </td>
+                                                                          
+                                                                    
+                                                                    
                                                                    
                                                                     
                                                            <td class="col-sm-2">
-                                                     <input type="number" class="form-control" name="unitPrice"  id = "unitPrice"  readonly/> <!-- When I put a disabled here I cant save the value -->
+                                                     <input type="number" class="form-control" name="unitPrice"  id = "unitPrice"  disabled readonly/> <!-- When I put a disabled here I cant save the value -->
                                                            </td>
                                                                   
                                                                     
                                                             <td class="col-sm-3">
-                                                      <input type="number"  class="form-control" name="amount"   id = "amount"  readonly/> <!-- When I put a disabled here I cant save the value -->
+                                                      <input type="number"  class="form-control" name="amount"   id = "amount"  disabled readonly/> <!-- When I put a disabled here I cant save the value -->
                                                             </td>
                                                                     
                                                            <td class="col-sm-3">
@@ -556,12 +584,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             </td>     
                                                                   
                                                                 </tr>
+                                                                
+                                                                
+                                        <?php if(!empty($tempExisting)){
+                                                             ?>           
                                                          <tr>
-                                                                    <td colspan="5" style="text-align: left;">
-                                                                        <Button type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="savebutton"  />Add
+                                                              <td colspan="5" style="text-align: left;">
+                                                                 <input type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add"  />
                                                                        
-                                                                    </td>
+                                                               </td>
                                                          </tr>
+                                                    <?php            
+                                                           }else{
+                                                              ?>
+                                                        <tr>
+                                                                <td colspan="5" style="text-align: left;">
+                                                                 <input type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add" disabled  />
+                                                                       
+                                                                 </td>
+                                                         </tr>
+                                                        <?php         
+                                                             } 
+                                                                
+                                                                ?>      
                                                                 
                                                             </tbody>
                                                         </table>
@@ -590,9 +635,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
+                                                                    <th><b>Type</b></th>
                                                                     <th><b>Quantity</b></th>
                                                                     <th><b>Weight(kg)</b></th>
-                                                                    <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
                                                                     
@@ -608,10 +653,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                           $category = $object->categoryx;   
                    if($category == 1){                                                          
                                                                          echo '<tr>' ,
-      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,    
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' , 
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                 
       '<td class="col-sm-2" >  </td>' ,
-      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,                 
-      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,    
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                        
@@ -622,10 +667,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        
                        echo '<tr>' ,
                          
-      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
-      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                
+      '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
       '<td class="col-sm-2">  </td>',                
-      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                        
@@ -986,8 +1031,6 @@ document.getElementById('addToTemp').onclick = function() {
     
     
     
-    
-    
  $(document).ready(function () {   
  
     $('#itemType').on('change', function(){
@@ -1003,31 +1046,36 @@ document.getElementById('addToTemp').onclick = function() {
                   
                 $('#unitPrice').val(data['unitPrice']);  //use this syntax when returning a single row only data['unitPrice']  column name in the query
                     var category = data['category'];       //use this syntax when returning a single row only data['category']  column name in the query
-                     //alert(category);
-                  
+                    $('#qty').removeAttr('disabled');
+                    $('#unitPrice').removeAttr('disabled');
+                    $('#amount').removeAttr('disabled');
+                   
                   if(category == 1){
+                      
                     var y =  parseFloat($('#qty').val());
-                      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
                     var x = y * parseFloat($('#unitPrice').val());
                     $('#amount').val(x);
-                     $('#category').val(category);   
+                    $('#category').val(category); 
+                      
                   }else{
+                      
+                      
                     var y =  parseFloat($('#qty').val());
                     var x = y * parseFloat($('#unitPrice').val());
                       
-               
-                    
                       $('#amount').val(x);
-                       $('#category').val(category);   
+                      $('#category').val(category); 
+                      $('#qty').attr('step', 1);
                  }
                     
                   
-           //when the category is 1 divide by 100.       
+              
                   $('#qty').keyup(function(){
+                      
                   if(category==1){
+                      
                   var y = parseFloat($(this).val());
-			      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
-                var x = y * parseFloat($('#unitPrice').val());
+                  var x = y * parseFloat($('#unitPrice').val());
 			      $('#amount').val(x);
                
                   }else{
@@ -1042,7 +1090,14 @@ document.getElementById('addToTemp').onclick = function() {
                   
               },
               error: function(){
-                 //alert('error');
+                  //alert('error');
+                $('#qty').attr('disabled','disabled');
+                $('#unitPrice').attr('disabled','disabled');
+                $('#amount').attr('disabled','disabled');
+                  
+                $('#qty').val('');
+                $('#unitPrice').val('');
+                $('#amount').val('');
               }
           });
       }); 
@@ -1050,9 +1105,6 @@ document.getElementById('addToTemp').onclick = function() {
   
                       
      
-        
-       
-  
         
         
         
@@ -1070,20 +1122,26 @@ document.getElementById('addToTemp').onclick = function() {
                   
                   
                   $('#itemType').removeAttr('disabled');
-                  $('#qty').removeAttr('disabled');
                   $('#itemType').html(type);
+                  $('#qty').val('');
                   $('#unitPrice').val('');
                   $('#amount').val('');
-                  if(category ==1){
+                  
+                  if(category == 1){
+                      
                    document.getElementById("qtywt").innerHTML = "Weight(kg)";
+                      
                   }else{
+                      
                    document.getElementById("qtywt").innerHTML = "Quantity";   
                   }
+                  
               },
               error: function(){
+                   //alert('error');  
                 document.getElementById("qtywt").innerHTML = "Quantity|Weight(kg)";
+                $('#qty').attr('disabled','disabled');  
                 $('#itemType').attr('disabled','disabled');
-                $('#qty').attr('disabled','disabled');
                 $('#unitPrice').attr('disabled','disabled');
                 $('#amount').attr('disabled','disabled');
                   

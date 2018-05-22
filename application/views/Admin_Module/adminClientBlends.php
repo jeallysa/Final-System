@@ -475,7 +475,7 @@ a:focus {
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                             <th><b class="pull-left">Quantity</b></th>
-                                            <th><b class="pull-left">Edit</b></th>
+                                            <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
                                         <tbody>
@@ -500,7 +500,7 @@ a:focus {
                                                 }
                                                 
                                                 ?>
-                                                <td><?php echo number_format($row->package_size); ?></td>
+                                                <td><?php echo number_format($row->package_size); ?> g</td>
                                                 <td><?php echo $row->package_type; ?></td>
                                                 <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                 <td><?php echo $row->blend_qty; ?></td>

@@ -26,8 +26,8 @@
             
             $data = array(
                         'blend_id'         => $this->input->post("blndid"),
-                        'blend_qty'  => ($this->input->post("physcount") * 1000),
-                        'blend_physcount'  => ($this->input->post("physcount") * 1000),
+                        'blend_qty'  => $this->input->post("physcount") ,
+                        'blend_physcount'  => $this->input->post("physcount"),
                         'blend_discrepancy'=> $this->input->post("discrepancy"),
                         'blend_remarks'    => $this->input->post("remarks"),
                         'inventory_date'    => $this->input->post("date"),

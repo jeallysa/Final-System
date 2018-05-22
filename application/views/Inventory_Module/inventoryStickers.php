@@ -305,11 +305,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
-                                                    <th><b>CLIENT/SUPPLIER</b></th>
-                                                    <th><b>DATE</b></th>
-                                                    <th><b>QUANTITY (PC)</b></th>
-                                                    <th><b>REMARKS</b></th>
-                                                    <th><b>TYPE</b></th>
+                                                    <th><b>Client/Supplier</b></th>
+                                                    <th><b>Date</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Remarks</b></th>
+                                                    <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -322,7 +322,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . '</td>' ;
+                                                '<td>'  . number_format($object->walkin_qty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Walkin Sales</td>
                                                     <td>Out</td>
@@ -340,7 +340,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . '</td>' ;
+                                                '<td>'  . number_format($object->contractPO_qty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Sales</td>
                                                     <td>Out</td>
@@ -358,7 +358,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->coff_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->coff_returnQty)  . '</td>' ;
+                                                '<td>'  . number_format($object->coff_returnQty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
                                                     <td>In</td>
@@ -376,7 +376,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . '</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Company Return</td>
                                                     <td>Out</td>
@@ -394,7 +394,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . '</td>' ;
+                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Company Delivery</td>
                                                     <td>In</td>
@@ -412,7 +412,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -457,7 +457,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-md-offset-1">
-                                        <h3>Do you wish to continue?</h3></div>
+                                        <h3>Do you want to continue?</h3></div>
                                 </div>
                                 <hr>
                               <div align="right">
@@ -542,16 +542,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">NO.</b></th>
-                                            <th><b class="pull-left">STICKER</b></th>
-                                            <th><b class="pull-left">SUPPLIER</b></th>
-                                            <th><b class="pull-left">REORDER LEVEL (PC)</b></th>
-                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
-                                            <th><b class="pull-left">PHYSICAL COUNT (PC)</b></th>
-                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
-                                            <th><b class="pull-left">INVENTORY DATE</b></th>
-                                            <th><b class="pull-left">REMARKS</b></th>
-                                            <th><b class="pull-left">STOCK CARD</b></th>
+                                            <th><b class="pull-left">No.</b></th>
+                                            <th><b class="pull-left">Sticker</b></th>
+                                            <th><b class="pull-left">Supplier</b></th>
+                                            <th><b class="pull-left">Re-order Level</b></th>
+                                            <th><b class="pull-left">Number of Stocks</b></th>
+                                            <th><b class="pull-left">Physical Count</b></th>
+                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Inventory Date</b></th>
+                                            <th><b class="pull-left">Remarks</b></th>
+                                            <th><b class="pull-left">Stock Card</b></th>
                                         </thead>
                                         <tbody>
                                             
@@ -568,10 +568,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sticker_id . '</td>' ,
                                                 '<td>'  . $object->sticker . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->sticker_reorder)   . '</td>' ,
-                                                '<td><b>'  . number_format($object->sticker_stock)   . '</b></td>' ,
-                                                '<td>'  . number_format($object->sticker_physcount)   . '</td>' ,
-                                                '<td>'  . number_format($object->sticker_discrepancy)   . '</td>' ,
+                                                '<td>'  . number_format($object->sticker_reorder)   . ' pcs</td>' ,
+                                                '<td><b>'  . number_format($object->sticker_stock)   . ' pcs</b></td>' ,
+                                                '<td>'  . number_format($object->sticker_physcount)   . ' pcs</td>' ,
+                                                '<td>'  . number_format($object->sticker_discrepancy)   . ' pcs</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->sticker_remarks   . '</td>' ;
 
@@ -662,7 +662,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=stckrstocks".$c."]'"?>).val());
-            var res = (x / 1000) - y || 0;
+            var res = x  - y || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")

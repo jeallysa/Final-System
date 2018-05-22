@@ -156,9 +156,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         $data['tempPO'] = $this->inventoryPOAdd_model->retrieveTemp();
        
-        $totalAmount = $this->input->post('totalAmount'); 
-        $totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
-          
+        $totalAmountv = $this->input->post('totalAmount'); 
+        //$totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
+        $totalAmount = str_replace(array(','), '' , $totalAmountv); 
         $datax = array();
             
          $i=0;   
@@ -170,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'suppPO_date' => $object->date,
                 'trucking_fee' => $object->trucking_fee,
                 'supp_creditTerm' => $object->credit_term,
-                'total_amount' =>$totalAmountv,
+                'total_amount' =>$totalAmount,
             );
             $i++;
           }$this->inventoryPOAdd_model->insertPO($datax);

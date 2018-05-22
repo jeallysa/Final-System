@@ -446,7 +446,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
+            $dateMin = $object->suppPO_date;
+               $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -511,12 +512,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             }
                                          } 
                                             ?>
-                                                     <tr>
-                                                            <td>Trucking Fee</td>
-                                                            <td></td>
-                                                            <td><input class="form-control" type="text"  id="truckingFee" readonly disabled /></td>
+                                                        
+                                                          
+                                         <tr>
+                                                   <td>Trucking Fee</td>
+                                                   <td></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
                                                             
-                                                        </tr>
+                                                        </tr>   
+                                                        
+                                               
                                                         
                                                         <tr>
                                                             <td></td>
@@ -585,6 +590,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
+               
                                
            }  
      }
@@ -672,9 +678,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  .  '</td>' ,
-                                                '<td>'  . number_format(($object->received)/1000)  . '</td>' ,
-                                                '<td>'  . number_format(($object->yield_weight)/1000). '</td>' ,
-                                                '<td>'  . number_format(($object->yields)/1000)  . '</td>' ,
+                                                '<td>'  . number_format((($object->received)/1000),3)  . '</td>' ,
+                                                '<td>'  . number_format((($object->yield_weight)/1000),3). '</td>' ,
+                                                '<td>'  . number_format((($object->yields)/1000),3)  . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 
@@ -918,11 +924,11 @@ $partial = 1;
                    var payment =  data['payment'];
                   
                   
-                   var truckingFee =  data['trucking_fee'];
+                   //var truckingFee =  data['trucking_fee'];
                   
-                   var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+                   //var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
                   
-                   var tfee ="Php " +tfeex+ ".00" ; 
+                   //var tfee ="Php " +tfeex+ ".00" ; 
                    
                   
                   
@@ -931,7 +937,7 @@ $partial = 1;
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
+                 // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
               error: function(){
                   //alert("error"); 
