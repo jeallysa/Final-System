@@ -45,7 +45,12 @@ class Login_Model extends CI_Model
 
 	public function updatePassword(){
 		$email = $this->input->post('email');
-        $password = $this->input->post('password');
+        $password = $this->input->post('password_new');
+        $password_confirm = $this->input->post('password_confirm');
+
+        if($password != $password_confirm){
+        	return false;
+        }
 
         $sql = "UPDATE user SET password = '".$password."' WHERE u_email = '".$email."' LIMIT 1";
         $this->db->query($sql);

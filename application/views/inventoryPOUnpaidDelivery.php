@@ -446,7 +446,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
+            $dateMin = $object->suppPO_date;
+               $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -516,7 +517,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          <tr>
                                                    <td>Trucking Fee</td>
                                                    <td></td>
-                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($unpaid[1]->trucking_fee),2)?> "readonly disabled /></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
                                                             
                                                         </tr>   
                                                         
@@ -589,6 +590,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
+               
                                
            }  
      }
