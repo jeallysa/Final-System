@@ -182,7 +182,14 @@
                                                  <td><?php echo $row->paid_date; ?></td>
                                                  <td><?php echo 'Php '.number_format($row->paid_amount,2); ?></td>
                                                  <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
-                                                 <td><?php echo 'Php '.number_format($row->withheld,2); ?></td>
+                                                 <td><?php
+                                                 if ($row->withheld>0) {
+                                                     echo 'Php '.number_format($row->withheld,2); 
+                                                  } else{
+                                                    echo "";
+                                                  }
+                                                        
+                                                    ?></td>
                                                  <td><?php echo $row->remarks; ?></td>
                                              </tr>
                                              <?php
