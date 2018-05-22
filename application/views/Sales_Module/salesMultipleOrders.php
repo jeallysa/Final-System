@@ -185,7 +185,7 @@
                             <div class="card">
                                 <center>
                                     <div class="card-header" data-background-color="purple">
-                                        <h2 class="title"><center>Walk-In Purchase Order/s</center></h2>
+                                        <h2 class="title"><center>Purchase Order <span class="glyphicon glyphicon-shopping-cart"></span></center></h2>
                                     </div>
                                     <div class="card-content">
 										
@@ -202,7 +202,7 @@
 										
 										<div class="col-sm-11 col-md-11 col-md-offset-1 well well-sm coll-centered" >
 											<form id="loginform" name="loginform">
-											<legend><span class="glyphicon glyphicon-shopping-cart"></span> Order</legend><hr>
+											<!--<legend><span class="glyphicon glyphicon-shopping-cart"></span> Order</legend><hr>-->
 												<span id="errorMessage" style="color: red; font-weight: 900;"></span>
 											<div class="row">
                                                 <div class="col-md-2 col-md-offset-1">
@@ -218,7 +218,7 @@
 												</div>
 												<div class="col-md-2">
 													<input class="form-control" name="number" id="qty" placeholder="Quantity" type="number" min="1" oninput="validity.valid||(value='');" data-validate="required" />
-												</div>
+												</div><br>
 												<input class="btn btn-lg btn-primary btn-sm" type="text" id="append_data" value="Add to Table" readonly>
 												</div>
 												</form>
