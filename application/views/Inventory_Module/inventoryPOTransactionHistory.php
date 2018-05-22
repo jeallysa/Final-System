@@ -245,12 +245,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
+                                              $category = $object->category;
+                                              
+                                              if($category == 1){
+                                                  
                                             echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
+                                              
+                                              }else{
+                                                  echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '</tr>' ;
+                                              }
+                                              
+                                              
+                                              
                                                  
                                              }
                                       }
@@ -320,7 +336,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(g)</th>
+                                                    <th>Weight(Kg)</th>
                                               <!--      <th>Yield Weight(g)</th>
                                                     <th>Yield(g)</th> -->
                                                     <th>Unit Price</th>
@@ -438,9 +454,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name </th>
                                                     <th>Type </th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(g)</th>
-                                                    <th>Yield Weight(g)</th>
-                                                    <th>Yield(g)</th>
+                                                    <th>Weight(Kg)</th>
+                                                    <th>Yield Weight(Kg)</th>
+                                                    <th>Yield(Kg)</th>
                                                     <th>Received By</th>
                                                 </tr>
                                                 
