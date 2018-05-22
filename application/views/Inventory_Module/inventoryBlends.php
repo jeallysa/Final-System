@@ -550,18 +550,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-<<<<<<< HEAD
-                                            <th><b class="pull-left">NO.</b></th>
-                                            <th><b class="pull-left">BLEND</b></th>
-                                            <th><b class="pull-left">PACKAGING</b></th>
-                                            <th><b class="pull-left">SIZE (G)</b></th>
-                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
-                                            <th><b class="pull-left">PHYSICAL COUNT (bags)</b></th>
-                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
-                                            <th><b class="pull-left">INVENTORY DATE</b></th>
-                                            <th><b class="pull-left">REMARKS</b></th>
-                                            <th><b class="pull-left">STOCK CARD</b></th>
-=======
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Blend</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
@@ -572,7 +560,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Inventory Date</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
->>>>>>> 17c9c5b6b4d8363c6f2484aa1e93fa9150be86d7
                                         </thead>
                                         <tbody>
                                             
