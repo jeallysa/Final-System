@@ -102,9 +102,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                               <li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>

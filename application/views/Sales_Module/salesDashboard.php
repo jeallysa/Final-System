@@ -101,8 +101,8 @@
                             <li class="dropdown">
 
                                 <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -131,7 +131,7 @@
 			
                      <p style="text-align:right; font-weight: bold; font-size: 20px;"> <?php
 									echo "Today is " . date("M j, Y - l");
-									?> </p>
+									?> </p> <br>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -142,6 +142,7 @@
 									
                                     <p class="category">Sales of the Day</p>
                                     <h3 class="title">
+										<b>
 										<?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=curdate() ;")->row()->total;
 
@@ -152,6 +153,7 @@
 										}
 
 										 ?>
+											</b>
                                     </h3>
 
                                 </div>
@@ -169,8 +171,9 @@
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Total Collections</p>
+									
                                     <h3 class="title">
-
+										<b>
                                     <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery  WHERE  payment_remarks='paid'; ")->row()->total;
 										if(!empty($total)){
@@ -179,7 +182,7 @@
 											echo 0;
 										}
 
-										 ?>
+										 ?></b>
                                     </h3>
 
                                 </div>
@@ -198,7 +201,7 @@
                                 <div class="card-content">
                                     <p class="category">Total Receivables</p>
                                     <h3 class="title">
-
+										<b>
                                     <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
 											if(!empty($total)){
@@ -207,6 +210,7 @@
 												echo 0;
 											}
 										 ?>
+											</b>
                                     </h3>
                                 </div>
                                 <div class="card-footer">
@@ -224,7 +228,7 @@
                                 <div class="card-content">
                                     <p class="category">Clients</p>
                                     <h3 class="title">
-
+										<b>
                                     <?php
 											$total = $this->db->query("SELECT COUNT(client_company) AS total FROM contracted_client NATURAL JOIN contract WHERE client_activation='1';")->row()->total;
 											if(!empty($total)){
@@ -233,6 +237,7 @@
 												echo 0;
 											}
 										 ?>
+											</b>
                                     </h3>
                                 </div>
                                 <div class="card-footer">
