@@ -25,8 +25,8 @@
             
             $data = array(
                         'package_id'         => $this->input->post("pckgid"),
-                        'package_stock'  => $this->input->post("physcount"),
-                        'package_physcount'  => $this->input->post("physcount"),
+                        'package_stock'  => ($this->input->post("physcount") * 1000),
+                        'package_physcount'  => ($this->input->post("physcount") * 1000),
                         'package_discrepancy'=> $this->input->post("discrepancy"),
                         'package_remarks'    => $this->input->post("remarks"),
                         'inventory_date'    => $this->input->post("date"),

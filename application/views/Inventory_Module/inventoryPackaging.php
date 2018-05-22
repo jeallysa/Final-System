@@ -413,7 +413,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -666,7 +666,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=pckgstocks".$c."]'"?>).val());
-            var res = x - y || 0;
+            var res = (x / 1000) - y || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
