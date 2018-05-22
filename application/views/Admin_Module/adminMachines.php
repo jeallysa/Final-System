@@ -333,7 +333,7 @@ a:focus {
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level (pc)</b></th>
                                             <th><b class="pull-left">Number of Stocks (pc)</b></th>
-                                            <th><b class="pull-left">Edit</b></th>
+                                            <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
                                         <tbody>

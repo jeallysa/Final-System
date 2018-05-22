@@ -208,7 +208,6 @@ a:focus {
                     </div>
                 </div>
             </nav>
-        
            <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -232,7 +231,7 @@ a:focus {
                                                 <th><b>Email</b></th>
                                                 <th><b>Contact No.</b></th>
                                                 <th><b class="pull-left">Contract</b></th>
-                                                <th class="disabled-sorting"><b>Edit</b></th>
+                                                <th class="disabled-sorting"><b>Action</b></th>
                                                 <th><b class="pull-left">Activation</b></th>
                                             </tr>
                                         </thead>
@@ -246,7 +245,7 @@ a:focus {
                                                         {
                                                 ?>
                                                 <tr>
-                                                <td>CL-<?php echo $row->client_id; ?></td>
+                                                <td>CL-<?php echo $row->client_id; ?></td> 
                                                 <td><?php echo $row->client_company; ?></td>
                                                 <td><?php echo $row->client_type; ?></td>
                                                 <td><?php echo $row->contact_personnel; ?></td>
@@ -254,9 +253,11 @@ a:focus {
                                                 <td><?php echo $row->client_address; ?></td>
                                                 <td><?php echo $row->client_email; ?></td>
                                                 <td><?php echo $row->client_contact; ?></td>
-                                                    <td><a href="<?php echo base_url(); ?>adminAddContract?p=<?php echo $row->client_id; ?>" class="btn btn-sm btn-round" size="10">Contract</a></td>
-                                                 <td>
-                                                                <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#edit<?php echo $row->client_id; ?>">Edit</a>
+                                                <td>
+                                                    <a href="<?php echo base_url(); ?>adminAddContract?p=<?php echo $row->client_id; ?>" class="btn btn-sm btn-round" size="10">Contract</a> 
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#edit<?php echo $row->client_id; ?>">Edit</a>
                                                 </td>
                                                     <td>
                                                     <div class="onoffswitch">
