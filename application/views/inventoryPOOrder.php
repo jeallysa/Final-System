@@ -417,7 +417,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            
                                                   
                                      if($category == 1){ 
-                                                   $raw_id   = $object->raw_id;
+                                                   $raw_id = $object->raw_id;
                                                 echo        
                                                 '<tr>' ;
                                              ?>
@@ -447,18 +447,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),3) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.001" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),3) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
                                                 <td>
-                                                      <input  type="number"  step="0.01" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
+                                                      <input  type="number"  step="0.0001" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
                                                 </td>   
                                                    <!--              <?php echo (($object->qty-$object->received)) ?>   -->
                              
                                                  <input type="hidden" class="form-control" name="itemId[]"  value = "<?php echo $tempItemId ?>" > 
                                                  <input type="hidden" class="form-control"  name="category[]"  value="<?php echo $category ?>" >
-											     <input type="hidden" class="form-control"  name="raw_id[]"  value="<?php echo $category ?>" >
+											     <input type="hidden" class="form-control"  name="raw_id[]"  value="<?php echo $raw_id ?>" >
                                                  <?php  
                                                 '</tr>'; 
                                          
@@ -482,7 +482,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>     
                                                          
                                                 <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo $object->qty ?>" readonly  />
+                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo number_format($object->qty) ?>" readonly  />
                                                   
                                                 </td> 
                                                     
@@ -870,7 +870,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               if ($query->num_rows() > 0) { ?>
                                             
                                               <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
-                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                          <a  class="btn btn-default btn-sm" data-toggle="modal" disabled>archive</a>
                                                    </center>
                                               </td>
                                              
@@ -878,14 +879,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                           
                                               }else{ ?>
                                               
-                                                <td>
-                                                   <center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
-                                                   <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                 <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
+                                                            <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                             <a  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a>
                                                    </center>
-                                               </td>
-                                            
-                                               <td>
-                                                    <center><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a></center>
                                                </td>
                                             
                                             
@@ -987,9 +984,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                   
     if($category == 1){ 
         ?>
-                                         $(document).ready(function(){   
+    
+  $(document).ready(function(){   
               
-           
       
       
        $(<?php echo "'#partial".$c." input[id=received".$i."]'"?>).keyup(function(){
@@ -1005,10 +1002,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			   $(<?php echo "'#partial".$c." input[id=yield_weight".$i."]'"?>).val('');
             }
           });
-      
-      
-      
-      
       
       
                             

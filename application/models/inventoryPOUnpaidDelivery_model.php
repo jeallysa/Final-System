@@ -40,7 +40,7 @@
       
  
          public function get_itemList($dr,$supp_po_id){
-			$query = $this->db->query("select distinct supp_po_ordered.supp_po_ordered_id , item ,type  from supp_delivery join supp_po_ordered using(supp_po_id) where drNo = '".$dr."' and supp_delivery.supp_po_id = ".$supp_po_id);
+			$query = $this->db->query("select distinct supp_po_ordered.supp_po_ordered_id , item ,type  from supp_delivery join supp_po_ordered using(supp_po_ordered_id) where drNo = '".$dr."' and supp_delivery.supp_po_id = ".$supp_po_id);
 			return $query->result();
 			
 		}  
