@@ -59,10 +59,13 @@
 				$raw_guide = $row->raw_id;
 			    $percentage = $row->percentage;
 			    $package = $row->package_size;
-				$stock = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';")->row()->raw_stock;
+				$stockpre = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';");
+				foreach($stockpre->result() as $rowstock){
+					$stock = $rowstock->raw_stock;
+				}
 				$taker = round($quantity*($package*($percentage * 0.01)));
 				if ($stock < $taker){
-					return;
+					exit;
 				}
 			}
 
@@ -74,10 +77,10 @@
 			$sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
 			if ($pack_stock < $quantity){
 				echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
-				return;
+				exit;
 			}else if($sticker_stock < $quantity){
 				echo '<script> alert("Insufficient stocks for stickers! Transaction halted."); </script>';
-				return;
+				exit;
 			}else{
 				$this->db->query("UPDATE packaging SET package_stock = package_stock - ".$quantity." WHERE package_id =".$pack_id.";");
 				$this->db->query('UPDATE sticker SET sticker_stock = sticker_stock - '.$quantity.' WHERE sticker_id ='.$stick_id.';');

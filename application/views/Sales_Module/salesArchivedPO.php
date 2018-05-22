@@ -174,6 +174,7 @@
             <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
             <th><b class="pull-left">Purchase Date</b></th>
+            <th><b class="pull-left">Remarks</b></th>
             <th class="disabled-sorting"><b class="pull-left">Action</b></th>
         </thead>
         <tbody>
@@ -197,6 +198,13 @@
                      ?>
                 </td>
                 <td><?php echo $row1->contractPO_date; ?></td>
+                <td><?php 
+                $roast = $row1->roast;
+                if ($roast == "Yes") {
+                                    echo "Roasted";
+                                    }                    
+
+                 ?></td>
                 <td><?php
                        
                         echo '
