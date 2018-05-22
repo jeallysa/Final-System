@@ -302,7 +302,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h3><b><?php echo $coff; ?></b></h3>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
@@ -369,6 +369,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             }
                                            
                                         ?>
+
+                                        <?php
+                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = ".$id ;
+                                              $query = $this->db->query($retrieveResolve);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 3)  . ' kg</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
                                  
                                             </tbody>
                                         </table>
