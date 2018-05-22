@@ -341,7 +341,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
-                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?></b></p>
+                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bags</b></p>
                                             </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
@@ -543,7 +543,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Size :</label>
 														<div class="col-md-5">
-															<p><b><input name="size" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="size" class="no-border" type="disabled"  readonly> g</b></p>
 														</div>
 													</div>
 										
@@ -556,7 +556,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bags</b></p>
 														</div>
 													</div>
                                                     <br>
@@ -631,13 +631,13 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Unit Price :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="uprice" readonly />
+															<p><b>Php <input class="no-border" type="text" name="uprice" readonly /></b></p>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="qty" readonly />
+															<p><b><input class="no-border" type="text" name="qty" readonly /> units</b></p>
 														</div>
 													</div>
                                                     <br>

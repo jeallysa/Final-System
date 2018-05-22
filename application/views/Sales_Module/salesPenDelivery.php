@@ -291,11 +291,11 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="panel-title" id="contactLabel"><center>Cancel Purchase Order</center></h4>
+                                <h4 class="panel-title" id="contactLabel"><center>Archive Purchase Order</center></h4>
                             </div>
                             <form action="<?php echo base_url(); ?>SalesDelivery/undoDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
-                                   <h3>Are you sure to cancel Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+                                   <h3>Are you sure to archive Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
                                     <label>Admin Password:</label><br>
                                     <input class="form-control" type="password" name="password" value="" required>
                                    <input class="form-control" type="hidden" name="po_undo" value="<?php echo $row1->contractPO_id; ?>" required>
