@@ -349,7 +349,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-5 control">Quantity :</label>
                                                     <div class="col-md-6">
-                                                        <p><b><?php echo $row1->contractPO_qty; ?></b></p>
+                                                        <p><b><?php echo $row1->contractPO_qty; ?> bags</b></p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -417,17 +417,17 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label class="col-md-7 control">Remaining quantity to be delivered (grams) :</label>
-                                                <div class="col-md-5">
+                                                <label class="col-md-5 control">Remaining quantity to be delivered:</label>
+                                                <div class="col-md-2">
                                                     <input id="" name="delivered_qty" type="number" value="<?php
-
                                                     $full_delivery = $row1->contractPO_qty;
                                                     $delivered_qty = $row1->delivered_qty;
                                                     $diff = $full_delivery - $delivered_qty;
                                                     echo $diff;
-													
-
                                                     ?>" class="form-control" min="1" max="<?php echo $diff ?>" required>
+                                                </div>
+                                                <div  class="col-md-2">
+                                                    <p>grams</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -642,7 +642,7 @@
                                                                   </div>
                                                                   <div class="form-group">
                                                                       <label class="col-md-6 control">Delivery Date:</label>
-                                                                      <div class="col-md-5">
+                                                                      <div class="col-md-6">
                                                                           <p><b><?php echo $row2->client_deliverDate;
                                                                           ?></b></p>
                                                                       </div>
@@ -650,7 +650,10 @@
                                                                   <div class="form-group">
                                                                       <label class="col-md-6 control">Quantity :</label>
                                                                       <div class="col-md-6">
-                                                                          <p><b><?php echo $row2->deliver_quantity; ?></b></p>
+                                                                          <p><b><?php echo $row2->deliver_quantity; ?> bags</b></p>
+                                                                      </div>
+                                                                      <div>
+                                                                          
                                                                       </div>
                                                                   </div>
                                                               </div>
@@ -658,8 +661,8 @@
                                                               <div class="row">
                                                                   <div class="col-lg-6">
                                                                       <div class="form-group">
-                                                                          <label class="col-md-5 control">Coffee Blend</label>
-                                                                          <div class="col-md-7">
+                                                                          <label class="col-md-4 control">Coffee Blend</label>
+                                                                          <div class="col-md-8">
                                                                               <p><b><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g"; ?></b></p>
                                                                           </div>
                                                                       </div>
@@ -670,23 +673,26 @@
                                                                 <div class="col-md-6">
 
                                                                     <div class="form-group">
-                                                                        <label class="col-md-6 control">Date Returned:</label>
-                                                                        <input class="col-md-6 control no-border" type="date" name="date_returned" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d')))?>"">
+                                                                        <label class="col-md-5 control">Date Returned:</label>
+                                                                        <input class="col-md-7 control no-border" type="date" name="date_returned" value="<?php echo date("Y-m-d");?>" data-validate="required" message="A Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d')))?>"">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Quantity Returned:</label>
-																		                                    <div class="col-md-6">
-                                                                        <input class="form-control" type="number" name="qty_returned" min="1" max="<?php
-                                                                        $fulqty = $row2->deliver_quantity;
-                                                                        $retqty = $row2->coff_returnQty;
-                                                                        $retdif = $fulqty - $retqty;
-                                                                        echo $retdif;
+																		  <div class="col-md-4">
+                                                                            <input class="form-control" type="number" name="qty_returned" min="1" max="<?php
+                                                                            $fulqty = $row2->deliver_quantity;
+                                                                            $retqty = $row2->coff_returnQty;
+                                                                            $retdif = $fulqty - $retqty;
+                                                                            echo $retdif;
 
-                                                                        ?>" required="" oninput="validity.valid||(value='');" >
-																		                                    </div>
+                                                                            ?>" required="" oninput="validity.valid||(value='');" >
+																		  </div>
+                                                                          <div class="col-md-2">
+                                                                              <p>bags</p>
+                                                                          </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
