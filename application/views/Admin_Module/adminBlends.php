@@ -320,7 +320,7 @@ a:focus {
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                            <th><b class="pull-left">Quantity</b></th>
-                                            <th><b class="pull-left">Edit</b></th>
+                                            <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
                                         <tbody>

@@ -167,7 +167,7 @@ a:focus {
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="green">
-                                    <h4 class="title">Edit Profile</h4>
+                                    <h4 class="title">Profile Information</h4>
                                     <p class="category"></p>
                                 </div>
                                 <?php

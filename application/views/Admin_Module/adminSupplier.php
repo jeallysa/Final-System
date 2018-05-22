@@ -232,7 +232,7 @@ a:focus {
                                                 <th><b>Email</b></th>
                                                 <th><b>Contact No.</b></th>
                                                 <th><b>Supplied Items</b></th>
-                                                <th class="disabled-sorting"><b>Edit</b></th>
+                                                <th class="disabled-sorting"><b>Action</b></th>
                                                 <th><b class="pull-left">Activation</b></th>
                                             </tr>
                                         </thead>
