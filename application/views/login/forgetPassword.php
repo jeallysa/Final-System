@@ -50,7 +50,7 @@
                         	<div class="form-top">
                         		<div class="form-top-left">
                         			<h3>Forgot your password? </h3>
-                            		<p>Enter your email address.</p>
+                            		<p>Enter your email address to recover your password.</p>
                                 </div>
                                        
                                 

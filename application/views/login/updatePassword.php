@@ -81,15 +81,15 @@
                                                 <input type = "hidden" value = "<?php echo $email_code ?>" name="email_code" class="form-control" />
                                         <?php
                                         } ?>
-                                        <input type="text" name = 'email' id = 'email' value='<?php echo $email ?>' placeholder = 'Email Address' class = 'form-control'>
+                                        <input type="text" name = 'email' id = 'email' value='<?php echo $email ?>' placeholder = 'Email Address' class = 'form-control' required>
 			                        </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="password">New Password</label>
-                                        <input type="password" name = 'password' id = 'password_new' placeholder = 'New Password' class = 'form-control'>
+                                        <input type="password" name = 'password_new' id = 'password_new' placeholder = 'New Password' class = 'form-control' required>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="password_con">Confirm Password</label>
-                                        <input type="password" name = 'password' id = 'password_confirm' placeholder = 'Confirm Password' class = 'form-control'>
+                                        <input type="password" name = 'password_confirm' id = 'password_confirm' placeholder = 'Confirm Password' class = 'form-control' required>
                                     </div>
 			                        
                                     <div class="row" style="display: flex; align-items: center; justify-content: center;color: red">
