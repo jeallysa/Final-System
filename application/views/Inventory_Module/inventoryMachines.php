@@ -242,10 +242,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <table class="table table-striped table-bordered dt-responsive nowrap" id="">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -304,14 +304,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h4><?php echo $brwrtype; ?></h4>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
-                                                    <th><b>CLIENT/SUPPLIER</b></th>
-                                                    <th><b>DATE</b></th>
-                                                    <th><b>QUANTITY (PC)</b></th>
-                                                    <th><b>REMARKS</b></th>
-                                                    <th><b>TYPE</b></th>
+                                                    <th><b>Client/Supplier</b></th>
+                                                    <th><b>Date</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Remarks</b></th>
+                                                    <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -324,7 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->date  . '</td>' ,
-                                                '<td>'  . number_format($object->mach_qty)  . '</td>' ;
+                                                '<td>'  . number_format($object->mach_qty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Sales</td>
                                                     <td>Out</td>
@@ -342,7 +342,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->mach_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->mach_returnQty)  . '</td>' ;
+                                                '<td>'  . number_format($object->mach_returnQty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
                                                     <td>In</td>
@@ -360,7 +360,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . '</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Company Return</td>
                                                     <td>Out</td>
@@ -378,9 +378,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . '</td>' ;
+                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
                                                 ?>
                                                     <td>Company Delivery</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE res = 'resolved' AND mach_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
                                                     <td>In</td>
                                                  <?php   
                                                 '</tr>' ;
@@ -397,7 +415,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -442,7 +460,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-md-offset-1">
-                                        <h3>Do you wish to continue?</h3></div>
+                                        <h3>Do you want to continue?</h3></div>
                                 </div>
                                 <hr>
                               <div align="right">
@@ -526,17 +544,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">NO.</b></th>
-                                            <th><b class="pull-left">MACHINE</b></th>
-                                            <th><b class="pull-left">TYPE</b></th>
-                                            <th><b class="pull-left">SUPPLIER</b></th>
-                                            <th><b class="pull-left">REORDER LEVEL (PC)</b></th>
-                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
-                                            <th><b class="pull-left">PHYSICAL COUNT (PC)</b></th>
-                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
-                                            <th><b class="pull-left">INVENTORY DATE</b></th>
-                                            <th><b class="pull-left">REMARKS</b></th>
-                                            <th><b class="pull-left">STOCK CARD</b></th>
+                                            <th><b class="pull-left">No.</b></th>
+                                            <th><b class="pull-left">Machine</b></th>
+                                            <th><b class="pull-left">Type</b></th>
+                                            <th><b class="pull-left">Suppplier</b></th>
+                                            <th><b class="pull-left">Re-order Level</b></th>
+                                            <th><b class="pull-left">Number of Stocks</b></th>
+                                            <th><b class="pull-left">Physical Count</b></th>
+                                            <th><b class="pull-left">Discrepancy</b></th>
+                                            <th><b class="pull-left">Inventory Date</b></th>
+                                            <th><b class="pull-left">Remarks</b></th>
+                                            <th><b class="pull-left">Stock Card</b></th>
                                         </thead>
                                         <tbody>
                                             
@@ -554,10 +572,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->mach_reorder)   . '</td>' ,
-                                                '<td><b>'  . number_format($object->mach_stocks)   . '</b></td>' ,
-                                                '<td>'  . number_format($object->mach_physcount)   . '</td>' ,
-                                                '<td>'  . number_format($object->mach_discrepancy)   . '</td>' ,
+                                                '<td>'  . number_format($object->mach_reorder)   . ' pcs</td>' ,
+                                                '<td><b>'  . number_format($object->mach_stocks)   . ' pcs</b></td>' ,
+                                                '<td>'  . number_format($object->mach_physcount)   . ' pcs</td>' ,
+                                                '<td>'  . number_format($object->mach_discrepancy)   . ' pcs</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->mach_remarks   . '</td>' ;
 
@@ -648,7 +666,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=machstocks".$c."]'"?>).val());
-            var res = (x / 1000) - y || 0;
+            var res = x - y || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")

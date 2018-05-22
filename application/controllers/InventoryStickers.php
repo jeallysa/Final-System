@@ -25,8 +25,8 @@
             
             $data = array(
                         'sticker_id'         => $this->input->post("stckrid"),
-                        'sticker_stock'  => ($this->input->post("physcount") * 1000),
-                        'sticker_physcount'  => ($this->input->post("physcount") * 1000),
+                        'sticker_stock'  => $this->input->post("physcount"),
+                        'sticker_physcount'  => $this->input->post("physcount"),
                         'sticker_discrepancy'=> $this->input->post("discrepancy"),
                         'sticker_remarks'    => $this->input->post("remarks"),
                         'inventory_date'    => $this->input->post("date"),

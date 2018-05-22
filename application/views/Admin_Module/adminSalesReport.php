@@ -226,8 +226,8 @@ a:focus {
                                                 <th><b>Date</b></th>
                                                 <th><b>Client</b></th>
                                                 <th><b>Coffee</b></th>
-                                                <th><b>Bag</b></th>
-                                                <th><b>Size (g)</b></th>
+                                                <th><b>Packaging</b></th>
+                                                <th><b>Size</b></th>
                                                 <th><b>Quantity</b></th>
                                                 <th><b>Unit Price</b></th>
                                                 <th><b>Total Amount</b></th>
@@ -248,8 +248,8 @@ a:focus {
                                                  <td><?php echo $row->client_company; ?></td>
                                                  <td><?php echo $row->blend; ?></td>
                                                  <td><?php echo $row->package_type; ?></td>
-                                                 <td><?php echo number_format($row->package_size); ?></td>
-                                                 <td><?php echo number_format($row->contractPO_qty); ?></td>
+                                                 <td><?php echo number_format($row->package_size); ?> g</td>
+                                                 <td><?php echo number_format($row->contractPO_qty); ?> bags</td>
                                                  <td><?php echo 'Php '.number_format($row->blend_price,2); ?></td>
                                                  <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
                                                  <td><?php echo $row->client_type; ?></td>

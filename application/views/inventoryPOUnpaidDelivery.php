@@ -254,7 +254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -446,7 +446,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
+            $dateMin = $object->suppPO_date;
+               $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -516,7 +517,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          <tr>
                                                    <td>Trucking Fee</td>
                                                    <td></td>
-                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($unpaid[1]->trucking_fee),2)?> "readonly disabled /></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
                                                             
                                                         </tr>   
                                                         
@@ -589,6 +590,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
+               
                                
            }  
      }
@@ -676,9 +678,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  .  '</td>' ,
-                                                '<td>'  . number_format((($object->received)/1000),3)  . '</td>' ,
-                                                '<td>'  . number_format((($object->yield_weight)/1000),3). '</td>' ,
-                                                '<td>'  . number_format((($object->yields)/1000),3)  . '</td>' ,
+                                                '<td>'  . number_format((($object->received)/1000),2)  . '</td>' ,
+                                                '<td>'  . number_format((($object->yield_weight)/1000),2). '</td>' ,
+                                                '<td>'  . number_format((($object->yields)/1000),2)  . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 

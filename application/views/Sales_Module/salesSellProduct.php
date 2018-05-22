@@ -111,8 +111,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -163,7 +163,7 @@
                                                         <th><b>Purchase Date</b></th>
 														<th><b>Coffee</b></th>
 														<th><b>Bag</b></th>
-														<th><b>Size (g)</b></th>
+														<th><b>Size</b></th>
 														<th><b>Qty</b></th>
 														<th><b>Price</b></th>
                                                         <th><b>Total Amount</b></th>
@@ -180,8 +180,8 @@
                                                          <td><?php echo $row->walkin_date; ?></td>
                                                          <td><?php echo $row->blend; ?></td>
                                                          <td><?php echo $row->package_type; ?></td>
-                                                         <td><?php echo number_format($row->package_size); ?> </td>
-                                                         <td><?php echo $row->walkin_qty; ?></td>
+                                                         <td><?php echo number_format($row->package_size); ?> g </td>
+                                                         <td><?php echo $row->walkin_qty; ?> bag/s</td>
                                                          <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                          <td><?php 
                                                                 $price = $row->blend_price;
@@ -230,14 +230,14 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Packaging: </label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->package_type.'/ '.number_format($row->package_size).' g';
+                                                                    <p><b><?php echo $row->package_type.' bag/ '.number_format($row->package_size).' g';
                                                                     ?></b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Quantity :</label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->walkin_qty; ?></b></p>
+                                                                    <p><b><?php echo $row->walkin_qty; ?> bags</b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -270,13 +270,14 @@
                                                         <div class="col-md-6">
 
                                                             <div class="form-group">
-                                                                <label class="col-md-6 control">Quantity Returned:</label>
-                                                                <input class="form-control col-md-12" type="number" name="blend_returned" min="1" max="<?php
+                                                                <label class="col-md-12 control">Quantity Returned:</label>
+                                                                <input class="form-control col-md-5" type="number" name="blend_returned" min="1" max="<?php
                                                                     $retblend = $row->walkin_returns;
                                                                     $soldblend = $row->walkin_qty;
                                                                     $ret_mach = $soldblend - $retblend;
                                                                     echo $ret_mach;
                                                                  ?>" required="">
+                                                                 <p class="col-md-2">bags</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -333,7 +334,7 @@
                                                          <td><?php echo $row->date; ?></td>
                                                          <td><?php echo $row->client_company; ?></td>
                                                          <td><?php echo $row->brewer; ?></td>
-                                                         <td><?php echo $row->mach_qty; ?></td>
+                                                         <td><?php echo $row->mach_qty; ?> /unit</td>
                                                          <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                          <td><?php 
                                                                 $price = $row->unitPrice;
@@ -388,7 +389,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
                                                 <div class="col-md-7">
-                                                    <p><b><?php echo $row->mach_qty; ?></b></p>
+                                                    <p><b><?php echo $row->mach_qty; ?> unit/s</b></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -424,9 +425,10 @@
                                                                 <div class="col-md-6">
 
                                                                     <div class="form-group">
-                                                                        <label class="col-md-6 control">Quantity Returned:</label>
+                                                                        <label class="col-md-12 control">Quantity Returned:</label>
                                                                         <input class="form-control col-md-6" type="number" name="qty_returned" min="1" max="<?php echo $row->mach_qty;
                                                                          ?>" required="">
+                                                                         <p>unit/s</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

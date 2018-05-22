@@ -97,8 +97,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -131,14 +131,32 @@
                                     <h3 class="title"><center>Collections Report</center></h3>
                                 </div>
                                 <div class="card-content">
+									<div class="row">
+										<div class="form-group col-xs-3 float-right">
+											 <label>Filter By:</label>
+											<div class="input-group input-daterange">
+												<input type="text" id="min" class="form-control" value="2000-01-01" >
+												<span class="input-group-addon">to</span>
+												<input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+											</div>
+										</div>
                                     <div class="form-group col-xs-3">
-                                    <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                            <input type="text" id="min" class="form-control" value="2000-01-01" >
-                                            <span class="input-group-addon">to</span>
-                                            <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                        </div>
+										<p class="category">Total Sales: </p>
+                                    	<h3 class="title">
+										<b>
+										<?php
+											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery ;")->row()->total;
+
+										if(!empty($total)){
+											echo 'Php '.number_format($total,2);
+										}else{
+											echo 0;
+										}
+
+										 ?></b>
+											</h3>
                                     </div>
+									</div>
                                     <div>
                                         <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -164,7 +182,14 @@
                                                  <td><?php echo $row->paid_date; ?></td>
                                                  <td><?php echo 'Php '.number_format($row->paid_amount,2); ?></td>
                                                  <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
-                                                 <td><?php echo 'Php '.number_format($row->withheld,2); ?></td>
+                                                 <td><?php
+                                                 if ($row->withheld>0) {
+                                                     echo 'Php '.number_format($row->withheld,2); 
+                                                  } else{
+                                                    echo "";
+                                                  }
+                                                        
+                                                    ?></td>
                                                  <td><?php echo $row->remarks; ?></td>
                                              </tr>
                                              <?php

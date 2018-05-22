@@ -101,19 +101,30 @@ class Login extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email_hash', 'Email Hash', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
+        //$this->form_validation->set_rules('password_new', 'New Pass', 'trim|required|matches[password_confirm]|xss_clean');
+        //$this->form_validation->set_rules('password_confirm', 'New Pass 2', 'trim|required|xss_clean');
+        $email = $this->input->post('email');
+        $new_pass = $this->input->post('password_new');
+        $con_pass = $this->input->post('password_confirm');
+        $redata = array(
+                'email_hash' => $_POST['email_hash'],
+                'email_code' => $_POST['email_code'],
+                'email' => $_POST['email']
+                
+            );
         
 
         if ($this->form_validation->run() == FALSE){
                 $this->session->set_flashdata('error', 'Not working.');
-                $this->load->view('login/updatePassword');
-        } else{
+                $this->load->view('login/updatePassword', $redata);
+        }else {
             $result = $this->login_model->updatePassword();
             if($result){
                 $this->session->set_flashdata('success', 'Your password is now updated!');
                 redirect(base_url());
             }else{
-                $this->session->set_flashdata('error', 'Problem updating your password.');
-                $this->load->view('login/updatePassword');
+                $this->session->set_flashdata('error', 'Passwords do not match.');
+                $this->load->view('login/updatePassword', $redata);
             }
         }
 

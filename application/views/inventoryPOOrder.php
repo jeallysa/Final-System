@@ -447,12 +447,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                            <input type="number"  step="0.001" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),3) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),2) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
                                                 <td>
-                                                      <input  type="number"  step="0.0001" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
+                                                      <input  type="number"  step="0.01" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
                                                 </td>   
                                                    <!--              <?php echo (($object->qty-$object->received)) ?>   -->
                              

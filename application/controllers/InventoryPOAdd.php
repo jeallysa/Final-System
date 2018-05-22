@@ -156,9 +156,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         $data['tempPO'] = $this->inventoryPOAdd_model->retrieveTemp();
        
-        $totalAmount = $this->input->post('totalAmount'); 
+        $totalAmountv = $this->input->post('totalAmount'); 
         //$totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
-          
+        $totalAmount = str_replace(array(','), '' , $totalAmountv); 
         $datax = array();
             
          $i=0;   
