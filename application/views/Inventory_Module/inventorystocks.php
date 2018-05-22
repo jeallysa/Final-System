@@ -261,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -323,7 +323,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->yield_weight / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Company Delivery </td>' ,
                                                 '<td> In </td>' ,
                                                 '</tr>' ;
@@ -343,7 +343,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Company Return </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -361,7 +361,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->client_company   . '</td>' ,
                                                 '<td>'  . $object->transact_date  . '</td>' ,
-                                                '<td>'  . number_format($object->quantity / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->quantity / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Used for Blend </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -378,7 +378,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->return_date  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty / 1000, 3)  . ' kg</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ;
                                                 ?>
                                                     <td>Resolved returns</td>
                                                     <td>In</td>
@@ -395,41 +395,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         
                                                             <div class="row">
                                                                     <div class="form-group">
-                                                                        <label class="col-md-6 control">Total Out :</label>
-                                                                        <div class="col-md-4">
-
-                                                                            <?php
-                                              $retrieveTotalout ="Select SUM(Total) AS Total from
-(SELECT sup_returnQty AS Total FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
-SELECT quantity AS Total FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
-                                              $query = $this->db->query($retrieveTotalout);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo 
-                                                '<input value="'  . $object->Total/1000  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
-                                              }
-                                            }
-                                        ?> 
-                                        </div>
-
+                                                                        <label class="col-md-6 control">Total In :</label>
                                         <div class="col-md-4">
 
                                         <?php
-                                              $retrieveTotalin ="Select SUM(Total) AS Total from
-(SELECT yield_weight AS Total FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS Total FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
+                                              $retrieveTotalin ="Select SUM(TotalIn) AS TotalIn from
+(SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
                                            echo 
-                                                '<input value="'  . $object->Total/1000  . ' kg" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ;
+                                                '<input value="'  . number_format($object->TotalIn/1000, 2)  . ' kg" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ;
                                               }
                                             }
                                         ?> 
                                     </div>
 
+                                                                        <label class="col-md-6 control">Total Out :</label>
+                                                                        <div class="col-md-4">
 
-                                                                        
+                                                                            <?php
+                                              $retrieveTotalout ="Select SUM(TotalOut) AS TotalOut from
+(SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo 
+                                                '<input value="'  . number_format($object->TotalOut/1000), 2  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              }
+                                            }
+                                        ?> 
+                                        </div>
+            
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
@@ -593,8 +592,8 @@ SELECT sup_returnQty AS Total FROM company_returns INNER JOIN supp_po_ordered ON
                                                 '<td>'  . $object->raw_type . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td><b>'  . number_format($object->raw_reorder / 1000) . ' kg</b></td>' ,
-                                                '<td><b>'  . number_format($object->raw_stock / 1000, 3) . ' kg</b></td>' ,
-                                                '<td>'  . number_format($object->raw_physcount / 1000, 3)   . ' kg</td>' ,
+                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' kg</b></td>' ,
+                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' kg</td>' ,
                                                 '<td>'  . number_format($object->raw_discrepancy)   . ' g</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->raw_remarks   . '</td>' ;
@@ -698,7 +697,6 @@ $(document).ready(function() {
                 }
 });      
 });     
-  
     
 <?php                                                  
                                                                  
