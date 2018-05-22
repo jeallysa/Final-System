@@ -40,7 +40,7 @@
       
  
          public function get_itemList($dr,$supp_po_id){
-			$query = $this->db->query("select distinct supp_po_ordered.supp_po_ordered_id , item ,type  from supp_delivery join supp_po_ordered using(supp_po_id) where drNo = ".$dr." and supp_delivery.supp_po_id = ".$supp_po_id);
+			$query = $this->db->query("select distinct supp_po_ordered.supp_po_ordered_id , item ,type  from supp_delivery join supp_po_ordered using(supp_po_id) where drNo = '".$dr."' and supp_delivery.supp_po_id = ".$supp_po_id);
 			return $query->result();
 			
 		}  
@@ -55,11 +55,11 @@
       public function get_maxModel($poNo, $item, $drNo){
             
             
-            $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = ".$drNo);
+            $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
-            $queryLimit = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = ".$drNo);
+            $queryLimit = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
             
-            $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = ".$drNo);
+            $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
             
 		 

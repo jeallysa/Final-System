@@ -26,7 +26,7 @@
 			$this->output->set_content_type('application/json');
 			echo json_encode(array('check'=>'check'));
 			
-			redirect('salesMachineOrders');
+			redirect('salesSellProduct');
         }
         
     }

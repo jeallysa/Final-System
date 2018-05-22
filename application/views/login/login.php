@@ -85,7 +85,7 @@
 			                        <button type="submit" class="btn">Sign in!</button>
                                 <?php echo form_close(); ?>
                                 <br>
-                                <a href="<?php echo base_url(); ?>login/forgetPassword"> Forgot your password?</a>
+                                <p style="color: white;" > Forgot password?<a href="<?php echo base_url(); ?>login/forgetPassword" style="color: red;" > Click here !</a></p>
 			                    
 		                    </div>
                         </div>

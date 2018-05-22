@@ -142,7 +142,7 @@
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=curdate() ;")->row()->total;
 
 										if(!empty($total)){
-											echo number_format($total);
+											echo 'Php '.number_format($total,2);
 										}else{
 											echo 0;
 										}
@@ -170,7 +170,7 @@
                                     <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery  WHERE  payment_remarks='paid'; ")->row()->total;
 										if(!empty($total)){
-											echo number_format($total);
+											echo 'Php '.number_format($total,2);
 										}else{
 											echo 0;
 										}
@@ -198,7 +198,7 @@
                                     <?php
 											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
 											if(!empty($total)){
-												echo number_format($total);
+												echo 'Php '.number_format($total,2);
 											}else{
 												echo 0;
 											}
