@@ -342,7 +342,7 @@ a:focus {
                                              ?>
                                              <tr>
                                                  <td><?php echo $row->package_type; ?></td>
-                                                 <td><?php echo number_format($row->package_size); ?></td>
+                                                 <td><?php echo number_format($row->package_size); ?> g</td>
                                                   <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
                                                  <td><?php echo number_format($row->package_reorder); ?> pcs</td>
