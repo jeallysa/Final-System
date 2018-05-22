@@ -213,7 +213,7 @@
                 <td><?php echo $row1->client_company; ?></td>
                 <td><?php echo $row1->blend_id; ?></td>
                 <td><?php echo "$row1->blend/ $row1->package_type/ $row1->package_size g"; ?></td>
-                <td><?php echo $row1->contractPO_qty; ?></td>
+                <td><?php echo $row1->contractPO_qty; ?> bags</td>
                 <td>Php <?php echo number_format($row1->blend_price,2); ?></td>
                 <td><?php
                         $price = $row1->blend_price;
@@ -267,7 +267,8 @@
                             </div>
                             <form action="<?php echo base_url(); ?>SalesDelivery/roastDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
-                                   <h3>Are you sure to roast Purchase Order no. <?php echo $row1->contractPO_id ?>?</h3>
+									<h3 style="font-weight: bold; ">Purchase Order No. <?php echo $row1->contractPO_id ?></h3>
+                                   <h3>Are you sure to roast <?php echo $row1->blend ?> ?</h3>
                                    <input class="form-control" type="hidden" name="po_roast" value="<?php echo $row1->contractPO_id; ?>" required>
                                    <input class="form-control" type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required>
                                    <input class="form-control" type="hidden" name="po_qty" value="<?php echo $row1->contractPO_qty; ?>" required>
@@ -416,14 +417,15 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label class="col-md-6 control">Remaining quantity to be delivered :</label>
-                                                <div class="col-md-6">
+                                                <label class="col-md-7 control">Remaining quantity to be delivered (grams) :</label>
+                                                <div class="col-md-5">
                                                     <input id="" name="delivered_qty" type="number" value="<?php
 
                                                     $full_delivery = $row1->contractPO_qty;
                                                     $delivered_qty = $row1->delivered_qty;
                                                     $diff = $full_delivery - $delivered_qty;
                                                     echo $diff;
+													
 
                                                     ?>" class="form-control" min="1" max="<?php echo $diff ?>" required>
                                                 </div>

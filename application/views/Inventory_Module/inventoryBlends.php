@@ -555,7 +555,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">PACKAGING</b></th>
                                             <th><b class="pull-left">SIZE (G)</b></th>
                                             <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
-                                            <th><b class="pull-left">PHYSICAL COUNT (PC)</b></th>
+                                            <th><b class="pull-left">PHYSICAL COUNT (bags)</b></th>
                                             <th><b class="pull-left">DISCREPANCY (PC)</b></th>
                                             <th><b class="pull-left">INVENTORY DATE</b></th>
                                             <th><b class="pull-left">REMARKS</b></th>

@@ -260,7 +260,7 @@
                                                     <tr>
                                                         <td><?php echo $row->client_dr; ?></td>
                                                         <td><?php echo $row->coff_returnDate; ?></td>
-                                                        <td><?php echo $row->coff_returnQty; ?></td>
+                                                        <td><?php echo $row->coff_returnQty; ?> bags</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
