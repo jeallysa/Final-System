@@ -490,8 +490,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
-                                                                    <th><b><p id="qtywt">Quantity|Weight(kg)</p></b></th>
                                                                     <th><b>Type</b></th>
+                                                                    <th><b><p id="qtywt">Quantity|Weight(kg)</p></b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
                                                                     
@@ -505,7 +505,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     
                                                                     
                                                                     
-                                                               <td class='col-sm-3'>
+                                                <td class='col-sm-3'>
                                                                    
                                                                    
                                                                    
@@ -547,22 +547,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                    <option value="" >Choose Item</option>
                                                                   <?php } ?>
                                                                    
-                                                                   
-                                                                   
-                                                                   
-                                                                   
-                                                                   
-                                                           </td>
-                                                          <td class="col-sm-3">
-                                                     <input type="number" class="form-control" step="0.001" min='1' name="qty" id = "qty" disabled required/>
-                                                           </td>
-                                                                    
+                                                                  
+                                                </td>
+                                                    
+                                                        
                                                                     
                                                             <td class='col-sm-2'>
                                                                       <select class="form-control" name = "itemType"  id = "itemType" disabled required>
                                                                             <option value="">Select Type</option>      
                                                                      </select>
                                                             </td>    
+                                                                    
+                                                                    
+                                                                    
+                                                          
+                                                    
+                                                          <td class="col-sm-3">
+                                                     <input type="number" class="form-control" step="0.001" min='1' name="qty" id = "qty" disabled required/>
+                                                           </td>
+                                                                          
+                                                                    
+                                                                    
                                                                    
                                                                     
                                                            <td class="col-sm-2">
@@ -630,9 +635,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <thead>
                                                                 <tr>
                                                                     <th><b>Item</b></th>
+                                                                    <th><b>Type</b></th>
                                                                     <th><b>Quantity</b></th>
                                                                     <th><b>Weight(kg)</b></th>
-                                                                    <th><b>Type</b></th>
                                                                     <th><b>Unit Price</b></th>
                                                                     <th><b>Amount</b></th>
                                                                     
@@ -648,10 +653,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                           $category = $object->categoryx;   
                    if($category == 1){                                                          
                                                                          echo '<tr>' ,
-      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,    
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' , 
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                 
       '<td class="col-sm-2" >  </td>' ,
-      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,                 
-      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,    
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                        
@@ -662,10 +667,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        
                        echo '<tr>' ,
                          
-      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,        
+      '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                
       '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
       '<td class="col-sm-2">  </td>',                
-      '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                        
