@@ -254,7 +254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -678,9 +678,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  .  '</td>' ,
-                                                '<td>'  . number_format((($object->received)/1000),3)  . '</td>' ,
-                                                '<td>'  . number_format((($object->yield_weight)/1000),3). '</td>' ,
-                                                '<td>'  . number_format((($object->yields)/1000),3)  . '</td>' ,
+                                                '<td>'  . number_format((($object->received)/1000),2)  . '</td>' ,
+                                                '<td>'  . number_format((($object->yield_weight)/1000),2). '</td>' ,
+                                                '<td>'  . number_format((($object->yields)/1000),2)  . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 

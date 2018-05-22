@@ -369,7 +369,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->type  . '</td>' ,
                                        
                                                 '<td>'   . '</td>',
-                                                '<td>'  . number_format(($object->qty)/1000)  . '</td>' ,
+                                                '<td>'  .     number_format((($object->qty)/1000),2)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
                                                 '<td>Php '  .  number_format($object->amount,2)  . '</td>' ,
                                                 '</tr>' ;
@@ -482,9 +482,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item .         '</td>' ,
                                                 '<td>'  . $object->type .         '</td>' ,  
                                                 '<td>'                            ,'</td>' ,
-                                                '<td>'  . number_format(($object->received)/1000) .     '</td>' ,  
-                                                '<td>'  . number_format(($object->yield_weight)/1000) . '</td>' ,
-                                                '<td>'  . number_format(($object->yields)/1000) .       '</td>' ,  
+                                                '<td>'  . number_format((($object->received)/1000),2) .     '</td>' ,  
+                                                '<td>'  . number_format((($object->yield_weight)/1000),2) . '</td>' ,
+                                                '<td>'  . number_format((($object->yields)/1000),2) .       '</td>' ,  
                                                 '<td>'  . $object->received_by  . '</td>' ,
                                                 '</tr>' ;
                                        }else{
@@ -733,10 +733,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                          echo '<tr>' ,
                                                                               '<td>'  . $object->supp_po_id . '</td>' ,
                                                                               '<td>'  . $newDate   . '</td>' ,
-                                                                           //   '<td>'  . $object->date_received  . '</td>' ,
 																			  '<td>'  . $object->sup_company  . '</td>' ,
                                                                               '<td>Php '  . number_format($object->total_amount,2)  . '</td>' ;
-                                                                             // '<td>'  . $object->date_payment     . '</td>'; 
                                                                       ?> 
                                             <td><center><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details".$i   ?>">Order Details</a>
                                              <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "delivery".$i   ?>">Delivery Details</a>

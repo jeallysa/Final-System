@@ -164,11 +164,6 @@ a:focus {
                     </div>
                 </div>
             </nav>
-            <?php
-                $client_id = $this->input->get('p');
-                $query_checker = $this->db->query("SELECT * FROM contract WHERE client_id = '".$client_id."';");
-                if($query_checker->num_rows() > 0){
-            ?>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -190,397 +185,181 @@ a:focus {
                                             <strong><?php echo $success; ?></strong> 
                                         </div>
                                   <?php } ?>
-                                <div class="card-content">
-                                   <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
-                            <div class="modal-body" style="padding: 5px;">
-                                    <div class="col-md-12 form-group">
-                                         <div class="form-group label-floating">
-                                            <label for="email">Client</label>
-                                            <!--
-                                            <select class="form-control" name="client_company" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Company Name should only countain letters">
-                                                <option disabled selected value> -- select a client name -- </option>
-                                                <?php 
-                                                /*
-
-                                                    foreach($data4['getName'] as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->client_id.'">'.$row->client_company.'</option>';
-                                                    }
-                                                */
-                                                 ?>
-                                            </select>
-                                        --> 
-                                            <?php
-                                                $cli_id = $this->input->get('p'); 
-                                                $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
-                                                foreach($query->result() AS $row){
-                                            ?>
-                                            <input class="form-control" type="text" name="client" value="<?php echo $row->client_company?>" disabled>
-                                            <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>">
-                                            <?php
-                                                }
-                                            ?>
-                                        </div>
-                                        <?php
-                                            $query_contract = $this->db->query("SELECT * FROM contract WHERE client_id = '".$cli_id."';");
-                                            foreach($query_contract->result() as $row){
-                                        ?>
-
-                                        <div class="form-group label-floating">
-                                            <label for="email">Date Started</label>
-                                            <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo date("Y-m-d", strtotime($row->date_started));?>" >
-                                        </div>
-                                         <div class="form-group label-floating">
-                                            <label for="email">Date Expiration</label>
-                                            <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo date("Y-m-d", strtotime($row->date_expiration));?> " >
-                                        </div>
-                                        <?php
-                                            }
-                                        ?>
-                                         
-                                    </div>
-                                </div>
                                 
-                                <div class="row">
-                                     <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Blends</label>
-                                            <select id="editBlends" class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client' UNION SELECT blend_id, blend FROM coffee_blend WHERE blend_id = '".$cli_id."';");
-                                                    foreach($query_blend->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->blend_id.'">'.$row->blend.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    foreach($query_contract->result() as $row){
-                                    ?>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Blends Required Quantity</label>
-                                            <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');" value="<?php echo $row->required_qty?>" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    <?php
-                                        }
-                                    ?>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Packaging</label>
-                                            <select id="editPackaging" class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_pack = $this->db->query("SELECT * FROM packaging;");
-                                                    foreach($query_pack->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->package_id.'">'.$row->package_type.' '.$row->package_size.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Stickers</label>
-                                            <select id="editStickers" class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_pack = $this->db->query("SELECT * FROM sticker;");
-                                                    foreach($query_pack->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->sticker_id.'">'.$row->sticker.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                     
-                                    <?php
-                                        $id = $this->input->get('p');
-                                        $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
-                                        if ($type == "Coffee Service"){
-                                    ?>
-                                    
-                                   <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Machine</label>
-                                            <select class="form-control" name="contract_machine" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Machine should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-
-                                                    foreach($data3['getMachine'] as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->mach_id.'">'.$row->brewer.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Machine Required Quantity</label>
-                                            <input class="form-control" type="number" name="contract_mqty" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Machine Serial Number</label>
-                                            <input class="form-control" type="text" name="contract_serial" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                   <?php }else{ 
-                                                 ?>
-
-                                        <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_machine" value ="0" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_mqty" min="0" value="0" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_serial" min="0" value="0" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-
-                                    <?php
-                                        }
-                                    ?>
-                                </div> 
-                            </div>
-                            <div class="panel-footer" style="margin-bottom:-14px;" align="right">
-                                <input type="submit" class="btn btn-success" value="Save" />
-                                <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                <input type="reset" class="btn btn-danger" value="Clear" />
-                                <!--<span class="glyphicon glyphicon-remove"></span>-->
-                            </div>
-                        </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-                }else if ($query_checker->num_rows() == 0){
-            ?>
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header" data-background-color="green">
-                                    <h4 class="title">Create New Contract</h4>
-                                </div>
-                                <?php
-                                    $error = $this->session->flashdata('error');
-                                    $success = $this->session->flashdata('success');
-                                    if(!empty($error)){
-                                        ?>
-                                        <div class="alert alert-danger" style="margin: 20px; text-align: center; ">
-                                            <strong><?php echo $error; ?></strong> 
-                                        </div>
-                                  <?php } else if(!empty($success)){ ?>
-                                        <div class="alert alert-success" style="margin: 20px; text-align: center; ">
-                                            <strong><?php echo $success; ?></strong> 
-                                        </div>
-                                  <?php } ?>
                                 <div class="card-content">
                                    <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
-                            <div class="modal-body" style="padding: 5px;">
-                                    <div class="col-md-12 form-group">
-                                         <div class="form-group label-floating">
-                                            <label for="email">Client</label>
-                                            <!--
-                                            <select class="form-control" name="client_company" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Company Name should only countain letters">
-                                                <option disabled selected value> -- select a client name -- </option>
-                                                <?php 
-                                                /*
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                     <div class="form-group label-floating">
+                                                        <label for="email">Client</label> 
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){
+                                                        ?>
+                                                        <input class="form-control" type="text" name="client" value="<?php echo $row->client_company?>" disabled>
+                                                        <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>">
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Date Started</label>
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">                                            
+                                                        <label for="email">Date Expiration</label>
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="row">
+                                                <?php
+                                                    $cli_id = $this->input->get('p'); 
+                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id where client_id = '".$cli_id."' ;");
+                                                    
+                                                    foreach($query->result() AS $row){
+                                                ?>
+                                                 <div class="col-md-6 form-group">
+                                                       <div class="form-group label-floating">
+                                                        <label for="email">Blends</label>
+                                                            <input class="form-control" type="text" name="blends" value="<?php echo $row->blend?>" disabled>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Blends Required Quantity</label>
+                                                        <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');"  value="<?php echo $row->required_qty?>" disabled>
+                                                    </div>
+                                                </div>
 
-                                                    foreach($data4['getName'] as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->client_id.'">'.$row->client_company.'</option>';
+                                                <?php 
                                                     }
-                                                */
                                                  ?>
-                                            </select>
-                                        --> 
+                                                
+                                            </div>
+                                            <div class="row">
+                                                <?php
+                                                    $cli_id = $this->input->get('p'); 
+                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN packaging ON contract.package_id = packaging.package_id where client_id = '".$cli_id."' ;");
+                                                    
+                                                    foreach($query->result() AS $row){
+                                                ?>
+                                                <div class="col-md-6 form-group">
+                                                       <div class="form-group label-floating">
+                                                        <label for="email">Packaging</label>
+                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type?>" disabled>
+                                                    </div>
+                                                </div>
+                                                <?php } ?>
+
+                                                
+                                                <div class="col-md-6 form-group">
+
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Stickers</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE contract.client_id = '".$cli_id."' ;");
+                                                    
+                                                            foreach($query->result() AS $row){   
+                                                        ?>  
+                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->sticker?>" disabled>
+                                                        <?php } ?>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                             <?php
-                                                $cli_id = $this->input->get('p'); 
-                                                $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
-                                                foreach($query->result() AS $row){
+                                                $id = $this->input->get('p');
+                                                $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
+                                                if ($type == "Coffee Service"){
                                             ?>
-                                            <input class="form-control" type="text" name="client" value="<?php echo $row->client_company?>" disabled>
-                                            <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>">
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine</label> 
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine ON contract.mach_id = machine.mach_id where client_id = '".$cli_id."' ;");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->brewer?>, <?php echo $row->brewer_type?>" disabled>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine Required Quantity</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                        <input class="form-control" type="number" name="contract_mqty" value="<?php echo $row->mach_qty?>" disabled>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine Serial Number</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                        <input class="form-control" type="text" name="contract_serial" value="<?php echo $row->mach_serial?>" disabled>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           <?php }else{ ?>
+
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_machine" value ="0" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_mqty" min="0" value="0" data-validate="required" max="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_serial" min="0" value="0" data-validate="required" max="" required>
+                                                </div>
+                                            </div>
+
                                             <?php
                                                 }
                                             ?>
+
                                         </div>
                                         
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Date Started</label>
-                                            <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">                                            
-                                            <label for="email">Date Expiration</label>
-                                            <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                         
-                                
-                                <div class="row">
-                                     <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Blends</label>
-                                            <select class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client';");
-                                                    foreach($query_blend->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->blend_id.'">'.$row->blend.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Blends Required Quantity</label>
-                                            <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');"  data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Packaging</label>
-                                            <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_pack = $this->db->query("SELECT * FROM packaging;");
-                                                    foreach($query_pack->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->package_id.'">'.$row->package_type.' '.$row->package_size.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Stickers</label>
-                                            <select class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_pack = $this->db->query("SELECT * FROM sticker;");
-                                                    foreach($query_pack->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->sticker_id.'">'.$row->sticker.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                     
-                                    <?php
-                                        $id = $this->input->get('p');
-                                        $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
-                                        if ($type == "Coffee Service"){
-                                    ?>
-                                    
-                                   <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <label for="email">Machine</label>
-                                            <select class="form-control" name="contract_machine" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Machine should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-
-                                                    foreach($data3['getMachine'] as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->mach_id.'">'.$row->brewer.'</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Machine Required Quantity</label>
-                                            <input class="form-control" type="number" name="contract_mqty" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <div class="form-group label-floating">
-                                            <label for="email">Machine Serial Number</label>
-                                            <input class="form-control" type="text" name="contract_serial" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                   <?php }else{ 
-                                                 ?>
-
-                                        <div class="col-md-6 form-group">
-                                           <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_machine" value ="0" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_mqty" min="0" value="0" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <div class="form-group label-floating">
-                                            <input class="form-control" type="hidden" name="contract_serial" min="0" value="0" data-validate="required" max="" required>
-                                        </div>
-                                    </div>
-
-                                    <?php
-                                        }
-                                    ?>
-                                </div> 
-                            </div>
-                            <div class="panel-footer" style="margin-bottom:-14px;">
-                                <input type="submit" class="btn btn-success" value="Add" />
-                                <!--<span class="glyphicon glyphicon-ok"></span>-->
-                                <input type="reset" class="btn btn-danger" value="Clear" />
-                                <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                 <a href="<?php echo base_url(); ?>adminClients" style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</a>
-                            </div>
-                        </form>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <?php
-                }
-            ?>
         </div>
-
+    </div>
 </body>
 <!--   Core JS Files   -->
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
