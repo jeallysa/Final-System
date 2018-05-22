@@ -100,8 +100,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -235,7 +235,7 @@
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
                                                         <td><?php echo number_format($row->package_size); ?> g</td>
-                                                        <td><?php echo $row->contractPO_qty; ?></td>
+                                                        <td><?php echo $row->contractPO_qty; ?> pc/s</td>
                                                         <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                         <td><?php
                                                         $qty = $row->contractPO_qty;
@@ -287,7 +287,7 @@
                                                         <td><?php echo $row->contractPO_id; ?></td>
                                                         <td><?php echo $row->client_deliverDate; ?></td>
                                                         <td><?php echo $row->blend.'/ '.$row->package_type.'/ '.number_format($row->package_size); ?> g</td>
-                                                        <td><?php echo $row->contractPO_qty; ?></td>
+                                                        <td><?php echo $row->contractPO_qty; ?> pc/s</td>
                                                         <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                         <td><?php
                                                         $qty = $row->contractPO_qty;

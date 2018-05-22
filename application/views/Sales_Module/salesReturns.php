@@ -172,8 +172,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -260,7 +260,7 @@
                                                     <tr>
                                                         <td><?php echo $row->client_dr; ?></td>
                                                         <td><?php echo $row->coff_returnDate; ?></td>
-                                                        <td><?php echo $row->coff_returnQty; ?></td>
+                                                        <td><?php echo $row->coff_returnQty; ?> bags</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
@@ -341,7 +341,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
-                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?></b></p>
+                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bags</b></p>
                                             </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
@@ -412,7 +412,7 @@
                                                     <tr>
                                                         <td><?php echo $row->mach_serial; ?></td>
                                                         <td><?php echo $row->mach_returnDate; ?></td>
-                                                        <td><?php echo $row->mach_returnQty; ?></td>
+                                                        <td><?php echo $row->mach_returnQty; ?> /unit</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>
@@ -543,7 +543,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Size :</label>
 														<div class="col-md-5">
-															<p><b><input name="size" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="size" class="no-border" type="disabled"  readonly> g</b></p>
 														</div>
 													</div>
 										
@@ -556,7 +556,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bags</b></p>
 														</div>
 													</div>
                                                     <br>
@@ -631,13 +631,13 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Unit Price :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="uprice" readonly />
+															<p><b>Php <input class="no-border" type="text" name="uprice" readonly /></b></p>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="qty" readonly />
+															<p><b><input class="no-border" type="text" name="qty" readonly /> units</b></p>
 														</div>
 													</div>
                                                     <br>
