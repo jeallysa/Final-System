@@ -501,11 +501,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <tbody>
                                                                 <tr>
                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
                                                                <td class='col-sm-3'>
+                                                                   
+                                                                   
+                                                                   
+          <?php if(!empty($tempExisting)){
+                      ?>                                                         
+                                                                   
                                                                       <select required class="form-control" name="item" id ="item">
                                                                             <!-- <option value="" disabled selected>Choose Item</option> -->
                                                                            <option value="" >Choose Item</option>
-                                                                           
+                                                 
+                                                                          
                                                   <?php
                                                           
                                                     for($i=0; $i <= 3 ; $i++){ 
@@ -529,6 +540,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             ?>        
                                                                           
                                                                     </select>
+        <?php                                                           
+                         }else{
+                                     ?>
+                                                             <select required class="form-control" name="item" id ="item" disabled>          
+                                                                   <option value="" >Choose Item</option>
+                                                                  <?php } ?>
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
                                                            </td>
                                                           <td class="col-sm-3">
                                                      <input type="number" class="form-control" step="0.001" min='1' name="qty" id = "qty" disabled required/>
@@ -543,12 +566,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                    
                                                                     
                                                            <td class="col-sm-2">
-                                                     <input type="number" class="form-control" name="unitPrice"  id = "unitPrice"  readonly/> <!-- When I put a disabled here I cant save the value -->
+                                                     <input type="number" class="form-control" name="unitPrice"  id = "unitPrice"  disabled readonly/> <!-- When I put a disabled here I cant save the value -->
                                                            </td>
                                                                   
                                                                     
                                                             <td class="col-sm-3">
-                                                      <input type="number"  class="form-control" name="amount"   id = "amount"  readonly/> <!-- When I put a disabled here I cant save the value -->
+                                                      <input type="number"  class="form-control" name="amount"   id = "amount"  disabled readonly/> <!-- When I put a disabled here I cant save the value -->
                                                             </td>
                                                                     
                                                            <td class="col-sm-3">
@@ -571,7 +594,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                               ?>
                                                         <tr>
                                                                 <td colspan="5" style="text-align: left;">
-                                                                 <input type="submit" class="btn btn btn-default accept btn-block" id="addToTemp" value="Add" disabled  />
+                                                                 <input type="submit" class="btn btn btn-success accept btn-block" id="addToTemp" value="Add" disabled  />
                                                                        
                                                                  </td>
                                                          </tr>
@@ -1003,8 +1026,6 @@ document.getElementById('addToTemp').onclick = function() {
     
     
     
-    
-    
  $(document).ready(function () {   
  
     $('#itemType').on('change', function(){
@@ -1020,33 +1041,36 @@ document.getElementById('addToTemp').onclick = function() {
                   
                 $('#unitPrice').val(data['unitPrice']);  //use this syntax when returning a single row only data['unitPrice']  column name in the query
                     var category = data['category'];       //use this syntax when returning a single row only data['category']  column name in the query
-                     //alert(category);
                     $('#qty').removeAttr('disabled');
-                  
+                    $('#unitPrice').removeAttr('disabled');
+                    $('#amount').removeAttr('disabled');
+                   
                   if(category == 1){
+                      
                     var y =  parseFloat($('#qty').val());
-                      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
                     var x = y * parseFloat($('#unitPrice').val());
                     $('#amount').val(x);
-                     $('#category').val(category);   
+                    $('#category').val(category); 
+                      
                   }else{
+                      
+                      
                     var y =  parseFloat($('#qty').val());
                     var x = y * parseFloat($('#unitPrice').val());
                       
-               
-                    
                       $('#amount').val(x);
                       $('#category').val(category); 
                       $('#qty').attr('step', 1);
                  }
                     
                   
-           //when the category is 1 divide by 100.       
+              
                   $('#qty').keyup(function(){
+                      
                   if(category==1){
+                      
                   var y = parseFloat($(this).val());
-			      //var x = (y / 1000) * parseFloat($('#unitPrice').val());
-                var x = y * parseFloat($('#unitPrice').val());
+                  var x = y * parseFloat($('#unitPrice').val());
 			      $('#amount').val(x);
                
                   }else{
@@ -1077,9 +1101,6 @@ document.getElementById('addToTemp').onclick = function() {
                       
      
         
-       
-  
-        
         
         
    $('#item').on('change', function(){
@@ -1096,22 +1117,26 @@ document.getElementById('addToTemp').onclick = function() {
                   
                   
                   $('#itemType').removeAttr('disabled');
-                  $('#qty').removeAttr('disabled');
                   $('#itemType').html(type);
-                  
                   $('#qty').val('');
                   $('#unitPrice').val('');
                   $('#amount').val('');
-                  if(category ==1){
+                  
+                  if(category == 1){
+                      
                    document.getElementById("qtywt").innerHTML = "Weight(kg)";
+                      
                   }else{
+                      
                    document.getElementById("qtywt").innerHTML = "Quantity";   
                   }
+                  
               },
               error: function(){
+                   //alert('error');  
                 document.getElementById("qtywt").innerHTML = "Quantity|Weight(kg)";
+                $('#qty').attr('disabled','disabled');  
                 $('#itemType').attr('disabled','disabled');
-                //$('#qty').attr('disabled','disabled');
                 $('#unitPrice').attr('disabled','disabled');
                 $('#amount').attr('disabled','disabled');
                   
