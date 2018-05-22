@@ -164,6 +164,195 @@ a:focus {
                     </div>
                 </div>
             </nav>
+            <?php 
+            $cli_id = $this->input->get('p');
+                $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
+
+                foreach($query->result() AS $row){
+             ?>
+            <div class="modal fade" id="edit<?php echo $row->client_id; ?>" tabindex="1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <?php } ?>
+                <div class="modal-dialog modal-lg">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Account Information</h4>
+                        </div>
+                        <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                     <div class="form-group label-floating">
+                                                        <label for="email">Client</label> 
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){
+                                                        ?>
+                                                        <input class="form-control" type="text" name="client" value="<?php echo $row->client_company?>" disabled>
+                                                        <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>">
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Date Started</label>
+
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">                                            
+                                                        <label for="email">Date Expiration</label>
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="row">
+                                                <?php
+                                                    $cli_id = $this->input->get('p'); 
+                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id where client_id = '".$cli_id."' ;");
+                                                    
+                                                    foreach($query->result() AS $row){
+                                                ?>
+                                                 <div class="col-md-6 form-group">
+                                                       <div class="form-group label-floating">
+                                                        <label for="email">Blends</label>
+                                                            <input class="form-control" type="text" name="blends" value="<?php echo $row->blend?>" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Blends Required Quantity</label>
+                                                        <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');"  value="<?php echo $row->required_qty?>" >
+                                                    </div>
+                                                </div>
+
+                                                <?php 
+                                                    }
+                                                 ?>
+                                                
+                                            </div>
+                                            <div class="row">
+                                                <?php
+                                                    $cli_id = $this->input->get('p'); 
+                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN packaging ON contract.package_id = packaging.package_id where client_id = '".$cli_id."' ;");
+                                                    
+                                                    foreach($query->result() AS $row){
+                                                ?>
+                                                <div class="col-md-6 form-group">
+                                                       <div class="form-group label-floating">
+                                                        <label for="email">Packaging</label>
+                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type?>" >
+                                                    </div>
+                                                </div>
+                                                <?php } ?>
+
+                                                
+                                                <div class="col-md-6 form-group">
+
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Stickers</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE contract.client_id = '".$cli_id."' ;");
+                                                    
+                                                            foreach($query->result() AS $row){   
+                                                        ?>  
+                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->sticker?>" >
+                                                        <?php } ?>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <?php
+                                                $id = $this->input->get('p');
+                                                $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
+                                                if ($type == "Coffee Service"){
+                                            ?>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine</label> 
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine ON contract.mach_id = machine.mach_id where client_id = '".$cli_id."' ;");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->brewer?>, <?php echo $row->brewer_type?>" >
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine Required Quantity</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                        <input class="form-control" type="number" name="contract_mqty" value="<?php echo $row->mach_qty?>" >
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label for="email">Machine Serial Number</label>
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){   
+                                                        ?> 
+                                                        <input class="form-control" type="text" name="contract_serial" value="<?php echo $row->mach_serial?>" >
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           <?php }else{ ?>
+
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_machine" value ="0" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_mqty" min="0" value="0" data-validate="required" max="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <div class="form-group label-floating">
+                                                    <input class="form-control" type="hidden" name="contract_serial" min="0" value="0" data-validate="required" max="" required>
+                                                </div>
+                                            </div>
+
+                                            <?php
+                                                }
+                                            ?>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <div class="panel-footer" align="right">
+                                                        <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                    </div>
+                </div>
+            </div>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -172,6 +361,18 @@ a:focus {
                                 <div class="card-header" data-background-color="green">
                                     <h4 class="title">Create New Contract</h4>
                                 </div>
+                                <?php  
+                                    $cli_id = $this->input->get('p');
+                                    $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
+
+                                    foreach($query->result() AS $row){
+                                        $blend = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id where client_id = '".$cli_id."' ;");
+                                        if(!empty($blend)) {     
+                                    ?>
+                                     <a href='#' class="btn btn-warning" style=" float: right;" data-toggle="modal" data-target="#edit<?php echo $row->client_id; ?>">Edit Contract</a>    
+                                <?php } 
+                                } ?>
+                                
                                 <?php
                                     $error = $this->session->flashdata('error');
                                     $success = $this->session->flashdata('success');
@@ -185,7 +386,7 @@ a:focus {
                                             <strong><?php echo $success; ?></strong> 
                                         </div>
                                   <?php } ?>
-                                
+                                 
                                 <div class="card-content">
                                    <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
