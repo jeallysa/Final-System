@@ -29,6 +29,13 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/ico/apple-touch-icon-57-precomposed.png">
 
+        <style>
+            #hov:hover {
+                color: black !important; 
+            }
+
+        </style>
+
     </head>
 
     <body>
@@ -82,11 +89,10 @@
 			                        </div>
                                     <div class="row" style="display: flex; align-items: center; justify-content: center;color: red">
                                       </div>  
-			                        <button type="submit" class="btn">Sign in!</button>
+			                        <button type="submit" class="btn btn-outline-secondary"><p style="color: black;">Sign in!</p></button>
                                 <?php echo form_close(); ?>
                                 <br>
-                                <p style="color: white;" > Forgot password?<a href="<?php echo base_url(); ?>login/forgetPassword" style="color: red;" > Click here !</a></p>
-			                    
+                                <a href="<?php echo base_url(); ?>login/forgetPassword" style="color: white;" id="hov"> Forgot password?</a>
 		                    </div>
                         </div>
                     </div>

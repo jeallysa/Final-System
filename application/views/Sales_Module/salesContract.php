@@ -193,6 +193,10 @@
                                                         <td><?php echo $row->date_started; ?></td>
                                                     </tr>
                                                     <tr>
+                                                        <td><b>Date of Expiration</b></td>
+                                                        <td><?php echo $row->date_expiration; ?></td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>Coffee Blend:</b></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                     </tr>

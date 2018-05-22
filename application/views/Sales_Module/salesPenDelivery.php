@@ -472,13 +472,17 @@
                 <td><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g/ "; ?>
                     <?php
                         $price = $row2->blend_price;
-                        $qty = $row2->deliver_quantity;
-                        $amount = $price * $qty;
-                        echo 'Php '.number_format($amount,2);
+                        echo 'Php '.number_format($price,2);
                      ?>
                 </td>
                 <td><?php echo $row2->deliver_quantity; ?></td>
-                <td>Php <?php echo number_format($row2->blend_price,2); ?></td>
+                <td>Php                     
+                    <?php
+                        $price = $row2->blend_price;
+                        $qty = $row2->deliver_quantity;
+                        $amount = $price * $qty;
+                        echo 'Php '.number_format($amount,2);
+                     ?></td>
                 <td><?php echo $row2->client_receive; ?></td>
                 <td><?php echo $row2->coff_returnQty; ?></td>
                 <td><button type="button" title="pay order" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
