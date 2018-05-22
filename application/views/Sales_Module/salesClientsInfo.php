@@ -386,7 +386,7 @@
 																<td><?php echo $row->client_dr; ?></td>
 																<td><?php echo $row->blend_id; ?></td>
 																<td><?php echo $row->client_deliverDate; ?></td>
-																<td class="text-primary"><?php echo $row->client_balance; ?> </td>
+																<td class="text-primary">Php <?php echo $row->client_balance; ?> </td>
                                                                 <!-- <td><input type="checkbox" class="checks" /></td> -->
 															</tr>
 															<?php
@@ -565,6 +565,7 @@ $(document).ready(function() {
 	}
 
 	var table = document.getElementById("mytable"),
+		
 		sumVal = 0;
 
             for(var i = 1; i < table.rows.length; i++)

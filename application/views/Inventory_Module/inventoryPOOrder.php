@@ -247,12 +247,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                  for($i = 0; $i <= 3 ;$i++){
                                      if(!empty($reorder[$i])){
                                           foreach($reorder[$i] as $object){
+                                              $category = $object->category;
+                                              
+                                              if($category == 1){
+                                                  
                                             echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . ($object->reorder-$object->stock+1) .  ' </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
+                                              
+                                              }else{
+                                                  echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '</tr>' ;
+                                              }
+                                              
+                                              
+                                              
                                                  
                                              }
                                       }
@@ -366,9 +382,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <th>Type</th>
                                                         <th>Original Qty</th>
                                                         <th>Quantity</th>
-                                                        <th>Original Weight(g)</th>
-                                                        <th>Weight(g)</th>
-                                                        <th>Yield Weight(g)</th>
+                                                        <th>Original Weight(kg)</th>
+                                                        <th>Weight(kg)</th>
+                                                        <th>Yield Weight(kg)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -666,7 +682,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>Item Name</th>
                                                     <th>Type</th>
                                                     <th>Quantity</th>
-                                                    <th>Weight(g)</th>
+                                                    <th>Weight(kg)</th>
                                                     <th>Unit Price</th>
                                                     <th>Amount</th>
                                                 </tr>
@@ -696,7 +712,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item   . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  .  '</td>' ,
-                                                '<td>'  .    number_format($object->qty)  . '</td>' ,
+                                                '<td>'  .     number_format(($object->qty)/1000)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->unitPrice,2)  . '</td>' ,
                                                 '<td>Php '  . number_format($object->amount,2)  . '</td>' ,
                                                 '</tr>' ;
