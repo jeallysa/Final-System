@@ -347,6 +347,8 @@ a:focus {
                                                                             <input name="sup_address" class="form-control" type="textarea" value="<?php echo $row->sup_address; ?>" id="example-number-input" required>
                                                                         </div>
                                                                     </div>
+
+                                                                    <h6> Contact Personnel </h6>
                                                                         <div class="form-group row">
                                                                         <div for="example-number-input" class="col-2 col-form-label">
                                                                             <label for="type">Email</label>
@@ -360,37 +362,30 @@ a:focus {
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                         
-                                                                         <div class="col-md-6">
-                                                                            <label for="example-number-input" class="col-2 col-form-label">Position</label>
-                                                                            <div class="col-10">
+                                                                         <div for="example-number-input" class="col-2 col-form-label">
+                                                                                <label for="type">Position</label>
                                                                                 <input name="sup_position" class="form-control" type="textarea" value="<?php echo $row->sup_position; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
                                                                             </div>
-                                                                        </div>
-                                                                     
-                                                                    </div>
-                                                                    <h6> Contact Personnel </h6>
+                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="col-md-6">
-                                                                            
-                                                                            <label for="example-number-input" class="col-2 col-form-label">First Name</label>
-                                                                            <div class="col-10">
+                                                                        <div for="example-number-input" class="col-2 col-form-label">
+                                                                            <label for="type">First Name</label>
                                                                                 <input name="sup_fname" class="form-control" type="textarea" value="<?php echo $row->sup_fname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="First Name should only countain letters">
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <label for="example-number-input" class="col-2 col-form-label">Last Name</label>
-                                                                            <div class="col-10">
+                                                                    </div>
+                                                                        <div class="form-group row">
+                                                                             <div for="example-number-input" class="col-2 col-form-label">
+                                                                            <label for="type">Last Name</label>
                                                                                 <input name="sup_lname" class="form-control" type="textarea" value="<?php echo $row->sup_lname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Last Name should only countain letters">
-                                                                            </div>
+                                                                         
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="row">
-                                                                        <div class="panel-footer" style="margin-bottom:-14px;" align="right">
-                                                                            <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
-                                                                        </div>
-                                                                    </div>
+                                                                                <div class="panel-footer" style="margin-bottom:-14px;" align="right">
+                                                                                    <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
+                                                                                </div>
+                                                                            </div>
                                                                       
                                                                     </div>
                                                             </form>

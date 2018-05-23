@@ -117,6 +117,8 @@ a:focus {
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
+
+
 </style>
 <body>
     <div class="wrapper">
@@ -226,7 +228,7 @@ a:focus {
                                         <div class="form-group label-floating">
                                             <label for="email">Name</label>
                                             <input class="form-control" type="text" name="name" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -265,7 +267,7 @@ a:focus {
                                     </div>
                                      <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Reorder Level (g)</label>
+                                            <label for="email">Reorder Level (kg)</label>
                                             <input class="form-control" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -281,19 +283,7 @@ a:focus {
                     </div>
                 </div>
             </div>
-            <?php
-                $error = $this->session->flashdata('error');
-                $success = $this->session->flashdata('success');
-                if(!empty($error)){
-                    ?>
-                    <div class="alert alert-danger" style="margin: 80px; text-align: center; ">
-                        <strong><?php echo $error; ?></strong> 
-                    </div>
-              <?php } else if(!empty($success)){ ?>
-                    <div class="alert alert-success" style="margin: 80px; text-align: center; ">
-                        <strong><?php echo $success; ?></strong> 
-                    </div>
-              <?php } ?>
+            
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -370,7 +360,7 @@ a:focus {
                                                  <td><?php echo $row->raw_type; ?></td>
                                                  <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
                                                  <td><?php echo $row->sup_company; ?></td>
-                                                 <td><?php echo number_format($row->raw_reorder/1000); ?> kg</td>
+                                                 <td><?php echo number_format($row->raw_reorder); ?> kg</td>
                                                  <td><?php echo number_format($row->raw_stock/1000); ?> kg</td>
                                                 <td>
                                                     <a class="btn btn-warning btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#updateraw<?php echo $row->raw_id;?>">Edit</a>
@@ -494,7 +484,7 @@ a:focus {
                                                                         </div>
                                                                     <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Reorder Level (g)</label>
+                                                                            <label for="email">Reorder Level (kg)</label>
                                                                             <input class="form-control" value="<?php echo $row->raw_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>

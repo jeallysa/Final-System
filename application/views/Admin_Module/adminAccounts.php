@@ -286,7 +286,7 @@ a:focus {
                                                                 <div class="modal-body" style="padding: 5px;">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this blend?</h4>
+                                                                        <h4> Are you sure you want to activate/deactivate this account?</h4>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">
