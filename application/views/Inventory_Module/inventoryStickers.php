@@ -226,7 +226,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($sticker as $object){
             $stckr = $object->sticker; 
             $id =  $object->sticker_id;
-            $stock =  $object->sticker_stock; 
+            $stock =  $object->sticker_stock;
+            $physical =  $object->sticker_physcount;
           
            
 ?>
@@ -312,10 +313,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
+                                            <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> pcs</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
                                             <tbody>
                                                 
                                                 <?php
-                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE sticker.sticker_id = ".$id ;
+                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE walkin_sales.stckr_stat='0' AND sticker.sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -333,7 +341,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE delivery_stat = 'delivered' AND sticker.sticker_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE contracted_po.stckr_stat='0' AND delivery_stat = 'delivered' AND sticker.sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -351,7 +359,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                                              $retrieveDetails3 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE sticker.sticker_id = ".$id ;
+                                              $retrieveDetails3 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE client_coffreturn.stckr_stat='0' AND sticker.sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails3);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -369,7 +377,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT DISTINCT sup_company, sup_returnDate, sup_returnQty FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE sticker.sticker_id = ".$id;
+                                              $retrieveDetails5 ="SELECT DISTINCT sup_company, sup_returnDate, sup_returnQty, company_returns.stckr_stat FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = ".$id;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -387,7 +395,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE sticker_id = ".$id ;
+                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, stckr_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -405,7 +413,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE res = 'resolved' AND sticker_id = ".$id ;
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -434,14 +442,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE sticker.sticker_id = '". $id  ."' UNION ALL
-SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE sticker_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE res = 'resolved' AND sticker_id = '". $id  ."') AS b; " ;
+(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE client_coffreturn.stckr_stat='0' AND sticker.sticker_id = '". $id  ."' UNION ALL
+SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
-(SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE sticker.sticker_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE delivery_stat = 'delivered' AND sticker.sticker_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE sticker.sticker_id = '". $id  ."') AS b; " ;
+(SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE walkin_sales.stckr_stat='0' AND sticker.sticker_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE contracted_po.stckr_stat='0' AND delivery_stat = 'delivered' AND sticker.sticker_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {

@@ -35,7 +35,13 @@
         
             $this->InventoryStickers_Model->update($data , $id);    
         	
-        	$this->InventoryStickers_Model->activity_logs('inventory', "Record Physical Count under Stickers Invetory Stocks ");   
+        	$this->InventoryStickers_Model->activity_logs('inventory', "Record Physical Count under Stickers Invetory Stocks ");
+
+        	$this->InventoryStickers_Model->walkin_sales(1, $id);
+        	$this->InventoryStickers_Model->client_coffreturn(1, $id);  
+        	$this->InventoryStickers_Model->contracted_po(1, $id);
+        	$this->InventoryStickers_Model->company_returns(1, $id);  
+        	$this->InventoryStickers_Model->supp_po_ordered(1, $id);   
             
             redirect('inventoryStickers');
         }  
