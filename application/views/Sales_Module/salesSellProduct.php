@@ -516,7 +516,7 @@ $(document).ready(function() {
     $('#cosales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>
@@ -525,7 +525,7 @@ $(document).ready(function() {
     $('#masales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>
