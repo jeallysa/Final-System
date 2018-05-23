@@ -239,7 +239,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th align="center"><b>Product</b></th>
@@ -662,6 +662,17 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
 
 $(document).ready(function() {
     $('#example').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+<script>
+
+$(document).ready(function() {
+    $('#example2').DataTable({
         select: {
             style: 'single'
         }
