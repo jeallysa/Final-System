@@ -366,12 +366,15 @@ a:focus {
                                     $query = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$cli_id."';");
 
                                     foreach($query->result() AS $row){
-                                        $blend = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id where client_id = '".$cli_id."' ;");
-                                        if(!empty($blend)) {     
-                                    ?>
+                                        $blend = $this->db->query("SELECT * FROM contract where client_id = '".$cli_id."' ;");
+                                        print_r($blend);
+                                        if(!empty($blend)) {     ?>
                                      <a href='#' class="btn btn-warning" style=" float: right;" data-toggle="modal" data-target="#edit<?php echo $row->client_id; ?>">Edit Contract</a>    
+                                <?php } else if (empty($blend)) { ?>
+                                     <a href='#' class="btn btn-success" style=" float: right;" data-toggle="modal" data-target="#edit<?php echo $row->client_id; ?>">Create Contract</a>    
                                 <?php } 
-                                } ?>
+                                }?>    
+                                
                                 
                                 <?php
                                     $error = $this->session->flashdata('error');

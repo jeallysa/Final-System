@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -232,13 +234,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -254,7 +256,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -446,7 +448,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
+            $dateMin = $object->suppPO_date;
+               $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -511,12 +514,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             }
                                          } 
                                             ?>
-                                                     <tr>
-                                                            <td>Trucking Fee</td>
-                                                            <td></td>
-                                                            <td><input class="form-control" type="text"  id="truckingFee" readonly disabled /></td>
+                                                        
+                                                          
+                                         <tr>
+                                                   <td>Trucking Fee</td>
+                                                   <td></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
                                                             
-                                                        </tr>
+                                                        </tr>   
+                                                        
+                                               
                                                         
                                                         <tr>
                                                             <td></td>
@@ -585,6 +592,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
+               
                                
            }  
      }
@@ -672,9 +680,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
                                                 '<td>'  .  '</td>' ,
-                                                '<td>'  . number_format(($object->received)/1000)  . '</td>' ,
-                                                '<td>'  . number_format(($object->yield_weight)/1000). '</td>' ,
-                                                '<td>'  . number_format(($object->yields)/1000)  . '</td>' ,
+                                                '<td>'  . number_format((($object->received)/1000),2)  . '</td>' ,
+                                                '<td>'  . number_format((($object->yield_weight)/1000),2). '</td>' ,
+                                                '<td>'  . number_format((($object->yields)/1000),2)  . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 
@@ -918,11 +926,11 @@ $partial = 1;
                    var payment =  data['payment'];
                   
                   
-                   var truckingFee =  data['trucking_fee'];
+                   //var truckingFee =  data['trucking_fee'];
                   
-                   var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+                   //var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
                   
-                   var tfee ="Php " +tfeex+ ".00" ; 
+                   //var tfee ="Php " +tfeex+ ".00" ; 
                    
                   
                   
@@ -931,7 +939,7 @@ $partial = 1;
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                  $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
+                 // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
               error: function(){
                   //alert("error"); 
@@ -1092,5 +1100,15 @@ $(document).ready(function() {
     
 </script>
 
+<script>
 
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
 </html>

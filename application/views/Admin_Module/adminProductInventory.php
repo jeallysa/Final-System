@@ -226,7 +226,7 @@ a:focus {
                                         <div class="form-group label-floating">
                                             <label for="email">Name</label>
                                             <input class="form-control" type="text" name="name" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -281,7 +281,19 @@ a:focus {
                     </div>
                 </div>
             </div>
-            
+            <?php
+                $error = $this->session->flashdata('error');
+                $success = $this->session->flashdata('success');
+                if(!empty($error)){
+                    ?>
+                    <div class="alert alert-danger" style="margin: 80px; text-align: center; ">
+                        <strong><?php echo $error; ?></strong> 
+                    </div>
+              <?php } else if(!empty($success)){ ?>
+                    <div class="alert alert-success" style="margin: 80px; text-align: center; ">
+                        <strong><?php echo $success; ?></strong> 
+                    </div>
+              <?php } ?>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
