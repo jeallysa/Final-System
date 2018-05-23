@@ -39,6 +39,7 @@
 
         	$name = $this->input->post("rawname");
         	$type = $this->input->post("rawtype");
+        	
         	$this->InventoryStocks_Model->supp_po_ordered(1, $name, $type);
         	$this->InventoryStocks_Model->company_returns(1, $name, $type);  
         	$this->InventoryStocks_Model->trans_raw(1, $id);  
