@@ -76,7 +76,37 @@ a:focus {
 			border: none !important;
 			
 		}
-		
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
 </style>
 
 <body>
@@ -314,7 +344,41 @@ a:focus {
                     
                 </div>
             </div>
-            
+            <footer class="footer">
+    <div class="container">
+      <nav class="float-left">
+        <ul>
+          <li>
+            <a href="https://www.creative-tim.com">
+              Creative Tim
+            </a>
+          </li>
+          <li>
+            <a href="https://presentation.creative-tim.com">
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="https://blog.creative-tim.com">
+              Blog
+            </a>
+          </li>
+          <li>
+            <a href="https://www.creative-tim.com/license">
+              Licenses
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="copyright float-right">
+        &copy;
+        <script>
+          document.write(new Date().getFullYear())
+        </script>, made with <i class="material-icons">favorite</i> by
+        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+      </div>
+    </div>
+  </footer>
         </div>
 </body>
 <!--   Core JS Files   -->
