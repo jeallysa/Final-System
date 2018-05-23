@@ -414,7 +414,7 @@
                                                     <tr>
                                                         <td><?php echo $row->mach_serial; ?></td>
                                                         <td><?php echo $row->mach_returnDate; ?></td>
-                                                        <td><?php echo $row->mach_returnQty; ?> /unit</td>
+                                                        <td><?php echo $row->mach_returnQty; ?> unit/s</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>
@@ -639,7 +639,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input class="no-border" type="text" name="qty" readonly /> units</b></p>
+															<p><b><input class="no-border" type="text" name="qty" readonly /> unit/s</b></p>
 														</div>
 													</div>
                                                     <br>
