@@ -356,12 +356,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                           <label>DR #</label>
+                                           <label>Delivery Receipt No.</label>
                                            <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
                                                 <option value="">Select DR#</option> -->
                                         <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
                                                <!-- <option disabled selected value="">Select DR#</option> -->
-                                                <option value="">Select DR#</option>
+                                                <option value="">Select DR #</option>
                                                 
                    <?php                              
                           $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
@@ -448,8 +448,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date;
-               $tfee = $object->trucking_fee
+            $dateMin = $object->suppPO_date
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -519,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          <tr>
                                                    <td>Trucking Fee</td>
                                                    <td></td>
-                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($unpaid[1]->trucking_fee),2)?> "readonly disabled /></td>
                                                             
                                                         </tr>   
                                                         
@@ -592,7 +591,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
-               
                                
            }  
      }
@@ -641,7 +639,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Date Received</th>
-                                                                       <th>DR No.</th>
+                                                                       <th>Delivery Receipt No.</th>
                                                                         <th>Item Name</th>
                                                                         <th>Type</th>
                                                                         <th>Quantity</th>
@@ -796,7 +794,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <thead>
                                             <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
-                                            <th><b class="pull-left">PO Credit Term</b></th>
+                                            <th><b class="pull-left">Purchase Order Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
                                             
