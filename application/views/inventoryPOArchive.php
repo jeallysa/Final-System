@@ -306,7 +306,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           
     <form action="InventoryPOArchive/archive/<?php echo $temp ?>" method="post" accept-charset="utf-8">    
         <div class="modal-body">
-            <center><h4><b><p>Are you sure you want to Unarchive PO #<?php echo $temp ?></p></b></h4></center>.
+            <center><h4><b><p>Are you sure you want to Retrieve Purchase Order No. <?php echo $temp ?></p></b></h4></center>.
            
             <input type="hidden" class="form-control" name="supp_po_id"         value = "<?php echo $temp ?>" > 
             
@@ -507,7 +507,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <span></span>
                                                <li class="active">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
@@ -528,7 +528,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table hover order-column" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">PO #</b></th>
+                                            <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Archived</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
@@ -559,8 +559,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                               
                                                
                                                <td><center>
+                                                   <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Retrieve</a>
                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
-                                                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Unarchive</a></center>
+                                                   </center>
                                             </td>
                                             
                                             

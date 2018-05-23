@@ -457,7 +457,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                          <?php if(!empty($lastPO[0])){
                                                                 $last = $lastPO[0]->supp_po_id;
                                                                 $new = $last + 1;
-                                                                echo '<h3> PO#' .$new  .'</h3>';
+                                                                echo '<h3> Purchase Order No. ' .$new  .'</h3>';
                                                                } 
                                                         ?>
                                                   <?php     
