@@ -76,10 +76,12 @@
 		  $quantity = $this->input->post('resolve_walkin_qty');
 		  $blend_id = $this->input->post('blend_id_walkin');
 		  $date_resolved = $this->input->post('date_resolved');
+		  $action_taken_walk = $this->input->post('action_taken');
 
 		  $client = $this->db->query("SELECT * FROM coffee_blend WHERE blend_id = '".$blend_id."'")->row()->blend;
 		  $this->SalesReturns_model->activity_logs('sales', "Resolved ".$client." of Walkin Client Order ");
 		  $this->SalesReturns_model->update_walkin_sales($id);
+		  $this->SalesReturns_model->update_walkin_return($id, $action_taken_walk);
 		  $this->SalesReturns_model->update_less_return_coffee($quantity, $blend_id);
 		  $this->SalesReturns_model->less_raw_coffee_walkin($date_resolved, $quantity, $blend_id, $id);
 		echo "<script>alert('Blend Return has been resolved!');</script>";

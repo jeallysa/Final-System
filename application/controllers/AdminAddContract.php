@@ -26,7 +26,7 @@
           function insert()
 		{
 			$this->load->model('AdminAddContract_model');
-			
+			$blend_id = $this->input->post("contract_blend");
 			$data_bag = array(
                 "client_id" =>$this->input->post("client_company"),
 				"date" =>$this->input->post("date_started"),
@@ -42,7 +42,7 @@
                 "client_id" =>$this->input->post("client_company"),
 				"date_started" =>$this->input->post("date_started"),
 				"date_expiration" =>$this->input->post("date_expiration"),
-				"blend_id" =>$this->input->post("contract_blend"),
+				"blend_id" => $blend_id,
 				"mach_id" =>$this->input->post("contract_machine"),
 				"required_qty" =>$this->input->post("contract_bqty"),
 				"package_id" =>$this->input->post("contract_bag"),
@@ -62,7 +62,7 @@
 			}
 			
 
-			$blend_id = $this->input->post("contract_blend");
+			
 			$data_blend = array(
 				'package_id' => $this->input->post("contract_bag"),
 				'sticker_id' => $this->input->post("contract_sticker")
@@ -71,9 +71,29 @@
 			$this->db->where('blend_id', $blend_id);
 			$this->db->update('coffee_blend', $data_blend);
 			
-			redirect('adminAddContract');
+			redirect($_SERVER['HTTP_REFERER']);
 
 			/* data - contract; data_bag = machine_out*/
+		}
+
+		function update(){
+			$client_id = $this->input->post("client_company");
+			$blend_id = $this->input->post("contract_blend");
+			$data = array(
+                "client_id" =>$this->input->post("client_company"),
+				"date_started" =>$this->input->post("date_started"),
+				"date_expiration" =>$this->input->post("date_expiration"),
+				"blend_id" => $blend_id,
+				"mach_id" =>$this->input->post("contract_machine"),
+				"required_qty" =>$this->input->post("contract_bqty"),
+				"package_id" =>$this->input->post("contract_bag")
+                
+			);
+			$data = $this->security->xss_clean($data);
+			$this->db->where('client_id', $client_id);
+			$this->db->update('contract', $data);
+			$this->session->set_flashdata('success', 'Update successful!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 ?>

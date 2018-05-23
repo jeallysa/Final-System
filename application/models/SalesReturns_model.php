@@ -215,7 +215,10 @@
 			$this->db->query("UPDATE walkin_sales SET coff_remark = 'Received', walkin_returns = '0' WHERE walkin_id = '".$id."';");
 
 		}
+		public function update_walkin_return($id, $action_taken_walk){
+			$this->db->query("UPDATE client_coffreturn SET coff_returnAction = '$action_taken_walk', resolved = 'Yes' WHERE client_deliveryID = '".$id."';");
 
+		}
 		public function ResolveMachineReturnsA($c_id, $m_id, $date, $remarks, $serial, $qty){
 
 			$dataA = array(

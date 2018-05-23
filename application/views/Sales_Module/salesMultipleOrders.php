@@ -372,8 +372,7 @@
 				for(var i=1; i<=count; i++){
 					$('tr#'+i+'').remove();
 				}
-				console.log(data.check)
-				location.reload();  
+				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
 			}	
 		});
 	});

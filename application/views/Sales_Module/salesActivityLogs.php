@@ -187,6 +187,19 @@
                         </div>
                     </div>
                 </div>
+<!--
+                <footer class="footer navbar navbar-fixed-bottom">
+                <div class="container-fluid">
+                    <div class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>, made with love by
+                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    </div>
+                </div>
+            </footer>
+-->
 		</div>
 </body>
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
