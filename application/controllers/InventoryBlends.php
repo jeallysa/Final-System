@@ -36,7 +36,11 @@
         
             $this->InventoryBlends_Model->update($data , $id); 
 
-        	$this->InventoryBlends_Model->activity_logs('inventory', "Record Physical Count under Coffee Blends Inventory Stocks ");      
+        	$this->InventoryBlends_Model->activity_logs('inventory', "Record Physical Count under Coffee Blends Inventory Stocks ");
+        	
+        	$this->InventoryBlends_Model->walkin_sales(1, $id);
+        	$this->InventoryBlends_Model->client_coffreturn(1, $id);  
+        	$this->InventoryBlends_Model->contracted_po(1, $id);  
         
             
             redirect('inventoryBlends');

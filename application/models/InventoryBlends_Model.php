@@ -45,4 +45,21 @@ class InventoryBlends_Model extends CI_model
         $this->db->insert('activitylogs', $data);
   }  
 
+  function walkin_sales($status, $id){
+
+        $this->db->query("UPDATE walkin_sales SET walkin_sales.inv_stat ='".$status."' WHERE walkin_sales.blend_id ='".$id."'");
+  }  
+  function client_coffreturn($status, $id){
+        
+        $this->db->query("UPDATE client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id  SET client_coffreturn.inv_stat ='".$status."' WHERE coffee_blend.blend_id ='".$id."'");
+  }  
+  function contracted_po($status, $id){
+        $data = array(
+            'inv_stat' => $status
+        );
+        $this->db->where('blend_id', $id); 
+        $this->db->update('contracted_po', $data);
+  }  
+
 }
+?>
