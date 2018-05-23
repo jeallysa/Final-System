@@ -305,13 +305,13 @@ s}
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>Product</b></th>
-                                                    <th align="center"><b>Type</b></th>
-                                                    <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -327,7 +327,7 @@ s}
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -397,10 +397,10 @@ s}
                                             <thead>
                                                 <tr>
                                                     <th><b>Delivery Receipt No.</b></th>
-													 <th><b>DATE RETURNED</b></th>
-                                                     <th><b>ITEM RETURNED</b></th>
-                                                     <th><b>QUANTITY/WEIGHT(Kg)</b></th>
-                                                     <th><b>REMARKS</b></th>
+													 <th><b>Date Returned</b></th>
+                                                     <th><b>Item Returned</b></th>
+                                                     <th><b>Quantity/Weight</b></th>
+                                                     <th><b>Remarks</b></th>
                                                      <th></th>
                                                     
                                                 </tr>
@@ -416,7 +416,7 @@ s}
                                                     <td><?php echo $row->drNo ?></td>
                                                     <td><?php echo $row->sup_returnDate ?></td>
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
-                                                    <td><?php echo $row->sup_returnQty ?></td>
+                                                    <td><?php echo $row->sup_returnQty ?> kg</td>
                                                     <td><?php echo $row->sup_returnRemarks ?></td>
                                             <?php 
                                                     if($row->res == "unresolved"){
@@ -454,13 +454,16 @@ s}
                                                     <table id="coffee" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th><b>DELIVERY RECEIPT NO.</b></th>
-                                                                <th><b>DATE RETURNED</b></th>
-                                                                <th><b>CLIENT</b></th>
-                                                                <th><b>QUANTITY (PC)</b></th>
-                                                                <th><b>REMARKS</b></th>
-                                                                <th><b>ACTION TAKEN</b></th>
-                                                                <th><b>DATE RESOLVED</b></th>
+                                                                <th><b>Delivery Receipt No.</b></th>
+                                                                <th><b>Date Returned</b></th>
+                                                                <th><b>Client</b></th>
+                                                                <th><b>Coffee</b></th>
+                                                                <th><b>Bag</b></th>
+                                                                <th><b>Size</b></th>
+                                                                <th><b>Quantity</b></th>
+                                                                <th><b>Remarks</b></th>
+                                                                <th><b>Action Taken</b></th>
+                                                                <th><b>Date Resolved</b></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -472,7 +475,10 @@ s}
                                                                 <td><?php echo $row->client_dr; ?></td>
                                                                 <td><?php echo $row->coff_returnDate; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
-                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
+                                                                <td><?php echo $row->blend; ?></td>
+                                                                <td><?php echo $row->package_type; ?></td>
+                                                                <td><?php echo number_format($row->package_size); ?> g</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?> pc/s</td>
                                                                 <td><?php echo $row->coff_remarks; ?></td>
                                                                 <td><?php echo $row->coff_returnAction; ?></td>
                                                                 <td><?php echo $row->coff_resolveDate; ?></td>
@@ -489,7 +495,10 @@ s}
                                                                 <td> - </td>
                                                                 <td><?php echo $row->coff_returnDate; ?></td>
                                                                 <td> Walk-in Client</td>
-                                                                <td><?php echo number_format($row->coff_returnQty); ?></td>
+                                                                <td><?php echo $row->blend; ?></td>
+                                                                <td><?php echo $row->package_type; ?></td>
+                                                                <td><?php echo number_format($row->package_size); ?> g</td>
+                                                                <td><?php echo number_format($row->coff_returnQty); ?> pc/s</td>
                                                                  <td><?php echo $row->coff_remarks; ?></td>
                                                                  <td><?php echo $row->coff_returnAction; ?></td>
                                                                 <td><?php echo $row->coff_resolveDate; ?></td>
@@ -505,15 +514,15 @@ s}
                                                     <table id="machine" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th><b>RETURN NO.</b></th>
-                                                                <th><b>DATE RETURNED</b></th>
-                                                                <th><b>MACHINE SERIAL NO.</b></th>
-                                                                <th><b>CLIENT</b></th>
-                                                                <th><b>MACHINE</b></th>
-                                                                <th><b>QUANTITY (PC)</b></th>
-                                                                <th><b>REMARKS</b></th>
-                                                                <th><b>ACTION TAKEN</b></th>
-                                                                <th><b>RESOLVED DATE</b></th>
+                                                                <th><b>Return No.</b></th>
+                                                                <th><b>Date Returned</b></th>
+                                                                <th><b>Machine Serial No.</b></th>
+                                                                <th><b>Client</b></th>
+                                                                <th><b>Machine</b></th>
+                                                                <th><b>Quantity</b></th>
+                                                                <th><b>Remarks</b></th>
+                                                                <th><b>Action Taken</b></th>
+                                                                <th><b>Resolved Date</b></th>
                                                                 
                                                             </tr>
                                                         </thead>
@@ -528,7 +537,7 @@ s}
                                                                 <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
                                                                 <td><?php echo $row->machine; ?></td>
-                                                                <td><?php echo number_format($row->mach_returnQty); ?></td>
+                                                                <td><?php echo number_format($row->mach_returnQty); ?> pc/s</td>
                                                                 <td><?php echo $row->mach_remarks; ?></td>
                                                                 <td><?php echo $row->mach_returnAction; ?></td>
                                                                 <th><?php echo $row->mach_resolveDate; ?></th>

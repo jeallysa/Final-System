@@ -66,9 +66,6 @@
     input[type=checkbox].toggle-switch:checked::after {
         left: 2em;
     }
-    .navbar {
-        background-color: chartreuse;
-    }
 
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -143,6 +140,10 @@ a:focus {
 .dropdown-menu li a:active {
     background-color: #43a047;
     color: #FFFFFF;
+}
+
+.footer{
+    z-index: 0;
 }
 
 </style>
@@ -330,11 +331,11 @@ a:focus {
                                                                     </div>
                                                                 </div>
                                                                 <div class="panel-footer" style="margin-bottom:-14px;">
-                                                                    <input type="submit" class="btn btn-danger" value="Yes" />
+                                                                    <input type="submit" class="btn btn-success" value="Yes" />
                                                                     <!--<span class="glyphicon glyphicon-ok"></span>-->
                                                                     
                                                                     <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                                                    <button type="button" class="btn btn-success btn-close" onclick="document.getElementById('button<?php echo $row->user_no;?>').click()" data-dismiss="modal">No</button>
+                                                                    <button type="button" class="btn btn-danger btn-close" onclick="document.getElementById('button<?php echo $row->user_no;?>').click()" data-dismiss="modal">No</button>
                                                                 </div>
                                                                 </form>
                                                         </div>
@@ -370,9 +371,18 @@ a:focus {
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">Position</label>
                                                                                     <select class="form-control" name="position" type="textarea" value="<?php echo $row->u_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
-                                                                                    <option value="admin">admin</option>
-                                                                                     <option value="sales">sales</option>
-                                                                                     <option value="inventory">inventory</option>
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_utype = $this->db->query("SELECT DISTINCT u_type FROM user;");
+                                                                                        foreach($query_utype->result() as $row2){
+                                                                                            if($row->u_type == $row2->u_type){
+                                                                                                echo '<option value="'.$row2->u_type.'" selected>'.$row2->u_type.'</option>';
+                                                                                            }else{
+                                                                                                echo '<option value="'.$row2->u_type.'">'.$row2->u_type.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
                                                                                      </select>
                                                                                 </div>
                                                                             </div>
@@ -438,6 +448,20 @@ a:focus {
                 </div>
             </div>
         </div>
+           <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
         </div>
 </body>
 <!--   Core JS Files   -->
@@ -475,7 +499,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {

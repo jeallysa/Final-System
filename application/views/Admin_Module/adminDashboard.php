@@ -107,6 +107,10 @@ a:focus {
     background-color: #43a047;
     color: #FFFFFF;
 }
+
+.footer{
+    z-index: 0;
+}
 </style>
 
 <body>
@@ -344,41 +348,20 @@ a:focus {
                     
                 </div>
             </div>
-            <footer class="footer">
-    <div class="container">
-      <nav class="float-left">
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
-            </a>
-          </li>
-          <li>
-            <a href="https://presentation.creative-tim.com">
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="https://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-      </div>
-    </div>
-  </footer>
+               <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
         </div>
 </body>
 <!--   Core JS Files   -->

@@ -97,6 +97,10 @@ a:focus {
     background-color: #43a047;
     color: #FFFFFF;
 }
+
+.footer{
+    z-index: 0;
+}
 </style>
 
 <body>
@@ -264,6 +268,20 @@ a:focus {
                     </div>
                 </div>
             </div>
+               <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
         </div>
 </body>
 <!--   Core JS Files   -->
