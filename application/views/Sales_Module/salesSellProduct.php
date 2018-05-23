@@ -42,6 +42,9 @@
 		.select-pane {
         display: none;
     }
+    
+    .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+    .panel-primary{ border-color:#9c27b0 !important}
     </style>
 </head>
 
@@ -167,7 +170,7 @@
 														<th><b>Qty</b></th>
 														<th><b>Price</b></th>
                                                         <th><b>Total Amount</b></th>
-                                                        <th><b>Returns Quantity</b></th>
+                                                        <th><b>Remarks</b></th>
                                                         <th><b>Action</b></th>
                                                     </tr>
                                                 </thead>
@@ -189,7 +192,15 @@
                                                                 echo 'Php '.number_format($price * $qty,2);
                                                              ?>
                                                         </td>
-                                                         <td><?php echo $row->walkin_returns; ?></td>
+                                                         <td><?php 
+                                                            if ($row->walkin_returns == 0 && $row->resolved == 'No') {
+                                                                echo "";
+                                                            } else if ($row->walkin_returns > 0 && $row->resolved == 'No'){
+                                                                echo 'returned '.$row->walkin_returns.' bag/s';
+                                                            } else if ($row->walkin_returns == 0 && $row->resolved == 'Yes') {
+                                                                echo "returns has been resolved";
+                                                            }
+                                                         ?></td>
                                                          <td><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#returnblend<?php echo $row->walkin_id; ?>" <?php 
                                                             $coff_remark = $row->resolved;
                                                             if ($coff_remark == 'Yes' || $coff_remark == 'No') {
@@ -237,7 +248,7 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Quantity :</label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->walkin_qty; ?> bags</b></p>
+                                                                    <p><b><?php echo $row->walkin_qty; ?> bag/s</b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -277,7 +288,7 @@
                                                                     $ret_mach = $soldblend - $retblend;
                                                                     echo $ret_mach;
                                                                  ?>" required="">
-                                                                 <p class="col-md-2">bags</p>
+                                                                 <p class="col-md-2">bag/s</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -320,7 +331,7 @@
 														<th><b>Client</b></th>
 														<th><b>Machine</b></th>
 														<th><b>Sold Quantity</b></th>
-														<th><b>Unit Price</b></th>
+                                                        <th><b>Unit Price</b></th>
                                                         <th><b>Total Amount</b></th>
                                                         <th><b>Action</b></th>
 													</thead>
@@ -342,7 +353,6 @@
                                                                 echo 'Php' .number_format($price * $qty, 2);
                                                              ?>
                                                          </td>
-
                                                          <td><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#return<?php echo $row->mach_salesID; ?>" <?php 
                                                             $mach_remark = $row->remarks; 
                                                             if ($mach_remark == 'Returned') {
@@ -506,7 +516,7 @@ $(document).ready(function() {
     $('#cosales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>
@@ -515,7 +525,7 @@ $(document).ready(function() {
     $('#masales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>

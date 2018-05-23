@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -228,13 +230,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -250,7 +252,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -306,7 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           
     <form action="InventoryPOArchive/archive/<?php echo $temp ?>" method="post" accept-charset="utf-8">    
         <div class="modal-body">
-            <center><h4><b><p>Are you sure you want to Unarchive PO #<?php echo $temp ?></p></b></h4></center>.
+            <center><h4><b><p>Are you sure you want to Retrieve Purchase Order No. <?php echo $temp ?></p></b></h4></center>.
            
             <input type="hidden" class="form-control" name="supp_po_id"         value = "<?php echo $temp ?>" > 
             
@@ -507,7 +509,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <span></span>
                                                <li class="active">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
@@ -528,7 +530,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table hover order-column" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">PO #</b></th>
+                                            <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Archived</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
@@ -559,8 +561,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                               
                                                
                                                <td><center>
+                                                   <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Retrieve</a>
                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
-                                                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Unarchive</a></center>
+                                                   </center>
                                             </td>
                                             
                                             
@@ -632,5 +635,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
 
     
+</script>
+<script>
+
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
 </script>
 </html>

@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -232,13 +234,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -354,12 +356,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                           <label>DR #</label>
+                                           <label>Delivery Receipt No.</label>
                                            <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
                                                 <option value="">Select DR#</option> -->
                                         <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
                                                <!-- <option disabled selected value="">Select DR#</option> -->
-                                                <option value="">Select DR#</option>
+                                                <option value="">Select DR #</option>
                                                 
                    <?php                              
                           $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
@@ -446,8 +448,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date;
-               $tfee = $object->trucking_fee
+            $dateMin = $object->suppPO_date
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -517,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          <tr>
                                                    <td>Trucking Fee</td>
                                                    <td></td>
-                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($unpaid[1]->trucking_fee),2)?> "readonly disabled /></td>
                                                             
                                                         </tr>   
                                                         
@@ -590,7 +591,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
-               
                                
            }  
      }
@@ -639,7 +639,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Date Received</th>
-                                                                       <th>DR No.</th>
+                                                                       <th>Delivery Receipt No.</th>
                                                                         <th>Item Name</th>
                                                                         <th>Type</th>
                                                                         <th>Quantity</th>
@@ -794,7 +794,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <thead>
                                             <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
-                                            <th><b class="pull-left">PO Credit Term</b></th>
+                                            <th><b class="pull-left">Purchase Order Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
                                             
@@ -1098,5 +1098,15 @@ $(document).ready(function() {
     
 </script>
 
+<script>
 
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
 </html>

@@ -174,12 +174,7 @@ class sellProduct_model extends CI_MODEL
 			for($x = 0; $x < count($data); $x++){
                 $mach_id = $data[$x]['mach_id'];
                 $quantity = $data[$x]['quantity'];
-                $stock_mach = $this->db->query("SELECT * FROM machine WHERE mach_id = '".$mach_id."';")->row()->mach_stocks;
-                $stock_mach_out = $this->db->query("SELECT * FROM machine_out WHERE mach_id = '".$mach_id."';")->row()->mach_qty;
-                if ($stock_mach < $quantity){
-                    echo '<script> alert("Insufficient stocks for machines! Transaction halted."); </script>';
-                    return;
-                }else{
+
                     $this->db->query("UPDATE machine SET mach_stocks = mach_stocks - ".$quantity." WHERE mach_id = '".$mach_id."';");
                     $this->db->query("UPDATE machine_out SET mach_qty = mach_qty + ".$quantity." WHERE mach_id = '".$mach_id."';");
                     $orders[] = array(
@@ -190,7 +185,7 @@ class sellProduct_model extends CI_MODEL
                         'client_id' => $data[$x]['client_id'],
 						'status' => 'sold'
                     );
-                }
+                
 			}
 
 			try{

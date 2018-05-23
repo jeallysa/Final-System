@@ -31,6 +31,8 @@
 	.bold{
 		font-weight: 1000;
 	}
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+    .panel-primary{ border-color:#9c27b0 !important}
     </style>
 </head>
 
@@ -463,8 +465,8 @@
                                     </div>
                                 <?php echo form_close(); ?>
                             </div>
-                        </div>
-                    </div>
+                        </div></div>
+</div></body>
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>

@@ -43,6 +43,8 @@
 		.table td {
 		   text-align: center;
 		}
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+        .panel-primary{ border-color:#9c27b0 !important}
 
     </style>
 </head>
@@ -235,7 +237,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6">
-
+                                            <br><br>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Purchase Date :</label>
                                                 <div class="col-md-4">
@@ -248,12 +250,12 @@
                                                     <input type="number" name="quantity" id="quantityAvailed" class="form-control" min="1" oninput="validity.valid||(value='');" data-validate="required" max="" placeholder="reqQty" >
                                                 </div>
                                             </div><br><br>
-											 <div class="form-group">
+											 <!--<div class="form-group">
                                                 <label class="col-md-3 control">Total Price :</label>
                                                 <div class="col-md-9">
                                                     <h5><b>Php <input name="TotalPrice" type="number" value="quantity" id="product" class="no-border number" type="disabled" readonly /></b></h5>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -269,6 +271,17 @@
                 </div>
             </div>
         </div>
+        <footer class="footer navbar navbar-fixed-bottom">
+                <div class="container-fluid">
+                    <div class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>, made with love by
+                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    </div>
+                </div>
+            </footer>
     </div>
 </body>
 <!--   Core JS Files   -->

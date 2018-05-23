@@ -66,9 +66,6 @@
     input[type=checkbox].toggle-switch:checked::after {
         left: 2em;
     }
-    .navbar {
-        background-color: chartreuse;
-    }
 
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -112,6 +109,72 @@ a:focus {
     background-color: #4caf50;
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
+}
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
+
+.footer{
+    z-index: 0;
 }
 </style>
 <body>
@@ -237,7 +300,7 @@ a:focus {
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Price</label>
+                                            <label for="email">Price/pc</label>
                                             <input class="form-control" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -276,19 +339,7 @@ a:focus {
                     </div>
                 </div>
             </div>
-            <?php
-                $error = $this->session->flashdata('error');
-                $success = $this->session->flashdata('success');
-                if(!empty($error)){
-                    ?>
-                    <div class="alert alert-danger" style="margin: 80px; text-align: center; ">
-                        <strong><?php echo $error; ?></strong> 
-                    </div>
-              <?php } else if(!empty($success)){ ?>
-                    <div class="alert alert-success" style="margin: 80px; text-align: center; ">
-                        <strong><?php echo $success; ?></strong> 
-                    </div>
-              <?php } ?>
+        
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -348,7 +399,7 @@ a:focus {
                                         <thead>
                                             <th><b class="pull-left">Sticker</b></th>
                                             <th><b class="pull-left">Type</b></th>
-                                            <th><b class="pull-left">Price</b></th>
+                                            <th><b class="pull-left">Price/pc</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
@@ -465,7 +516,7 @@ a:focus {
                                                                     </div>
                                                                     <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Price</label>
+                                                                            <label for="email">Price/pc</label>
                                                                             <input class="form-control" value="<?php echo $row->unitPrice; ?>" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
@@ -519,6 +570,20 @@ a:focus {
                     </div>
                 </div>
             </div>
+               <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
         </div>
 </body>
 <!--   Core JS Files   -->
@@ -557,7 +622,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {

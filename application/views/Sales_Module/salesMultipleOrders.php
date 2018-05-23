@@ -326,7 +326,7 @@
 		var newRow = '<tr id="row'+count+'">'+
 				'<td contenteditable="true" class="blendName">'+dateO+'</td>'+
 			 	'<td contenteditable="true" class="blendName">'+blend+'</td>'+
-			 	'<td contenteditable="true" class="quantity">'+qty+' bag/s</td>'+
+			 	'<td contenteditable="true" class="quantity">'+qty+'</td>'+
 			 	'<td contenteditable="true" class="quantity">' +blendDetail+ '</td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
@@ -372,8 +372,7 @@
 				for(var i=1; i<=count; i++){
 					$('tr#'+i+'').remove();
 				}
-				console.log(data.check)
-				location.reload();  
+				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
 			}	
 		});
 	});

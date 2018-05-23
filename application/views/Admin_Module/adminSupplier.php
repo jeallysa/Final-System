@@ -66,9 +66,6 @@
     input[type=checkbox].toggle-switch:checked::after {
         left: 2em;
     }
-    .navbar {
-        background-color: chartreuse;
-    }
     
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -112,6 +109,72 @@ a:focus {
     background-color: #4caf50;
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
+}
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
+
+.footer{
+    z-index: 0;
 }
 </style>
 
@@ -347,6 +410,8 @@ a:focus {
                                                                             <input name="sup_address" class="form-control" type="textarea" value="<?php echo $row->sup_address; ?>" id="example-number-input" required>
                                                                         </div>
                                                                     </div>
+
+                                                                    <h6> Contact Personnel </h6>
                                                                         <div class="form-group row">
                                                                         <div for="example-number-input" class="col-2 col-form-label">
                                                                             <label for="type">Email</label>
@@ -360,37 +425,30 @@ a:focus {
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                         
-                                                                         <div class="col-md-6">
-                                                                            <label for="example-number-input" class="col-2 col-form-label">Position</label>
-                                                                            <div class="col-10">
+                                                                         <div for="example-number-input" class="col-2 col-form-label">
+                                                                                <label for="type">Position</label>
                                                                                 <input name="sup_position" class="form-control" type="textarea" value="<?php echo $row->sup_position; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
                                                                             </div>
-                                                                        </div>
-                                                                     
-                                                                    </div>
-                                                                    <h6> Contact Personnel </h6>
+                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="col-md-6">
-                                                                            
-                                                                            <label for="example-number-input" class="col-2 col-form-label">First Name</label>
-                                                                            <div class="col-10">
+                                                                        <div for="example-number-input" class="col-2 col-form-label">
+                                                                            <label for="type">First Name</label>
                                                                                 <input name="sup_fname" class="form-control" type="textarea" value="<?php echo $row->sup_fname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="First Name should only countain letters">
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <label for="example-number-input" class="col-2 col-form-label">Last Name</label>
-                                                                            <div class="col-10">
+                                                                    </div>
+                                                                        <div class="form-group row">
+                                                                             <div for="example-number-input" class="col-2 col-form-label">
+                                                                            <label for="type">Last Name</label>
                                                                                 <input name="sup_lname" class="form-control" type="textarea" value="<?php echo $row->sup_lname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Last Name should only countain letters">
-                                                                            </div>
+                                                                         
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="row">
-                                                                        <div class="panel-footer" style="margin-bottom:-14px;" align="right">
-                                                                            <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
-                                                                        </div>
-                                                                    </div>
+                                                                                <div class="panel-footer" style="margin-bottom:-14px;" align="right">
+                                                                                    <input type="submit" class="btn btn-success" value="Save" style="float: right;" />
+                                                                                </div>
+                                                                            </div>
                                                                       
                                                                     </div>
                                                             </form>
@@ -443,6 +501,20 @@ a:focus {
                     </div>
                 </div>
             </div>
+               <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
         </div>
                         
 </body>
@@ -481,7 +553,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {

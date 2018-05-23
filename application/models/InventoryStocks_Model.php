@@ -46,6 +46,30 @@ class InventoryStocks_Model extends CI_model
         );
         $this->db->insert('activitylogs', $data);
   }  
+
+  function supp_po_ordered($status, $name, $type){
+        $data = array(
+            'inv_stat' => $status
+        );
+        $this->db->where('item', $name); 
+        $this->db->where('type', $type); 
+        $this->db->update('supp_po_ordered', $data);
+  }  
+  function company_returns($status, $name, $type){
+
+        $data = array(
+            'inv_stat' => $status
+        );
+        
+        $this->db->query("UPDATE company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id SET company_returns.inv_stat ='1' WHERE item ='".$name."' AND type = '".$type."'");
+  }  
+  function trans_raw($status, $id){
+        $data = array(
+            'inv_stat' => $status
+        );
+        $this->db->where('raw_coffeeid', $id); 
+        $this->db->update('trans_raw', $data);
+  }  
 }
       
       

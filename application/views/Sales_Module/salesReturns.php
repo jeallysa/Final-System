@@ -41,11 +41,11 @@
 
 		}
 		.navbar-default > li.active > a, .navbar-default > li.active > a:focus, .navbar-default > li.active > a:hover {
-			border-top: 1px solid #4cb1d1 !important;
-			border-right: 1px solid #4cb1d1 !important;
-			border-left: 1px solid #4cb1d1 !important;
+			border-top: 1px solid 	#DDA0DD !important;
+			border-right: 1px solid #DDA0DD !important;
+			border-left: 1px solid 	#DDA0DD !important;
 			border-bottom: transparent !important;
-			background-color: #4cb1d1 !important;
+			background-color: 	#DDA0DD !important;
 			color: white !important;
 		}
 		.navbar-default > li.active > a {
@@ -55,7 +55,7 @@
 		}
 		.navbar-default > li > a, .navbar-default > li > a:hover {
 			border: none;
-			color: #4cb1d1 !important;
+			color: 	#DDA0DD !important;
 			background: transparent;
 		}
 		.navbar-default > li > a::after {
@@ -81,8 +81,8 @@
 		}
 		.tab-color{
 			padding:20px;
-			border-top: 3px solid #4cb1d1;
-			border-left: 2px solid #4cb1d1;
+			border-top: 3px solid 	#DDA0DD;
+			border-left: 2px solid 	#DDA0DD;
 		}
 
 		.select-pane {
@@ -99,6 +99,8 @@
 			border: none !important;
 
 		}
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+        .panel-primary{ border-color:#9c27b0 !important}
 
 
 
@@ -260,7 +262,7 @@
                                                     <tr>
                                                         <td><?php echo $row->client_dr; ?></td>
                                                         <td><?php echo $row->coff_returnDate; ?></td>
-                                                        <td><?php echo $row->coff_returnQty; ?> bags</td>
+                                                        <td><?php echo $row->coff_returnQty; ?> bag/s</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
@@ -303,7 +305,7 @@
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
                                                         <td><?php echo number_format($row->package_size); ?> g</td>
-                                                        <td><?php echo $row->walkin_returns; ?></td>
+                                                        <td><?php echo $row->walkin_returns; ?> bag/s</td>
                                                         <td><?php echo $row->coff_remarks; ?></td>
                                                         <td>
                                                             <button class="btn btn-success btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee_walkin<?php echo $row->walkin_id; ?>" id="getDetails" data-id="<?php echo $row->walkin_id; ?>"> Resolve</button>
@@ -341,7 +343,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
-                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bags</b></p>
+                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bag/s</b></p>
                                             </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
@@ -412,7 +414,7 @@
                                                     <tr>
                                                         <td><?php echo $row->mach_serial; ?></td>
                                                         <td><?php echo $row->mach_returnDate; ?></td>
-                                                        <td><?php echo $row->mach_returnQty; ?> /unit</td>
+                                                        <td><?php echo $row->mach_returnQty; ?> unit/s</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->brewer; ?></td>
                                                         <td><?php echo $row->mach_remarks; ?></td>
@@ -556,7 +558,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bags</b></p>
+															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bag/s</b></p>
 														</div>
 													</div>
                                                     <br>
@@ -637,7 +639,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input class="no-border" type="text" name="qty" readonly /> units</b></p>
+															<p><b><input class="no-border" type="text" name="qty" readonly /> unit/s</b></p>
 														</div>
 													</div>
                                                     <br>
