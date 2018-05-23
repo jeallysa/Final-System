@@ -322,6 +322,7 @@ a:focus {
                                                                     </div>
                                                                     <form action="<?php echo base_url(); ?>AdminClients/update" method="post" accept-charset="utf-8">
                                                                           <div class="modal-body" style="padding-left: 100px;">
+                                                                             <h6> Client Information: </h6>
                                                                              <div class="form-group row">
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">Company Name</label>
@@ -338,12 +339,14 @@ a:focus {
                                                                                  </select>
                                                                                 </div>
                                                                             </div>
-                                                                            <h5> Contact Personnel </h5>
+                                                                            <h6> Contact Personnel: </h6>
                                                                                 <div class="form-group row">
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">Last Name</label>
                                                                                     <input class="form-control" name="last_name" type="text" value="<?php echo $row->client_lname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Last Name should only countain letters">
                                                                                 </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">First Name</label>
                                                                                     <input class="form-control" name="first_name" type="text" value="<?php echo $row->client_fname; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="First Name should only countain letters">
