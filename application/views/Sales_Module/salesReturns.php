@@ -41,11 +41,11 @@
 
 		}
 		.navbar-default > li.active > a, .navbar-default > li.active > a:focus, .navbar-default > li.active > a:hover {
-			border-top: 1px solid #4cb1d1 !important;
-			border-right: 1px solid #4cb1d1 !important;
-			border-left: 1px solid #4cb1d1 !important;
+			border-top: 1px solid 	#DDA0DD !important;
+			border-right: 1px solid #DDA0DD !important;
+			border-left: 1px solid 	#DDA0DD !important;
 			border-bottom: transparent !important;
-			background-color: #4cb1d1 !important;
+			background-color: 	#DDA0DD !important;
 			color: white !important;
 		}
 		.navbar-default > li.active > a {
@@ -55,7 +55,7 @@
 		}
 		.navbar-default > li > a, .navbar-default > li > a:hover {
 			border: none;
-			color: #4cb1d1 !important;
+			color: 	#DDA0DD !important;
 			background: transparent;
 		}
 		.navbar-default > li > a::after {
@@ -81,8 +81,8 @@
 		}
 		.tab-color{
 			padding:20px;
-			border-top: 3px solid #4cb1d1;
-			border-left: 2px solid #4cb1d1;
+			border-top: 3px solid 	#DDA0DD;
+			border-left: 2px solid 	#DDA0DD;
 		}
 
 		.select-pane {
@@ -99,6 +99,8 @@
 			border: none !important;
 
 		}
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+        .panel-primary{ border-color:#9c27b0 !important}
 
 
 
