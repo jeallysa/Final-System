@@ -72,6 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
     public function get_max(){  
+        
         $poNo = $this->input->post('poNo');
         $item = $this->input->post('item');
         $drNo = $this->input->post('drNo');
@@ -80,10 +81,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         $result = $this->inventoryPOUnpaidDelivery_model->get_maxModel($poNo , $item, $drNo);
         
-     
+         if(count($result) > 0){
+ 
           
-            echo json_encode($result);
-            
+          echo json_encode($result);
+         }
         
       
     }    
@@ -92,17 +94,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
         public function insertReturn(){
-        
+             $category = $this->input->post('category');
+             $returnQty = $this->input->post('returnQty');
+            if($category == 1){
           
-         $data = array(      "poNo"               => $this->input->post('poNo'),
-                             "drNo"               => $this->input->post('drList'),
-                             "sup_returnDate"     => $this->input->post('date'),
-                             "sup_returnItem"     => $this->input->post('item'),
-                             "sup_returnRemarks"  => $this->input->post('remarks'),
-                             "sup_returnQty"      => $this->input->post('returnQty'),
-                            );    
+                  $data = array(      "poNo"               => $this->input->post('poNo'),
+                                      "drNo"               => $this->input->post('drList'),
+                                      "sup_returnDate"     => $this->input->post('date'),
+                                      "sup_returnItem"     => $this->input->post('item'),
+                                      "sup_returnRemarks"  => $this->input->post('remarks'),
+                                      "sup_returnQty"      => $returnQty * 1000,
+                                      "categoryr"          => $category,
+                                     );   
+            }else{
+                
+                 $data = array(      "poNo"                => $this->input->post('poNo'),
+                                      "drNo"               => $this->input->post('drList'),
+                                      "sup_returnDate"     => $this->input->post('date'),
+                                      "sup_returnItem"     => $this->input->post('item'),
+                                      "sup_returnRemarks"  => $this->input->post('remarks'),
+                                      "sup_returnQty"      => $returnQty,
+                                      "categoryr"          => $category, 
+                                     );   
+                
+                
+                
+                
+            }
         
-        $this->inventoryPOUnpaidDelivery_model->insertReturns($data);
+         $this->inventoryPOUnpaidDelivery_model->insertReturns($data);
           
          $this->inventoryPOUnpaidDelivery_model->updateStocks($data);  
           
