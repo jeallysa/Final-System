@@ -56,12 +56,12 @@ class InventoryStocks_Model extends CI_model
         $this->db->update('supp_po_ordered', $data);
   }  
   function company_returns($status, $name, $type){
-        $query = $this->db->query("SELECT * FROM jhcs.company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id WHERE item ='".$name." AND type = '".$type."';");
+
         $data = array(
             'inv_stat' => $status
         );
-        $this->db->where('sup_returnItem', $name, $type); 
-        $this->db->update('company_returns', $data);
+        
+        $this->db->query("UPDATE company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id SET company_returns.inv_stat ='1' WHERE item ='".$name."' AND type = '".$type."'");
   }  
   function trans_raw($status, $id){
         $data = array(
