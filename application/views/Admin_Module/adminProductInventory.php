@@ -178,8 +178,9 @@ a:focus {
 }
 
 .footer{
-    z-index: -1;
+    z-index: 0;
 }
+
 
 </style>
 <body>
@@ -578,12 +579,15 @@ a:focus {
             </div>
             <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
-                  <div class="copyright float-right">
+                  <div class="copyright float-center">
+                    <center>
                     &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
                     <script>
                       document.write(new Date().getFullYear())
                     </script>, made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
                   </div>
                 </div>
               </footer>
@@ -630,7 +634,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
 		buttons: [
             { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
                 exportOptions: {
