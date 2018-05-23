@@ -49,12 +49,20 @@
         
 			);
 			$type = $this->input->post("type");
-            $size = $this->input->post("size");
-			$this->AdminPackaging_model->activity_logs('admin', "Inserted New Packaging: '".$type." bag, ".$size."g'");
-			$data = $this->security->xss_clean($data);
-			$this->AdminPackaging_model->insert_data($data);
-			echo "<script>alert('Insert successful!');</script>";
-			redirect('adminPackaging', 'refresh');
+		    $size = $this->input->post("size");
+			if($this->db->query("SELECT IF (EXISTS (SELECT * FROM packaging WHERE package_type = '".$type."' AND package_size = '".$size."'), 1,  0) AS result")->row()->result == 1){
+					$this->session->set_flashdata('error', 'Packaging already exist');
+								redirect('adminPackaging');
+				}else{
+					$type = $this->input->post("type");
+		            $size = $this->input->post("size");
+					$this->AdminPackaging_model->activity_logs('admin', "Inserted New Packaging: '".$type." bag, ".$size."g'");
+					$data = $this->security->xss_clean($data);
+					$this->AdminPackaging_model->insert_data($data);
+					$this->session->set_flashdata('error', 'Packaging added successfully');
+					redirect('adminPackaging', 'refresh');
+				}
+			
 		}
 
         function activation(){
