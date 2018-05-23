@@ -228,6 +228,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $size = $object->package_size;
             $id =  $object->package_id;
             $stock =  $object->package_stock; 
+            $physical =  $object->package_physcount; 
           
            
 ?>
@@ -313,10 +314,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
+                                            <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> pcs</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
                                             <tbody>
                                                 
                                                 <?php
-                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE packaging.package_id = ".$id ;
+                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.pckng_stat='0' AND packaging.package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -334,7 +342,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE delivery_stat = 'delivered' AND coffee_blend.package_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -352,7 +360,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails3 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE packaging.package_id = ".$id ;
+                                              $retrieveDetails3 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE client_coffreturn.pckng_stat='0' AND packaging.package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails3);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -370,7 +378,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN packaging ON supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size WHERE package_id = ".$id;
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN packaging ON supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size WHERE company_returns.pckng_stat='0' AND package_id = ".$id;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -388,7 +396,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT package_id, item, qty, date_received, yield_weight, sup_company FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE package_id = ".$id ;
+                                              $retrieveDetails4 ="SELECT package_id, item, qty, date_received, yield_weight, sup_company, supp_po_ordered.pckng_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -406,7 +414,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE res = 'resolved' AND package_id = ".$id ;
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE company_returns.pckng_stat='0' AND res = 'resolved' AND package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -436,14 +444,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE packaging.package_id = '". $id  ."' UNION ALL
-SELECT yield_weight AS TotalIn FROM supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE package_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE res = 'resolved' AND package_id = '". $id  ."') AS b; " ;
+(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE client_coffreturn.pckng_stat='0' AND packaging.package_id = '". $id  ."' UNION ALL
+SELECT yield_weight AS TotalIn FROM supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE company_returns.pckng_stat='0' AND res = 'resolved' AND package_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
-(SELECT walkin_qty AS TotalOut FROM walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE packaging.package_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE delivery_stat = 'delivered' AND coffee_blend.package_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN packaging ON supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size WHERE package_id = '". $id  ."') AS b; " ;
+(SELECT walkin_qty AS TotalOut FROM walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.pckng_stat='0' AND packaging.package_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.package_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN packaging ON supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size WHERE company_returns.pckng_stat='0' AND package_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {

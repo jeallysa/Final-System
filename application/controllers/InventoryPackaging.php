@@ -35,7 +35,13 @@
         
             $this->InventoryPackaging_Model->update($data , $id);    
         	
-        	$this->InventoryPackaging_Model->activity_logs('inventory', "Record Physical Count under Packaging Inventory Stocks ");   
+        	$this->InventoryPackaging_Model->activity_logs('inventory', "Record Physical Count under Packaging Inventory Stocks ");
+
+        	$this->InventoryPackaging_Model->walkin_sales(1, $id);
+        	$this->InventoryPackaging_Model->client_coffreturn(1, $id);  
+        	$this->InventoryPackaging_Model->contracted_po(1, $id);
+        	$this->InventoryPackaging_Model->company_returns(1, $id);  
+        	$this->InventoryPackaging_Model->supp_po_ordered(1, $id);  
             
             redirect('inventoryPackaging');
         }  
