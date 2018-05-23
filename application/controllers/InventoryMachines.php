@@ -36,7 +36,12 @@
         
             $this->InventoryMachines_Model->update($data , $id);    
         	
-        	$this->InventoryMachines_Model->activity_logs('inventory', "Record Physical Count under Machine Inventory Stocks ");   
+        	$this->InventoryMachines_Model->activity_logs('inventory', "Record Physical Count under Machine Inventory Stocks ");
+
+        	$this->InventoryMachines_Model->machine_out(1, $id);
+        	$this->InventoryMachines_Model->client_machreturn(1, $id);
+        	$this->InventoryMachines_Model->company_returns(1, $id);  
+        	$this->InventoryMachines_Model->supp_po_ordered(1, $id);      
             
             redirect('inventoryMachines');
         }  
