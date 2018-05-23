@@ -32,7 +32,7 @@
    function ajaxTotal($poId){
       $query = $this->db->query('SELECT * from supp_po where supp_po_id ='.$poId);
       if($query->num_rows() > 0){
-          return $query-> row();
+          return $query->row();
       }else
           return NULL;
   }
@@ -57,40 +57,54 @@
             
             $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
-            $queryLimit = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
+$queryLimit = $this->db->query("SELECT * FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
             
             $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
             
 		 
-                if($queryCheck->num_rows() > 0){
+   if($queryCheck->num_rows() > 0){
                     
                             $limit = $queryLimit->row();
                             $deduc = $queryDeduc->row();
                     
-                    $limitT  = $limit->max;
+       
+                    $limitT  =  $limit->yield_weight;
+                    $category  = $limit->categoryx;
+       
                     $deducT  = $deduc->max;
                     
-                    $result = $limitT - $deducT;
+                    $total = $limitT - $deducT;
+       
+       
+       
+                    $result = array("yield_weight"  => $total,
+                                     "categoryx"    =>$category,
+                                               );
+        
+       
                     
-                 //   $result = $deducT;
-                    
+                 
                     
                     return $result;
                     
-                }else{
+    }else{
                     
-                      $query2 = $this->db->query("SELECT sum(yield_weight)  max  FROM supp_delivery where supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item);
-                         if($query2->num_rows() > 0){
+  $query2 = $this->db->query("SELECT * FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
+                if($query2->num_rows() > 0){
                                         
-                                      $limit = $queryLimit->row();
-                              $limitT  = $limit->max;
+                               $result = $query2->row();
                              
                              
+                              //$limit  = $result->yield_weight;
+                              //$category = $result->categoryx;
                              
-                                    return  $limitT;
                              
+                            // $maxOrder = array("limit" =>$limit,
+                                               //"category" =>$category,
+                                             // );
                              
+                                return  $result;
                              
                               }
                 }

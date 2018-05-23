@@ -327,7 +327,7 @@ s}
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -396,10 +396,12 @@ s}
                                              <table id="" class="table hover order-column" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th><b>Delivery Receipt No.</b></th>
+                                                     <th><b>Purchase Order No.</b></th>
+                                                     <th><b>Delivery Receipt No.</b></th>
 													 <th><b>Date Returned</b></th>
                                                      <th><b>Item Returned</b></th>
-                                                     <th><b>Quantity/Weight</b></th>
+                                                     <th><b>Quantity</b></th>
+                                                     <th><b>Weight(kg)</b></th>
                                                      <th><b>Remarks</b></th>
                                                      <th></th>
                                                     
@@ -411,19 +413,54 @@ s}
                                                     if(!empty($data1['get_companyreturns'])){
                                                     foreach($data1['get_companyreturns'] as $row){
                                                   
-                                                ?>
+                                                if($row->categoryr==1){ 
+                                                  ?>
                                                 <tr>
+                                                    <td><?php echo $row->poNo ?></td>
                                                     <td><?php echo $row->drNo ?></td>
                                                     <td><?php echo $row->sup_returnDate ?></td>
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
-                                                    <td><?php echo $row->sup_returnQty ?> kg</td>
+                                                    <td></td>
+                                                    <td><?php echo number_format((($row->sup_returnQty)/1000),2) ?> kg</td>
                                                     <td><?php echo $row->sup_returnRemarks ?></td>
-                                            <?php 
+                                              
+                                                    
+                                                <?php 
+                                                    if($row->res == "unresolved"){
+                                                 ?>   
+                                                    <td><a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a></td>
+                                                   
+                                                <?php       
+                                                    }else{ ?>
+													<td><a class=" btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "detailsModal" . $returnModal   ?>">Details</a></td>	
+														
+												<?php 		
+													}
+                                                       ?>
+                                                </tr>
+                                                
+                                                
+                                                
+                                                <?php
+                                                   
+                                                    }else{ ?>
+                                                <tr>
+                                                    <td><?php echo $row->poNo ?></td>
+                                                    <td><?php echo $row->drNo ?></td>
+                                                    <td><?php echo $row->sup_returnDate ?></td>
+                                                    <td><?php echo $row->item."  ".$row->type ?></td>
+                                                    <td><?php echo $row->sup_returnQty ?></td>
+                                                    <td></td>
+                                                    <td><?php echo $row->sup_returnRemarks ?></td>
+                                              
+                                                    
+                                                <?php 
                                                     if($row->res == "unresolved"){
                                                  ?>   
                                                     <td>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "returnModal" . $returnModal   ?>">Resolve</a>
                                                     </td>
+                                                   
                                                 <?php       
                                                     }else{ ?>
 													<td>
@@ -433,13 +470,13 @@ s}
 												<?php 		
 													}
                                                        ?>
-                                                       
-                                                </tr>
-                                                <?php
-                                                    $returnModal++;
-                                                    }
-                                                        
-                                                 } 
+                                                  </tr>
+                                                    
+                                               <?php     
+                                                   }
+                                                  $returnModal++;
+                                              }
+                                           } 
                                                 ?>
                                             </tbody>
                                         </table>

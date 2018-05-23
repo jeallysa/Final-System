@@ -16,8 +16,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -234,13 +232,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>Product</b></th>
-                                                    <th align="center"><b>Type</b></th>
-                                                    <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>PRODUCT</b></th>
+                                                    <th align="center"><b>TYPE</b></th>
+                                                    <th align="center"><b>SUPPLIER</b></th>
+                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -356,12 +354,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                           <label>Delivery Receipt No.</label>
+                                           <label>DR #</label>
                                            <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
                                                 <option value="">Select DR#</option> -->
                                         <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
                                                <!-- <option disabled selected value="">Select DR#</option> -->
-                                                <option value="">Select DR #</option>
+                                                <option value="">Select DR#</option>
                                                 
                    <?php                              
                           $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
@@ -412,6 +410,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 
                                       <input class="form-control" type="hidden" name="poNo" value="<?php echo $temp ?>"/>
+                                      <input class="form-control" type="hidden" name="category" id="<?php echo "category".$return ?>" />
                                 
                             </div>
                             <div class="panel-footer" style="margin-bottom:-14px;">
@@ -448,7 +447,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
-            $dateMin = $object->suppPO_date
+            $dateMin = $object->suppPO_date;
+               $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -518,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          <tr>
                                                    <td>Trucking Fee</td>
                                                    <td></td>
-                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($unpaid[1]->trucking_fee),2)?> "readonly disabled /></td>
+                                                   <td><input class="form-control" type="text"  id="trucking_fee" value ="<?php echo 'Php ' .  number_format(($tfee),2)?> "readonly disabled /></td>
                                                             
                                                         </tr>   
                                                         
@@ -541,14 +541,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <div class="col-md-4">
                                                                             <div class="form-group label-floating">
                                                                             <label>Total Balance:</label>
-                                                                             <input class="form-control" type="text"  id="total" readonly disabled />
+                                                                                <input class="form-control" step="0.01" type="text"  id="total" readonly disabled />
                                                                              </div>
                                                                         </div>
                                                                         
                                                                         <div class="col-md-4">
                                                                              <div class="form-group label-floating">
                                                                             <label>Remaining Balance</label>
-                                                                             <input class="form-control" type="text"  value=" " id="remaining" readonly disabled />
+                                                                             <input class="form-control" type="text"  step="0.01"   id="remaining" readonly disabled />
                                                                              </div>
                                                                         </div>    
                                                                    </div>      
@@ -591,6 +591,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
           <?php                       
                    $partial++;
+               
                                
            }  
      }
@@ -639,7 +640,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Date Received</th>
-                                                                       <th>Delivery Receipt No.</th>
+                                                                       <th>DR No.</th>
                                                                         <th>Item Name</th>
                                                                         <th>Type</th>
                                                                         <th>Quantity</th>
@@ -794,7 +795,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <thead>
                                             <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
-                                            <th><b class="pull-left">Purchase Order Credit Term</b></th>
+                                            <th><b class="pull-left">PO Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
                                             
@@ -920,22 +921,19 @@ $partial = 1;
               success: function(data){
                   
                    var total = data['total_amount'];  //use this syntax when returning a single row only data['total_amount'] column name in the query
-                   
+                   var total1 = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  
+                  
                    var payment =  data['payment'];
                   
-                  
-                   //var truckingFee =  data['trucking_fee'];
-                  
-                   //var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                  
-                   //var tfee ="Php " +tfeex+ ".00" ; 
-                   
-                  
+            
                   
                    var remaining = total - payment;
+                   var remaining1 = remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                   //var remaining2 = remaining1.toFixed(2);
                    
-                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
-                  $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
+                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(total1); 
+                  $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining1);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
                  // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
@@ -1052,16 +1050,29 @@ $(document).ready(function() {
               dataType: 'json',
               success: function(data){
                 //alert("success"); 
-              
-                 var newData = data; //data['max']; 
-                 
-                 $(<?php echo "'#returnQty".$return."'"?>).attr("max", newData);
-                 $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",newData);
+                  var category = data['categoryx'];
+                  var maxQtyx =   data['yield_weight'];
                   
-                 $(<?php echo "'#returnQty".$return."'"?>).removeAttr('disabled')
-                 $(<?php echo "'#remarks".$return."'"?>).removeAttr('disabled')
+                if(category == 1){
+                    var maxQty = maxQtyx/1000
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQty);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQty);
+                      $(<?php echo "'#category".$return."'"?>).val(category);
+                      
+                }else{
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQtyx);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQtyx);
+                      $(<?php echo "'#category".$return."'"?>).val(category);
+                } 
+                     
+                   
+                     $(<?php echo "'#returnQty".$return."'"?>).removeAttr('disabled')
+                     $(<?php echo "'#remarks".$return."'"?>).removeAttr('disabled')
               },
               error: function(){
+                 // alert("error");
+                  
+                  
                   $(<?php echo "'#returnQty".$return."'"?>).val('');
                   $(<?php echo "'#remarks".$return."'"?>).val('');
                   
@@ -1070,7 +1081,6 @@ $(document).ready(function() {
                   
                   $(<?php echo "'#returnQty".$return."'"?>).attr('disabled','disabled')
                   $(<?php echo "'#remarks".$return."'"?>).attr('disabled','disabled')
-                  //alert("error");
                 
               }
           });
@@ -1098,15 +1108,5 @@ $(document).ready(function() {
     
 </script>
 
-<script>
 
-$(document).ready(function() {
-    $('#example2').DataTable({
-        select: {
-            style: 'single'
-        }
-
-    });
-});
-</script>
 </html>

@@ -371,9 +371,18 @@ a:focus {
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">Position</label>
                                                                                     <select class="form-control" name="position" type="textarea" value="<?php echo $row->u_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
-                                                                                    <option value="admin">admin</option>
-                                                                                     <option value="sales">sales</option>
-                                                                                     <option value="inventory">inventory</option>
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_utype = $this->db->query("SELECT DISTINCT u_type FROM user;");
+                                                                                        foreach($query_utype->result() as $row2){
+                                                                                            if($row->u_type == $row2->u_type){
+                                                                                                echo '<option value="'.$row2->u_type.'" selected>'.$row2->u_type.'</option>';
+                                                                                            }else{
+                                                                                                echo '<option value="'.$row2->u_type.'">'.$row2->u_type.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
                                                                                      </select>
                                                                                 </div>
                                                                             </div>
