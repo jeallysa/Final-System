@@ -226,8 +226,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       if(!empty($coffee)) {                                     
            foreach($coffee as $object){
             $coff = $object->raw_coffee; 
+            $type = $object->raw_type; 
             $id =  $object->raw_id;
             $stock =  $object->raw_stock; 
+            $physical =  $object->raw_physcount; 
           
            
 ?>
@@ -300,6 +302,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <div class="col-lg-12 col-md-12 col-sm-12 text-center" style="padding-bottom: 10px;">
                                                                 <h3><b><?php echo $coff; ?></b></h3>
+                                                                <h4><b><?php echo $type; ?></b></h4>
                                                                 <hr>
                                                             </div>
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
@@ -312,10 +315,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
+                                            <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical/1000); ?> kg</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
                                             <tbody>
 
+
                                                 <?php
-                     $retrieveCompdel ="SELECT item, qty, date_received, yield_weight, sup_company, raw_id FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id ; 
+                     $retrieveCompdel ="SELECT item, qty, date_received, yield_weight, sup_company, raw_id, inv_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE inv_stat='0' AND raw_id = ".$id ; 
                                      $query = $this->db->query($retrieveCompdel);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -335,7 +346,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
                                                 
                     <?php
-                     $retrieveCompreturn ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id; 
+                     $retrieveCompreturn ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND raw_id = ".$id; 
                                      $query = $this->db->query($retrieveCompreturn);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -353,7 +364,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = ".$id; 
+                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
                                      $query = $this->db->query($retrieveSales);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -371,7 +382,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = ".$id ;
+                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE company_returns.inv_stat='0' AND res = 'resolved' AND raw_id = ".$id ;
                                               $query = $this->db->query($retrieveResolve);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -400,12 +411,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="Select SUM(TotalIn) AS TotalIn from
-(SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
+(SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE supp_po_ordered.inv_stat='0' AND raw_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE supp_po_ordered.inv_stat='0' AND res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="Select SUM(TotalOut) AS TotalOut from
-(SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = '". $id  ."' UNION ALL
-SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+(SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND raw_id = '". $id  ."' UNION ALL
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
@@ -425,7 +436,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                         <div class="col-md-4">
                                                                             <?php
                                                                             echo
-                                                                            '<input value="'  . number_format(($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            '<input value="'  . number_format(($physical/1000)+($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
             
@@ -464,6 +475,18 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                         <label for="type"></label>
                                                                         <div class="col-md-4">
                                                                             <input value="<?php echo $stock; ?>" class="form-control" id = "rawstocks<?php echo $details; ?>" name="rawstocks" type="hidden" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="type"></label>
+                                                                        <div class="col-md-4">
+                                                                            <input value="<?php echo $coff; ?>" class="form-control" id = "rawname<?php echo $details; ?>" name="rawname" type="hidden" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="type"></label>
+                                                                        <div class="col-md-4">
+                                                                            <input value="<?php echo $type; ?>" class="form-control" id = "rawtype<?php echo $details; ?>" name="rawtype" type="hidden" />
                                                                         </div>
                                                                     </div>
                                                             </div>
