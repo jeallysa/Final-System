@@ -261,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -409,10 +409,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tbody>
 
                                         </table>
+
                                         <div class="row">
                                             <center>  
                                                             <div class="row">
                                                                     <div class="form-group">
+                                                                        <label class="col-md-6 control">Total In :</label>
+
+                                                                        <div class="col-md-4">
+
+                                        <?php
+                                              $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
+(SELECT mach_returnQty AS TotalIn FROM jhcs.client_machreturn NATURAL JOIN contracted_client WHERE mach_returnQty != '0' AND  mach_id = '". $id  ."' UNION ALL
+SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE mach_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE res = 'resolved' AND mach_id = '". $id  ."') AS b; " ;
+
+$retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
+(SELECT mach_qty AS TotalOut FROM jhcs.machine_out NATURAL JOIN machine NATURAL JOIN contracted_client where mach_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE mach_id = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalin);
+                                              $query2 = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
+                                              
+                                           echo 
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' pcs" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '</div>',
+                                                '<label class="col-md-6 control">Total Out :</label>',
+                                                '<div class="col-md-4">',
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' pcs" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              
+                                            }
+                                        ?> 
+                                    </div>
+
+                                    <label class="col-md-6 control">Subtotal :</label>
+                                                                        <div class="col-md-4">
+                                                                            <?php
+                                                                            echo
+                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' pcs"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            ?>
+                                                                        </div>
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
                                                                             <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
@@ -666,7 +702,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=machstocks".$c."]'"?>).val());
-            var res = x - y || 0;
+            var res = y - x || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
