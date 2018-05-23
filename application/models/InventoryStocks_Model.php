@@ -47,25 +47,27 @@ class InventoryStocks_Model extends CI_model
         $this->db->insert('activitylogs', $data);
   }  
 
-  function supp_po_ordered($status, $id){
+  function supp_po_ordered($status, $name, $type){
         $data = array(
             'inv_stat' => $status
         );
-        $this->db->where('item', $name && 'type', $type); 
+        $this->db->where('item', $name); 
+        $this->db->where('type', $type); 
         $this->db->update('supp_po_ordered', $data);
   }  
-  function company_returns($status, $id){
+  function company_returns($status, $name, $type){
+        $query = $this->db->query("SELECT * FROM jhcs.company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id WHERE item ='".$name." AND type = '".$type."';");
         $data = array(
             'inv_stat' => $status
         );
-        $this->db->where('sup_returnItem', $name && 'type', $type ); 
+        $this->db->where('sup_returnItem', $name, $type); 
         $this->db->update('company_returns', $data);
   }  
   function trans_raw($status, $id){
         $data = array(
             'inv_stat' => $status
         );
-        $this->db->where('raw_coffeeid', $id, $type ); 
+        $this->db->where('raw_coffeeid', $id); 
         $this->db->update('trans_raw', $data);
   }  
 }
