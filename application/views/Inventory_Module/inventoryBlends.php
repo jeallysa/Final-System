@@ -418,39 +418,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <div class="row">
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Total In :</label>
-                                        <div class="col-md-4">
+
+                                                                        <div class="col-md-4">
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
 (SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE coffee_blend.blend_id = '". $id  ."' UNION ALL
 SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
 SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = '". $id  ."') AS b; " ;
+
+$retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
+(SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
+                                              $query2 = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
+                                              
                                            echo 
-                                                '<input value="'  . number_format($object->TotalIn) . ' bags" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ;
-                                              }
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' bags" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '</div>',
+                                                '<label class="col-md-6 control">Total Out :</label>',
+                                                '<div class="col-md-4">',
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' bags" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              
                                             }
                                         ?> 
                                     </div>
 
-                                                                        <label class="col-md-6 control">Total Out :</label>
+                                    <label class="col-md-6 control">Subtotal :</label>
                                                                         <div class="col-md-4">
-
                                                                             <?php
-                                              $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
-(SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
-                                              $query = $this->db->query($retrieveTotalout);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo 
-                                                '<input value="'  . number_format($object->TotalOut)  . ' bags" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
-                                              }
-                                            }
-                                        ?> 
-                                        </div>
+                                                                            echo
+                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bags"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            ?>
+                                                                        </div>
 
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
@@ -706,7 +707,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=blndstocks".$c."]'"?>).val());
-            var res = x - y || 0;
+            var res = y - x || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")

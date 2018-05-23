@@ -415,11 +415,19 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                 '</div>',
                                                 '<label class="col-md-6 control">Total Out :</label>',
                                                 '<div class="col-md-4">',
-                                                '<input value="'  . number_format($query2->row()->TotalOut/1000), 2  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                                '<input value="'  . number_format($query2->row()->TotalOut/1000, 2)  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
                                               
                                             }
                                         ?> 
                                     </div>
+
+                                    <label class="col-md-6 control">Subtotal :</label>
+                                                                        <div class="col-md-4">
+                                                                            <?php
+                                                                            echo
+                                                                            '<input value="'  . number_format(($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            ?>
+                                                                        </div>
             
                                                                     </div>
                                                                     <div class="form-group">
@@ -678,7 +686,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=rawstocks".$c."]'"?>).val());
-            var res = (x / 1000) - y || 0;
+            var res = y - (x / 1000) || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
