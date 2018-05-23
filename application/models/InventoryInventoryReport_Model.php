@@ -20,7 +20,10 @@ class InventoryInventoryReport_model extends CI_Model {
 			$query_append .=  " AS ". $row->raw_coffee ." ";
 		}
 
-		$query_append .= " FROM raw_coffee a LEFT JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN supp_delivery d ON c.po_supplier = d.supp_po_id JOIN supp_po e ON d.supp_po_id = e.supp_po_id JOIN supplier f ON e.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
+		$query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid
+    JOIN inv_transact c ON b.trans_id = c.trans_id
+    JOIN supp_po d ON c.po_supplier = d.supp_po_id
+    JOIN supplier f ON d.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
 
         foreach ($qcount->result() AS $row){
 			$new_query = $this->db->query("SELECT raw_id, raw_coffee FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
@@ -73,7 +76,10 @@ class InventoryInventoryReport_model extends CI_Model {
 			$query_append .=  " AS ". $row->raw_coffee ." ";
 		}
 
-		$query_append .= " FROM raw_coffee a LEFT JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN supp_delivery d ON c.po_supplier = d.supp_po_id JOIN supp_po e ON d.supp_po_id = e.supp_po_id JOIN supplier f ON e.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
+		$query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid
+    JOIN inv_transact c ON b.trans_id = c.trans_id
+    JOIN supp_po d ON c.po_supplier = d.supp_po_id
+    JOIN supplier f ON d.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
 
         foreach ($qcount->result() AS $row){
 			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
