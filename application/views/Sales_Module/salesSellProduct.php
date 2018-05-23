@@ -194,11 +194,11 @@
                                                         </td>
                                                          <td><?php 
                                                             if ($row->walkin_returns == 0 && $row->resolved == 'No') {
-                                                                echo " ";
+                                                                echo "";
                                                             } else if ($row->walkin_returns > 0 && $row->resolved == 'No'){
                                                                 echo 'returned '.$row->walkin_returns.' bag/s';
                                                             } else if ($row->walkin_returns == 0 && $row->resolved == 'Yes') {
-                                                                echo "resolved";
+                                                                echo "returns resolved";
                                                             }
                                                          ?></td>
                                                          <td><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#returnblend<?php echo $row->walkin_id; ?>" <?php 
@@ -516,7 +516,7 @@ $(document).ready(function() {
     $('#cosales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>
@@ -525,7 +525,7 @@ $(document).ready(function() {
     $('#masales').DataTable({
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
     });
 });
 </script>
