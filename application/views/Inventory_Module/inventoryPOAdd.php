@@ -28,6 +28,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' type='text/css'>
 </head>
 <style>
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #17bbd0;
+    border-color: #9c27b0;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
 .btn, .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .open>.btn.dropdown-toggle, .open>.btn.dropdown-toggle:focus, .open>.btn.dropdown-toggle:hover, .btn.btn-default, .btn.btn-default:hover, .btn.btn-default:focus, .btn.btn-default:active, .btn.btn-default.active, .btn.btn-default:active:focus, .btn.btn-default:active:hover, .btn.btn-default.active:focus, .btn.btn-default.active:hover, .open>.btn.btn-default.dropdown-toggle, .open>.btn.btn-default.dropdown-toggle:focus, .open>.btn.btn-default.dropdown-toggle:hover, .navbar .navbar-nav>li>a.btn, .navbar .navbar-nav>li>a.btn:hover, .navbar .navbar-nav>li>a.btn:focus, .navbar .navbar-nav>li>a.btn:active, .navbar .navbar-nav>li>a.btn.active, .navbar .navbar-nav>li>a.btn:active:focus, .navbar .navbar-nav>li>a.btn:active:hover, .navbar .navbar-nav>li>a.btn.active:focus, .navbar .navbar-nav>li>a.btn.active:hover, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle:focus, .open>.navbar .navbar-nav>li>a.btn.dropdown-toggle:hover, .navbar .navbar-nav>li>a.btn.btn-default, .navbar .navbar-nav>li>a.btn.btn-default:hover, .navbar .navbar-nav>li>a.btn.btn-default:focus, .navbar .navbar-nav>li>a.btn.btn-default:active, .navbar .navbar-nav>li>a.btn.btn-default.active, .navbar .navbar-nav>li>a.btn.btn-default:active:focus, .navbar .navbar-nav>li>a.btn.btn-default:active:hover, .navbar .navbar-nav>li>a.btn.btn-default.active:focus, .navbar .navbar-nav>li>a.btn.btn-default.active:hover, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle:focus, .open>.navbar .navbar-nav>li>a.btn.btn-default.dropdown-toggle:hover {
     background-color: transparent;
     color: #000000;
@@ -459,7 +470,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                          <?php if(!empty($lastPO[0])){
                                                                 $last = $lastPO[0]->supp_po_id;
                                                                 $new = $last + 1;
-                                                                echo '<h3> PO#' .$new  .'</h3>';
+                                                                echo '<h3> Purchase Order No. ' .$new  .'</h3>';
                                                                } 
                                                         ?>
                                                   <?php     

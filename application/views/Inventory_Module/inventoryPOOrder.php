@@ -331,7 +331,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <div class="col-md-4 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label>DR No.</label>
+                                                        <label>Delivery Receipt No.</label>
                                                          <input type="Text" class="form-control" name="DRNO" required>
                                                     </div>
                                                 </div>
@@ -382,7 +382,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <tr>
                                                         <th>Item Name</th>
                                                         <th>Type</th>
-                                                        <th>Original Qty</th>
+                                                        <th>Original Quantity</th>
                                                         <th>Quantity</th>
                                                         <th>Original Weight(kg)</th>
                                                         <th>Weight(kg)</th>
@@ -600,7 +600,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             
            <!-- <center><h3><b><p><?php echo $newDate ?></p></b></h3></center> -->
-            <center><h4><b><p>Are you sure you want to archive PO #<?php echo $temp ?></p></b></h4></center>
+            <center><h4><b><p>Are you sure you want to archive Purchase Order No. <?php echo $temp ?></p></b></h4></center>
            
             
              <input class="form-control" type="hidden"  name ="supp_po_id" value="<?php echo $temp ?>">
@@ -810,7 +810,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               <span></span>
                                                <li class="">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
@@ -833,7 +833,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <thead>
                                             <th><b class="pull-left">Purchase Order No.</b></th>
                                             <th><b class="pull-left">Date Ordered</b></th>
-                                            <th><b class="pull-left">PO Credit Term</b></th>
+                                            <th><b class="pull-left">Purchase Order Credit Term</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b><center>Action</center></b></th>
                                             
@@ -873,7 +873,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                               <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
                                                           <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
-                                                          <a  class="btn btn-default btn-sm" data-toggle="modal" disabled>archive</a>
+                                                          <a  class="btn btn-default btn-sm" data-toggle="modal" disabled>Archive</a>
                                                    </center>
                                               </td>
                                              
@@ -883,7 +883,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               
                                                  <td><center><a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "partial" . $mapModal  ?>">Delivery</a> 
                                                             <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
-                                                             <a  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">archive</a>
+                                                             <a  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Archive</a>
                                                    </center>
                                                </td>
                                             

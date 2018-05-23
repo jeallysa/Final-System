@@ -232,13 +232,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -1107,6 +1107,16 @@ $(document).ready(function() {
       
     
 </script>
+<script>
 
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
 
 </html>

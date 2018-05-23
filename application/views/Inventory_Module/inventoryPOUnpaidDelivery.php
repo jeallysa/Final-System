@@ -16,8 +16,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -412,6 +410,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 
                                       <input class="form-control" type="hidden" name="poNo" value="<?php echo $temp ?>"/>
+                                      <input class="form-control" type="hidden" name="category" id="<?php echo "category".$return ?>" />
                                 
                             </div>
                             <div class="panel-footer" style="margin-bottom:-14px;">
@@ -542,14 +541,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <div class="col-md-4">
                                                                             <div class="form-group label-floating">
                                                                             <label>Total Balance:</label>
-                                                                             <input class="form-control" type="text"  id="total" readonly disabled />
+                                                                                <input class="form-control" step="0.01" type="text"  id="total" readonly disabled />
                                                                              </div>
                                                                         </div>
                                                                         
                                                                         <div class="col-md-4">
                                                                              <div class="form-group label-floating">
                                                                             <label>Remaining Balance</label>
-                                                                             <input class="form-control" type="text"  value=" " id="remaining" readonly disabled />
+                                                                             <input class="form-control" type="text"  step="0.01"   id="remaining" readonly disabled />
                                                                              </div>
                                                                         </div>    
                                                                    </div>      
@@ -922,22 +921,19 @@ $partial = 1;
               success: function(data){
                   
                    var total = data['total_amount'];  //use this syntax when returning a single row only data['total_amount'] column name in the query
-                   
+                   var total1 = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  
+                  
                    var payment =  data['payment'];
                   
-                  
-                   //var truckingFee =  data['trucking_fee'];
-                  
-                   //var tfeex = String(truckingFee).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                  
-                   //var tfee ="Php " +tfeex+ ".00" ; 
-                   
-                  
+            
                   
                    var remaining = total - payment;
+                   var remaining1 = remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                   //var remaining2 = remaining1.toFixed(2);
                    
-                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(data['total_amount']); 
-                  $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining);
+                  $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(total1); 
+                  $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining1);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
                  // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
@@ -1054,16 +1050,29 @@ $(document).ready(function() {
               dataType: 'json',
               success: function(data){
                 //alert("success"); 
-              
-                 var newData = data; //data['max']; 
-                 
-                 $(<?php echo "'#returnQty".$return."'"?>).attr("max", newData);
-                 $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder",newData);
+                  var category = data['categoryx'];
+                  var maxQtyx =   data['yield_weight'];
                   
-                 $(<?php echo "'#returnQty".$return."'"?>).removeAttr('disabled')
-                 $(<?php echo "'#remarks".$return."'"?>).removeAttr('disabled')
+                if(category == 1){
+                    var maxQty = maxQtyx/1000
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQty);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQty);
+                      $(<?php echo "'#category".$return."'"?>).val(category);
+                      
+                }else{
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQtyx);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQtyx);
+                      $(<?php echo "'#category".$return."'"?>).val(category);
+                } 
+                     
+                   
+                     $(<?php echo "'#returnQty".$return."'"?>).removeAttr('disabled')
+                     $(<?php echo "'#remarks".$return."'"?>).removeAttr('disabled')
               },
               error: function(){
+                 // alert("error");
+                  
+                  
                   $(<?php echo "'#returnQty".$return."'"?>).val('');
                   $(<?php echo "'#remarks".$return."'"?>).val('');
                   
@@ -1072,7 +1081,6 @@ $(document).ready(function() {
                   
                   $(<?php echo "'#returnQty".$return."'"?>).attr('disabled','disabled')
                   $(<?php echo "'#remarks".$return."'"?>).attr('disabled','disabled')
-                  //alert("error");
                 
               }
           });
@@ -1099,7 +1107,6 @@ $(document).ready(function() {
       
     
 </script>
-
 <script>
 
 $(document).ready(function() {
@@ -1111,4 +1118,5 @@ $(document).ready(function() {
     });
 });
 </script>
+
 </html>
