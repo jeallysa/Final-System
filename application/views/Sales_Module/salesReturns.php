@@ -262,7 +262,7 @@
                                                     <tr>
                                                         <td><?php echo $row->client_dr; ?></td>
                                                         <td><?php echo $row->coff_returnDate; ?></td>
-                                                        <td><?php echo $row->coff_returnQty; ?> bags</td>
+                                                        <td><?php echo $row->coff_returnQty; ?> bag/s</td>
                                                         <td><?php echo $row->client_company; ?></td>
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
@@ -305,7 +305,7 @@
                                                         <td><?php echo $row->blend; ?></td>
                                                         <td><?php echo $row->package_type; ?></td>
                                                         <td><?php echo number_format($row->package_size); ?> g</td>
-                                                        <td><?php echo $row->walkin_returns; ?></td>
+                                                        <td><?php echo $row->walkin_returns; ?> bag/s</td>
                                                         <td><?php echo $row->coff_remarks; ?></td>
                                                         <td>
                                                             <button class="btn btn-success btn-sm" style="margin-top: 0px" data-toggle="modal" data-target="#resolve_coffee_walkin<?php echo $row->walkin_id; ?>" id="getDetails" data-id="<?php echo $row->walkin_id; ?>"> Resolve</button>
@@ -343,7 +343,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
-                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bags</b></p>
+                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bag/s</b></p>
                                             </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
@@ -558,7 +558,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bags</b></p>
+															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bag/s</b></p>
 														</div>
 													</div>
                                                     <br>
