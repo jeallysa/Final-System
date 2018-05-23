@@ -34,12 +34,20 @@
         
 			);
 			$brewer = $this->input->post("brewer");
-			$type = $this->input->post("type");
-			$this->AdminMachines_model->activity_logs('admin', "Inserted Coffee Machine: '".$brewer.", ".$type."'");
-			$data = $this->security->xss_clean($data);
-			$this->AdminMachines_model->insert_data($data);
-			echo "<script>alert('Insert successful!');</script>";
-			redirect('adminMachines', 'refresh');
+			$brewer_type = $this->input->post("type");
+			if($this->db->query("SELECT IF (EXISTS (SELECT * FROM machine WHERE brewer = '".$brewer."' AND brewer_type = '".$brewer_type."'), 1,  0) AS result")->row()->result == 1){
+					$this->session->set_flashdata('error', 'Machine already exist');
+					redirect('adminMachines');
+				}else{
+					$brewer = $this->input->post("brewer");
+					$type = $this->input->post("type");
+					$this->AdminMachines_model->activity_logs('admin', "Inserted Coffee Machine: '".$brewer.", ".$type."'");
+					$data = $this->security->xss_clean($data);
+					$this->AdminMachines_model->insert_data($data);
+					$this->session->set_flashdata('error', 'Machine added successfully');
+					redirect('adminMachines', 'refresh');
+				}
+			
 		}
 
 		function update(){

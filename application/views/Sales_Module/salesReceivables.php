@@ -38,6 +38,9 @@
         float: none;
         margin: 0 auto;
     }
+    
+    .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+    .panel-primary{ border-color:#9c27b0 !important}
     </style>
 </head>
 
@@ -141,14 +144,33 @@
                                     <h3 class="title"><center>Receivables</center></h3>
                                 </div>
                                 <div class="card-content">
-                                <div class="form-group col-xs-3">
-                                <label>Filter By:</label>
+                                <div class="row">
+                                    <div class="form-group col-xs-3">
+                                        <label>Filter By:</label>
                                     <div class="input-group input-daterange">
                                         <input type="text" id="min" class="form-control" value="2000-01-01" >
                                         <span class="input-group-addon">to</span>
                                         <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
                                     </div>
+                                    </div>
+                                <div class="form-group col-xs-3">
+                                
+                                    
+                                    <p class="category">Total Receivables</p>
+                                    <h3 class="title">
+										<b>
+                                    <?php
+											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
+											if(!empty($total)){
+												echo 'Php '.number_format($total,2);
+											}else{
+												echo 0;
+											}
+										 ?>
+											</b>
+                                    </h3>
                                 </div>
+                                    </idv>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>

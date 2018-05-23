@@ -226,8 +226,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       if(!empty($coffee)) {                                     
            foreach($coffee as $object){
             $coff = $object->raw_coffee; 
+            $type = $object->raw_type; 
             $id =  $object->raw_id;
             $stock =  $object->raw_stock; 
+            $physical =  $object->raw_physcount; 
           
            
 ?>
@@ -239,7 +241,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th align="center"><b>Product</b></th>
@@ -261,7 +263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -300,9 +302,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <div class="col-lg-12 col-md-12 col-sm-12 text-center" style="padding-bottom: 10px;">
                                                                 <h3><b><?php echo $coff; ?></b></h3>
+                                                                <h4><b><?php echo $type; ?></b></h4>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client/Supplier</b></th>
@@ -312,10 +315,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
+                                            <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical/1000); ?> kg</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
                                             <tbody>
 
+
                                                 <?php
-                     $retrieveCompdel ="SELECT item, qty, date_received, yield_weight, sup_company, raw_id FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id ; 
+                     $retrieveCompdel ="SELECT item, qty, date_received, yield_weight, sup_company, raw_id, inv_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE inv_stat='0' AND raw_id = ".$id ; 
                                      $query = $this->db->query($retrieveCompdel);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -323,7 +334,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->yield_weight / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Company Delivery </td>' ,
                                                 '<td> In </td>' ,
                                                 '</tr>' ;
@@ -335,7 +346,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 
                                                 
                     <?php
-                     $retrieveCompreturn ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE raw_id = ".$id; 
+                     $retrieveCompreturn ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND raw_id = ".$id; 
                                      $query = $this->db->query($retrieveCompreturn);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -343,7 +354,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->sup_company   . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Company Return </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -353,7 +364,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE quantity != '0' AND raw_coffeeid = ".$id; 
+                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
                                      $query = $this->db->query($retrieveSales);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -361,7 +372,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                
                                                 '<td>'  . $object->client_company   . '</td>' ,
                                                 '<td>'  . $object->transact_date  . '</td>' ,
-                                                '<td>'  . number_format($object->quantity / 1000, 3)  . ' kg</td>' ,
+                                                '<td>'  . number_format($object->quantity / 1000, 2)  . ' kg</td>' ,
                                                 '<td> Used for Blend </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
@@ -369,6 +380,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             }
                                            
                                         ?>
+
+                                        <?php
+                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE company_returns.inv_stat='0' AND res = 'resolved' AND raw_id = ".$id ;
+                                              $query = $this->db->query($retrieveResolve);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
                                  
                                             </tbody>
                                         </table>
@@ -376,6 +405,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <center>  
                                         
                                                             <div class="row">
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-6 control">Total In :</label>
+                                        <div class="col-md-4">
+
+                                        <?php
+                                              $retrieveTotalin ="Select SUM(TotalIn) AS TotalIn from
+(SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE supp_po_ordered.inv_stat='0' AND raw_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE supp_po_ordered.inv_stat='0' AND res = 'resolved' AND raw_id = '". $id  ."') AS b; " ;
+
+$retrieveTotalout ="Select SUM(TotalOut) AS TotalOut from
+(SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND raw_id = '". $id  ."' UNION ALL
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalin);
+                                              $query2 = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
+                                              
+                                           echo 
+                                                '<input value="'  . number_format($query->row()->TotalIn/1000, 2)  . ' kg" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '</div>',
+                                                '<label class="col-md-6 control">Total Out :</label>',
+                                                '<div class="col-md-4">',
+                                                '<input value="'  . number_format($query2->row()->TotalOut/1000, 2)  . ' kg" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              
+                                            }
+                                        ?> 
+                                    </div>
+
+                                    <label class="col-md-6 control">Subtotal :</label>
+                                                                        <div class="col-md-4">
+                                                                            <?php
+                                                                            echo
+                                                                            '<input value="'  . number_format(($physical/1000)+($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            ?>
+                                                                        </div>
+            
+                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
@@ -410,6 +475,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <label for="type"></label>
                                                                         <div class="col-md-4">
                                                                             <input value="<?php echo $stock; ?>" class="form-control" id = "rawstocks<?php echo $details; ?>" name="rawstocks" type="hidden" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="type"></label>
+                                                                        <div class="col-md-4">
+                                                                            <input value="<?php echo $coff; ?>" class="form-control" id = "rawname<?php echo $details; ?>" name="rawname" type="hidden" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="type"></label>
+                                                                        <div class="col-md-4">
+                                                                            <input value="<?php echo $type; ?>" class="form-control" id = "rawtype<?php echo $details; ?>" name="rawtype" type="hidden" />
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -538,8 +615,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->raw_type . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td><b>'  . number_format($object->raw_reorder / 1000) . ' kg</b></td>' ,
-                                                '<td><b>'  . number_format($object->raw_stock / 1000, 3) . ' kg</b></td>' ,
-                                                '<td>'  . number_format($object->raw_physcount / 1000, 3)   . ' kg</td>' ,
+                                                '<td><b>'  . number_format($object->raw_stock / 1000, 2) . ' kg</b></td>' ,
+                                                '<td>'  . number_format($object->raw_physcount / 1000, 2)   . ' kg</td>' ,
                                                 '<td>'  . number_format($object->raw_discrepancy)   . ' g</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->raw_remarks   . '</td>' ;
@@ -617,6 +694,17 @@ $(document).ready(function() {
 </script>
 <script>
 
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+<script>
+
 <?php
            
            $c = 1; 
@@ -632,7 +720,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=rawstocks".$c."]'"?>).val());
-            var res = (x / 1000) - y || 0;
+            var res = y - (x / 1000) || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
@@ -643,7 +731,6 @@ $(document).ready(function() {
                 }
 });      
 });     
-  
     
 <?php                                                  
                                                                  

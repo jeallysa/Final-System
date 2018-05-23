@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -233,13 +235,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
-                                                    <th align="center"><b>PRODUCT</b></th>
-                                                    <th align="center"><b>TYPE</b></th>
-                                                    <th align="center"><b>SUPPLIER</b></th>
-                                                    <th align="center"><b>QUANTITY NEEDED</b></th>
+                                                    <th align="center"><b>Product</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Supplier</b></th>
+                                                    <th align="center"><b>Quantity Needed</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -255,7 +257,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -447,12 +449,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                            <input type="number"  step="0.001" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),3) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),2) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
                                                 <td>
-                                                      <input  type="number"  step="0.0001" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
+                                                      <input  type="number"  step="0.01" class="form-control"  name="yield_weight[]"  id ="<?php echo "yield_weight".$i?>" disabled/>
                                                 </td>   
                                                    <!--              <?php echo (($object->qty-$object->received)) ?>   -->
                              
@@ -1076,5 +1078,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
 
     
+</script>
+<script>
+
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
 </script>
 </html>

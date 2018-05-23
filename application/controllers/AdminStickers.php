@@ -47,12 +47,20 @@
                 "sticker_stock" =>$this->input->post("stocks"),
                 "sup_id" =>$this->input->post("sup_company")
 			);
-			$name = $this->input->post("name");
-			$this->AdminStickers_model->activity_logs('admin', "Inserted Sticker: '".$name."'");	
-			$data = $this->security->xss_clean($data);
-			$this->AdminStickers_model->insert_data($data);
-			echo "<script>alert('Insert successful!');</script>";
-			redirect('adminStickers', 'refresh');
+			$sticker = $this->input->post("name");
+            $sticker_type = $this->input->post("sticker_type");
+			if($this->db->query("SELECT IF (EXISTS (SELECT * FROM sticker WHERE sticker = '".$sticker."' AND sticker_type = '".$sticker_type."'), 1,  0) AS result")->row()->result == 1){
+					$this->session->set_flashdata('error', 'Sticker already exist');
+					redirect('adminStickers');
+				}else{
+					$name = $this->input->post("name");
+					$this->AdminStickers_model->activity_logs('admin', "Inserted Sticker: '".$name."'");	
+					$data = $this->security->xss_clean($data);
+					$this->AdminStickers_model->insert_data($data);
+					$this->session->set_flashdata('error', 'Sticker added successfully');
+					redirect('adminStickers', 'refresh');
+				}
+			
 		}
         
         function activation(){

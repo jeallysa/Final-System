@@ -41,11 +41,11 @@
 
 		}
 		.navbar-default > li.active > a, .navbar-default > li.active > a:focus, .navbar-default > li.active > a:hover {
-			border-top: 1px solid #4cb1d1 !important;
-			border-right: 1px solid #4cb1d1 !important;
-			border-left: 1px solid #4cb1d1 !important;
+			border-top: 1px solid 	#DDA0DD !important;
+			border-right: 1px solid #DDA0DD !important;
+			border-left: 1px solid 	#DDA0DD !important;
 			border-bottom: transparent !important;
-			background-color: #4cb1d1 !important;
+			background-color: 	#DDA0DD !important;
 			color: white !important;
 		}
 		.navbar-default > li.active > a {
@@ -55,7 +55,7 @@
 		}
 		.navbar-default > li > a, .navbar-default > li > a:hover {
 			border: none;
-			color: #4cb1d1 !important;
+			color: 	#DDA0DD !important;
 			background: transparent;
 		}
 		.navbar-default > li > a::after {
@@ -81,8 +81,8 @@
 		}
 		.tab-color{
 			padding:20px;
-			border-top: 3px solid #4cb1d1;
-			border-left: 2px solid #4cb1d1;
+			border-top: 3px solid 	#DDA0DD;
+			border-left: 2px solid 	#DDA0DD;
 		}
 
 		.select-pane {
@@ -99,6 +99,8 @@
 			border: none !important;
 
 		}
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+        .panel-primary{ border-color:#9c27b0 !important}
 
 
 
@@ -341,7 +343,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
-                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?></b></p>
+                                                <p class="col-md-5 control"><b><?php echo $row->walkin_returns; ?> bags</b></p>
                                             </div> 
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Remarks :</label>
@@ -543,7 +545,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Size :</label>
 														<div class="col-md-5">
-															<p><b><input name="size" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="size" class="no-border" type="disabled"  readonly> g</b></p>
 														</div>
 													</div>
 										
@@ -556,7 +558,7 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly></b></p>
+															<p><b><input name="quantity" id="Originalquantity" class="no-border" type="disabled"  readonly> bags</b></p>
 														</div>
 													</div>
                                                     <br>
@@ -631,13 +633,13 @@
 													<div class="form-group">
 														<label class="col-md-5 control">Unit Price :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="uprice" readonly />
+															<p><b>Php <input class="no-border" type="text" name="uprice" readonly /></b></p>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="col-md-5 control">Quantity :</label>
 														<div class="col-md-6">
-															<input class="no-border" type="text" name="qty" readonly />
+															<p><b><input class="no-border" type="text" name="qty" readonly /> units</b></p>
 														</div>
 													</div>
                                                     <br>

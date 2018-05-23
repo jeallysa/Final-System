@@ -42,6 +42,9 @@
 		.select-pane {
         display: none;
     }
+    
+    .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+    .panel-primary{ border-color:#9c27b0 !important}
     </style>
 </head>
 
@@ -230,14 +233,14 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Packaging: </label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->package_type.'/ '.number_format($row->package_size).' g';
+                                                                    <p><b><?php echo $row->package_type.' bag/ '.number_format($row->package_size).' g';
                                                                     ?></b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Quantity :</label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->walkin_qty; ?></b></p>
+                                                                    <p><b><?php echo $row->walkin_qty; ?> bags</b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -270,13 +273,14 @@
                                                         <div class="col-md-6">
 
                                                             <div class="form-group">
-                                                                <label class="col-md-6 control">Quantity Returned:</label>
-                                                                <input class="form-control col-md-12" type="number" name="blend_returned" min="1" max="<?php
+                                                                <label class="col-md-12 control">Quantity Returned:</label>
+                                                                <input class="form-control col-md-5" type="number" name="blend_returned" min="1" max="<?php
                                                                     $retblend = $row->walkin_returns;
                                                                     $soldblend = $row->walkin_qty;
                                                                     $ret_mach = $soldblend - $retblend;
                                                                     echo $ret_mach;
                                                                  ?>" required="">
+                                                                 <p class="col-md-2">bags</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -388,7 +392,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
                                                 <div class="col-md-7">
-                                                    <p><b><?php echo $row->mach_qty; ?></b></p>
+                                                    <p><b><?php echo $row->mach_qty; ?> unit/s</b></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -424,9 +428,10 @@
                                                                 <div class="col-md-6">
 
                                                                     <div class="form-group">
-                                                                        <label class="col-md-6 control">Quantity Returned:</label>
+                                                                        <label class="col-md-12 control">Quantity Returned:</label>
                                                                         <input class="form-control col-md-6" type="number" name="qty_returned" min="1" max="<?php echo $row->mach_qty;
                                                                          ?>" required="">
+                                                                         <p>unit/s</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

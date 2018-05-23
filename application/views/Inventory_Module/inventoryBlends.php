@@ -241,7 +241,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" id="example2" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th align="center"><b>Product</b></th>
@@ -263,7 +263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
                                               }else{
@@ -308,7 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <h4><?php echo $pckg; ?> bag (<?php echo $size; ?>g)</h4>
                                                                 <hr>
                                                             </div>
-                                        <table class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
+                                        <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
                                                     <th><b>Client</b></th>
@@ -417,6 +417,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                           <center>
                                                             <div class="row">
                                                                     <div class="form-group">
+                                                                        <label class="col-md-6 control">Total In :</label>
+
+                                                                        <div class="col-md-4">
+
+                                        <?php
+                                              $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
+(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = '". $id  ."') AS b; " ;
+
+$retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
+(SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
+                                              $query = $this->db->query($retrieveTotalin);
+                                              $query2 = $this->db->query($retrieveTotalout);
+                                              if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
+                                              
+                                           echo 
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' bags" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '</div>',
+                                                '<label class="col-md-6 control">Total Out :</label>',
+                                                '<div class="col-md-4">',
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' bags" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                              
+                                            }
+                                        ?> 
+                                    </div>
+
+                                    <label class="col-md-6 control">Subtotal :</label>
+                                                                        <div class="col-md-4">
+                                                                            <?php
+                                                                            echo
+                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bags"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            ?>
+                                                                        </div>
+
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
                                                                             <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Bags" name="physcount" type="number" class="form-control" required/>
@@ -550,18 +586,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-<<<<<<< HEAD
-                                            <th><b class="pull-left">NO.</b></th>
-                                            <th><b class="pull-left">BLEND</b></th>
-                                            <th><b class="pull-left">PACKAGING</b></th>
-                                            <th><b class="pull-left">SIZE (G)</b></th>
-                                            <th><b class="pull-left">NUMBER OF STOCKS (PC)</b></th>
-                                            <th><b class="pull-left">PHYSICAL COUNT (bags)</b></th>
-                                            <th><b class="pull-left">DISCREPANCY (PC)</b></th>
-                                            <th><b class="pull-left">INVENTORY DATE</b></th>
-                                            <th><b class="pull-left">REMARKS</b></th>
-                                            <th><b class="pull-left">STOCK CARD</b></th>
-=======
                                             <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Blend</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
@@ -572,7 +596,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th><b class="pull-left">Inventory Date</b></th>
                                             <th><b class="pull-left">Remarks</b></th>
                                             <th><b class="pull-left">Stock Card</b></th>
->>>>>>> 17c9c5b6b4d8363c6f2484aa1e93fa9150be86d7
                                         </thead>
                                         <tbody>
                                             
@@ -667,6 +690,19 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<script>
+
+$(document).ready(function() {
+    $('#example2').DataTable({
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+
 <script>
 
 <?php
@@ -684,7 +720,7 @@ $(document).ready(function() {
            $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'#details".$c." input[id=blndstocks".$c."]'"?>).val());
-            var res = x - y || 0;
+            var res = y - x || 0;
             $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
 
             if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")

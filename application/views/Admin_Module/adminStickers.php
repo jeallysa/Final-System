@@ -237,7 +237,7 @@ a:focus {
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Price</label>
+                                            <label for="email">Price/pc</label>
                                             <input class="form-control" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                         </div>
                                     </div>
@@ -336,7 +336,7 @@ a:focus {
                                         <thead>
                                             <th><b class="pull-left">Sticker</b></th>
                                             <th><b class="pull-left">Type</b></th>
-                                            <th><b class="pull-left">Price</b></th>
+                                            <th><b class="pull-left">Price/pc</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Reorder Level</b></th>
                                             <th><b class="pull-left">Number of Stocks</b></th>
@@ -453,7 +453,7 @@ a:focus {
                                                                     </div>
                                                                     <div class="col-lg-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Price</label>
+                                                                            <label for="email">Price/pc</label>
                                                                             <input class="form-control" value="<?php echo $row->unitPrice; ?>" type="number" name="unitprice" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>

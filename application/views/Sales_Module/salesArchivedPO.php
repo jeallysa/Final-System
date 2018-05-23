@@ -44,6 +44,9 @@
 	.no-border{
 		border: none !important;
 	}
+        
+        .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
+        .panel-primary{ border-color:#9c27b0 !important}
 
     </style>
 </head>
