@@ -524,8 +524,8 @@ a:focus {
                                                                      <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
-                                                                                <select id="editSupplier" class="form-control" name="sup_company" required>
-                                                                                    <option disabled selected value> -- select a supplier -- </option>
+                                                                                <select class="form-control" name="sup_company" required>
+                                                                                    <option disabled selected value></option>
                                                                                     <?php 
 
                                                                                         foreach($data1['getSupplier'] as $row2)
