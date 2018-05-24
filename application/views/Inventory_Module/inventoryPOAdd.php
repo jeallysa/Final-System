@@ -101,7 +101,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
-
+.footer{
+    z-index: 0;
+}
 
 </style>
 
@@ -669,7 +671,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       '<td class="col-sm-2 "><input type="text" class="form-control" name="item_name[]" id="item_name'.$counter.'" value ="'.$object->item_name. '" readonly required> </td>' , 
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                 
       '<td class="col-sm-2" >  </td>' ,
-      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.$object->qty       .'" readonly required>  </td>' ,    
+      '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format(($object->qty),2)       .'" readonly required>  </td>' ,    
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
                        
@@ -847,7 +849,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
               </footer>
         </div>
-
+</div>
+               <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
+        </div>
 </body>
 <!--   Core JS Files   -->
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>

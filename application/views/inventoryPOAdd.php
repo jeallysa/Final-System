@@ -786,30 +786,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       
     </div>
   </div>
+</div>
                                             
                                             
                                             
-  <div class="modal fade" id="invalidDate" role="dialog">
+    <div class="modal fade" id="invalidOrder1" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ERROR:</h4>
+            <b><h1 class="modal-title">Order already exist</h1></b>
         </div>
+          
         <div class="modal-body">
-            <center><p>Invalid Date</p></center>
-        </div>
+        <center><input type="text" class="form-control"  id = "modalOrderStatusHeader" readonly/><center>
+           
+           
         <div class="modal-footer">
-            <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </center>
+            <center><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> </center>
         </div>
       </div>
       
     </div>
+  </div>    
   </div>                                         
                                             
-                                          
                                             
                                             
                                             
@@ -818,8 +821,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             
-                                         </div>
-                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                    </ div>
                                 </div>
                             </div>
                         </div>
@@ -934,43 +949,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script type="text/javascript">
     
- 
-    /*
-function btnClick(){
-     if($('#subTotal').val()==""){
-        alert("invalid order");
-        return false;
-     }
-    
-};
-    
-    
-    
-function checkdate(){
-   
-	   var sendDate = document.getElementById('poDate').val
-          sendDate = new Date(Date.parse(sendDate.replace(/-/g,' ')))
-	      today = new Date();
-	      today.setHours(0,0,0,0)
-	      if (sendDate < today) {
-		      alert('Invalid Date');
-		      return false;
-	       }  
-    
-}
-   
-  */  
     
 $(document).ready(function () {
-    
- // I dont understand why it cant validate the first time  
-    
 
-    
-    
-    
-    
-    
 document.getElementById('submitInfo').onclick = function() {
    
 	      var sendDate = document.getElementById('poDate').value
@@ -983,13 +964,7 @@ document.getElementById('submitInfo').onclick = function() {
 	       }  
     
 }  
-});
 
-
-
-
-
-$(document).ready(function () {
 
 
 document.getElementById('submitOrder').onclick = function() {
@@ -1007,8 +982,7 @@ document.getElementById('submitOrder').onclick = function() {
   
 $(document).ready(function () {
 
-
-document.getElementById('addToTemp').onclick = function() {
+document.getElementById('addToTempOld').onclick = function() {
  
    
           var itemType = document.getElementById("itemType").value;
@@ -1026,7 +1000,7 @@ document.getElementById('addToTemp').onclick = function() {
      }
     
     
-    var returnvalue; 
+    var returnvalue = true; 
     
             $.ajax({
               async: false,
@@ -1058,6 +1032,7 @@ document.getElementById('addToTemp').onclick = function() {
                 $("#invalidOrder").modal();
                 
                   returnvalue = false;
+                
                 }
               },
           
@@ -1069,9 +1044,283 @@ document.getElementById('addToTemp').onclick = function() {
 }; 
                   
  
+                   
+               
+                   
 });
     
  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+$(document).ready(function () {
+
+
+document.getElementById('addToTemp').onclick = function() {
+ 
+   
+          var itemType = document.getElementById("itemType").value;
+          var itemName = document.getElementById("item").value;
+          var qty      = document.getElementById("qty").value;
+          var qty1      = document.getElementById("qty").value;
+    
+    
+     var category      = document.getElementById("category").value;
+     if(category == 1 ){
+          var qty2       = qty1 * 1000;
+          var qty  = qty2.toPrecision(3);
+     }else{
+         var qty = qty1;
+     }
+    
+    
+    var returnvalue = true; 
+       $.ajax({
+         async: false,
+         url:'<?php echo base_url(); ?>InventoryPOAdd/checkIfExisting' ,
+         method:"POST",
+         data: {    itemName : itemName , itemType : itemType }, //used the sup_id to know whose product.
+         dataType: 'json',
+         success: function(data){
+             var status = data;
+                                             
+                                          
+       if(status == "0"){
+           //alert("order already exists")
+               var notifHeader1 = itemName+" "+" "+itemType;
+              // var notif1 = "Your order already exist";
+              $(<?php echo "'#invalidOrder1 input[id=modalOrderStatusHeader]'"?>).val(notifHeader1);
+          // $(<?php echo "'#invalidOrder1 input[id=modalOrderStatus]'"?>).val(notif1);
+              $("#invalidOrder1").modal();
+                
+             returnvalue = false;
+           
+           
+           }else{
+                 
+                $.ajax({
+                  async: false,
+                  url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
+                  method:"POST",
+                  data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+                  dataType: 'json',
+                  success: function(data){
+                 // alert("punyeta kulang order brad");
+                     var status = data['status'];
+                     var reorder = data['reorder'];
+                     var stocks = data['stocks'];
+                  
+                  if(category == 1){
+                     var total1 = ((reorder - stocks)/1000) + 0.1;
+                     var total  = total1.toPrecision(3);
+                 
+                     var notifHeader = itemName+" "+" "+itemType;
+                     var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
+                  }else{
+                     var total = reorder - stocks  + 1 ;
+                     var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                  }
+                  
+                  
+                 if(status == "0"){
+                    $(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
+                    $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
+                    $("#invalidOrder").modal();
+                 
+                    returnvalue = false;
+                
+                  }
+                  },
+          
+                 });
+  
+                return returnvalue;
+               
+               
+                }
+             
+             
+             
+         },
+                                        
+     });
+
+return returnvalue;
+                    
+
+    
+}; 
+                  
+ 
+                   
+               
+                   
+}); 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+$(document).ready(function () {   
+    
+    
+    
+document.getElementById('addToTempsssss').onclick = function() {
+ 
+   
+          var itemType = document.getElementById("itemType").value;
+          var itemName = document.getElementById("item").value;
+          var qty      = document.getElementById("qty").value;
+          var qty1      = document.getElementById("qty").value;
+    
+    
+     var category      = document.getElementById("category").value;
+     if(category == 1 ){
+          var qty2       = qty1 * 1000;
+          var qty  = qty2.toPrecision(3);
+     }else{
+         var qty = qty1;
+     }
+    
+    
+    var returnvalue = true; 
+    
+            $.ajax({
+              async: false,
+              url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
+              method:"POST",
+              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              dataType: 'json',
+              success: function(data){
+                 // alert("punyeta kulang order brad");
+                  var status = data['status'];
+                  var reorder = data['reorder'];
+                  var stocks = data['stocks'];
+                  
+            if(category == 1){
+                  var total1 = ((reorder - stocks)/1000) + 0.1;
+                  var total  = total1.toPrecision(3);
+                 
+                  var notifHeader = itemName+" "+" "+itemType;
+                  var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
+            }else{
+                  var total = reorder - stocks  + 1 ;
+                  var notif = "Your order should be atleast "+total+" to reach the reorder level";
+            }
+                  
+                  
+            if(status == "0"){
+                $(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
+                $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
+                $("#invalidOrder").modal();
+                
+                  returnvalue = false;
+                
+                }else{
+                    
+                             $.ajax({
+                                      async: false,
+                                      url:'<?php echo base_url(); ?>InventoryPOAdd/checkIfExisting' ,
+                                      method:"POST",
+                                      data: {    itemName : itemName , itemType : itemType }, //used the sup_id to know whose product.
+                                      dataType: 'json',
+                                      success: function(data){
+                                          var status = data;
+                                             
+                                          
+                                    if(status == "0"){
+                                        alert("order already exists")
+                                       // $(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
+                                       // $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
+                                        $("#invalidOrder").modal();
+                
+                                          returnvalue = false;
+                                        }
+                                      },
+                                        
+                                  });
+
+                             return returnvalue;
+                    
+                    
+                    
+                 }
+              },
+          
+          });
+
+     return returnvalue;
+    
+    
+};    
+    
+    
+    
+});
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
