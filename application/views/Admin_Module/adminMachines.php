@@ -513,11 +513,11 @@ a:focus {
                                                                                 <input class="form-control" type="number" name="price" value="<?php echo $row->unitPrice; ?>" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-6 form-group">
+                                                                       <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
-                                                                                <select id="editSupplier" class="form-control" name="sup_company" required>
-                                                                                    <option disabled selected value> -- select a supplier -- </option>
+                                                                                <select class="form-control" name="sup_company" required>
+                                                                                    <option disabled selected value></option>
                                                                                     <?php 
 
                                                                                         foreach($data1['getSupplier'] as $row2)

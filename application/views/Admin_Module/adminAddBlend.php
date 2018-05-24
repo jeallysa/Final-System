@@ -289,7 +289,6 @@ a:focus {
                                                               <select class="form-control" id="sel1" name="type">
                                                                 
                                                                     <option value="Existing"> Company Blend </option>
-                                                                    <option value="Client"> Client </option>
                                                                    
                                                               </select>
                                                             

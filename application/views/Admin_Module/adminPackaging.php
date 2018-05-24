@@ -524,10 +524,10 @@ a:focus {
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                     <div class="col-md-6 form-group">
+                                                                      <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
-                                                                                <select id="editSupplier" class="form-control" name="sup_company" required>
+                                                                                <select class="form-control" name="sup_company" required>
                                                                                     <option disabled selected value></option>
                                                                                     <?php 
 
