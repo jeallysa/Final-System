@@ -141,6 +141,9 @@ s}
 			border-top: 3px solid #75DAE2;
 			border-left: 2px solid #75DAE2;
 		}
+        .footer{
+    z-index: 0;
+}
     </style>
 
     
