@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -649,6 +651,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <th>Weight(kg)</th>
                                                                         <th>Yield Weight(kg)</th>
                                                                         <th>Yield(kg)</th>
+                                                                        <th>Received by</th>
                                                                         
                                                                     </tr>
                                                                 </thead>
@@ -658,15 +661,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     
                                  
         <?php
-                                                                
-      //$i = 1;                                                             
+                                                                             
             
                  $arrayItem = array("raw_coffee","sticker","packaging","machine");
-                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");
-                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
+                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");                                   //lahat ng delivery kahit pare-pareho ng DR received by, kinukuha niya as isang delivery
+                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");                       //pero pwede naman iSum nalang. pero sabi kahit ganito nlang raw. 
                          for($table = 0 ; $table < 4 ; $table++){
                           
-                             $retrieveDetails ="SELECT distinct supp_po_ordered_id , date_received, drNo , item , type ,  qty ,supp_delivery.received as received, yield_weight , yields , unitPrice , amount,category    FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
+                             $retrieveDetails ="SELECT supp_po_ordered_id , date_received, drNo , item , type ,  qty ,supp_delivery.received as received, yield_weight , yields , unitPrice , amount,category,received_by   FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
                              ".$sup_id ." and  type = ".$arrayType[$table]." and supp_po_ordered.supp_po_id = $temp"  ;  
                
                                               $query = $this->db->query($retrieveDetails);
@@ -684,6 +686,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format((($object->received)/1000),2)  . '</td>' ,
                                                 '<td>'  . number_format((($object->yield_weight)/1000),2). '</td>' ,
                                                 '<td>'  . number_format((($object->yields)/1000),2)  . '</td>' ,
+                                                '<td>'  . $object->received_by . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 
@@ -693,9 +696,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
-                                               // '<td>'  . number_format($object->received)  . '</td>' ,
                                                 '<td>'  . number_format($object->yield_weight). '</td>' ,
-                                             
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  . $object->received_by  . '</td>' , 
+                                                
                                                 '</tr>' ;
                                                   
                                               }
@@ -855,23 +861,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
-    </div>
-               <footer class="footer navbar navbar-fixed-bottom" >
-                <div class="container">
-                  <div class="copyright float-center">
-                    <center>
-                    &copy;
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
-                    <script>
-                      document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    Team Barako for John Hay Coffee Services Incorporation.
-                </center>
-                  </div>
-                </div>
-              </footer>
-        </div>
-</div>
+      <div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
@@ -964,6 +954,8 @@ $partial = 1;
                   
                    var remaining = total - payment;
                    var remaining1 = remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                  
                    //var remaining2 = remaining1.toFixed(2);
                    
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(total1); 

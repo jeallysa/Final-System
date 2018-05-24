@@ -180,8 +180,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        
         $totalAmountv = $this->input->post('totalAmount'); 
         //$totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
-        $totalAmount = str_replace(array(','), '' , $totalAmountv); 
-        $datax = array();
+          
+        $totalAmount = str_replace(array(','), '' ,    $totalAmountv);
+        $totalAmount = str_replace(array('Php '), '' , $totalAmount);
+        
+          $datax = array();
             
          $i=0;   
     if (!empty($data['tempPO'])){
@@ -205,7 +208,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $itemv=$this->input->post('item_name');
         $itemTypev = $this->input->post('type');
         $qtyv=$this->input->post('qty');
-        $typev=$this->input->post('type');
         $amountv=$this->input->post('amount');
 		$categoryx=$this->input->post('category');
 		   
@@ -218,7 +220,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 for ($i = 0; $i < count($this->input->post('item_name')); $i++){
 			
         //$totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
-        $qtyT = str_replace(array(','), '' , $qtyv[$i]);   
+         $qtyT = str_replace(array(','), '' , $qtyv[$i]);
+         $qtyT = str_replace(array('Php '), '' , $qtyT);
+    
+    
+         $amountT = str_replace(array(','), '' , $amountv[$i]);
+         $amountT = str_replace(array('Php '), '' , $amountT);
             
             
 	if($categoryx[$i] == 1){
@@ -230,7 +237,7 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
                 'item' => $itemv[$i],
                 'qty' => $newQty,
                 'type' => $itemTypev[$i],
-                'amount' => $amountv[$i],
+                'amount' => $amountT,
                 'supp_po_id' =>$lastPO[0]->supp_po_id,
 				'categoryx'  =>$categoryx[$i],
                
@@ -243,7 +250,7 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
                 'item' => $itemv[$i],
                 'qty' => $qtyT,
                 'type' => $itemTypev[$i],
-                'amount' => $amountv[$i],
+                'amount' => $amountT,
                 'supp_po_id' =>$lastPO[0]->supp_po_id,
 				'categoryx'  =>$categoryx[$i],
 			);
@@ -318,11 +325,6 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
          redirect(base_url('inventoryPOAdd'));
      }   
           
-        
-        
-        
-        
-        
         
         
         

@@ -651,7 +651,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
     </div>        
  
 </body>
-</div>
+<div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
