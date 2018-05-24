@@ -189,20 +189,11 @@
                                     </div>
                                     <div class="card-content">
 										
-										<!--<?php foreach($data['info'] as $row){ ?>
-											<br>
-											<p style="font-size: 180%; font-weight: bold;" ><?php echo $row->client_company; ?> </p>
-											<input id="client_id" value="<?php echo $row->client_id ?>" type="hidden" />
-										
-										<?php
-										
-										}?>-->
 										
 										<hr>
 										
 										<div class="col-sm-11 col-md-11 col-md-offset-1 well well-sm coll-centered" >
 											<form id="loginform" name="loginform">
-											<!--<legend><span class="glyphicon glyphicon-shopping-cart"></span> Order</legend><hr>-->
 												<span id="errorMessage" style="color: red; font-weight: 900;"></span>
 											<div class="row">
                                                 <div class="col-md-2 col-md-offset-1">
@@ -373,6 +364,7 @@
 					$('tr#'+i+'').remove();
 				}
 				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
+				alert('Purchase order added');
 			}	
 		});
 	});
