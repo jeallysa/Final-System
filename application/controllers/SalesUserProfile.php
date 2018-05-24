@@ -39,11 +39,6 @@
 				$lname = $this->UserProfile_model->getLname();
 				$fname = $this->UserProfile_model->getFname();
 
-				if($this->db->query("SELECT IF (EXISTS (SELECT * FROM user WHERE u_lname = '".$l_name."' AND u_fname = '".$f_name."' ), 1,  0) AS result")->row()->result == 1){
-					$this->session->set_flashdata('error', 'Sorry, Data already exist');
-								redirect('SalesUserProfile');
-				}else {
-					
 					if ($this->UserProfile_model->updateProfile($userid, $l_name, $f_name, $email, $contact, $address)){
 						$this->session->set_flashdata('success', 'Successfully Updated your Profile');
 						redirect('SalesUserProfile');
@@ -51,7 +46,6 @@
 						$this->session->set_flashdata('error', 'Sorry, Failed to Updated your Profile');
 						redirect('SalesUserProfile');
 					}
-				}
 			} else {
 				echo validation_errors();
 				$this->session->set_flashdata('error', validation_errors());

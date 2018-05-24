@@ -40,10 +40,11 @@
         function insert()
 		{
 			$this->load->model('AdminProductInventory_model');
+			$reorder = $this->input->post("reorder");
 			$data = array(
 				"raw_coffee" =>$this->input->post("name"),
 				"raw_type" =>$this->input->post("raw_type"),
-				"raw_reorder" =>$this->input->post("reorder"),
+				"raw_reorder" =>$reorder * 1000,
                 "raw_stock" =>$this->input->post("stocks"),
                 "unitPrice" =>$this->input->post("price"),
                 "sup_id" =>$this->input->post("sup_company")

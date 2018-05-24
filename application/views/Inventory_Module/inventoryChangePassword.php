@@ -355,7 +355,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                   <?php } ?> 
                                 <div class="card-content">
-                                    <?php echo form_open('salesChangePassword/updatePwd') ?>
+                                    <?php echo form_open('inventoryChangePassword/updatePwd') ?>
                                     <!-- <form action="#" method="post" accept-charset="utf-8"> -->
                                         <div class="modal-body" style="padding: 5px;">
                                             <div class="row">

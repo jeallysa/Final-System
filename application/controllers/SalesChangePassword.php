@@ -18,7 +18,7 @@
  		
 		public function updateusername() {
 			$this->form_validation->set_rules('u_name', 'Username', 'required|min_length[5]|max_length[15]');
-			$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[4]|max_length[20]');
 			if ($this->form_validation->run()) {
 				$u_name = $this->input->post('u_name');
 				$curr_password = $this->input->post('password');
@@ -49,9 +49,9 @@
 		}
 
 		public function updatePwd(){
-			$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('newpassword', 'New Password', 'alpha_numeric|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('confpassword', 'Confirm Password', 'alpha_numeric|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[4]|max_length[20]');
+			$this->form_validation->set_rules('newpassword', 'New Password', 'alpha_numeric|min_length[4]|max_length[20]');
+			$this->form_validation->set_rules('confpassword', 'Confirm Password', 'alpha_numeric|min_length[4]|max_length[20]');
 			if ($this->form_validation->run()) {
 				$curr_password = $this->input->post('password');
 				$new_password = $this->input->post('newpassword');

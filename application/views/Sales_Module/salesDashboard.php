@@ -311,7 +311,9 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer navbar navbar-fixed-bottom">
+            
+        </div>
+		<footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright pull-right">
                         &copy;
@@ -322,7 +324,6 @@
                     </div>
                 </div>
             </footer>
-        </div>
 </body>
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>

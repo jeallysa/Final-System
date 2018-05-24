@@ -33,7 +33,12 @@
             #hov:hover {
                 color: black !important; 
             }
-
+			.footer{
+                z-index: 0;
+                background:  rgba(6, 4, 6, 0.62);
+                color: white;
+				font-size:   13px;        
+			}
         </style>
 
     </head>
@@ -100,7 +105,22 @@
             </div>
             
         </div>
-
+			
+		</div>
+		<footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="glyphicon glyphicon-heart"></i> by
+                        <a href="">Team Barako</a> for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+			</footer>
 
         <!-- Javascript -->
         <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
