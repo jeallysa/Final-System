@@ -332,13 +332,13 @@
 		
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
-                '<td contenteditable="true">'+serial+'</td>'+
-				'<td contenteditable="true">'+dateOfPO+'</td>'+
-			 	'<td contenteditable="true" > '+client_id+'</td>'+
-				'<td contenteditable="true">'+clientDetail+'</td>'+
-			 	'<td contenteditable="true" >'+mach_id+'</td>'+
-				'<td contenteditable="true">'+machineDetail+'</td>'+
-			 	'<td contenteditable="true">'+quantity+' </td>'+
+                '<td >'+serial+'</td>'+
+				'<td >'+dateOfPO+'</td>'+
+			 	'<td > '+client_id+'</td>'+
+				'<td >'+clientDetail+'</td>'+
+			 	'<td >'+mach_id+'</td>'+
+				'<td >'+machineDetail+'</td>'+
+			 	'<td >'+quantity+' </td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		
