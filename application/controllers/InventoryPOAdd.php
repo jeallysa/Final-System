@@ -193,10 +193,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	
            
-        for ($i = 0; $i < count($this->input->post('item_name')); $i++){
+for ($i = 0; $i < count($this->input->post('item_name')); $i++){
 			
+        //$totalAmountv = filter_var($totalAmount, FILTER_SANITIZE_NUMBER_FLOAT); 
+        $qtyT = str_replace(array(','), '' , $qtyv[$i]);   
+            
+            
 	if($categoryx[$i] == 1){
-			$newQty = $qtyv[$i] * 1000;
+        
+			$newQty = $qtyT * 1000;
 				
             $data[$i] = array(
                
@@ -214,7 +219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$data[$i] = array(
                
                 'item' => $itemv[$i],
-                'qty' => $qtyv[$i],
+                'qty' => $qtyT,
                 'type' => $itemTypev[$i],
                 'amount' => $amountv[$i],
                 'supp_po_id' =>$lastPO[0]->supp_po_id,

@@ -443,7 +443,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                          
                                                    <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo ($object->qty)/1000 ?>" readonly />
+                                                      <input type="text" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo number_format((($object->qty)/1000),2) ?>" readonly />
                                                       
                                                    </td>   
                                                     
@@ -484,7 +484,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </td>     
                                                          
                                                 <td>
-                                                      <input type="number" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo number_format($object->qty) ?>" readonly  />
+                                                      <input type="text" class="form-control" name="qty[]" id ="<?php echo "qtyp".$i?>" value="<?php echo number_format($object->qty) ?>" readonly  />
                                                   
                                                 </td> 
                                                     
