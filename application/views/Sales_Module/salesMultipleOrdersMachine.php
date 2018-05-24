@@ -384,6 +384,7 @@
 				
 				/*location.reload(); */ 
 				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
+                alert('Purchase order added');
 			}	
 		});
 	});

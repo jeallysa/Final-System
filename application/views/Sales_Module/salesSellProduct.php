@@ -514,18 +514,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#cosales').DataTable({
-        "dom":' fBrtip',
-        "lengthChange": false,
-        "info":     true,
+        
     });
 });
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#masales').DataTable({
-        "dom":' fBrtip',
-        "lengthChange": false,
-        "info":     true,
+
     });
 });
 </script>
