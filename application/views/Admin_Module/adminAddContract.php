@@ -177,7 +177,7 @@ a:focus {
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Account Information</h4>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Contract Information</h4>
                         </div>
                         <form action="AdminAddContract/update" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
@@ -210,13 +210,13 @@ a:focus {
                                                     <div class="form-group label-floating">
                                                         <label for="email">Date Started</label>
 
-                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started?>" data-validate="required" message="Date of Purchase is recquired!"  max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>" >
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started?>" data-validate="required" message="Date of Purchase is recquired!"  >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration?>" data-validate="required" message="Date of Purchase is recquired!" min="<?=date('Y-m-d')?>" >
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration?>" data-validate="required" message="Date of Purchase is recquired!"  >
                                                     </div>
                                                 </div>
                                                 <?php
@@ -253,7 +253,7 @@ a:focus {
                                                 
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Blends Required Quantity</label>
+                                                        <label for="email">Blends Required Quantity (bags)</label>
                                                         <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');"  value="<?php echo $row->required_qty?>" >
                                                     </div>
                                                 </div>
@@ -273,7 +273,7 @@ a:focus {
                                                 <div class="col-md-6 form-group">
                                                        
                                                             <div class="form-group label-floating">
-                                                                <label for="email">Packaging</label>
+                                                                <label for="email">Packaging (bag type - grams)</label>
                                                                 <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
                                                         <option disabled selected value></option>
                                                         <?php 
@@ -283,7 +283,7 @@ a:focus {
                                                                 if($row->package_id == $row2->package_id){
                                                                 echo '<option value="'.$row2->package_id.'" selected>'.$row2->package_type.' '.$row2->package_size.'</option>';
                                                                     }else{
-                                                                            echo '<option value="'.$row2->package_id.'">'.$row2->package_type.' '.$row2->package_size.'</option>';
+                                                                            echo '<option value="'.$row2->package_id.'">'.$row2->package_type.' - '.$row2->package_size.' g</option>';
                                                                     }
                                                             }
                                                          ?>
@@ -306,7 +306,7 @@ a:focus {
 
                                                     <div class="form-group label-floating">
                                                         <label for="email">Stickers</label>
-                                                         <select  class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
+                                                         <select  class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters" disabled>
                                                             <option disabled selected value></option>
                                                             <?php 
                                                                 $query_pack = $this->db->query("SELECT * FROM sticker;");
@@ -365,7 +365,7 @@ a:focus {
                                                 
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Machine Required Quantity</label>
+                                                        <label for="email">Machine Quantity (unit/s)</label>
                                                         <?php
                                                             $cli_id = $this->input->get('p'); 
                                                             $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
@@ -436,7 +436,7 @@ a:focus {
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Account Information</h4>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Contract Information</h4>
                         </div>
                         <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
@@ -459,13 +459,13 @@ a:focus {
                                                     <div class="form-group label-floating">
                                                         <label for="email">Date Started</label>
 
-                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" >
+                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired!" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" >
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired!" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -490,7 +490,7 @@ a:focus {
                                                 
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Blends Required Quantity</label>
+                                                        <label for="email">Blends Required Quantity (bags)</label>
                                                         <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');" >
                                                     </div>
                                                 </div>
@@ -499,14 +499,14 @@ a:focus {
                                             <div class="row">                                               
                                                 <div class="col-md-6 form-group">
                                                        <div class="form-group label-floating">
-                                                        <label for="email">Packaging</label>
+                                                        <label for="email">Packaging (bag - grams)</label>
                                                         <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
                                                 <option disabled selected value></option>
                                                 <?php 
                                                     $query_pack = $this->db->query("SELECT * FROM packaging;");
                                                     foreach($query_pack->result() as $row)
                                                     { 
-                                                        echo '<option value="'.$row->package_id.'">'.$row->package_type.' '.$row->package_size.'</option>';
+                                                        echo '<option value="'.$row->package_id.'">'.$row->package_type.' bag - '.$row->package_size.' g</option>';
                                                     }
                                                  ?>
                                             </select>
@@ -556,7 +556,7 @@ a:focus {
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Machine Required Quantity</label>
+                                                        <label for="email">Machine Quantity (unit/s)</label>
                                                         <input class="form-control" type="number" name="contract_mqty" >
                                                     </div>
                                                 </div>
@@ -622,7 +622,7 @@ a:focus {
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="green">
-                                    <h4 class="title">Create New Contract</h4>
+                                    <h4 class="title">Contract</h4>
                                 </div>
                                 <?php  
                                     $cli_id = $this->input->get('p');
@@ -692,7 +692,7 @@ a:focus {
                                                 
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Blends Required Quantity</label>
+                                                        <label for="email">Blends Required Quantity (bags)</label>
                                                         <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');"  value="<?php echo $row->required_qty?>" disabled>
                                                     </div>
                                                 </div>
@@ -712,7 +712,7 @@ a:focus {
                                                 <div class="col-md-6 form-group">
                                                        <div class="form-group label-floating">
                                                         <label for="email">Packaging</label>
-                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type?>" disabled>
+                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type . ' - ' . $row->package_size . ' g'?> " disabled>
                                                     </div>
                                                 </div>
                                                 <?php } ?>
@@ -756,7 +756,7 @@ a:focus {
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
-                                                        <label for="email">Machine Required Quantity</label>
+                                                        <label for="email">Machine Quantity (unit/s)</label>
                                                         <?php
                                                             $cli_id = $this->input->get('p'); 
                                                             $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");

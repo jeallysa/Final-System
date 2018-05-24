@@ -223,7 +223,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-4 control">Size(g) :</label>
+                                            <label class="col-md-4 control">Size (g) :</label>
                                             <div class="col-md-6">
                                                 <p><b><input name="Size" class="no-border" type="disabled" readonly /></b></p>
                                             </div>
@@ -250,12 +250,12 @@
                                                     <input type="number" name="quantity" id="quantityAvailed" class="form-control" min="1" oninput="validity.valid||(value='');" data-validate="required" max="" placeholder="reqQty" >
                                                 </div>
                                             </div><br><br>
-											 <!--<div class="form-group">
+											 <div class="form-group">
                                                 <label class="col-md-3 control">Total Price :</label>
                                                 <div class="col-md-9">
                                                     <h5><b>Php <input name="TotalPrice" type="number" value="quantity" id="product" class="no-border number" type="disabled" readonly /></b></h5>
                                                 </div>
-                                            </div>-->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

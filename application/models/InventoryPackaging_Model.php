@@ -13,7 +13,7 @@ class InventoryPackaging_Model extends CI_model
 	}
 
 	function retrievePackaging(){
-      $query = $this->db->query("SELECT * FROM jhcs.packaging NATURAL JOIN supplier WHERE pack_activation = '1';");
+      $query = $this->db->query("SELECT *, supplier.sup_id, package_id, package_type, package_size, unitPrice, package_reorder, package_stock, sup_company, pack_activation FROM packaging JOIN supplier ON supplier.sup_id = packaging.package_id WHERE pack_activation = '1';");
             
       if($query->num_rows() > 0){
           return $query-> result();

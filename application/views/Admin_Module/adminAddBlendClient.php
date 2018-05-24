@@ -282,7 +282,7 @@ a:focus {
                                 <thead>
                                     <tr>
                                          <?php
-                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
+                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', '') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
                                                         foreach($query_head->result() AS $row) {

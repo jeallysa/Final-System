@@ -6,7 +6,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
 		$count = $this->db->count_all_results('raw_coffee');
         $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
 		$query_append = "SELECT  a.* FROM
-                            (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, 'Company' as supplier";
+                            (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
 		foreach ($qcount->result() AS $row){
 			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
@@ -59,7 +59,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
 		$count = $this->db->count_all_results('raw_coffee');
         $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
 		$query_append = "SELECT a.* FROM
-                            (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, 'Company' as supplier";
+                            (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
 		foreach ($qcount->result() AS $row){
 			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");

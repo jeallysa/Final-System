@@ -432,6 +432,19 @@ a:focus {
                                         </div>
                                     </div>
                                 </div>
+		<?php
+                                    $error = $this->session->flashdata('error');
+                                    $success = $this->session->flashdata('success');
+                                    if(!empty($error)){
+                                        ?>
+                                        <div class="alert alert-danger" style="margin: 20px; text-align: center; ">
+                                            <strong><?php echo $error; ?></strong> 
+                                        </div>
+                                  <?php } else if(!empty($success)){ ?>
+                                        <div class="alert alert-success" style="margin: 20px; text-align: center; ">
+                                            <strong><?php echo $success; ?></strong> 
+                                        </div>
+                                  <?php } ?> 
                                 <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -490,8 +503,10 @@ a:focus {
                                      <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Client Blend</b></th>
+                                            <th><b class="pull-left">Price</b></th>
+                                            <th><b class="pull-left">Quantity</b></th>
                                              <?php
-                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
+                                                    $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', '') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
                                                         foreach($query_head->result() AS $row) {
@@ -503,10 +518,7 @@ a:focus {
                                                     echo "0 results";
                                                 }
                                                 ?>
-                                            <th><b class="pull-left">Size</b></th>
-                                            <th><b class="pull-left">Packaging</b></th>
-                                            <th><b class="pull-left">Price</b></th>
-                                            <th><b class="pull-left">Quantity</b></th>
+                                            
                                             <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
@@ -520,7 +532,10 @@ a:focus {
                                                         foreach($fetch_data_cb -> result() as $row)
                                                         {
                                                 ?>
+												
                                                 <td><?php echo $row->blend; ?></td>
+                                                <td>Php <?php echo number_format($row->blend_price,2); ?></td>
+                                                <td><?php echo $row->blend_qty; ?></td>
 
                                                 
                                                 <?php
@@ -532,10 +547,7 @@ a:focus {
                                                 }
                                                 
                                                 ?>
-                                                <td><?php echo number_format($row->package_size); ?> g</td>
-                                                <td><?php echo $row->package_type; ?></td>
-                                                <td>Php <?php echo number_format($row->blend_price,2); ?></td>
-                                                <td><?php echo $row->blend_qty; ?></td>
+                                               
 
                                                 <!--
                                                 <td>Blend A</td>

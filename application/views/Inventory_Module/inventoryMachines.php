@@ -321,7 +321,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <tr>
                                                     <td><b>Beginning Inventory</b></th>
                                                     <td><b> </b></td>
-                                                    <td><b><?php echo ($physical); ?> pcs</b></td>
+                                                    <td><b><?php echo ($physical); ?> unit/s</b></td>
                                                     <td><b> </b></td>
                                                     <td><b> </b></td>
                                                 </tr>
@@ -335,7 +335,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->date  . '</td>' ,
-                                                '<td>'  . number_format($object->mach_qty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->mach_qty)  . ' unit/s</td>' ;
                                                 ?>
                                                     <td>Sales</td>
                                                     <td>Out</td>
@@ -443,11 +443,11 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
                                               
                                            echo 
-                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' pcs" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' unit/s" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
                                                 '</div>',
                                                 '<label class="col-md-6 control">Total Out :</label>',
                                                 '<div class="col-md-4">',
-                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' pcs" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' unit/s" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
                                               
                                             }
                                         ?> 
@@ -457,12 +457,12 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                         <div class="col-md-4">
                                                                             <?php
                                                                             echo
-                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' pcs"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' unit/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="unit/s" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -619,10 +619,10 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->mach_reorder)   . ' pcs</td>' ,
-                                                '<td><b>'  . number_format($object->mach_stocks)   . ' pcs</b></td>' ,
-                                                '<td>'  . number_format($object->mach_physcount)   . ' pcs</td>' ,
-                                                '<td>'  . number_format($object->mach_discrepancy)   . ' pcs</td>' ,
+                                                '<td>'  . number_format($object->mach_reorder)   . ' unit/s</td>' ,
+                                                '<td><b>'  . number_format($object->mach_stocks)   . ' unit/s</b></td>' ,
+                                                '<td>'  . number_format($object->mach_physcount)   . ' unit/s</td>' ,
+                                                '<td>'  . number_format($object->mach_discrepancy)   . ' unit/s</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->mach_remarks   . '</td>' ;
 

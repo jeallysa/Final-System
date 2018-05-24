@@ -138,29 +138,31 @@
 			$sticker = $this->input->post('stick');
 			$pack = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_type;	
 			$size = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_size;
-
-			$this->Admin_Blends_model->activity_logs('admin', "Inserted New Coffee Blend: ".$blend_name.", ".$pack." bag ".$size." grams in ".$type." blend ");	
-			$data_blend = array(
-				'blend' => $blend_name,
-				'package_id' => $packaging,
-				'blend_price' => $price,
-				'blend_type' => $type,
-				'sticker_id' => $sticker
-			);
-			$this->db->insert('coffee_blend', $data_blend);
-			$id = $this->db->insert_id();
-			$query = $this->db->query("SELECT * FROM raw_coffee;");
-			foreach($query->result() as $row){
-				$prop = $this->input->post("per[".$row->raw_id."]");
-				$data_for = array(
-			        	'blend_id' => $id,
-			        	'raw_id' => $row->raw_id,
-			        	'percentage' => $prop
-			        );
-			    $this->db->insert('proportions', $data_for);
-			}
-			echo "<script>alert('Insert successful!');</script>";
-			redirect('adminBlends', 'refresh');
+			
+				$this->Admin_Blends_model->activity_logs('admin', "Inserted New Coffee Blend: ".$blend_name.", ".$pack." bag ".$size." grams in ".$type." blend ");	
+				$data_blend = array(
+					'blend' => $blend_name,
+					'package_id' => $packaging,
+					'blend_price' => $price,
+					'blend_type' => $type,
+					'sticker_id' => $sticker
+				);
+				$this->db->insert('coffee_blend', $data_blend);
+				$id = $this->db->insert_id();
+				$query = $this->db->query("SELECT * FROM raw_coffee;");
+				foreach($query->result() as $row){
+					$prop = $this->input->post("per[".$row->raw_id."]");
+					$data_for = array(
+							'blend_id' => $id,
+							'raw_id' => $row->raw_id,
+							'percentage' => $prop
+						);
+					$this->db->insert('proportions', $data_for);
+				}
+				$this->session->set_flashdata('success', 'Blend added successfully');
+				redirect('adminBlends', 'refresh');
+			
+			
 
 
 		}

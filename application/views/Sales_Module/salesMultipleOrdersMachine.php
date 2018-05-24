@@ -249,7 +249,7 @@
 														<th>Client Name</th>
 													    <th >Machine ID</th>
 														<th>Machine Name</th>
-														<th>Quantity</th>
+														<th>Quantity (unit/s)</th>
 														<th></th>
 													</thead>
 													<tbody>

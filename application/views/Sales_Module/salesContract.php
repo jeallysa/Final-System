@@ -213,7 +213,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>Quantity:</b></td>
-                                                        <td><?php echo $row->required_qty; ?></td>
+                                                        <td><?php echo $row->required_qty; ?> bags</td>
                                                     </tr>
                                                     <?php 
                                                         }
@@ -253,7 +253,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>Quantity:</b></td>
-                                                        <td><?php echo $row->mach_qty; ?></td>
+                                                        <td><?php echo $row->mach_qty; ?> unit/s</td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Type:</b></td>

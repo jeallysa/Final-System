@@ -338,7 +338,6 @@ a:focus {
                     </div>
                 </div>
             </div>
-        
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">

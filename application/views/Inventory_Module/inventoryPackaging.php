@@ -304,7 +304,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     
                                     <div class="table-responsive">
                                         <div class="col-lg-12 col-md-12 col-sm-12 text-center" style="padding-bottom: 10px;">
-                                                                <h3><b><?php echo $pckg; ?> bag (<?php echo $size; ?> g)</b></h3>
+                                                                <h3><b><?php echo $pckg; ?> (<?php echo $size; ?> g)</b></h3>
                                                                 <hr>
                                                             </div>
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
@@ -636,7 +636,7 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                            echo '<tr>' ,
                                                 
                                                 '<td>'  . $object->package_id . '</td>' ,
-                                                '<td>'  . $object->package_type . ' bag</td>' ,
+                                                '<td>'  . $object->package_type . ' </td>' ,
                                                 '<td>'  . number_format($object->package_size)   . ' g</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td>'  . number_format($object->package_reorder)   . ' pcs</td>' ,

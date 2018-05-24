@@ -202,7 +202,7 @@
 											<div class="col-md-4 ">
 														<select class="form-control selectpicker" id="blend" data-live-search="true" title="Choose Coffee Blend..." name="coffeeBlend">
 															<?php foreach($data1['blends'] as $row){ ?>
-															<option value='<?php echo $row->blend_id; ?>' ><?php echo $row->blend; ?>/<?php echo $row->package_type; ?>/<?php echo $row->package_size; ?>  </option>
+															<option value='<?php echo $row->blend_id; ?>' ><?php echo $row->blend; ?> / <?php echo $row->package_type; ?> / <?php echo $row->package_size; ?> g </option>
                                                             <?php 
 															} ?>
                                                          </select>
@@ -222,7 +222,7 @@
 														<th  >Date of Order</th>
 														<th  >Blend ID</th>
 														<th  >Quantity</th>
-														<th  >Coffee Blend/Type of Bag/Size of Bag</th>
+														<th  >Coffee Blend / Type of Bag / Size of Bag</th>
 														<th></th>
 													</thead>
 													<tbody>
