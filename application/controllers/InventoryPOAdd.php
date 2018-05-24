@@ -121,6 +121,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
         
+     
+     public function checkIfExisting(){          //ajax part
+        $item_name = $this->input->post('itemName');
+        $item_type = $this->input->post('itemType');
+        
+        $result   = $this->inventoryPOAdd_model->checkIfExisting($item_name , $item_type);
+        
+        if(count($result)>0){
+          
+            echo json_encode($result);
+        }
+    } 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
        public function removeOrder($item){       
         $this->inventoryPOAdd_model->removeOrder($item);

@@ -83,7 +83,65 @@
                     }
                    
                }
-         }   
+         }  
+      
+      
+      
+      
+     public function checkIfExisting($item_name , $item_type){
+        $currentStock = 0;
+          
+       
+          
+        for($i = 0 ; $i < 4 ; $i++){
+                          
+        $retrieveDetails ="select * from supp_temp_po_order where item_name ='".$item_name."' and type ='".$item_type."'" ; 
+             $query = $this->db->query($retrieveDetails); 
+                      
+               if ($query->num_rows() > 0) {
+                           $status = "0";
+                           
+                       return $status;
+                   
+                  }else{
+                           $status = "1";
+                           
+                      return $status;
+                     
+                  }
+        
+                    
+         }
+ } 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
      
       
     
