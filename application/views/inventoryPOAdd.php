@@ -672,7 +672,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                 
       '<td class="col-sm-2" >  </td>' ,
       '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format(($object->qty),2)       .'" readonly required>  </td>' ,    
-      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="Php '.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="Php '.number_format(($object->amount),2)    .'" readonly required>   </td>' ,
                        
       '<td class="col-sm-3"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
@@ -686,7 +686,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       '<td class="col-sm-2"><input type="text" class="form-control" name="type[]"       id="type'.$counter.'" value ="'.$object->type      .'" readonly required>   </td>' ,                
       '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
       '<td class="col-sm-2">  </td>',                
-      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="Php '.$object->unitPrice .'" readonly required>   </td>' ,
       '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="Php '.number_format(($object->amount),2)    .'" readonly required>   </td>' ,
                        
       '<td class="col-sm-2"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
