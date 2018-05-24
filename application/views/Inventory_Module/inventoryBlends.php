@@ -369,6 +369,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
+                                              $retrieveDetails3 ="SELECT * FROM jhcs.walkin_sales WHERE coff_remark='Returned' AND blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails3);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> Walk-in Client </td>' ,
+                                                '<td>'  . $object->walkin_date  . '</td>' ,
+                                                '<td>'  . number_format($object->walkin_returns)  . ' bags</td>' ;
+                                                ?>
+                                                    <td>Client Return</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
                                               $retrieveDetails4 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
@@ -434,7 +452,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
+(SELECT walkin_returns AS TotalIn FROM jhcs.walkin_sales WHERE coff_remark='Returned' AND blend_id = '". $id  ."' UNION ALL
+    SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
 SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
 SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
 
