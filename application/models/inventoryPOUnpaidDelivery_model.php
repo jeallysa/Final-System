@@ -57,7 +57,7 @@
             
             $queryCheck = $this->db->query("SELECT * FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
-$queryLimit = $this->db->query("SELECT * FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
+$queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categoryx FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
             
             $queryDeduc = $this->db->query("SELECT sum(sup_returnQty)  max  FROM company_returns where poNo = ".$poNo."  and sup_returnItem = ".$item." and drNo = '".$drNo."'");
             
@@ -82,15 +82,13 @@ $queryLimit = $this->db->query("SELECT * FROM supp_delivery  join supp_po_ordere
                                      "categoryx"    =>$category,
                                                );
         
-       
-                    
                  
                     
                     return $result;
                     
     }else{
                     
-  $query2 = $this->db->query("SELECT * FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
+  $query2 = $this->db->query("SELECT sum(yield_weight) as yield_weight , categoryx FROM supp_delivery  join supp_po_ordered using(supp_po_ordered_id) where supp_delivery.supp_po_id  = ".$poNo." and supp_po_ordered_id =  ".$item." and drNo = '".$drNo."'");
                 if($query2->num_rows() > 0){
                                         
                                $result = $query2->row();
