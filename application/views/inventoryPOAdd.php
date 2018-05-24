@@ -673,7 +673,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       '<td class="col-sm-2" >  </td>' ,
       '<td class="col-sm-2"><input type="text"  class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format(($object->qty),2)       .'" readonly required>  </td>' ,    
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="Php '.number_format(($object->amount),2)    .'" readonly required>   </td>' ,
                        
       '<td class="col-sm-3"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
       '<td class="col-sm-1"><button type="submit"  formaction="InventoryPOAdd/removeOrder/'.$item.'" class="btn btn-danger decline">-</button> </td>' ,                                                               
@@ -687,7 +687,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       '<td class="col-sm-2"><input type="text" class="form-control" name="qty[]"        id="qty'.$counter.'" value ="'.number_format($object->qty)       .'" readonly required>  </td>' ,
       '<td class="col-sm-2">  </td>',                
       '<td class="col-sm-2"><input type="text" class="form-control" name="unitPrice[]"  id="unitPrice'.$counter.'" value ="'.$object->unitPrice .'" readonly required>   </td>' ,
-      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="'.$object->amount    .'" readonly required>   </td>' ,
+      '<td class="col-sm-2"><input type="text" class="form-control" name="amount[]"     id="amount'.$counter.'" value ="Php '.number_format(($object->amount),2)    .'" readonly required>   </td>' ,
                        
       '<td class="col-sm-2"><input type="hidden" class="form-control" name="category[]"     id="category'.$counter.'" value ="'.$object->categoryx    .'" readonly required>   </td>' ,    
       '<td class="col-sm-1"><button type="submit"  formaction="InventoryPOAdd/removeOrder/'.$item.'" class="btn btn-danger decline">-</button> </td>' ,                                                               
@@ -718,7 +718,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td><center><b>Sub total</b></center></td>
-                                                                    <td><center><b><input type="text"  class="form-control" name="subTotal"   id="subTotal"  value="<?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo number_format($object->subTotal,2); }}  ?>"  readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text"  class="form-control" name="subTotal"   id="subTotal"  value="Php <?php if(!empty($sumOfTemp)) { foreach($sumOfTemp as $object) { echo number_format($object->subTotal,2); }}  ?>"  readonly required/></b></center></td>
                                                                 </tr>
                                                             
                                                             
@@ -729,7 +729,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                      <td></td>
                                                                      <td></td>
                                                                      <td><b><center>Trucking Fee</center></b></td>
-                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="<?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo number_format($object->trucking_fee,2); }}  ?>" readonly /></b></td>  
+                                                                     <td><b><input type="text" class="form-control" name="truckingFee" id="truckingFee" value="Php <?php if(!empty($truckingFee)) { foreach($truckingFee as $object) { echo number_format($object->trucking_fee,2); }}  ?>" readonly /></b></td>  
                                                                     
                                                                 </tr>
                                                             
@@ -741,7 +741,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td><center><b>Total Amount</b></center></td>
-                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="<?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format($object->tAmount,2); }}  ?>" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="Php <?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format($object->tAmount,2); }}  ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>
