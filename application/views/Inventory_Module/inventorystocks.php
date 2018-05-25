@@ -436,8 +436,7 @@ SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered 
 
 $retrieveTotalout ="Select SUM(TotalOut) AS TotalOut from
 (SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND type = '".$type."' AND raw_id = '". $id  ."' UNION ALL
-SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE trans_raw.inv_stat='0' AND type = 'OUT' AND quantity != '0' AND raw_coffeeid = '". $id  ."' UNION ALL
-SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE trans_raw.inv_stat='0' AND type = 'OUT' AND quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE type = 'OUT' AND trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
