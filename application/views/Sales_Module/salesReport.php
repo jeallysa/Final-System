@@ -133,38 +133,11 @@
                             <div class="card">
                                 <div class="card card-nav-tabs">
                                     <div class="card-header" data-background-color="purple">
-                                        <div class="nav-tabs-navigation">
-                                            <div class="nav-tabs-wrapper">
-                                                <ul class="nav nav-tabs" data-tabs="tabs" id="myTab">
-                                                    <li>
-                                                        <h3 class="title"><center>Sales Report: <br></center></h3>
-                                                    </li>
-                                                    <li class="active">
-                                                        <a href="#contract" data-toggle="tab">
-                                                             Contracted Clients
-                                                            <div class="ripple-container"></div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="">
-                                                        <a href="#walkin" data-toggle="tab">
-                                                         Walk-in Clients
-                                                            <div class="ripple-container"></div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="">
-                                                        <a href="#mach" data-toggle="tab">
-                                                         Sold Machines
-                                                            <div class="ripple-container"></div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        <h3 class="title"><center>Sales Report<br></center></h3>
                                     </div>
                                 </div>
                                 <div class="card-content">
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="contract">
     									<div class="row">
     									<div class="form-group col-xs-3">
     										<label>Filter By:</label>
@@ -233,141 +206,6 @@
                                                   ?>
                                             </tbody>
                                         </table>
-                                    </div>
-                            <div class="tab-pane" id="walkin">
-                                    <!-- <div class="row">
-                                    <div class="form-group col-xs-3">
-                                        <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                            <input type="text" id="min" class="form-control" value="2000-01-01" >
-                                            <span class="input-group-addon">to</span>
-                                            <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                        </div>
-                                    </div> -->
-                                
-                                    <div class="form-group col-xs-4 " >
-                                        
-                                        <p class="category">Total Sales of Walk-in Clients: </p>
-                                    <h3 class="title">
-                                        <b>
-                                        <?php
-                                            $total = $this->db->query("SELECT SUM(blend_price * walkin_qty) AS total FROM walkin_sales a INNER JOIN coffee_blend b ON a.blend_id = b.blend_id;")->row()->total;
-
-                                        if(!empty($total)){
-                                            echo 'Php '.number_format($total,2);
-                                        }else{
-                                            echo 0;
-                                        }
-
-                                         ?></b>
-                                            </h3>
-                                    
-                                    </div>
-                                <!-- </div> -->
-
-                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th><b>Item Code</b></th>
-                                                <th><b>Purchase Date</b></th>
-                                                <th><b>Coffee</b></th>
-                                                <th><b>Bag</b></th>
-                                                <th><b>Size</b></th>
-                                                <th><b>Qty</b></th>
-                                                <th><b>Price</b></th>
-                                                <th><b>Total Amount</b></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            foreach ($data1['saleswalkin'] as $row) {
-                                         ?>
-                                             <tr>
-                                                 <td><?php echo $row->blend_id; ?></td>
-                                                 <td><?php echo $row->walkin_date; ?></td>
-                                                 <td><?php echo $row->blend; ?></td>
-                                                 <td><?php echo $row->package_type; ?></td>
-                                                 <td><?php echo number_format($row->package_size); ?> g </td>
-                                                 <td><?php echo $row->walkin_qty; ?> bag/s</td>
-                                                 <td>Php <?php echo number_format($row->blend_price,2); ?></td>
-                                                 <td><?php 
-                                                        $price = $row->blend_price;
-                                                        $qty = $row->walkin_qty;
-                                                        echo 'Php '.number_format($price * $qty,2);
-                                                     ?>
-                                                </td>
-                                            </tr>
-                                             <?php
-                                                }
-                                              ?>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div class="tab-pane" id="mach">
-                                <!-- <div class="row">
-                                    <div class="form-group col-xs-3">
-                                        <label>Filter By:</label>
-                                        <div class="input-group input-daterange">
-                                            <input type="text" id="min" class="form-control" value="2000-01-01" >
-                                            <span class="input-group-addon">to</span>
-                                            <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-                                        </div>
-                                    </div> -->
-                                
-                                    <div class="form-group col-xs-4 " >
-                                        <p class="category">Total Sales of Sold Machines: </p>
-                                    <h3 class="title">
-                                        <b>
-                                        <?php
-                                            $total = $this->db->query("SELECT SUM(unitPrice * mach_qty) AS total FROM machine_out a INNER JOIN machine b ON a.mach_id = b.mach_id;")->row()->total;
-
-                                        if(!empty($total)){
-                                            echo 'Php '.number_format($total,2);
-                                        }else{
-                                            echo 0;
-                                        }
-
-                                         ?></b>
-                                            </h3>
-                                    
-                                    </div>
-                                <!-- </div> -->
-
-                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                        <thead>
-                                            <th><b>Item Code</b></th>
-                                            <th><b>Serial No.</b></th>
-                                            <th><b>Purchase Date</b></th>
-                                            <th><b>Client</b></th>
-                                            <th><b>Machine</b></th>
-                                            <th><b>Sold Quantity</b></th>
-                                            <th><b>Unit Price</b></th>
-                                            <th><b>Total Amount</b></th>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                            foreach ($data2['salesmach'] as $row) {
-                                         ?>
-                                         <tr>
-                                             <td><?php echo $row->mach_id; ?></td>
-                                             <td><?php echo $row->mach_serial; ?></td>
-                                             <td><?php echo $row->date; ?></td>
-                                             <td><?php echo $row->client_company; ?></td>
-                                             <td><?php echo $row->brewer; ?></td>
-                                             <td><?php echo $row->mach_qty; ?> /unit</td>
-                                             <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
-                                             <td><?php 
-                                                    $price = $row->unitPrice;
-                                                    $qty = $row->mach_qty;
-                                                    echo 'Php' .number_format($price * $qty, 2);
-                                                 ?>
-                                             </td>
-                                             <?php
-                                                }
-                                              ?>
-                                        </tbody>
-                                    </table>
-                            </div>
                             </div>
                         </div>
                     </div>
