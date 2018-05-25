@@ -95,7 +95,7 @@
           
         for($i = 0 ; $i < 4 ; $i++){
                           
-        $retrieveDetails ="select * from supp_temp_po_order where item_name ='".$item_name."' and type ='".$item_type."' and username ='".$username; 
+        $retrieveDetails ="select * from supp_temp_po_order where item_name ='".$item_name."' and type ='".$item_type."' and username ='".$username."'"; 
              $query = $this->db->query($retrieveDetails); 
                       
                if ($query->num_rows() > 0) {
