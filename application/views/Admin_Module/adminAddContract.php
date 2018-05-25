@@ -227,7 +227,7 @@ a:focus {
                                             <div class="row">
                                                 <?php
                                                     $cli_id = $this->input->get('p'); 
-                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id where client_id = '".$cli_id."' ;");
+                                                    $query = $this->db->query("SELECT * FROM contract WHERE client_id = '".$cli_id."' ;");
                                                     
                                                     foreach($query->result() AS $row){
                                                 ?>
@@ -237,13 +237,13 @@ a:focus {
                                                         <select  class="form-control" name="contract_blend" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Blends should only countain letters">
                                                 <option disabled selected value></option>
                                                 <?php 
-                                                    $query_blend = $this->db->query("SELECT blend_id AS id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client' UNION SELECT blend_id AS id, blend FROM coffee_blend WHERE blend_id = '".$cli_id."';");
+                                                    $query_blend = $this->db->query("SELECT blend_id, blend FROM coffee_blend WHERE blend_id NOT IN (SELECT blend_id FROM contract) AND blend_type = 'Client' UNION SELECT contract.blend_id, blend FROM contract JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id WHERE client_id = '".$cli_id."' ORDER by 1;");
                                                     foreach($query_blend->result() as $row2)
                                                     { 
-                                                        if($row->blend_id = $row2->blend_id){
-                                                        echo '<option value="'.$row2->id.'">'.$row2->blend.'</option>';
-                                                            }else{
-                                                                echo '<option value="'.$row2->id.'" selected>'.$row2->blend.'</option>';
+                                                        if($row2->blend_id == $row->blend_id){
+                                                        echo '<option value="'.$row2->blend_id.'" selected>'.$row2->blend.'</option>';
+                                                        }else{
+                                                                echo '<option value="'.$row2->blend_id.'">'.$row2->blend.'</option>';
                                                             }
                                                     }
                                                  ?>
@@ -395,13 +395,13 @@ a:focus {
                                                     <div class="form-group label-floating">
                                                         <label for="email">Date Started</label>
 
-                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired!" >
+                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is recquired!" >
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -564,16 +564,24 @@ a:focus {
                                             <div class="row">
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
+                                                        <?php
+                                                            $cli_id = $this->input->get('p'); 
+                                                            $query = $this->db->query("SELECT * FROM contract WHERE client_id = '".$cli_id."';");
+                                                            foreach($query->result() AS $row){
+                                                        ?>
                                                         <label for="email">Date Started</label>
-                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started;?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo date("Y-m-d");?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration;?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
                                                     </div>
                                                 </div>
+                                                <?php
+                                                    }
+                                                ?>
                                             </div>
                                         
                                             <div class="row">
@@ -601,39 +609,6 @@ a:focus {
                                                     }
                                                  ?>
                                                 
-                                            </div>
-                                            <div class="row">
-                                                <?php
-                                                    $cli_id = $this->input->get('p'); 
-                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN packaging ON contract.package_id = packaging.package_id where client_id = '".$cli_id."' ;");
-                                                    
-                                                    foreach($query->result() AS $row){
-                                                ?>
-                                                <div class="col-md-6 form-group">
-                                                       <div class="form-group label-floating">
-                                                        <label for="email">Packaging</label>
-                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type . ' - ' . $row->package_size . ' g'?> " disabled>
-                                                    </div>
-                                                </div>
-                                                <?php } ?>
-
-                                                
-                                                <div class="col-md-6 form-group">
-
-                                                    <div class="form-group label-floating">
-                                                        <label for="email">Stickers</label>
-                                                        <?php
-                                                            $cli_id = $this->input->get('p'); 
-                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE contract.client_id = '".$cli_id."' ;");
-                                                    
-                                                            foreach($query->result() AS $row){   
-                                                        ?>  
-                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->sticker?>" disabled>
-                                                        <?php } ?>
-
-                                                    </div>
-
-                                                </div>
                                             </div>
                                             <?php
                                                 $id = $this->input->get('p');

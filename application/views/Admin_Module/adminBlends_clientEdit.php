@@ -259,26 +259,104 @@ a:focus {
                                                             $id = $this->input->get('id');
                                                             foreach($edit_page->result() as $row){
                                                     ?>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group label-floating">
                                                             <label for="email">Blend Name:</label>
                                                             <input class="form-control" type="text" name="blend_name" value="<?php echo $row->blend;?>" required="">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group label-floating">
-
+                                                            <?php /* <!-- 
                                                             <input type="hidden" class="form-control" name="price" value="<?php echo $row->blend_price;?>" required="">
                                                             <input type="hidden" class="form-control" name="id" value="<?php echo $id;?>" required="">
                                                             <input type="hidden" class="form-control" name="package_id" value="<?php echo $row->package_id; ?>" required="">
                                                              <input type="hidden" class="form-control" name="type" value="<?php echo $row->type; ?>" required="">
                                                              <input type="hidden" class="form-control" name="stick" value="<?php echo $row->sticker; ?>" required="">
+                                                             --> */
+                                                             ?>
+                                                         
+                                                            <label for="email">Price Per Unit</label>
+                                                            <input type="number" class="form-control" name="price" value="<?php echo $row->blend_price;?>" required="">
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel1">Package and Size:</label>
+
+                                                              <select class="form-control" id="sel1" name="package_id">
+                                                                <?php
+                                                                    $pack = $this->db->query('SELECT * FROM packaging');
+                                                                    foreach($pack->result() as $row5){
+                                                                        if ($row5->package_id == $row->package_id){
+                                                                ?>
+                                                                    <option value="<?php echo $row5->package_id; ?>" selected> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
+                                                                    <?php
+                                                                    }else{
+                                                                ?>
+                                                                    <option value="<?php echo $row5->package_id; ?>"> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
+                                                                <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                              </select>
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel1">Blend Type:</label>
+
+                                                              <select class="form-control" id="sel1" name="type" disabled>
+                                                                
+                                                                    <option value="Client"> Client </option>
+                                                                   
+                                                              </select>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel2">Sticker:</label>
+
+                                                              <select class="form-control" id="sel2" name="stick">
+                                                                <?php
+                                                                    $stick = $this->db->query('SELECT * FROM sticker');
+                                                                    foreach($stick->result() as $row6){
+                                                                        if($row6->sticker_id == $row->sticker){
+                                                                ?>
+                                                                    <option value="<?php echo $row6->sticker_id; ?>"  selected> <?php echo $row6->sticker; ?> </option>
+                                                                    <?php
+                                                                    }else{
+                                                                ?>
+                                                                    <option value="<?php echo $row6->sticker_id; ?>"> <?php echo $row6->sticker; ?> </option>
+                                                                <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                   
+                                                              </select>
+                                                            
                                                         </div>
                                                     </div>
 
                                                     
                                                 
                                             </div>
+                                            <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group label-floating">
+                                                                
+                                                            <input type="hidden" class="form-control" name="id" value="<?php echo $id;?>" required="">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             <?php
 
                                                 }

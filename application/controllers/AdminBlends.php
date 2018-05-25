@@ -71,13 +71,12 @@
 			$id = $this->input->post('id');
 			$price = $this->input->post('price');
 			$packaging = $this->input->post('package_id');
-			$type = $this->input->post('type');
 			$sticker = $this->input->post('stick');
 
 			$pack = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_type;
 			$size = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_size;
-			$this->Admin_Blends_Model->activity_logs('admin', "Updated Coffee Blend: ".$blend_name.", ".$pack." Bag ".$size." grams in ".$type." ");
-			$this->db->query("UPDATE coffee_blend SET blend = '".$blend_name."', blend_price = '".$price."', package_id = '".$packaging."', blend_type = '".$type."', sticker_id = '".$sticker."' WHERE blend_id = '".$id."'");
+			$this->Admin_Blends_Model->activity_logs('admin', "Updated Coffee Blend: ".$blend_name.", ".$pack." Bag ".$size." grams in Company Blends.");
+			$this->db->query("UPDATE coffee_blend SET blend = '".$blend_name."', blend_price = '".$price."', package_id = '".$packaging."',  sticker_id = '".$sticker."' WHERE blend_id = '".$id."'");
 			$query = $this->db->query("SELECT * FROM raw_coffee;");
 			foreach($query->result() as $row){
 				$prop = $this->input->post("per[".$row->raw_id."]");
@@ -103,13 +102,12 @@
 			$id = $this->input->post('id');
 			$price = $this->input->post('price');
 			$packaging = $this->input->post('package_id');
-			$type = $this->input->post('type');
 			$sticker = $this->input->post('stick');
 
 			$pack = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_type;
 			$size = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_size;
-			$this->Admin_Blends_Model->activity_logs('admin', "Updated Coffee Blend: ".$blend_name.", ".$pack." Bag ".$size." grams in ".$type." ");
-			$this->db->query("UPDATE coffee_blend SET blend = '".$blend_name."', blend_price = '".$price."', package_id = '".$packaging."', blend_type = '".$type."', sticker_id = '".$sticker."' WHERE blend_id = '".$id."'");
+			$this->Admin_Blends_Model->activity_logs('admin', "Updated Coffee Blend: ".$blend_name.", ".$pack." Bag ".$size." grams in Client Blends.");
+			$this->db->query("UPDATE coffee_blend SET blend = '".$blend_name."', blend_price = '".$price."', package_id = '".$packaging."', sticker_id = '".$sticker."' WHERE blend_id = '".$id."'");
 			$query = $this->db->query("SELECT * FROM raw_coffee;");
 			foreach($query->result() as $row){
 				$prop = $this->input->post("per[".$row->raw_id."]");

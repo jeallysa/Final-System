@@ -280,11 +280,17 @@ a:focus {
                                                                 <?php
                                                                     $pack = $this->db->query('SELECT * FROM packaging');
                                                                     foreach($pack->result() as $row5){
+                                                                        if($row5->package_id == $row->package_id){
 
                                                                 ?>
-                                                                    <option value="<?php echo $row5->package_id; ?>"> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
+                                                                    <option value="<?php echo $row5->package_id; ?>" selected> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
                                                                     <?php
+                                                                    }else{
+                                                                ?>
+                                                                    <option value="<?php echo $row5->package_id; ?>"> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
+                                                                <?php
                                                                     }
+                                                                }
                                                                 ?>
                                                               </select>
                                                             
@@ -295,14 +301,7 @@ a:focus {
                                                         <div class="form-group label-floating">
                                                             
                                                             <label for="sel1">Blend Type:</label>
-
-                                                              <select class="form-control" id="sel1" name="type">
-                                                                
-                                                                    <option value="Existing"> Company Blend </option>
-                                                                    <option value="Client"> Client </option>
-                                                                   
-                                                              </select>
-                                                            
+                                                            <input type="text" class="form-control" id="sel1" name="type" value="Client Blend" disabled>
                                                         </div>
                                                     </div>
                                                     
