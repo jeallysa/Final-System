@@ -46,7 +46,6 @@
 		// }
 
 		public function roastDel($date, $quantity, $blend_id, $po_id){
-			$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po_id."';");
 
 			/* NEEDED QUERY for Section 4 */
 			$query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
@@ -85,6 +84,8 @@
 				$this->db->query("UPDATE packaging SET package_stock = package_stock - ".$quantity." WHERE package_id =".$pack_id.";");
 				$this->db->query('UPDATE sticker SET sticker_stock = sticker_stock - '.$quantity.' WHERE sticker_id ='.$stick_id.';');
 				$this->db->query('UPDATE coffee_blend SET blend_qty = blend_qty + '.$quantity.' WHERE blend_id ='.$blend_id.';');
+				$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po_id."';");
+
 				$data_trans = array(
 							'transact_date' => $date,
 							'po_client' => $po_id,
