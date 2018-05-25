@@ -121,31 +121,6 @@
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-     
-      
-    
-      
       public function removeOrder($item){
           $this->db->where('idsupp_temp_po_order', $item);
           $this->db->delete('supp_temp_po_order');
@@ -155,7 +130,8 @@
       
     
   function displayOrderedTemp(){
-    $query = $this->db->query('SELECT * FROM supp_temp_po_order order by idsupp_temp_po_order desc');      
+       $username = $this->session->userdata('username');
+    $query = $this->db->query('SELECT * FROM supp_temp_po_order where username="'.$username.'" order by idsupp_temp_po_order desc');      
     if($query->num_rows() > 0){
       return $query-> result();
     }else{
@@ -182,18 +158,44 @@
   }       
       
   function checkIfTempIsEmpty(){
-    $query = $this->db->query('select *  from supp_temp_po left join supplier on supp_name = sup_company');      
+      
+    $username = $this->session->userdata('username');
+      
+    $query = $this->db->query('select *  from supp_temp_po left join supplier on supp_name = sup_company where username = "'.$username.'"');      
     if($query->num_rows() > 0){
-      return $query-> result();
+        
+        
+      return $query->row();
     }else{
       return NULL;
     }
   }
       
-  function emptyTemp($dataInsert){  //diko sure kung kelangan pa to dito eh nalimutan ko na.
-    $this->db->empty_table("supp_temp_po"); 
-  }   
-  
+      
+      
+      
+      
+      
+  //function emptyTemp($dataInsert){                
+ //   $this->db->empty_table("supp_temp_po"); 
+//  }   
+      
+      
+   //function cancelPO(){
+    //$this->db->empty_table("supp_temp_po"); 
+    //$this->db->empty_table("supp_temp_po_order"); 
+  //}     
+      
+      
+function delete_temp_po($username){
+$this->db->where('username', $username);
+$this->db->delete('supp_temp_po');   
+   }
+      
+      
+      
+      
+      
   function insertChosenSupplier($dataInsert){
       $this->db->insert("supp_temp_po" , $dataInsert);
   }
@@ -202,22 +204,32 @@
     $this->db->insert("supp_temp_po_order" , $dataInsert);     
   }     
       
-  function insertOrder($data){      
-    $this->db->insert_batch("supp_po_ordered" , $data);
-    $this->db->empty_table("supp_temp_po"); 
-    $this->db->empty_table("supp_temp_po_order");
+  function insertOrder($data){   
+      $username = $this->session->userdata('username');
+      
+      
+       $this->db->insert_batch("supp_po_ordered" , $data);
+       
+      
+      $this->db->where('username', $username);
+      $this->db->delete('supp_temp_po');
+      
+      
+     $this->db->where('username', $username);
+     $this->db->delete('supp_temp_po_order');
+      
+    //$this->db->empty_table("supp_temp_po"); 
+    //$this->db->empty_table("supp_temp_po_order");
   }  
     
-  function cancelPO(){
-    $this->db->empty_table("supp_temp_po"); 
-    $this->db->empty_table("supp_temp_po_order"); 
-  } 
+ 
       
   function resetOrder(){
     $this->db->empty_table("supp_temp_po_order"); 
   } 
 
   function retrieveSuppliers(){
+      
     $query = $this->db->query('SELECT * from supplier where sup_activation = 1 order by sup_company  asc');
           
     if($query->num_rows() > 0){
@@ -227,13 +239,14 @@
   }
 
   function retrieveItems(){
+       $username = $this->session->userdata('username');
     $result = array("");
     for($i=0 ; $i <= 3 ; $i++){
       $array = array("raw_coffee","sticker","packaging","machine");
       $arrayName = array("raw_coffee","sticker","package_type","brewer"); 
       $arrayActivation = array("raw_activation","sticker_activation","pack_activation","mach_activation");
        
-      $query = $this->db->query('SELECT distinct '. $arrayName[$i] .' , category from '. $array[$i] .' join supplier using(sup_id) join supp_temp_po on sup_company = supp_name where '. $arrayActivation[$i].' = 1  order by 1 asc');      
+      $query = $this->db->query('SELECT distinct '. $arrayName[$i] .' , category from '. $array[$i] .' join supplier using(sup_id) join supp_temp_po on sup_company = supp_name where '. $arrayActivation[$i].' = 1  and username ="'.$username . '"order by 1 asc');      
       
       if($query->num_rows() > 0){
          $result[$i] =  $query->result();  
@@ -244,36 +257,50 @@
   }
       
   function retrieveTruckingFee(){
-   
-      $query = $this->db->query('SELECT * from supp_temp_po');      
+      $username = $this->session->userdata('username');
+      
+      $query = $this->db->query('SELECT * from supp_temp_po where username = "'.$username.'"');      
       if($query->num_rows() > 0){
           return $query-> result();
       }else
           return NULL;
   }
       
+      
+      
   function retrieveTemp(){
    // I think this should be moofied with Supplier is deactivated/
-    $query = $this->db->query('select * from supp_temp_po join supplier on supp_name = sup_company');      
+    $username = $this->session->userdata('username');
+      
+    $query = $this->db->query('select * from supp_temp_po join supplier on supp_name = sup_company where username = "'.$username.'"');      
     if($query->num_rows() > 0){
         return $query-> result();
     }else
         return NULL;
   }
       
+      
+      
+      
   function insertPO($datax){
      $this->db->insert_batch("supp_po" , $datax);
   }   
       
    
+      
   function RetrieveLastPO(){
+      
     $query = $this->db->query("SELECT distinct  supp_po_id from supp_po order by 1 desc limit  1");
     if($query->num_rows() > 0){
         return $query->result();
       }else
         return NULL;
+      
   }
 
+      
+      
+      
   function activity_logs($module, $activity){
     $username = $this->session->userdata('username');
         $query = $this->db->query("SELECT user_no from user where username ='".$username."';");

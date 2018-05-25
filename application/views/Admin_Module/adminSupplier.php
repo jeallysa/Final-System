@@ -460,11 +460,11 @@ a:focus {
                                                     <div class="modal-dialog">
                                                         <div class="panel panel-primary">
                                                         <?php
-                                                            $selector = $this->db->query("SELECT CONCAT(raw_coffee, ' ', raw_type, ' roast') AS item FROM raw_coffee WHERE raw_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(package_type, ' bag ', package_size, 'g') AS item FROM packaging WHERE pack_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(brewer, ' ', brewer_type) AS item FROM machine WHERE mach_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT sticker AS item FROM sticker WHERE sticker_activation = 1 AND sup_id = ".$row->sup_id."");
+                                                            $selector = $this->db->query("SELECT CONCAT(raw_coffee, ' ', raw_type, ' roast') AS item FROM raw_coffee WHERE raw_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(package_type, ' ', package_size, 'g') AS item FROM packaging WHERE pack_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT CONCAT(brewer, ' ', brewer_type) AS item FROM machine WHERE mach_activation = 1 AND sup_id = ".$row->sup_id." UNION SELECT sticker AS item FROM sticker WHERE sticker_activation = 1 AND sup_id = ".$row->sup_id."");
                                                         ?>
                                                             <div class="panel-heading">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> All Products Supplied </h4>
+                                                                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> All Products Supplied by <?php echo $row->sup_company ?></h4>
                                                             </div>
                                                             <form action="<?php echo base_url(); ?>AdminSupplier/update" id="modalUpdate" method="post" accept-charset="utf-8">
                                                                   <div class="modal-body" style="padding-left: 100px;">
