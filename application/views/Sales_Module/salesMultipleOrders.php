@@ -315,10 +315,10 @@
 
 		count = count + 1;
 		var newRow = '<tr id="row'+count+'">'+
-				'<td contenteditable="true" class="blendName">'+dateO+'</td>'+
-			 	'<td contenteditable="true" class="blendName">'+blend+'</td>'+
-			 	'<td contenteditable="true" class="quantity">'+qty+'</td>'+
-			 	'<td contenteditable="true" class="quantity">' +blendDetail+ '</td>'+
+				'<td class="blendName">'+dateO+'</td>'+
+			 	'<td class="blendName">'+blend+'</td>'+
+			 	'<td class="quantity">'+qty+'</td>'+
+			 	'<td class="quantity">' +blendDetail+ '</td>'+
 				'<td><button class="btn btn-danger btn-xs remove" data-row="row'+count+'">-</button></td>'+
 			'</tr>';
 		
