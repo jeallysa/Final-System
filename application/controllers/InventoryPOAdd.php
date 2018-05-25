@@ -139,11 +139,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
         
-        
-        
-        
-        
-        
        public function removeOrder($item){       
         $this->inventoryPOAdd_model->removeOrder($item);
          redirect(base_url('inventoryPOAdd'));
@@ -155,10 +150,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
     
-      public function cancelPO(){
-        $this->inventoryPOAdd_model->cancelPO();
+      public function delete_temp_po(){
+        $username = $this->input->post("username");
+        $this->inventoryPOAdd_model->delete_temp_po($username);
+          
+          
         redirect(base_url('inventoryPOAdd'));
         }
+        
+        
         
       public function resetOrder(){
         $this->inventoryPOAdd_model->resetOrder();
@@ -175,7 +175,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
       public function insertOrder(){
   //Populate First The supplier supp_po.   
-
+         
+          
+          
+          
         $data['tempPO'] = $this->inventoryPOAdd_model->retrieveTemp();
        
         $totalAmountv = $this->input->post('totalAmount'); 
@@ -262,6 +265,11 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
         }
            
         $this->inventoryPOAdd_model->insertOrder($data);
+           
+        //$this->inventoryPOAdd_model->delete_temp_po();
+        //$this->inventoryPOAdd_model->delete_temp_po_order();
+           
+           
         $this->inventoryPOAdd_model->activity_logs('inventory', "Purchased Order ");
     }
          
@@ -288,13 +296,15 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
           
           //"category"    => $this->input->post('category'
           
+         $username = $this->input->post("username");
           
          $dataInsert = array("item_name" => $this->input->post('item'),
                              "qty"       => $this->input->post('qty'),
                              "type"      => $this->input->post('itemType'),
                              "unitPrice" => $this->input->post('unitPrice'),
                              "amount"    => $this->input->post('amount'),
-                             "categoryx"    => $this->input->post('category'),
+                             "categoryx" => $this->input->post('category'),
+                             "username" => $username,
                             );    
         
         $this->inventoryPOAdd_model->insertTempOrder($dataInsert);
@@ -307,14 +317,15 @@ for ($i = 0; $i < count($this->input->post('item_name')); $i++){
              
      public function insertSupplierToTemp(){
          //Empty Temp then insert New
-         $this->inventoryPOAdd_model->emptyTemp();   
+         $username = $this->input->post("username");
+         $this->inventoryPOAdd_model->delete_temp_po($username);   
          
          
-         $dataInsert = array("id_supp_temp_PO" => 1,
-                             "supp_name" => $this->input->post("dropdown"),
-                             "date"      => $this->input->post("date"),
+         $dataInsert = array("supp_name"    => $this->input->post("dropdown"),
+                             "date"         => $this->input->post("date"),
                              "trucking_fee" => $this->input->post("truckingFee"),
-                             "credit_term" => $this->input->post("creditTerms"),
+                             "credit_term"  => $this->input->post("creditTerms"),
+                             "username"      => $username,
                             );
          
          $this->inventoryPOAdd_model->insertChosenSupplier($dataInsert);

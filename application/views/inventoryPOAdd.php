@@ -408,8 +408,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group label-floating">
                                                                       <label for="date">Order Date:</label>
                                                                         
-                                                                  <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="<?php if(!empty($tempExisting)){
-                                                                                                                                      echo $tempExisting[0]->date; } ?>" required>
+                                                                  <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="" required>
                                                                         
                                                                     </div>
                                                                 </div>
@@ -422,8 +421,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         <label for=creditTerm>Credit Term:</label>
                                                                         
                                                                         
-                                                        <input type="number" class="form-control" placeholder = "days" name="creditTerms" placeholder ="days" min="1" max = "30"  value="<?php if(!empty($tempExisting)){
-                                                                                                                                                echo $tempExisting[0]->credit_term; } ?>" required>
+                                                        <input type="number" class="form-control" placeholder = "days" name="creditTerms" placeholder ="days" min="1" max = "30"  value="" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -432,10 +430,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                         
                                                                         
                                                                         
-                                                         <input type="number" class="form-control"  min="1"  name = "truckingFee" value = "<?php if(!empty($tempExisting)){
-                                                                                                                                           echo $tempExisting[0]->trucking_fee; } ?>" required>
+                                                         <input type="number" class="form-control"  min="1"  name = "truckingFee" value = "" required>
                                                                     </div>
                                                                 </div>
+                                                                
+                                                                
+                               
+                                
+                                              <?php $username = $this->session->userdata('username');  ?>
+                                                  
+                                                       <input type="hidden"  class="form-control" name="username"   id = "username"  value ="<?php echo $username ?>" readonly/> 
+                                                           
+                                                                                
+                                          
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
                                                             </div>
                                                             <div class="row">
                                                                 <div align="center">
@@ -443,11 +463,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            if(!empty($TempOrdered)){
                                                        ?>                       
                                                  <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-default accept' disabled>   
-                                                 <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >
+                                                 <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/delete_temp_po" value ="cancel" class="btn btn-secondary decline" disabled >
                                                    <?php 
                                            }else{ ?>
                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
-                                                <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">
+                                                <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/delete_temp_po" value ="cancel" class="btn btn-danger decline" formnovalidate>
                                           <?php }
                                                        ?>                
                                                                 </div>
@@ -477,14 +497,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         ?>
                                                   <?php     
                                                        if(!empty($tempExisting)){
-                                                            echo '<h4><b>'  .$tempExisting[0]->supp_name . '</b></h4>' ; 
+                                                            echo '<h4><b>'  .$tempExisting->supp_name . '</b></h4>' ; 
                                                          } ?>
                                                         
                                                         
                                                         
                                                          <?php     
                                                        if(!empty($tempExisting)){
-                                                              $oldDate = $tempExisting[0]->date;
+                                                              $oldDate = $tempExisting->date;
                                                               $arr = explode('-', $oldDate);
                                                               $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                                            
@@ -557,7 +577,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     </select>
         <?php                                                           
                          }else{
-                                     ?>
+                                     ?> 
                                                              <select required class="form-control" name="item" id ="item" disabled>          
                                                                    <option value="" >Choose Item</option>
                                                                   <?php } ?>
@@ -595,7 +615,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             </td>
                                                                     
                                                            <td class="col-sm-3">
+                                                               
                                                       <input type="hidden"  class="form-control" name="category"   id = "category"  readonly/> 
+                                                               
+                                                               
+                                                      <?php $username = $this->session->userdata('username');  ?>            
+                                                      <input type="hidden"  class="form-control" name="username"   id = "username"  value ="<?php echo $username ?>"readonly/>
                                                             </td>     
                                                                   
                                                                 </tr>
@@ -993,7 +1018,7 @@ document.getElementById('addToTempOld').onclick = function() {
               async: false,
               url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
               method:"POST",
-              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
                  // alert("punyeta kulang order brad");
@@ -1095,7 +1120,7 @@ document.getElementById('addToTemp').onclick = function() {
                   async: false,
                   url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
                   method:"POST",
-                  data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+                  data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
                   dataType: 'json',
                   success: function(data){
                  // alert("punyeta kulang order brad");
@@ -1222,7 +1247,7 @@ document.getElementById('addToTempsssss').onclick = function() {
               async: false,
               url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
               method:"POST",
-              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
                  // alert("punyeta kulang order brad");
@@ -1320,7 +1345,7 @@ document.getElementById('addToTempsssss').onclick = function() {
            $.ajax({
               url:'<?php echo base_url(); ?>InventoryPOAdd/get_selectItem_amount' ,
               method:"POST",
-              data:{itemName : itemName , itemType : itemType , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              data:{itemName : itemName , itemType : itemType , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
                   //alert("success");
@@ -1395,7 +1420,7 @@ document.getElementById('addToTempsssss').onclick = function() {
            $.ajax({
               url:'<?php echo base_url(); ?>InventoryPOAdd/get_selectItem_type' ,
               method:"POST",
-              data:{item_name : item_name , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting[0]->sup_id; } ?>}, //used the sup_id to know whose product.
+              data:{item_name : item_name , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
               dataType: 'json',
               success: function(data){
                  var category = data['category'];
@@ -1419,7 +1444,7 @@ document.getElementById('addToTempsssss').onclick = function() {
                   
               },
               error: function(){
-                   //alert('error');  
+                alert('error item ');  
                 document.getElementById("qtywt").innerHTML = "Quantity|Weight(kg)";
                 $('#qty').attr('disabled','disabled');  
                 $('#itemType').attr('disabled','disabled');
