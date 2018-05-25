@@ -22,7 +22,6 @@
         	$this->load->model('Admin_Blends_model');
 			$id = $this->input->post("deact_id");
 			$deact = $this->db->query("SELECT * FROM coffee_blend WHERE blend_id = '".$id."'")->row()->blend_activation;
-			
 			$name = $this->db->query("SELECT * FROM coffee_blend WHERE blend_id = '".$id."'")->row()->blend;
 			$type = $this->db->query("SELECT * FROM `coffee_blend` NATURAL JOIN packaging WHERE blend_id = '".$id."' ")->row()->package_type;
 			$size =  $this->db->query("SELECT * FROM `coffee_blend` NATURAL JOIN packaging WHERE blend_id = '".$id."' ")->row()->package_size;

@@ -131,20 +131,20 @@
 
 		public function insertion(){
 			$this->load->model('Admin_Blends_model');
-			$blend_name = $this->input->post('blend_name');
+			$blend_name = $this->input->post('blend_name'); 
 			$price = $this->input->post('price');
-			$packaging = $this->input->post('package_id');
-			$type = $this->input->post('type');
+			$packaging = $this->input->post('package_id'); 
+			$temptype = $this->input->post('type');
 			$sticker = $this->input->post('stick');
 			$pack = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_type;	
 			$size = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$packaging."'")->row()->package_size;
 			
-				$this->Admin_Blends_model->activity_logs('admin', "Inserted New Coffee Blend: ".$blend_name.", ".$pack." bag ".$size." grams in ".$type." blend ");	
+				$this->Admin_Blends_model->activity_logs('admin', "Inserted New Coffee Blend: ".$blend_name.", ".$pack." bag ".$size." grams in ".$temptype." blend ");	
 				$data_blend = array(
 					'blend' => $blend_name,
 					'package_id' => $packaging,
 					'blend_price' => $price,
-					'blend_type' => $type,
+					'blend_type' => "Existing",
 					'sticker_id' => $sticker
 				);
 				$this->db->insert('coffee_blend', $data_blend);
@@ -185,11 +185,15 @@
 			
 			$date_expiration = $query_first->row()->date_expiration;
 			*/
+			$sticker = $this->input->post('stick');
+			$packaging = $this->input->post('package_id');
 			$this->Admin_Blends_model->activity_logs('admin', "Inserted New Coffee Blend (Client): ".$blend_name." .");	
 			$data_blend = array(
 				'blend' => $blend_name,
 				'blend_price' => $blend_price,
-				'blend_type' => "Client"
+				'blend_type' => "Client",
+				'package_id' => $packaging,
+				'sticker_id' => $sticker
 			);
 			$this->db->insert('coffee_blend', $data_blend);
 			$id = $this->db->insert_id();
