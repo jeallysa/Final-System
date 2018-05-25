@@ -590,6 +590,7 @@ a:focus {
                                                 </div>
                                                 <?php
                                                     }
+                                                }
                                                 ?>
                                             </div>
                                         
@@ -726,6 +727,4 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery-editable-select.min.js"></script>
-
-
 </html>
