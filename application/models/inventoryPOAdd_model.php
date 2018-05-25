@@ -90,12 +90,12 @@
       
      public function checkIfExisting($item_name , $item_type){
         $currentStock = 0;
-          
+         $username = $this->session->userdata('username');  
        
           
         for($i = 0 ; $i < 4 ; $i++){
                           
-        $retrieveDetails ="select * from supp_temp_po_order where item_name ='".$item_name."' and type ='".$item_type."'" ; 
+        $retrieveDetails ="select * from supp_temp_po_order where item_name ='".$item_name."' and type ='".$item_type."' and username ='".$username; 
              $query = $this->db->query($retrieveDetails); 
                       
                if ($query->num_rows() > 0) {
@@ -224,9 +224,12 @@ $this->db->delete('supp_temp_po');
     
  
       
-  function resetOrder(){
-    $this->db->empty_table("supp_temp_po_order"); 
-  } 
+   public function resetOrder($item){
+   $username = $this->session->userdata('username');
+                                    
+   $this->db->where('username', $username);
+   $this->db->delete('supp_temp_po_order');   
+ }
 
   function retrieveSuppliers(){
       
