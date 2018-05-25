@@ -365,7 +365,6 @@ input {
                                                 $conntitle->close();
                                                 ?>
                                             </tr>
-                                        </thead>
                                             <tr>
                                                 <td><b>Beginning Inventory</b></td>
                                                 <td></td>
@@ -417,6 +416,7 @@ input {
                                                 }
                                                 ?>
                                             </tr>
+                                        </thead>
                                         <tbody>
                                              <?php
                                                     
@@ -683,6 +683,7 @@ input {
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
+		"order": [[ 0, "desc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
@@ -724,6 +725,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
+		"order": [[ 0, "desc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',

@@ -419,7 +419,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 $conntitle->close();
                                                 ?>
                                             </tr>
-                                        </thead>
                                             <tr>
                                                 <td><b>Beginning Inventory</b></td>
                                                 <td></td>
@@ -471,6 +470,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 }
                                                 ?>
                                             </tr>
+                                        </thead>
                                         <tbody>
                                              <?php
                                                     
@@ -736,6 +736,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
+		"order": [[ 0, "desc"]],
         "lengthMenu": [ 5, 10, 25, 50, 100 ],
         select: {
             style: 'single'
@@ -746,6 +747,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
+		"order": [[ 0, "desc"]],
         "lengthMenu": [ 5, 10, 25, 50, 100 ],
         select: {
             style: 'single'
