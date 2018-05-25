@@ -464,7 +464,7 @@ a:focus {
                                                         ?>
                                                             <div class="panel-heading">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> All Products Supplied </h4>
+                                                                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> All Products Supplied by <?php echo $row->sup_company ?></h4>
                                                             </div>
                                                             <form action="<?php echo base_url(); ?>AdminSupplier/update" id="modalUpdate" method="post" accept-charset="utf-8">
                                                                   <div class="modal-body" style="padding-left: 100px;">
