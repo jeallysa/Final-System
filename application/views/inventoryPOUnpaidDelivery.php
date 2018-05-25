@@ -953,15 +953,14 @@ $partial = 1;
             
                   
                    var remaining = total - payment;
+                   var remaining = remaining.toFixed(2);
                    var remaining1 = remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    
+                  // var n = Math.floor(remaining);
                   
-                   //var remaining2 = remaining1.toFixed(2);
-                   
+                   //var remaining = remaining.toFixed(2);
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(total1); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining1);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                 // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
               error: function(){
                   //alert("error"); 
