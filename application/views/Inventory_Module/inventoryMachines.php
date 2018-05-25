@@ -364,7 +364,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE company_returns.mach_stat='0' AND mach_id = ".$id;
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE company_returns.mach_stat='0' AND mach_id = ".$id;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -382,7 +382,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, mach_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE supp_po_ordered.mach_stat='0' AND mach_id = ".$id ;
+                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, mach_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE supp_po_ordered.mach_stat='0' AND mach_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -400,7 +400,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = ".$id ;
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -432,12 +432,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
 (SELECT mach_returnQty AS TotalIn FROM jhcs.client_machreturn INNER JOIN contracted_client ON client_machreturn.client_id = contracted_client.client_id WHERE client_machreturn.mach_stat='0' AND mach_returnQty != '0' AND  mach_id = '". $id  ."' UNION ALL
-SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE supp_po_ordered.mach_stat='0' AND mach_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = '". $id  ."') AS b; " ;
+SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE supp_po_ordered.mach_stat='0' AND mach_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
 (SELECT mach_qty AS TotalOut FROM jhcs.machine_out INNER JOIN machine ON machine_out.mach_id = machine.mach_id INNER JOIN contracted_client ON machine_out.client_id = contracted_client.client_id WHERE machine_out.mach_stat='0' AND machine_out.mach_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON supp_po_ordered.item = machine.brewer WHERE company_returns.mach_stat='0' AND mach_id = '". $id  ."') AS b; " ;
+SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE company_returns.mach_stat='0' AND mach_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
