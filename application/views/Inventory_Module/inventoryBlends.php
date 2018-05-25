@@ -479,7 +479,7 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                                                         <div class="col-md-4">
                                                                             <?php
                                                                             echo
-                                                                            '<input value="'  . number_format(($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bags"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bags"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
 

@@ -562,6 +562,12 @@ a:focus {
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                 <?php
+                                                    $cli_id = $this->input->get('p');
+                                                    $query_dates = $this->db->query("SELECT * FROM contract WHERE client_id = '".$cli_id."';");
+                                                    foreach($query_dates->result() AS $row){
+
+                                                ?>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
                                                         <?php
@@ -570,13 +576,16 @@ a:focus {
                                                             foreach($query->result() AS $row){
                                                         ?>
                                                         <label for="email">Date Started</label>
-                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started;?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started?>" data-validate="required" message="Date of Purchase is recquired!"  >
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration;?>" data-validate="required" message="Date of Purchase is recquired! min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime(date('Y-m-d').'+1 days'))?>"" disabled>
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration?>" data-validate="required" message="Date of Purchase is recquired!"  >
+
                                                     </div>
                                                 </div>
                                                 <?php
@@ -699,7 +708,6 @@ a:focus {
 <script>
     jQuery(document).ready(function($){
     $('#editBlends').editableSelect();
-    $('#editPackaging').editableSelect();
     $('#editStickers').editableSelect();
     });
 </script>
