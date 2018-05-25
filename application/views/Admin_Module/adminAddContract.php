@@ -612,39 +612,6 @@ a:focus {
                                                  ?>
                                                 
                                             </div>
-                                            <div class="row">
-                                                <?php
-                                                    $cli_id = $this->input->get('p'); 
-                                                    $query = $this->db->query("SELECT * FROM contract INNER JOIN packaging ON contract.package_id = packaging.package_id where client_id = '".$cli_id."' ;");
-                                                    
-                                                    foreach($query->result() AS $row){
-                                                ?>
-                                                <div class="col-md-6 form-group">
-                                                       <div class="form-group label-floating">
-                                                        <label for="email">Packaging</label>
-                                                        <input class="form-control" type="text" name="Packaging" value="<?php echo $row->package_type . ' - ' . $row->package_size . ' g'?> " disabled>
-                                                    </div>
-                                                </div>
-                                                <?php } ?>
-
-                                                
-                                                <div class="col-md-6 form-group">
-
-                                                    <div class="form-group label-floating">
-                                                        <label for="email">Stickers</label>
-                                                        <?php
-                                                            $cli_id = $this->input->get('p'); 
-                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE contract.client_id = '".$cli_id."' ;");
-                                                    
-                                                            foreach($query->result() AS $row){   
-                                                        ?>  
-                                                         <input class="form-control" type="text" name="sticker" value="<?php echo $row->sticker?>" disabled>
-                                                        <?php } ?>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
                                             <?php
                                                 $id = $this->input->get('p');
                                                 $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
@@ -734,7 +701,6 @@ a:focus {
 <script>
     jQuery(document).ready(function($){
     $('#editBlends').editableSelect();
-    $('#editPackaging').editableSelect();
     $('#editStickers').editableSelect();
     });
 </script>

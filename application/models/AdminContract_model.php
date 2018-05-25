@@ -32,8 +32,6 @@ FROM
         LEFT JOIN
     coffee_blend c ON b.blend_id = c.blend_id
         LEFT JOIN
-    packaging d ON b.package_id = d.package_id
-        LEFT JOIN
     machine e ON b.mach_id = e.mach_id
         LEFT JOIN
     machine_out f ON b.mach_salesID = f.mach_salesID
