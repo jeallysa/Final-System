@@ -559,7 +559,7 @@ s}
                                                                 <th><b>Machine Serial No.</b></th>
                                                                 <th><b>Client</b></th>
                                                                 <th><b>Machine</b></th>
-                                                                <th><b>Quantity Returned</b></th>
+                                                                <th><b>Quantity</b></th>
                                                                 <th><b>Remarks</b></th>
                                                                 <th><b>Action Taken</b></th>
                                                                 <th><b>Resolved Date</b></th>
@@ -577,7 +577,7 @@ s}
                                                                 <td><?php echo $row->mach_serial; ?></td>
                                                                 <td><?php echo $row->client_company; ?></td>
                                                                 <td><?php echo $row->machine; ?></td>
-                                                                <td><?php echo number_format($row->mach_returnQty); ?> unit/s</td>
+                                                                <td><?php echo number_format($row->mach_returnQty); ?> pc/s</td>
                                                                 <td><?php echo $row->mach_remarks; ?></td>
                                                                 <td><?php echo $row->mach_returnAction; ?></td>
                                                                 <th><?php echo $row->mach_resolveDate; ?></th>
