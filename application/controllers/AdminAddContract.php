@@ -81,13 +81,20 @@
 				"date_started" =>$this->input->post("date_started"),
 				"date_expiration" =>$this->input->post("date_expiration"),
 				"blend_id" => $blend_id,
-				"mach_id" =>$this->input->post("contract_machine"),
-				"required_qty" =>$this->input->post("contract_bqty")
+				"mach_id" => $this->input->post("contract_machine"),
+				"required_qty" => $this->input->post("contract_bqty")
                 
+			);
+			$data_machout = array(
+				'mach_qty' => $this->input->post("contract_mqty"),
+				'mach_serial' => $this->input->post("contract_serial")
+
 			);
 			$data = $this->security->xss_clean($data);
 			$this->db->where('client_id', $client_id);
 			$this->db->update('contract', $data);
+			$this->db->where('client_id', $client_id);
+			$this->db->update('machine_out', $data_machout);
 			$this->session->set_flashdata('success', 'Update successful!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
