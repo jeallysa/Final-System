@@ -315,11 +315,16 @@ a:focus {
                                                                 <?php
                                                                     $stick = $this->db->query('SELECT * FROM sticker');
                                                                     foreach($stick->result() as $row6){
-
+                                                                        if($row6->sticker_id == $row->sticker){
+                                                                ?>
+                                                                    <option value="<?php echo $row6->sticker_id; ?>"  selected> <?php echo $row6->sticker; ?> </option>
+                                                                    <?php
+                                                                    }else{
                                                                 ?>
                                                                     <option value="<?php echo $row6->sticker_id; ?>"> <?php echo $row6->sticker; ?> </option>
-                                                                    <?php
+                                                                <?php
                                                                     }
+                                                                }
                                                                 ?>
                                                                    
                                                               </select>

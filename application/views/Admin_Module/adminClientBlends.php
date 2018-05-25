@@ -503,6 +503,10 @@ a:focus {
                                      <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Client Blend</b></th>
+                                            <th><b class="pull-left">Size</b></th>
+
+                                            <th><b class="pull-left">Packaging</b></th>
+
                                             <th><b class="pull-left">Price</b></th>
                                             <th><b class="pull-left">Quantity</b></th>
                                              <?php
@@ -534,6 +538,8 @@ a:focus {
                                                 ?>
 												
                                                 <td><?php echo $row->blend; ?></td>
+                                                <td><?php echo $row->size; ?></td>
+                                                <td><?php echo $row->package; ?></td>
                                                 <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                 <td><?php echo $row->blend_qty; ?></td>
 

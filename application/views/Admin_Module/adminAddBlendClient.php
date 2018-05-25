@@ -22,6 +22,7 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href="<?php echo base_url(); ?>assets/css/jquery-editable-select.min.css" rel="stylesheet">
     <script type="text/javascript">
 
         function findTotal(){
@@ -249,20 +250,72 @@ a:focus {
                                     <div class="card-content">
                                         <div class="modal-body" style="padding: 5px;">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group label-floating">
                                                             <label for="email">Blend Name</label>
                                                             <input class="form-control" type="text" name="blend_name"  required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group label-floating">
                                                             <label for="email">Price Per Unit</label>
                                                             <input type="number" class="form-control" name="price"  min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel1">Package and Size:</label>
+
+                                                              <select class="form-control" id="sel1" name="package_id">
+                                                                <?php
+                                                                    $pack = $this->db->query('SELECT * FROM packaging');
+                                                                    foreach($pack->result() as $row5){
+
+                                                                ?>
+                                                                    <option value="<?php echo $row5->package_id; ?>"> <?php echo $row5->package_type; ?> <?php echo $row5->package_size; ?>g </option>
+                                                                    <?php
+                                                                    }
+                                                                ?>
+                                                              </select>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel1">Blend Type:</label>
+
+                                                              <select class="form-control" id="sel1" name="type" disabled>
+                                                                
+                                                                    <option value="Client"> Client Blend </option>
+                                                                   
+                                                              </select>
+                                                            
+                                                        </div>
+                                                    </div>
                                                     
-                                                   
+                                                    <div class="col-md-2">
+                                                        <div class="form-group label-floating">
+                                                            
+                                                            <label for="sel2">Sticker:</label>
+
+                                                              <select  name="stick" class="form-control" id="sel2" name="stick">
+                                                                <?php
+                                                                    $stick = $this->db->query('SELECT * FROM sticker');
+                                                                    foreach($stick->result() as $row6){
+
+                                                                ?>
+                                                                    <option value="<?php echo $row6->sticker_id; ?>"> <?php echo $row6->sticker; ?> </option>
+                                                                    <?php
+                                                                    }
+                                                                ?>
+                                                                   
+                                                              </select>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                
 
                                                 </div>
 
@@ -367,6 +420,8 @@ a:focus {
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
+
+<script src="<?php echo base_url(); ?>assets/js/jquery-editable-select.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable({
@@ -386,6 +441,12 @@ $('table tbody tr  td').on('click', function() {
     $("#txtfname").val($(this).closest('tr').children()[0].textContent);
     $("#txtlname").val($(this).closest('tr').children()[1].textContent);
 });
+</script>
+
+<script>
+    jQuery(document).ready(function($){
+    $('#editStickers').editableSelect();
+    });
 </script>
 
 </html>
