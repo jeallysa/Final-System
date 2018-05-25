@@ -103,8 +103,7 @@ function insertTrans($data){
 	  
 function insertInvTransact($data){
          
-      $this->db->insert("inv_transact" , $data); 
-    return $this->db->insert_id();
+      $this->db->insert("inv_transact" , $data);        
          
   }	  
       

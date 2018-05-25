@@ -89,8 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   
 
                 );
-      $trans_id = $this->inventoryPOOrder_model->insertInvTransact($inv_transact);
-      
+      $this->inventoryPOOrder_model->insertInvTransact($inv_transact);
 	  
  for ($i = 0; $i < count($this->input->post('itemId')); $i++){
      
@@ -137,7 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			   
 			   
 		        $trans_raw = array(
-                    'trans_id' => $trans_id,
+                    'trans_id' => $new,
                     'raw_coffeeid' => $raw_id[$i],
                     'quantity' => $yield_weightv[$i] * 1000,
                   
