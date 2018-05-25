@@ -766,7 +766,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td><center><b>Total Amount</b></center></td>
-                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="Php <?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format($object->tAmount,2); }}  ?>" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="Php <?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format(($object->tAmount),2); }}  ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>
@@ -960,116 +960,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <script type="text/javascript">
-    
-    
-$(document).ready(function () {
-
-document.getElementById('submitInfo').onclick = function() {
-   
-	      var sendDate = document.getElementById('poDate').value
-          sendDate = new Date(Date.parse(sendDate.replace(/-/g,' ')))
-	      today = new Date();
-	      today.setHours(0,0,0,0)
-	      if (sendDate > today) {
-		       $("#invalidDate").modal();
-		      return false;
-	       }  
-    
-}  
-
-
-
-document.getElementById('submitOrder').onclick = function() {
-    
-     if($('#subTotal').val()==""){
-           $("#invalidOrder").modal();
-        return false;
-     }
-    
-};  
-});
-    
-    
      
   
-$(document).ready(function () {
-
-document.getElementById('addToTempOld').onclick = function() {
- 
-   
-          var itemType = document.getElementById("itemType").value;
-          var itemName = document.getElementById("item").value;
-          var qty      = document.getElementById("qty").value;
-          var qty1      = document.getElementById("qty").value;
-    
-    
-     var category      = document.getElementById("category").value;
-     if(category == 1 ){
-          var qty2       = qty1 * 1000;
-          var qty  = qty2.toPrecision(3);
-     }else{
-         var qty = qty1;
-     }
-    
-    
-    var returnvalue = true; 
-    
-            $.ajax({
-              async: false,
-              url:'<?php echo base_url(); ?>InventoryPOAdd/checkReorder' ,
-              method:"POST",
-              data: {    itemName : itemName , itemType : itemType , qty : qty , sup_id :<?php if(!empty($tempExisting)){echo $tempExisting->sup_id; } ?>}, //used the sup_id to know whose product.
-              dataType: 'json',
-              success: function(data){
-                 // alert("punyeta kulang order brad");
-                  var status = data['status'];
-                  var reorder = data['reorder'];
-                  var stocks = data['stocks'];
-                  
-            if(category == 1){
-                  var total1 = ((reorder - stocks)/1000) + 0.1;
-                  var total  = total1.toPrecision(3);
-                 
-                  var notifHeader = itemName+" "+" "+itemType;
-                  var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
-            }else{
-                  var total = reorder - stocks  + 1 ;
-                  var notif = "Your order should be atleast "+total+" to reach the reorder level";
-            }
-                  
-                  
-            if(status == "0"){
-                $(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
-                $(<?php echo "'#invalidOrder input[id=modalOrderStatus]'"?>).val(notif);
-                $("#invalidOrder").modal();
-                
-                  returnvalue = false;
-                
-                }
-              },
-          
-          });
-
-     return returnvalue;
-    
-    
-}; 
-                  
- 
-                   
-               
-                   
-});
-    
- 
-    
-    
-    
-    
-    
-    
-    
-    
+  
     
 $(document).ready(function () {
 
@@ -1186,35 +1079,9 @@ return returnvalue;
     
     
     
+
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     

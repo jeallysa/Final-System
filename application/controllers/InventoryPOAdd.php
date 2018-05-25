@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               
             if($result->category == 1){  
                 
-             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type. " roast" .'</option>';
+             $pro_select_box .=' <option value="'.$result->type.'">'.$result->type .'</option>';
              $category = 1;
                 
             }else{

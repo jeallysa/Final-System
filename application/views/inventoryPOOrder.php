@@ -702,7 +702,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
                    for($table = 0 ; $table < 4 ; $table++){
                           
-                     $retrieveDetails ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp." and sup_id = ".$sup_id." and type =".$arrayType[$table];
+                     $retrieveDetails2 ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp." and sup_id = ".$sup_id." and type =".$arrayType[$table];
+					   
+					   
+			  
+					 $retrieveDetails = "select * from supp_po join supp_po_ordered using (supp_po_id)  join ".$arrayItem[$table] ." on item = ".$arrayOn[$table] ." 
+					 where item = ".$arrayOn[$table] ." and type = ".$arrayType[$table]." and supp_po_id = ".$temp." and sup_id = ".$sup_id;   
+					   
+					   
+					   //pagnagkasabay ng order ata nababago yung supp_id kaya nwawala
+					   
+					   
+					   
+					   
                                               $query = $this->db->query($retrieveDetails);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
