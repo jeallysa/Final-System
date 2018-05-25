@@ -12,11 +12,9 @@
 			{
                 $this->load->model('AdminAddContract_model');
 	            $data1['getBlend'] = $this->AdminAddContract_model->getBlend();
-                $data2['getBag'] = $this->AdminAddContract_model->getBag();
               	 $data3['getMachine'] = $this->AdminAddContract_model->getMachine(); 
                 $data4['getName'] = $this->AdminAddContract_model->getName();
-                $data5['getPackage'] = $this->AdminAddContract_model->getPackage();
-				$this->load->view('Admin_Module/adminAddContract', ['data1' => $data1,'data2' => $data2,'data3' => $data3,'data4' => $data4,'data5' => $data5]);
+				$this->load->view('Admin_Module/adminAddContract', ['data1' => $data1,'data3' => $data3,'data4' => $data4]);
                 
 			} else {
 				redirect('login');
@@ -45,7 +43,6 @@
 				"blend_id" => $blend_id,
 				"mach_id" =>$this->input->post("contract_machine"),
 				"required_qty" =>$this->input->post("contract_bqty"),
-				"package_id" =>$this->input->post("contract_bag"),
 				"mach_salesID" => $m_sales_id
                 
 			);
@@ -85,8 +82,7 @@
 				"date_expiration" =>$this->input->post("date_expiration"),
 				"blend_id" => $blend_id,
 				"mach_id" =>$this->input->post("contract_machine"),
-				"required_qty" =>$this->input->post("contract_bqty"),
-				"package_id" =>$this->input->post("contract_bag")
+				"required_qty" =>$this->input->post("contract_bqty")
                 
 			);
 			$data = $this->security->xss_clean($data);

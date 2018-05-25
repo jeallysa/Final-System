@@ -11,7 +11,7 @@
 
 		}
 		public function getClientsDetails($id){
-			$query = $this->db->query("SELECT * FROM contract NATURAL JOIN contracted_client INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN packaging ON contract.package_id = packaging.package_id WHERE client_id='$id'");
+			$query = $this->db->query("SELECT * FROM contract NATURAL JOIN contracted_client INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE client_id='$id'");
 			 return $query->row();
 		}
 		public function addClientPO($date, $quantity, $id, $blend_id){
@@ -179,22 +179,7 @@
                 
                     $query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
                    
-                
-                
-                
-				$orders[] = array(
-					/*'client_id' => $data[$x]['id'],*/
-					'walkin_date' => $data[$x]['dateO'],
-					'blend_id' => $data[$x]['blend'],
-					'walkin_qty' => $data[$x]['quantity'],
-				);
-			}
-
-			try{
-
-				for($x = 0; $x<count($data);$x++){
-					$this->db->insert('walkin_sales', $orders[$x]);
-                     $inserted_id = $this->db->insert_id();
+                	$inserted_id = $this->db->insert_id();
 
                     $pack_id = $query->row()->package_id;
                     $stick_id = $query->row()->sticker_id;
@@ -239,6 +224,21 @@
                     $this->db->insert('trans_pack', $data_pack);
                     $this->db->insert('trans_stick', $data_stick);
                     $this->db->query('INSERT INTO trans_mach (trans_id) VALUES ('.$trans_id.')');
+                
+                
+				$orders[] = array(
+					/*'client_id' => $data[$x]['id'],*/
+					'walkin_date' => $data[$x]['dateO'],
+					'blend_id' => $data[$x]['blend'],
+					'walkin_qty' => $data[$x]['quantity'],
+				);
+			}
+
+			try{
+
+				for($x = 0; $x<count($data);$x++){
+					$this->db->insert('walkin_sales', $orders[$x]);
+                     
 
 				}
 
