@@ -80,17 +80,7 @@ class Admin_Blends_Model extends CI_model
 							        ELSE NULL
 							    END) AS per".$row->raw_id.",";
 		}
-		$query_append .= " d.package_size, d.package_type, c.blend_price, c.blend_qty FROM raw_coffee a JOIN proportions b JOIN coffee_blend c JOIN packaging d ON a.raw_id = b.raw_id AND b.blend_id = c.blend_id AND c.package_id = d.package_id WHERE c.blend_type = 'Client' AND a.raw_activation = 1 GROUP BY c.blend_id UNION SELECT c.blend_id AS main_id, c.blend_type AS type, c.blend AS blend, c.blend_activation,";
-
-		foreach ($qcount->result() as $row){
-			$query_append .= " SUM(CASE
-							        WHEN b.raw_id = '". $row->raw_id ."' THEN b.percentage
-							        ELSE NULL
-							    END) AS per".$row->raw_id.",";
-		}
-
-		$query_append .= " NULL, NULL, c.blend_price, c.blend_qty FROM raw_coffee a JOIN proportions b JOIN coffee_blend c ON a.raw_id = b.raw_id AND b.blend_id = c.blend_id WHERE c.blend_type = 'Client' AND a.raw_activation = 1 GROUP BY c.blend_id";
-
+		$query_append .= " d.package_size AS size, d.package_type AS package, c.blend_price, c.blend_qty FROM raw_coffee a JOIN proportions b JOIN coffee_blend c JOIN packaging d ON a.raw_id = b.raw_id AND b.blend_id = c.blend_id AND c.package_id = d.package_id WHERE c.blend_type = 'Client' AND a.raw_activation = 1 GROUP BY c.blend_id";
 
 		$query = $this->db->query($query_append);
 		return $query;

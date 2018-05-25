@@ -285,13 +285,7 @@ a:focus {
                                                         <div class="form-group label-floating">
                                                             
                                                             <label for="sel1">Blend Type:</label>
-
-                                                              <select class="form-control" id="sel1" name="type">
-                                                                
-                                                                    <option value="Existing"> Company Blend </option>
-                                                                   
-                                                              </select>
-                                                            
+                                                            <input type="text" class="form-control" id="sel1" name="type" value="Company Blend" disabled>
                                                         </div>
                                                     </div>
                                                     
@@ -300,7 +294,7 @@ a:focus {
                                                             
                                                             <label for="sel2">Sticker:</label>
 
-                                                              <select id="editStickers" class="form-control" id="sel2" name="stick">
+                                                              <select id="stick" name="stick" class="form-control" id="sel2" name="stick">
                                                                 <?php
                                                                     $stick = $this->db->query('SELECT * FROM sticker');
                                                                     foreach($stick->result() as $row6){

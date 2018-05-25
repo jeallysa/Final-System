@@ -263,70 +263,6 @@ a:focus {
                                                  ?>
                                                 
                                             </div>
-                                            <div class="row">
-                                                <?php
-                                                    $cli_id = $this->input->get('p'); 
-                                                    $query = $this->db->query("SELECT * FROM packaging JOIN contract ON packaging.package_id = contract.package_id WHERE contract.client_id = '".$cli_id."' ;");
-                                                    
-                                                    foreach($query->result() AS $row){
-                                                ?>
-                                                <div class="col-md-6 form-group">
-                                                       
-                                                            <div class="form-group label-floating">
-                                                                <label for="email">Packaging (bag type - grams)</label>
-                                                                <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                        <option disabled selected value></option>
-                                                        <?php 
-                                                            $query_pack = $this->db->query("SELECT * FROM packaging;");
-                                                            foreach($query_pack->result() as $row2)
-                                                            { 
-                                                                if($row->package_id == $row2->package_id){
-                                                                echo '<option value="'.$row2->package_id.'" selected>'.$row2->package_type.' '.$row2->package_size.'</option>';
-                                                                    }else{
-                                                                            echo '<option value="'.$row2->package_id.'">'.$row2->package_type.' - '.$row2->package_size.' g</option>';
-                                                                    }
-                                                            }
-                                                         ?>
-                                                    </select>
-
-                                                            </div>
-                                                
-                                                </div>
-                                                        <?php } ?>
-
-                                                
-                                                
-                                                        <?php
-                                                            $cli_id = $this->input->get('p'); 
-                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN coffee_blend ON contract.blend_id = coffee_blend.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE contract.client_id = '".$cli_id."' ;");
-                                                    
-                                                            foreach($query->result() AS $row){   
-                                                        ?>  
-                                                        <div class="col-md-6 form-group">
-
-                                                    <div class="form-group label-floating">
-                                                        <label for="email">Stickers</label>
-                                                         <select  class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters" disabled>
-                                                            <option disabled selected value></option>
-                                                            <?php 
-                                                                $query_pack = $this->db->query("SELECT * FROM sticker;");
-                                                                foreach($query_pack->result() as $row2)
-                                                                { 
-                                                                    if ($row->sticker_id == $row2->sticker_id){
-                                                                            echo '<option value="'.$row2->sticker_id.'" selected>'.$row2->sticker.'</option>';
-                                                                    }else{
-
-
-                                                                    echo '<option value="'.$row2->sticker_id.'">'.$row2->sticker.'</option>';
-                                                                        }
-                                                                }
-                                                             ?>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-                                                <?php } ?>
-                                            </div>
                                             <?php
                                                 $id = $this->input->get('p');
                                                 $type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
@@ -495,42 +431,6 @@ a:focus {
                                                     </div>
                                                 </div>
                                                 
-                                            </div>
-                                            <div class="row">                                               
-                                                <div class="col-md-6 form-group">
-                                                       <div class="form-group label-floating">
-                                                        <label for="email">Packaging (bag - grams)</label>
-                                                        <select class="form-control" name="contract_bag" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                <option disabled selected value></option>
-                                                <?php 
-                                                    $query_pack = $this->db->query("SELECT * FROM packaging;");
-                                                    foreach($query_pack->result() as $row)
-                                                    { 
-                                                        echo '<option value="'.$row->package_id.'">'.$row->package_type.' bag - '.$row->package_size.' g</option>';
-                                                    }
-                                                 ?>
-                                            </select>
-
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-6 form-group">
-
-                                                    <div class="form-group label-floating">
-                                                        <label for="email">Stickers</label>
-                                                         <select id="editStickers" class="form-control" name="contract_sticker" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Bag should only countain letters">
-                                                            <option disabled selected value></option>
-                                                            <?php 
-                                                                $query_pack = $this->db->query("SELECT * FROM sticker;");
-                                                                foreach($query_pack->result() as $row)
-                                                                { 
-                                                                    echo '<option value="'.$row->sticker_id.'">'.$row->sticker.'</option>';
-                                                                }
-                                                             ?>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
                                             </div>
                                             <?php
                                                 $id = $this->input->get('p');

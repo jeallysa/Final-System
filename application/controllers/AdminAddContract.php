@@ -63,7 +63,7 @@
 			
 
 			
-			$data_blend = array(
+			/*$data_blend = array(
 				'package_id' => $this->input->post("contract_bag"),
 				'sticker_id' => $this->input->post("contract_sticker")
 
@@ -71,7 +71,7 @@
 			$this->db->where('blend_id', $blend_id);
 			$this->db->update('coffee_blend', $data_blend);
 			
-			redirect($_SERVER['HTTP_REFERER']);
+			redirect($_SERVER['HTTP_REFERER']);*/
 
 			/* data - contract; data_bag = machine_out*/
 		}
