@@ -366,16 +366,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
-                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
+                     $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE type = 'OUT' AND trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
                                      $query = $this->db->query($retrieveSales);
                                         if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
                                                echo '<tr>' ,
                                                
-                                                '<td>'  . $object->client_company   . '</td>' ,
+                                                '<td> - </td>' ,
                                                 '<td>'  . $object->transact_date  . '</td>' ,
                                                 '<td>'  . number_format($object->quantity / 1000, 2)  . ' kg</td>' ,
-                                                '<td> Used for Blend </td>' ,
+                                                '<td> Used to Create Blend </td>' ,
+                                                '<td> Out </td>' ,
+                                                '</tr>' ;
+                                              }
+                                            }
+                                           
+                                        ?>
+
+                                        <?php
+                     $retrieveSales2 ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE walkin_return IS NOT NULL AND trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
+                                     $query = $this->db->query($retrieveSales2);
+                                        if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                               echo '<tr>' ,
+                                               
+                                                '<td> - </td>' ,
+                                                '<td>'  . $object->transact_date  . '</td>' ,
+                                                '<td>'  . number_format($object->quantity / 1000, 2)  . ' kg</td>' ,
+                                                '<td> Used to Resolve Client Blend Return </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
                                               }
@@ -414,11 +432,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php
                                               $retrieveTotalin ="Select SUM(TotalIn) AS TotalIn from
 (SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE supp_po_ordered.inv_stat='0' AND type = '".$type."' AND raw_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE supp_po_ordered.inv_stat='0' AND res = 'resolved' AND type = '".$type."' AND raw_id = '". $id  ."') AS b; " ;
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE company_returns.inv_stat='0' AND res = 'resolved' AND type = '".$type."' AND raw_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="Select SUM(TotalOut) AS TotalOut from
 (SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN raw_coffee ON supp_po_ordered.item = raw_coffee.raw_coffee WHERE company_returns.inv_stat='0' AND type = '".$type."' AND raw_id = '". $id  ."' UNION ALL
-SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id INNER JOIN contracted_po ON inv_transact.po_client = contracted_po.contractPO_id INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id WHERE trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = '". $id  ."') AS b; " ;
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE trans_raw.inv_stat='0' AND type = 'OUT' AND quantity != '0' AND raw_coffeeid = '". $id  ."' UNION ALL
+SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE walkin_return IS NOT NULL AND trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid ='". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {

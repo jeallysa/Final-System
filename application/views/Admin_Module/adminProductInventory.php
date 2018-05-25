@@ -563,6 +563,7 @@ a:focus {
                                                                             <input class="form-control" value="<?php echo $row->raw_reorder; ?>" type="number" name="reorder" min="0" oninput="validity.valid||(value='');" data-validate="required" max="" required>
                                                                         </div>
                                                                     </div>
+
                                                                 </div>
                                                                 </div>
 

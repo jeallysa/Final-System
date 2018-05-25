@@ -353,7 +353,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->mach_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->mach_returnQty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->mach_returnQty)  . ' unit/s</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
                                                     <td>In</td>
@@ -371,7 +371,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
                                                 ?>
                                                     <td>Company Return</td>
                                                     <td>Out</td>
@@ -389,7 +389,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->yield_weight)  . ' unit/s</td>' ;
                                                 ?>
                                                     <td>Company Delivery</td>
                                                     <td>In</td>
@@ -407,7 +407,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->sup_company  . '</td>' ,
                                                 '<td>'  . $object->return_date  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
                                                 ?>
                                                     <td>Resolved returns</td>
                                                     <td>In</td>

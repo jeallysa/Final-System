@@ -360,24 +360,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '</tr>' ;
                                               }
                                             }
-                                        ?>  
-
-                                        <?php
-                                              $retrieveDetails3 ="SELECT * FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE client_coffreturn.pckng_stat='0' AND packaging.package_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails3);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->client_company  . '</td>' ,
-                                                '<td>'  . $object->coff_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->coff_returnQty)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Client Return</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
                                         ?> 
 
                                         <?php
@@ -447,8 +429,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE client_coffreturn.pckng_stat='0' AND packaging.package_id = '". $id  ."' UNION ALL
-SELECT yield_weight AS TotalIn FROM supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = '". $id  ."' UNION ALL
+(SELECT yield_weight AS TotalIn FROM supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = '". $id  ."' UNION ALL
 SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE company_returns.pckng_stat='0' AND res = 'resolved' AND package_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
