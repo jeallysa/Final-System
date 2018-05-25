@@ -195,7 +195,7 @@
     									</div>
     								</div>
 
-                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <table id="example" class="display table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th><b>Delivery Receipt No.</b></th>
@@ -235,7 +235,7 @@
                                         </table>
                                     </div>
                             <div class="tab-pane" id="walkin">
-                                    <div class="row">
+                                    <!-- <div class="row">
                                     <div class="form-group col-xs-3">
                                         <label>Filter By:</label>
                                         <div class="input-group input-daterange">
@@ -243,7 +243,7 @@
                                             <span class="input-group-addon">to</span>
                                             <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
                                         </div>
-                                    </div>
+                                    </div> -->
                                 
                                     <div class="form-group col-xs-4 " >
                                         
@@ -263,7 +263,7 @@
                                             </h3>
                                     
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -304,7 +304,7 @@
                                     </table>
                             </div>
                             <div class="tab-pane" id="mach">
-                                    <div class="row">
+                                <!-- <div class="row">
                                     <div class="form-group col-xs-3">
                                         <label>Filter By:</label>
                                         <div class="input-group input-daterange">
@@ -312,7 +312,7 @@
                                             <span class="input-group-addon">to</span>
                                             <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
                                         </div>
-                                    </div>
+                                    </div> -->
                                 
                                     <div class="form-group col-xs-4 " >
                                         <p class="category">Total Sales of Sold Machines: </p>
@@ -331,7 +331,7 @@
                                             </h3>
                                     
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -472,17 +472,6 @@ $(document).ready(function() {
 
 
 
-</script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-        localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    var activeTab = localStorage.getItem('activeTab');
-    if(activeTab){
-        $('#myTab a[href="' + activeTab + '"]').tab('show');
-    }
-});
 </script>
 
 
