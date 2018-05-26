@@ -766,7 +766,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td><center><b>Total Amount</b></center></td>
-                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="Php <?php if(!empty($sumTotal)) { foreach($sumTotal as $object) { echo number_format(($object->tAmount),2); }}  ?>" readonly required/></b></center></td>
+                                                                    <td><center><b><input type="text" class="form-control" name="totalAmount"  id="totalAmount" value="Php <?php 
+                                                if(!empty($sumTotal)) { 
+                                                       echo number_format(($sumTotal),2);  
+                                                }
+                                                                        ?>" readonly required/></b></center></td>
                                                                 </tr>
                                                         
                                                         </table>

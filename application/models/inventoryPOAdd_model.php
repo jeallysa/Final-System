@@ -148,14 +148,27 @@
     }
   }     
             
+      
   function sumTotal(){
-    $query = $this->db->query('SELECT trucking_fee + sum(amount) as tAmount FROM supp_temp_po_order join supp_temp_po group by trucking_fee');      
-    if($query->num_rows() > 0){
-          return $query-> result();
-    }else{
-          return NULL;
+    $username = $this->session->userdata('username');
+    $query1 = $this->db->query('SELECT trucking_fee FROM supp_temp_po where username = "'.$username.'"'); 
+    $query2 = $this->db->query('SELECT sum(amount) as amount FROM supp_temp_po_order where username = "'.$username.'"'); 
+      if($query1->num_rows() > 0){
+      $trucking = $query1->row();
+      $amount   =$query2->row();
+      
+      $tfee  =  $trucking->trucking_fee;
+      $amount = $amount->amount;
+      
+      $total = $tfee + $amount;
+      
+          return $total;    //passing this value to the view.
+      }else{
+          
+      return null;
+        
     }
-  }       
+  }
       
   function checkIfTempIsEmpty(){
       
