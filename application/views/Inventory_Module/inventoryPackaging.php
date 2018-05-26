@@ -337,7 +337,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
                                                 '<td>'  . number_format($object->walkin_qty)  . ' pcs</td>' ;
                                                 ?>
-                                                    <td>Walkin Sales</td>
+                                                    <td>Sales</td>
                                                     <td>Out</td>
                                                  <?php   
                                                  ;
@@ -346,7 +346,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND packaging.package_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND contracted_po.roast = 'Yes' AND packaging.package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -435,7 +435,7 @@ SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered 
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
 (SELECT walkin_qty AS TotalOut FROM walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.pckng_stat='0' AND packaging.package_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND packaging.package_id = '". $id  ."' UNION ALL
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND contracted_po.roast = 'Yes' AND delivery_stat = 'delivered' AND packaging.package_id = '". $id  ."' UNION ALL
 SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE company_returns.pckng_stat='0' AND packaging.package_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
