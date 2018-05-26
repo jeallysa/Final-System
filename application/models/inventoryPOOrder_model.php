@@ -51,7 +51,7 @@
 	  
   function retrieveUsers(){
    
-    $query = $this->db->query('SELECT * FROM user');      
+    $query = $this->db->query('SELECT * FROM user where u_activation = "1" ');      
       if($query->num_rows() > 0){
           return $query-> result();
       }else
@@ -103,7 +103,8 @@ function insertTrans($data){
 	  
 function insertInvTransact($data){
          
-      $this->db->insert("inv_transact" , $data);        
+      $this->db->insert("inv_transact" , $data);
+      return $this->db->insert_id();        
          
   }	  
       

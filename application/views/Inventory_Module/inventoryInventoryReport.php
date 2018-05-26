@@ -683,7 +683,7 @@ input {
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
-		"order": [[ 0, "desc"]],
+        "order": [[ 0, "desc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
@@ -694,10 +694,6 @@ $(document).ready(function() {
                 customize: function ( win ) { 
                      $(win.document.body) .css( 'font-size', '10pt' )
                     .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
-                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
                 }
             },
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
@@ -736,10 +732,6 @@ $(document).ready(function() {
                 customize: function ( win ) { 
                      $(win.document.body) .css( 'font-size', '10pt' )
                     .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
-                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
                 }
             },
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },

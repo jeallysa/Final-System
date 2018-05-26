@@ -76,7 +76,7 @@
 
 
 		public function load_Client_mach($id){
-			$query = $this->db->query("SELECT * FROM machine_out NATURAL JOIN contracted_client NATURAL JOIN machine where status = 'rented' AND client_id='$id'");
+			$query = $this->db->query("SELECT * FROM machine_out NATURAL JOIN contracted_client NATURAL JOIN machine where status = 'rented' AND contract_id IS NOT NULL AND client_id='$id'");
 			return $query->result();
 		}
 

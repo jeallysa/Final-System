@@ -303,7 +303,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span> Change Username</h4>
                         </div>
-                        <?php echo form_open('adminChangePassword/updateusername') ?>
+                        <?php echo form_open('inventoryChangePassword/updateusername') ?>
                             <div class="modal-body" style="padding: 5px;">
                                 <div class="row">
                                     <div class="col-md-12 form-group">

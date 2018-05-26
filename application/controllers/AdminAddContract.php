@@ -25,17 +25,6 @@
 		{
 			$this->load->model('AdminAddContract_model');
 			$blend_id = $this->input->post("contract_blend");
-			$data_bag = array(
-                "client_id" =>$this->input->post("client_company"),
-				"date" =>$this->input->post("date_started"),
-				"mach_id" =>$this->input->post("contract_machine"),
-                "mach_qty" =>$this->input->post("contract_mqty"),
-                "mach_serial" =>$this->input->post("contract_serial"),
-                "status" => "rented"
-			);
-			
-			$this->db->insert('machine_out', $data_bag);
-			$m_sales_id = $this->db->insert_id();
 			$data = array(
                 "client_id" =>$this->input->post("client_company"),
 				"date_started" =>$this->input->post("date_started"),
@@ -43,14 +32,23 @@
 				"blend_id" => $blend_id,
 				"mach_id" =>$this->input->post("contract_machine"),
 				"required_qty" =>$this->input->post("contract_bqty"),
-				"mach_salesID" => $m_sales_id
-                
 			);
 			$client_id = $this->input->post("client_company");
 			$data = $this->security->xss_clean($data);
 			$query_client = $this->db->query("SELECT * FROM contract WHERE client_id = '".$client_id."';");
 			if ($query_client->num_rows() == 0){
 				$this->AdminAddContract_model->insert_data($data);
+				$contract_id = $this->db->insert_id();
+				$data_bag = array(
+	                "client_id" =>$this->input->post("client_company"),
+					"date" =>$this->input->post("date_started"),
+					"mach_id" =>$this->input->post("contract_machine"),
+	                "mach_qty" =>$this->input->post("contract_mqty"),
+	                "mach_serial" =>$this->input->post("contract_serial"),
+	                "status" => "rented",
+	                "contract_id" => $contract_id
+				);
+				$this->db->insert('machine_out', $data_bag);
 				$this->session->set_flashdata('success', 'Insert & Update successful!');
 			}else{
 				$this->db->where('client_id', $client_id);

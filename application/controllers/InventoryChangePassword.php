@@ -35,10 +35,10 @@
 				}else{
 					if ($psword->password == $curr_password) {
 						if ($this->Changepassword_Model->updateUsername($u_name, $userid )){
-									$this->session->set_flashdata('success', 'Successfully Updated your Username, Kindly login again');
+									$this->session->set_flashdata('success', 'Successfully updated your username, kindly login again');
 									redirect('login');
 							} else {
-								$this->session->set_flashdata('error', 'Failed to Update Password');
+								$this->session->set_flashdata('error', 'Failed to update password');
 									redirect('inventoryChangePassword');
 							}
 					}
@@ -68,31 +68,31 @@
 						if ($psword->password == $curr_password) {
 							if ($new_password == $conf_password) {
 								if ($this->Changepassword_Model->updatePassword($new_password, $userid )){
-									$this->session->set_flashdata('success', 'Successfully Updated your Password');
+									$this->session->set_flashdata('success', 'Successfully updated your password');
 									redirect('inventoryChangePassword');
 								} else {
-									$this->session->set_flashdata('error', 'Failed to Update Password');
+									$this->session->set_flashdata('error', 'Failed to update password');
 									redirect('inventoryChangePassword');
 									}
 							} else {
-								$this->session->set_flashdata('error', 'New Password and Confirmation Password does not Match');
+								$this->session->set_flashdata('error', 'New password and confirmation password does not Match');
 									redirect('inventoryChangePassword');
 							}
 						} else {
-							$this->session->set_flashdata('error', 'Sorry, You have input a wrong Password');
+							$this->session->set_flashdata('error', 'Sorry, you have input a wrong password');
 									redirect('inventoryChangePassword');
 						}
 					} else if (empty($new_password)) {
 						if ($psword->password == $curr_password) {
 							if ($this->Changepassword_Model->updateUsername($u_name, $userid )){
-									$this->session->set_flashdata('success', 'Successfully Updated your Username, Kindly login again');
+									$this->session->set_flashdata('success', 'Successfully updated your username, kindly login again');
 									redirect('login');
 							} else {
-								$this->session->set_flashdata('error', 'Failed to Update Password');
+								$this->session->set_flashdata('error', 'Failed to update password');
 									redirect('inventoryChangePassword');
 							}
 						} else {
-							$this->session->set_flashdata('error', 'Sorry, You have input a wrong Password');
+							$this->session->set_flashdata('error', 'Sorry, You have input a wrong password');
 									redirect('inventoryChangePassword');
 						}
 					}

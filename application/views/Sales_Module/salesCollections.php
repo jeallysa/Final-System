@@ -145,7 +145,7 @@
 											</div>
 										</div>
                                     <div class="form-group col-xs-3">
-										<p class="category">Total Sales: </p>
+										<p class="category">Total Collections: </p>
                                     	<h3 class="title">
 										<b>
 										<?php
@@ -274,9 +274,23 @@
         "lengthChange": false,
         "info":     false,
 		buttons: [
-            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs' },
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs' },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs' }
+            { 
+                "extend": 'print', 
+                "text":'<i class="fa fa-files-o"></i> Print',
+                "className": 'btn btn-default btn-xs',
+                "orientation": 'landscape' 
+            },
+			{ 
+                "extend": 'excel',
+                 "text":'<i class="fa fa-file-excel-o"></i> CSV',
+                 "className": 'btn btn-success btn-xs',
+                  "orientation": 'landscape'},
+			{ 
+                "extend": 'pdf', 
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs',
+                "orientation": 'landscape'
+             }
         ]
     });
 

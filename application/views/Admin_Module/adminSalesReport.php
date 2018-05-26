@@ -403,9 +403,19 @@ a:focus {
             },
             
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                }
+                orientation: 'landscape',
+                        exportOptions: {
+                         columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,100,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         doc.content[1].table.widths = [ '11%', '11%', '11%', '16%', '16%', '11%', '11%', '11%', '11%', '11%', '11%']; }
             }
         ]
     });

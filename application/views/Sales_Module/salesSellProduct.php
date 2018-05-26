@@ -162,7 +162,7 @@
 												 <table id="cosales" class="display table-striped table-hover cell-border" cellspacing="0" width="100%" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th><b>Item Code</b></th>
+                                                        <th><b>Purchase Order No.</b></th>
                                                         <th><b>Purchase Date</b></th>
 														<th><b>Coffee</b></th>
 														<th><b>Bag</b></th>
@@ -179,7 +179,7 @@
                                                         foreach ($data1['sellCoffee'] as $row) {
                                                      ?>
                                                      <tr>
-                                                         <td><?php echo $row->blend_id; ?></td>
+                                                         <td><?php echo $row->walkin_id; ?></td>
                                                          <td><?php echo $row->walkin_date; ?></td>
                                                          <td><?php echo $row->blend; ?></td>
                                                          <td><?php echo $row->package_type; ?></td>
@@ -241,7 +241,7 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Packaging: </label>
                                                                 <div class="col-md-6">
-                                                                    <p><b><?php echo $row->package_type.' bag/ '.number_format($row->package_size).' g';
+                                                                    <p><b><?php echo $row->package_type.' / '.number_format($row->package_size).' g';
                                                                     ?></b></p>
                                                                 </div>
                                                             </div>
@@ -325,7 +325,7 @@
                                                 <a href="<?php echo base_url(); ?>salesMachineOrders" class="btn btn-success btn-md" style="float: right">Add Sales</a>
 												<table id="masales" class="display table-striped table-hover cell-border" cellspacing="0" width="100%">
 													<thead>
-                                                        <th><b>Item Code</b></th>
+                                                        <th><b>Purchase Order No.</b></th>
 														<th><b>Serial No.</b></th>
 														<th><b>Purchase Date</b></th>
 														<th><b>Client</b></th>
@@ -340,7 +340,7 @@
                                                         foreach ($data2['sellMachine'] as $row) {
                                                      ?>
                                                      <tr>
-                                                         <td><?php echo $row->mach_id; ?></td>
+                                                         <td><?php echo $row->mach_salesID; ?></td>
                                                          <td><?php echo $row->mach_serial; ?></td>
                                                          <td><?php echo $row->date; ?></td>
                                                          <td><?php echo $row->client_company; ?></td>

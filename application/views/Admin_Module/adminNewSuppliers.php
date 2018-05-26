@@ -225,7 +225,7 @@ a:focus {
 
                                     <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
                                         <label for="date">Date Registered</label>
-                                        <input class="form-control" name="date_reg" placeholder="Date" type="date"/>
+                                        <input class="form-control" name="date_reg" placeholder="Date" type="date" max="<?php echo date("Y-m-d") ?>" required/>
                                     </div>
                                 </div>
                                 

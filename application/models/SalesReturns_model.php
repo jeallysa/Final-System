@@ -17,7 +17,7 @@
 		}
 
 		public function get_coffee_walkin_return(){
-			$query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN walkin_sales ON walkin_sales.walkin_id = client_coffreturn.client_deliveryID INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.coff_remark='Returned' AND client_coffreturn.resolved = 'No'");
+			$query = $this->db->query("SELECT * FROM client_coffreturn INNER JOIN walkin_sales ON walkin_sales.walkin_id = client_coffreturn.walkinPo_id INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.coff_remark='Returned' AND client_coffreturn.resolved = 'No'");
 			return $query->result();
 
 		}
@@ -216,7 +216,7 @@
 
 		}
 		public function update_walkin_return($id, $action_taken_walk){
-			$this->db->query("UPDATE client_coffreturn SET coff_returnAction = '$action_taken_walk', resolved = 'Yes' WHERE client_deliveryID = '".$id."';");
+			$this->db->query("UPDATE client_coffreturn SET coff_returnAction = '$action_taken_walk', resolved = 'Yes' WHERE walkinPo_id = '".$id."';");
 
 		}
 		public function ResolveMachineReturnsA($c_id, $m_id, $date, $remarks, $serial, $qty){

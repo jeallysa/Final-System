@@ -430,7 +430,7 @@
                                                     ?>" class="form-control" min="1" max="<?php echo $diff ?>" required>
                                                 </div>
                                                 <div  class="col-md-2">
-                                                    <p>grams</p>
+                                                    <p>bags</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -461,7 +461,7 @@
             <th><b class="pull-left">Quantity Delivered</b></th>
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
-            <th><b>Quantity Returned</b></th>
+            <th><b>Remarks</b></th>
             <th width="70%">Actions</th>
         </thead>
         <tbody>
@@ -489,7 +489,19 @@
                         echo 'Php '.number_format($amount,2);
                      ?></td>
                 <td><?php echo $row2->client_receive; ?></td>
-                <td><?php echo $row2->coff_returnQty; ?> </td>
+                <td>
+					<?php 
+						if ($row2->coff_returnQty == 0 && $row2->resolved == 'No') {
+							echo "";
+						} else if ($row2->coff_returnQty > 0 && $row2->resolved == 'No'){
+							echo 'returned '.$row2->coff_returnQty.' bag/s';
+						} else if ($row2->coff_returnQty == 0 && $row2->resolved == 'Yes') {
+							echo "returns has been resolved";
+						}
+					 ?>
+					
+			
+				</td>
                 <td><button type="button" title="pay order" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
                         $payment_remarks = $row2->payment_remarks;
                         if ($payment_remarks == 'paid') {

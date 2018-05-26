@@ -30,7 +30,7 @@ class Login_Model extends CI_Model
 							redirect('login');
 						}
 		} else {
-			$this->session->set_flashdata('error', 'Invalid Username or Password!');
+			$this->session->set_flashdata('error', 'Invalid username or password!');
 			redirect('login');
 		}
 	}

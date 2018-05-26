@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
    
-        public function insertPartial($temp){
+    public function insertPartial($temp){
            
         $DRNO=$this->input->post('DRNO');
         $itemIdv=$this->input->post('itemId');
@@ -82,14 +82,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    $newTrans = $newInvTrans+1;
 	    
        $inv_transact = array(
-                    'trans_id' => $newTrans,
                     'transact_date' => $datev,
                     'po_supplier' => $temp,
                     'type' => "IN",
                   
 
                 );
-      $this->inventoryPOOrder_model->insertInvTransact($inv_transact);
+      $transact_id = $this->inventoryPOOrder_model->insertInvTransact($inv_transact);
 	  
  for ($i = 0; $i < count($this->input->post('itemId')); $i++){
      
@@ -136,7 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			   
 			   
 		        $trans_raw = array(
-                    'trans_id' => $new,
+                    'trans_id' => $transact_id,
                     'raw_coffeeid' => $raw_id[$i],
                     'quantity' => $yield_weightv[$i] * 1000,
                   

@@ -69,6 +69,41 @@ a:focus {
     color: #FFFFFF;
     box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
+
+.panel-primary>.panel-heading{color:#fff !important;background-color:#43a047 !important;border-color:#43a047 !important}
+        .panel-primary{ border-color:#43a047 !important}
+
+.form-group.is-focused .form-control {
+    outline: none;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}    
+.form-control, .form-group .form-control {
+    border: 0;
+    background-image: linear-gradient(#43a047, #43a047), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+    background-color: #43a047;
+    color: #FFFFFF;
+}
+
+.footer{
+    z-index: 0;
+}
 </style>
 
 <body>
@@ -210,13 +245,13 @@ a:focus {
                                                     <div class="form-group label-floating">
                                                         <label for="email">Date Started</label>
 
-                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started?>" data-validate="required" message="Date of Purchase is recquired!"  >
+                                                        <input class="form-control" name="date_started" type="date" class="no-border" value="<?php echo $row->date_started?>" data-validate="required" message="Date of Purchase is recquired!" max="<?php echo date("Y-m-d") ?>"  required >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration?>" data-validate="required" message="Date of Purchase is recquired!"  >
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border" value="<?php echo $row->date_expiration?>" data-validate="required" message="Date of Purchase is recquired!"  required>
                                                     </div>
                                                 </div>
                                                 <?php
@@ -307,7 +342,7 @@ a:focus {
                                                             $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
                                                             foreach($query->result() AS $row){   
                                                         ?> 
-                                                        <input class="form-control" type="number" name="contract_mqty" value="<?php echo $row->mach_qty?>" >
+                                                        <input class="form-control" type="number" name="contract_mqty" value="<?php echo $row->mach_qty?>" min="0" oninput="validity.valid||(value='');" >
                                                         <?php } ?>
                                                     </div>
                                                 </div>
@@ -372,7 +407,7 @@ a:focus {
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Edit Contract Information</h4>
+                            <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign" ></span> Create Contract Information</h4>
                         </div>
                         <form action="AdminAddContract/insert" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
@@ -382,7 +417,7 @@ a:focus {
                                                         <label for="email">Client</label> 
                                                     
                                                         <input class="form-control" type="text" name="client" value="<?php echo $row->client_company?>" disabled>
-                                                        <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>">
+                                                        <input class="form-control" type="hidden" name="client_company" value="<?php echo $row->client_id?>" required>
                 <?php
                     }
                 ?>
@@ -395,13 +430,13 @@ a:focus {
                                                     <div class="form-group label-floating">
                                                         <label for="email">Date Started</label>
 
-                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!" >
+                                                        <input class="form-control" name="date_started" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!"  max="<?php echo date("Y-m-d") ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">                                            
                                                         <label for="email">Date Expiration</label>
-                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!" >
+                                                        <input class="form-control" name="date_expiration" type="date" class="no-border"  data-validate="required" message="Date of Purchase is required!" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -427,7 +462,7 @@ a:focus {
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
                                                         <label for="email">Blends Required Quantity (bags)</label>
-                                                        <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');" >
+                                                        <input class="form-control" type="number" name="contract_bqty" min="0" oninput="validity.valid||(value='');" required >
                                                     </div>
                                                 </div>
                                                 
@@ -457,7 +492,7 @@ a:focus {
                                                 <div class="col-md-6 form-group">
                                                     <div class="form-group label-floating">
                                                         <label for="email">Machine Quantity (unit/s)</label>
-                                                        <input class="form-control" type="number" name="contract_mqty" >
+                                                        <input class="form-control" type="number" name="contract_mqty" min="0" oninput="validity.valid||(value='');" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -465,7 +500,7 @@ a:focus {
                                                 <div class="col-md-12 form-group">
                                                     <div class="form-group label-floating">
                                                         <label for="email">Machine Serial Number</label> 
-                                                        <input class="form-control" type="text" name="contract_serial" >
+                                                        <input class="form-control" type="text" name="contract_serial" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -644,10 +679,10 @@ a:focus {
                                                         <label for="email">Machine Quantity (unit/s)</label>
                                                         <?php
                                                             $cli_id = $this->input->get('p'); 
-                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and machine_out.contract_id IS NOT NULL and contract.client_id = '".$cli_id."';");
                                                             foreach($query->result() AS $row){   
                                                         ?> 
-                                                        <input class="form-control" type="number" name="contract_mqty" value="<?php echo $row->mach_qty?>" disabled>
+                                                        <input class="form-control" type="number" name="contract_mqty" min="0" oninput="validity.valid||(value='');"   value="<?php echo $row->mach_qty?>" disabled>
                                                         <?php } ?>
                                                     </div>
                                                 </div>
@@ -658,7 +693,7 @@ a:focus {
                                                         <label for="email">Machine Serial Number</label>
                                                         <?php
                                                             $cli_id = $this->input->get('p'); 
-                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' and  contract.client_id = '".$cli_id."';");
+                                                            $query = $this->db->query("SELECT * FROM contract INNER JOIN machine_out ON contract.client_id = machine_out.client_id where machine_out.status = 'rented' AND machine_out.contract_id IS NOT NULL and  contract.client_id = '".$cli_id."';");
                                                             foreach($query->result() AS $row){   
                                                         ?> 
                                                         <input class="form-control" type="text" name="contract_serial" value="<?php echo $row->mach_serial?>" disabled>
@@ -698,6 +733,21 @@ a:focus {
                 </div>
             </div>
         </div>
+
+         <footer class="footer navbar navbar-fixed-bottom" >
+                <div class="container">
+                  <div class="copyright float-center">
+                    <center>
+                    &copy;
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    Team Barako for John Hay Coffee Services Incorporation.
+                </center>
+                  </div>
+                </div>
+              </footer>
     </div>
 </body>
 <!--   Core JS Files   -->

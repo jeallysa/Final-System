@@ -401,7 +401,7 @@ a:focus {
                                                                           <p><div class="form-group row">
                                                                         <div for="example-number-input" class="col-2 col-form-label">
                                                                             <label for="type">Date Registered</label>
-                                                                            <input name="date_reg" class="form-control" type="date" value="<?php echo $row->date_reg; ?>" id="example-number-input" required>
+                                                                            <input name="date_reg" class="form-control" type="date" value="<?php echo $row->date_reg; ?>" id="example-number-input"  max="<?php echo date("Y-m-d") ?>" required>
                                                                         </div>
                                                                     </div>
                                                                          <p><div class="form-group row">

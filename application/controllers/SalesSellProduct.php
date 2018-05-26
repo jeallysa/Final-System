@@ -100,7 +100,7 @@
 		{
 			$this->load->model('sellProduct_model');
 			$coffeeblend_return = array(
-				"client_deliveryID" =>$this->input->post("walkin_id"),
+				"walkinPo_id" =>$this->input->post("walkin_id"),
 				"coff_returnDate" =>$this->input->post("date_blend_returned"),
 				"coff_returnQty" =>$this->input->post("blend_returned"),
 				"coff_remarks" =>$this->input->post("return_blend_remarks")

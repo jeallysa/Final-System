@@ -283,7 +283,7 @@ a:focus {
                                     <div class="col-md-12 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">Name</label>
-                                            <input class="form-control" type="text" name="name" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
+                                            <input class="form-control" type="text" name="name" required>
                                         </div>
                                     </div>
                                 </div>
