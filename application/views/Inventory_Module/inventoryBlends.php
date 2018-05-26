@@ -439,6 +439,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               }
                                             }
                                         ?> 
+
+                                        <?php
+                                              $retrieveDetails7 ="SELECT * FROM client_coffreturn INNER JOIN walkin_sales ON client_coffreturn.walkinPo_id = walkin_sales.walkin_id INNER JOIN coffee_blend ON walkin_sales.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails7);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->client_company  . '</td>' ,
+                                                '<td>'  . $object->coff_returnDate  . '</td>' ,
+                                                '<td>'  . number_format($object->coff_returnQty)  . ' bags</td>' ;
+                                                ?>
+                                                    <td>Client Return</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?>
                                  
                                             </tbody>
                                         </table>
@@ -455,11 +473,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 (SELECT walkin_returns AS TotalIn FROM jhcs.walkin_sales WHERE coff_remark='Returned' AND blend_id = '". $id  ."' UNION ALL
     SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
 SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
-SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
+SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coff_remark='Returned' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN walkin_sales ON client_coffreturn.walkinPo_id = walkin_sales.walkin_id INNER JOIN coffee_blend ON walkin_sales.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coff_remark='Returned' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
 (SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
+SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN walkin_sales ON client_coffreturn.walkinPo_id = walkin_sales.walkin_id INNER JOIN coffee_blend ON walkin_sales.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
