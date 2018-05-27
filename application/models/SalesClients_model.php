@@ -87,7 +87,7 @@
 		}
 
 		public function getBlends(){
-			$query = $this->db->query("SELECT * FROM coffee_blend inner join packaging on coffee_blend.package_id=packaging.package_id;");
+			$query = $this->db->query("SELECT * FROM coffee_blend inner join packaging on coffee_blend.package_id=packaging.package_id WHERE coffee_blend.blend_type = 'Existing' ;");
 			return $query->result();
 		}
 

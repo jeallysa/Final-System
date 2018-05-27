@@ -27,7 +27,7 @@
                         'raw_id'         => $this->input->post("rawid"),
                         'raw_stock'  => ($this->input->post("physcount") * 1000),
                         'raw_physcount'  => ($this->input->post("physcount") * 1000),
-                        'raw_discrepancy'=> $this->input->post("discrepancy"),
+                        'raw_discrepancy'=> $this->input->post("discrepancy" * 1000),
                         'raw_remarks'    => $this->input->post("remarks"),
                         'inventory_date'    => $this->input->post("date"),
                     );              

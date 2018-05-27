@@ -9,11 +9,11 @@ class InventoryInventoryReport_model extends CI_Model {
                             (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
 		foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type, raw_discrepancy FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}
@@ -26,11 +26,11 @@ class InventoryInventoryReport_model extends CI_Model {
     JOIN supplier f ON d.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
 
         foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee, raw_discrepancy FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}
@@ -40,11 +40,11 @@ class InventoryInventoryReport_model extends CI_Model {
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.walkin_return, 'Walk-In Return' as supplier";
 
         foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type, raw_discrepancy FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}
@@ -65,11 +65,11 @@ class InventoryInventoryReport_model extends CI_Model {
                             (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
 		foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type, raw_discrepancy  FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}
@@ -82,11 +82,11 @@ class InventoryInventoryReport_model extends CI_Model {
     JOIN supplier f ON d.supp_id = f.sup_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.client_returnID, 'Client Return' as supplier";
 
         foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type, raw_discrepancy  FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}
@@ -96,11 +96,11 @@ class InventoryInventoryReport_model extends CI_Model {
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.walkin_return, 'Walk-In Return' as supplier";
 
         foreach ($qcount->result() AS $row){
-			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
+			$new_query = $this->db->query("SELECT raw_id, raw_coffee AS type, raw_discrepancy  FROM raw_coffee WHERE raw_activation = 1 AND raw_coffee = '".$row->raw_coffee."'");
 			$query_append .= ", '' ";
 			foreach($new_query->result() AS $row2){
 				$query_append .= "+ SUM(CASE
-								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity
+								        WHEN b.raw_coffeeid = '". $row2->raw_id ."' THEN b.quantity + '".$row2->raw_discrepancy."'
 								        ELSE 0
 								    END)";
 			}

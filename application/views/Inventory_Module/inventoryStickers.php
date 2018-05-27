@@ -803,7 +803,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": 3 },
             { "orderable": false, "targets": 4 }
         ],
-        "aaSorting": [1,'desc'],
+        "aaSorting": [1,'asc'],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,

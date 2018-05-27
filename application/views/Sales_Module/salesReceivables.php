@@ -278,9 +278,19 @@
             },
             
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                exportOptions: {
-                    columns: [0, 1, 2]
-                }
+                orientation: 'portrait',
+                        exportOptions: {
+                         columns: ':visible'
+                 
+                        },
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,100,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         doc.content[1].table.widths = [ '30%', '40%', '35%']; }
             }
         ]
     });

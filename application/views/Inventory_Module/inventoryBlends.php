@@ -333,7 +333,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <tbody>
 
                                                 <?php
-                                              $retrieveDetails5 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND contracted_po.roast = 'Yes' AND coffee_blend.blend_id = ".$id ;
+                                              $retrieveDetails5 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND contracted_po.roast = 'Yes' AND contracted_po.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -351,7 +351,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails6 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
+                                              $retrieveDetails6 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND walkin_sales.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails6);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -369,7 +369,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
+                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND walkin_sales.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -387,7 +387,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>  
 
                                         <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = ".$id ;
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND contracted_po.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails2);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -831,7 +831,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": 3 },
             { "orderable": false, "targets": 4 }
         ],
-        "aaSorting": [1,'desc'],
+        "aaSorting": [1,'asc'],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,

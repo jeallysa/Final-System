@@ -194,13 +194,14 @@
     <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
             <th><b class="pull-left">Purchase Order No.</b></th>
+            <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Item Code</b></th>
             <th><b class="pull-center">Coffee Blend</b></th>
             <th><b class="pull-left">Quantity</b></th>
             <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
-            <th><b class="pull-left">Purchase Date</b></th>
+            
             <th><b class="pull-left">Delivery Status</b></th>
             <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
             <th class="hidden"></th>
@@ -213,6 +214,7 @@
             ?>
             <tr>
                 <td><?php echo $row1->contractPO_id; ?></td>
+                <td><?php echo $row1->contractPO_date; ?></td>
                 <td><?php echo $row1->client_company; ?></td>
                 <td><?php echo $row1->blend_id; ?></td>
                 <td><?php echo "$row1->blend/ $row1->package_type/ $row1->package_size g"; ?></td>
@@ -225,7 +227,7 @@
                         echo 'Php '.number_format($amount,2);
                      ?>
                 </td>
-                <td><?php echo $row1->contractPO_date; ?></td>
+                
                 <td><?php echo $row1->delivery_stat; ?></td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
@@ -756,6 +758,7 @@
                                 <div class="card-block">
                                     <form action="<?php echo base_url(); ?>SalesDelivery/insert2" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
+                                            <p><center><b>Purchase Order No. <?php echo $row2->contractPO_id ?> / <?php echo $row2->client_dr ?> - <?php echo $row2->client_invoice ?></b></center></p>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 20px;">
                                                     <div class="form-group label-floating">
