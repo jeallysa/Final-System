@@ -484,7 +484,7 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
 
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Bags" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Bags" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -642,9 +642,9 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                                 '<td>'  . $object->blend . '</td>' ,
                                                 '<td>'  . $object->package_type   . '</td>' ,
                                                 '<td>'  . number_format($object->package_size)  . ' g</td>' ,
-                                                '<td><b>'  . number_format($object->blend_qty)   . ' bags</b></td>' ,
-                                                '<td>'  . number_format($object->blend_physcount)  . ' bags</td>' ,
-                                                '<td>'  . number_format($object->blend_discrepancy)   . ' bags</td>' ,
+                                                '<td><b>'  . number_format($object->blend_qty)   . ' bag/s</b></td>' ,
+                                                '<td>'  . number_format($object->blend_physcount)  . ' bag/s</td>' ,
+                                                '<td>'  . number_format($object->blend_discrepancy)   . ' bag/s</td>' ,
                                                 '<td>'  . $object->inventory_date  . '</td>' ,
                                                 '<td>'  . $object->blend_remarks  . '</td>' ;
 
