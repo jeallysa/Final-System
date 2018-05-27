@@ -223,7 +223,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-4 control">Size (g) :</label>
+                                            <label class="col-md-4 control">Size (grams):</label>
                                             <div class="col-md-6">
                                                 <p><b><input name="Size" class="no-border" type="disabled" readonly /></b></p>
                                             </div>
@@ -245,7 +245,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-5 control">Quantity :</label>
+                                                <label class="col-md-5 control">Quantity (bags):</label>
                                                 <div class="col-md-4">
                                                     <input type="number" name="quantity" id="quantityAvailed" class="form-control" min="1" oninput="validity.valid||(value='');" data-validate="required" max="" placeholder="reqQty" >
                                                 </div>

@@ -289,10 +289,10 @@
                                                         <td><?php echo $row->contractPO_id; ?></td>
                                                         <td><?php echo $row->client_deliverDate; ?></td>
                                                         <td><?php echo $row->blend.'/ '.$row->package_type.'/ '.number_format($row->package_size); ?> g</td>
-                                                        <td><?php echo $row->contractPO_qty; ?> pc/s</td>
+                                                        <td><?php echo $row->deliver_quantity; ?> pc/s</td>
                                                         <td>Php <?php echo number_format($row->blend_price,2); ?></td>
                                                         <td><?php
-                                                        $qty = $row->contractPO_qty;
+                                                        $qty = $row->deliver_quantity;
                                                         $Price = $row->blend_price;
                                                         $Amount = $qty * $Price;
                                                         echo 'Php '.number_format($Amount,2); ?></td>

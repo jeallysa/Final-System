@@ -319,11 +319,13 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="panel-title" id="contactLabel"><center>Delivery for <?php echo $row1->client_company ?></center></h4>
+                                <h3 class="panel-title" id="contactLabel"><center>Delivery for <?php echo $row1->client_company ?></center></h3>
                             </div>
                             <form action="<?php echo base_url(); ?>SalesDelivery/insert" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
                                     <div class="row">
+                                <p><center><b>Purchase Date: <?php echo $row1->contractPO_date ?></b></center></p>
+
                                         <div class="col-lg-7">
                                              <div class="form-group">
                                                 <label class="col-md-5 control">PO No. :</label>
@@ -776,7 +778,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <div class="form-group label-floating">
-                                                                        <label>Remaining Balance:</label>
+                                                                        <label>Remaining Balance (Php):</label>
                                                                         <input class="form-control" type="number" name="amount" value="<?php
                                                                             $rem_amount = $amount - $row2->amount_paid;
                                                                             echo $rem_amount;
@@ -789,7 +791,7 @@
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <div class="form-group label-floating">
-                                                                        <label>Withheld:</label>
+                                                                        <label>Withheld (Php):</label>
                                                                         <input class="form-control" type="number" min="0" max="<?php $val = $amount*.1;
                                                                         echo $val; ?>" name="withheld">
                                                                     </div>
@@ -804,7 +806,7 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group label-floating">
-                                                                        <label>MOD:</label>
+                                                                        <label>Mode of Payment:</label>
                                                                         <select class="form-control" name="mod">
                                                                             <option>Cash on Delivery</option>
                                                                             <option>Bank deposit</option>

@@ -313,7 +313,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 control">Quantity :</label>
                                                 <div class="col-md-7">
-                                                    <p><b><?php echo $row->mach_qty; ?></b></p>
+                                                    <p><b><?php echo $row->mach_qty; ?> unit/s</b></p>
                                                 </div>
                                             </div>
                                         </div>

@@ -260,7 +260,7 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control">Total Amount: </label>
                                                                 <div class="col-md-3">
-                                                                    <p><b><?php echo 'Php' .number_format($price * $qty, 2) ?></b></p>
+                                                                    <p><b><?php echo 'Php ' .number_format($price * $qty, 2) ?></b></p>
                                                                 </div>
                                                             </div>
                                                         </div>
