@@ -310,6 +310,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical/1000); ?> kg</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
+                                                <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
                                                     <th><b>Weight</b></th>
@@ -317,13 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-                                                    <td><b>Beginning Inventory</b></th>
-                                                    <td><b> </b></td>
-                                                    <td><b><?php echo ($physical/1000); ?> kg</b></td>
-                                                    <td><b> </b></td>
-                                                    <td><b> </b></td>
-                                                </tr>
+                                            
                                             <tbody>
 
 
@@ -366,6 +367,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
 
                                         <?php
+                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE company_returns.inv_stat='0' AND res = 'resolved' AND type = '".$type."' AND raw_id = ".$id ;
+                                              $query = $this->db->query($retrieveResolve);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
                      $retrieveSales ="SELECT * FROM trans_raw INNER JOIN inv_transact ON trans_raw.trans_id = inv_transact.trans_id WHERE type = 'OUT' AND trans_raw.inv_stat='0' AND quantity != '0' AND raw_coffeeid = ".$id; 
                                      $query = $this->db->query($retrieveSales);
                                         if ($query->num_rows() > 0) {
@@ -393,7 +412,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td> - </td>' ,
                                                 '<td>'  . $object->transact_date  . '</td>' ,
                                                 '<td>'  . number_format($object->quantity / 1000, 2)  . ' kg</td>' ,
-                                                '<td> Used to Resolve Client Blend Return </td>' ,
+                                                '<td> Used to Create Blend </td>' ,
                                                 '<td> Out </td>' ,
                                                 '</tr>' ;
                                               }
@@ -401,23 +420,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            
                                         ?>
 
-                                        <?php
-                                              $retrieveResolve ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN raw_coffee ON raw_coffee.raw_coffee = supp_po_ordered.item INNER JOIN supplier ON raw_coffee.sup_id = supplier.sup_id WHERE company_returns.inv_stat='0' AND res = 'resolved' AND type = '".$type."' AND raw_id = ".$id ;
-                                              $query = $this->db->query($retrieveResolve);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->return_date  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty / 1000, 2)  . ' kg</td>' ;
-                                                ?>
-                                                    <td>Resolved returns</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
+                                        
                                  
                                             </tbody>
                                         </table>

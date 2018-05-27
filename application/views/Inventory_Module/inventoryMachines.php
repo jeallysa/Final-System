@@ -311,6 +311,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> unit/s</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
+                                                <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
                                                     <th><b>Quantity</b></th>
@@ -318,14 +325,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-                                                    <td><b>Beginning Inventory</b></th>
-                                                    <td><b> </b></td>
-                                                    <td><b><?php echo ($physical); ?> unit/s</b></td>
-                                                    <td><b> </b></td>
-                                                    <td><b> </b></td>
-                                                </tr>
+                                            
                                             <tbody>
+                                                <?php
+                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, mach_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE supp_po_ordered.mach_stat='0' AND mach_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails4);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->date_received  . '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight)  . ' unit/s</td>' ;
+                                                ?>
+                                                    <td>Company Delivery</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE company_returns.mach_stat='0' AND mach_id = ".$id;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
+                                                ?>
+                                                    <td>Company Return</td>
+                                                    <td>Out</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails3 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails3);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
                                                 
                                              <?php
                                               $retrieveDetails ="SELECT * FROM jhcs.machine_out INNER JOIN machine ON machine_out.mach_id = machine.mach_id INNER JOIN contracted_client ON machine_out.client_id = contracted_client.client_id WHERE machine_out.mach_stat='0' AND machine_out.mach_id = ".$id ;
@@ -361,61 +415,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '</tr>' ;
                                               }
                                             }
-                                        ?>  
-
-                                        <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE company_returns.mach_stat='0' AND mach_id = ".$id;
-                                              $query = $this->db->query($retrieveDetails5);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
-                                                ?>
-                                                    <td>Company Return</td>
-                                                    <td>Out</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
-                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, mach_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') WHERE supp_po_ordered.mach_stat='0' AND mach_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails4);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' unit/s</td>' ;
-                                                ?>
-                                                    <td>Company Delivery</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN machine ON (supp_po_ordered.item = machine.brewer AND supp_po_ordered.type = '".$brwrtype."') INNER JOIN supplier ON machine.sup_id = supplier.sup_id WHERE company_returns.mach_stat='0' AND res = 'resolved' AND mach_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails5);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->return_date  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' unit/s</td>' ;
-                                                ?>
-                                                    <td>Resolved returns</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
+                                        ?>
                                  
                                             </tbody>
 

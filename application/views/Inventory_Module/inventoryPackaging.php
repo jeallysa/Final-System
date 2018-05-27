@@ -311,6 +311,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> pc/s</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
+                                                <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
                                                     <th><b>Quantity</b></th>
@@ -318,45 +325,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-                                                    <td><b>Beginning Inventory</b></th>
-                                                    <td><b> </b></td>
-                                                    <td><b><?php echo ($physical); ?> pcs</b></td>
-                                                    <td><b> </b></td>
-                                                    <td><b> </b></td>
-                                                </tr>
+                                            
                                             <tbody>
-                                                
                                                 <?php
-                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.pckng_stat='0' AND packaging.package_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails1);
+                                              $retrieveDetails4 ="SELECT package_id, item, qty, date_received, yield_weight, sup_company, supp_po_ordered.pckng_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails4);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
                                            echo '<tr>' ,
-                                                '<td> Walkin Client </td>' ,
-                                                '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' pcs</td>' ;
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->date_received  . '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
                                                 ?>
-                                                    <td>Sales</td>
-                                                    <td>Out</td>
-                                                 <?php   
-                                                 ;
-                                              }
-                                            }
-                                        ?>  
-
-                                        <?php
-                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND contracted_po.roast = 'Yes' AND packaging.package_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails2);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->client_company  . '</td>' ,
-                                                '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Sales</td>
-                                                    <td>Out</td>
+                                                    <td>Company Delivery</td>
+                                                    <td>In</td>
                                                  <?php   
                                                 '</tr>' ;
                                               }
@@ -382,24 +364,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?> 
 
                                         <?php
-                                              $retrieveDetails4 ="SELECT package_id, item, qty, date_received, yield_weight, sup_company, supp_po_ordered.pckng_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN packaging ON (supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) WHERE supp_po_ordered.pckng_stat='0' AND package_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails4);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Company Delivery</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
                                               $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN packaging ON(supp_po_ordered.item = packaging.package_type AND supp_po_ordered.type = packaging.package_size) INNER JOIN supplier ON packaging.sup_id = supplier.sup_id WHERE company_returns.pckng_stat='0' AND res = 'resolved' AND package_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails5);
                                               if ($query->num_rows() > 0) {
@@ -416,7 +380,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               }
                                             }
                                         ?> 
-                                 
+                                                
+                                                <?php
+                                              $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN packaging ON packaging.package_id = coffee_blend.package_id WHERE walkin_sales.pckng_stat='0' AND packaging.package_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails1);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> Walkin Client </td>' ,
+                                                '<td>'  . $object->walkin_date  . '</td>' ,
+                                                '<td>'  . number_format($object->walkin_qty)  . ' pcs</td>' ;
+                                                ?>
+                                                    <td>Used for Blends</td>
+                                                    <td>Out</td>
+                                                 <?php   
+                                                 ;
+                                              }
+                                            }
+                                        ?>  
+
+                                        <?php
+                                              $retrieveDetails2 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE contracted_po.pckng_stat='0' AND delivery_stat = 'delivered' AND contracted_po.roast = 'Yes' AND packaging.package_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails2);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->client_company  . '</td>' ,
+                                                '<td>'  . $object->contractPO_date  . '</td>' ,
+                                                '<td>'  . number_format($object->contractPO_qty)  . ' pcs</td>' ;
+                                                ?>
+                                                    <td>Used for Blends</td>
+                                                    <td>Out</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
                                             </tbody>
                                         </table>
                                         <div class="row">

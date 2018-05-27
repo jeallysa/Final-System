@@ -315,6 +315,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> bag/s</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
+                                                <tr>
                                                     <th><b>Client</b></th>
                                                     <th><b>Date</b></th>
                                                     <th><b>Quantity</b></th>
@@ -322,17 +329,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-                                                    <td><b>Beginning Inventory</b></th>
-                                                    <td><b> </b></td>
-                                                    <td><b><?php echo ($physical); ?> bags</b></td>
-                                                    <td><b> </b></td>
-                                                    <td><b> </b></td>
-                                                </tr>
+                                            
                                             <tbody>
-                                                
-                                                
-                                             <?php
+
+                                                <?php
+                                              $retrieveDetails5 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND contracted_po.roast = 'Yes' AND coffee_blend.blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> - </td>' ,
+                                                '<td>'  . $object->contractPO_date  . '</td>' ,
+                                                '<td>'  . number_format($object->contractPO_qty)  . ' bag/s</td>' ;
+                                                ?>
+                                                    <td>Created Blends</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails6 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails6);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td> - </td>' ,
+                                                '<td>'  . $object->walkin_date  . '</td>' ,
+                                                '<td>'  . number_format($object->walkin_qty)  . ' bag/s</td>' ;
+                                                ?>
+                                                    <td>Created Blends</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
                                               $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
@@ -340,9 +376,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' bags</td>' ;
+                                                '<td>'  . number_format($object->walkin_qty)  . ' bag/s</td>' ;
                                                 ?>
-                                                    <td>Walkin Sales</td>
+                                                    <td>Sales</td>
                                                     <td>Out</td>
                                                  <?php   
                                                 '<tr>' ;
@@ -358,7 +394,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . ' bags</td>' ;
+                                                '<td>'  . number_format($object->contractPO_qty)  . ' bag/s</td>' ;
                                                 ?>
                                                     <td>Sales</td>
                                                     <td>Out</td>
@@ -366,17 +402,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '</tr>' ;
                                               }
                                             }
-                                        ?>  
+                                        ?> 
 
-                                        <?php
-                                              $retrieveDetails3 ="SELECT * FROM jhcs.walkin_sales WHERE coff_remark='Returned' AND inv_stat = 0 AND blend_id = ".$id ;
+                                                <?php
+                                              $retrieveDetails3 ="SELECT * FROM walkin_sales INNER JOIN client_coffreturn ON walkin_sales.walkin_id = client_coffreturn.walkinPo_id WHERE coff_remark='Returned' AND walkin_sales.inv_stat = 0 AND blend_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails3);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
                                            echo '<tr>' ,
                                                 '<td> Walk-in Client </td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_returns)  . ' bags</td>' ;
+                                                '<td>'  . number_format($object->walkin_returns)  . ' bag/s</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
                                                     <td>In</td>
@@ -394,7 +430,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->coff_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->coff_returnQty)  . ' bags</td>' ;
+                                                '<td>'  . number_format($object->coff_returnQty)  . ' bag/s</td>' ;
                                                 ?>
                                                     <td>Client Return</td>
                                                     <td>In</td>
@@ -403,43 +439,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               }
                                             }
                                         ?>
-
-                                        <?php
-                                              $retrieveDetails5 ="SELECT * FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails5);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td> - </td>' ,
-                                                '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . ' bags</td>' ;
-                                                ?>
-                                                    <td>Created</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
-                                              $retrieveDetails6 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails6);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td> - </td>' ,
-                                                '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' bags</td>' ;
-                                                ?>
-                                                    <td>Created</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-                                 
                                             </tbody>
                                         </table>
                                         <div class="row">
@@ -452,10 +451,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT walkin_returns AS TotalIn FROM jhcs.walkin_sales WHERE coff_remark='Returned' AND inv_stat = 0 AND blend_id = '". $id  ."' UNION ALL
+(SELECT walkin_returns AS TotalIn FROM walkin_sales INNER JOIN client_coffreturn ON walkin_sales.walkin_id = client_coffreturn.walkinPo_id  WHERE coff_remark='Returned' AND walkin_sales.inv_stat = 0 AND blend_id = '". $id  ."' UNION ALL
     SELECT coff_returnQty AS TotalIn FROM client_coffreturn INNER JOIN client_delivery ON client_coffreturn.client_deliveryID = client_delivery.client_deliveryID INNER JOIN contracted_client ON client_delivery.client_id = contracted_client.client_id INNER JOIN contracted_po ON client_delivery.contractPO_id = contracted_po.contractPO_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE client_coffreturn.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
-SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND delivery_stat = 'delivered' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
-SELECT walkin_qty AS TotalIn FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coff_remark='Returned' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
+SELECT contractPO_qty AS TotalIn FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id WHERE contracted_po.inv_stat='0' AND contracted_po.roast = 'Yes' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
+SELECT walkin_qty AS TotalIn FROM walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
 (SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id WHERE walkin_sales.inv_stat='0' AND coffee_blend.blend_id = '". $id  ."' UNION ALL
@@ -465,11 +464,11 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
                                               
                                            echo 
-                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' bags" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' bag/s" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
                                                 '</div>',
                                                 '<label class="col-md-6 control">Total Out :</label>',
                                                 '<div class="col-md-4">',
-                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' bags" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' bag/s" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
                                               
                                             }
                                         ?> 
@@ -479,7 +478,7 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                                                         <div class="col-md-4">
                                                                             <?php
                                                                             echo
-                                                                            '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bags"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bag/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
 

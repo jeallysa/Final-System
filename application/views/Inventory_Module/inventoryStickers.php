@@ -309,6 +309,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
+                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b> </b></td>
+                                                    <td><b><?php echo ($physical); ?> pc/s</b></td>
+                                                    <td><b> </b></td>
+                                                    <td><b> </b></td>
+                                                </tr>
+                                                <tr>
                                                     <th><b>Client/Supplier</b></th>
                                                     <th><b>Date</b></th>
                                                     <th><b>Quantity</b></th>
@@ -316,16 +323,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th><b>Type</b></th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-                                                    <td><b>Beginning Inventory</b></th>
-                                                    <td><b> </b></td>
-                                                    <td><b><?php echo ($physical); ?> pcs</b></td>
-                                                    <td><b> </b></td>
-                                                    <td><b> </b></td>
-                                                </tr>
+                                            
                                             <tbody>
-                                                
+
                                                 <?php
+                                              $retrieveDetails4 ="SELECT * FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON (sticker.sticker = supp_po_ordered.item AND sticker.sticker_type = supp_po_ordered.type) WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails4);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->date_received  . '</td>' ,
+                                                '<td>'  . number_format($object->yield_weight)  . ' pc/s</td>' ;
+                                                ?>
+                                                    <td>Company Delivery</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT DISTINCT sup_company, sup_returnDate, sup_returnQty, company_returns.stckr_stat FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON (supp_po_ordered.item = sticker.sticker AND sticker.sticker_type = supp_po_ordered.type) WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = ".$id;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pc/s</td>' ;
+                                                ?>
+                                                    <td>Company Return</td>
+                                                    <td>Out</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
+                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON (sticker.sticker = supp_po_ordered.item AND sticker.sticker_type = supp_po_ordered.type) INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = ".$id ;
+                                              $query = $this->db->query($retrieveDetails5);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->sup_company  . '</td>' ,
+                                                '<td>'  . $object->return_date  . '</td>' ,
+                                                '<td>'  . number_format($object->sup_returnQty)  . ' pc/s</td>' ;
+                                                ?>
+                                                    <td>Resolved returns</td>
+                                                    <td>In</td>
+                                                 <?php   
+                                                '</tr>' ;
+                                              }
+                                            }
+                                        ?> 
+
+                                        <?php
                                               $retrieveDetails1 ="SELECT * FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE walkin_sales.stckr_stat='0' AND sticker.sticker_id = ".$id ;
                                               $query = $this->db->query($retrieveDetails1);
                                               if ($query->num_rows() > 0) {
@@ -333,9 +388,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>Walkin Client</td>' ,
                                                 '<td>'  . $object->walkin_date  . '</td>' ,
-                                                '<td>'  . number_format($object->walkin_qty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->walkin_qty)  . ' pc/s</td>' ;
                                                 ?>
-                                                    <td>Sales</td>
+                                                    <td>Used for Blends</td>
                                                     <td>Out</td>
                                                  <?php   
                                                  ;
@@ -351,70 +406,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->client_company  . '</td>' ,
                                                 '<td>'  . $object->contractPO_date  . '</td>' ,
-                                                '<td>'  . number_format($object->contractPO_qty)  . ' pcs</td>' ;
+                                                '<td>'  . number_format($object->contractPO_qty)  . ' pc/s</td>' ;
                                                 ?>
-                                                    <td>Sales</td>
+                                                    <td>Used for Blends</td>
                                                     <td>Out</td>
                                                  <?php   
                                                 '</tr>' ;
                                               }
                                             }
                                         ?>
-
-                                        <?php
-                                              $retrieveDetails5 ="SELECT DISTINCT sup_company, sup_returnDate, sup_returnQty, company_returns.stckr_stat FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = ".$id;
-                                              $query = $this->db->query($retrieveDetails5);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->sup_returnDate  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Company Return</td>
-                                                    <td>Out</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
-                                              $retrieveDetails4 ="SELECT item, qty, date_received, yield_weight, sup_company, stckr_stat FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails4);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->date_received  . '</td>' ,
-                                                '<td>'  . number_format($object->yield_weight)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Company Delivery</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-
-                                        <?php
-                                              $retrieveDetails5 ="SELECT * FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = ".$id ;
-                                              $query = $this->db->query($retrieveDetails5);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<tr>' ,
-                                                '<td>'  . $object->sup_company  . '</td>' ,
-                                                '<td>'  . $object->return_date  . '</td>' ,
-                                                '<td>'  . number_format($object->sup_returnQty)  . ' pcs</td>' ;
-                                                ?>
-                                                    <td>Resolved returns</td>
-                                                    <td>In</td>
-                                                 <?php   
-                                                '</tr>' ;
-                                              }
-                                            }
-                                        ?> 
-                                        
                                                 </tbody>
                                         </table>
                                         <div class="row">
@@ -427,23 +427,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <?php
                                               $retrieveTotalin ="SELECT SUM(TotalIn) AS TotalIn from
-(SELECT yield_weight AS TotalIn FROM jhcs.supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON sticker.sticker = supp_po_ordered.item INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = '". $id  ."') AS b; " ;
+(SELECT yield_weight AS TotalIn FROM supp_po_ordered INNER JOIN supp_delivery ON supp_po_ordered.supp_po_ordered_id = supp_delivery.supp_po_ordered_id INNER JOIN supp_po ON supp_po.supp_po_id = supp_po_ordered.supp_po_id INNER JOIN supplier ON supplier.sup_id = supp_po.supp_id INNER JOIN sticker ON (sticker.sticker = supp_po_ordered.item AND sticker.sticker_type = supp_po_ordered.type) WHERE supp_po_ordered.stckr_stat='0' AND sticker_id = '". $id  ."' UNION ALL
+SELECT sup_returnQty AS TotalIn FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN sticker ON (sticker.sticker = supp_po_ordered.item AND sticker.sticker_type = supp_po_ordered.type) INNER JOIN supplier ON sticker.sup_id = supplier.sup_id WHERE company_returns.stckr_stat='0' AND res = 'resolved' AND sticker_id = '". $id  ."') AS b; " ;
 
 $retrieveTotalout ="SELECT SUM(TotalOut) AS TotalOut from
 (SELECT walkin_qty AS TotalOut FROM jhcs.walkin_sales INNER JOIN coffee_blend ON coffee_blend.blend_id = walkin_sales.blend_id INNER JOIN sticker ON sticker.sticker_id = coffee_blend.sticker_id WHERE walkin_sales.stckr_stat='0' AND sticker.sticker_id = '". $id  ."' UNION ALL
 SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_client ON contracted_po.client_id = contracted_client.client_id INNER JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id INNER JOIN sticker ON coffee_blend.sticker_id = sticker.sticker_id WHERE contracted_po.stckr_stat='0' AND contracted_po.roast = 'Yes' AND delivery_stat = 'delivered' AND sticker.sticker_id = '". $id  ."' UNION ALL
-SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON supp_po_ordered.item = sticker.sticker WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = '". $id  ."') AS b; " ;
+SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered ON company_returns.sup_returnItem = supp_po_ordered.supp_po_ordered_id INNER JOIN supp_po ON supp_po_ordered.supp_po_id = supp_po.supp_po_id INNER JOIN supplier ON supp_po.supp_id = supplier.sup_id INNER JOIN sticker ON (supp_po_ordered.item = sticker.sticker AND sticker.sticker_type = supp_po_ordered.type) WHERE company_returns.stckr_stat='0' AND sticker.sticker_id = '". $id  ."') AS b; " ;
                                               $query = $this->db->query($retrieveTotalin);
                                               $query2 = $this->db->query($retrieveTotalout);
                                               if ($query->num_rows() > 0 && $query2->num_rows() > 0) {
                                               
                                            echo 
-                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' pcs" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
+                                                '<input value="'  . number_format($query->row()->TotalIn)  . ' pc/s" id="totalin<?php echo $details; ?>" name="totalin" readonly="" class="form-control" />' ,
                                                 '</div>',
                                                 '<label class="col-md-6 control">Total Out :</label>',
                                                 '<div class="col-md-4">',
-                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' pcs" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
+                                                '<input value="'  . number_format($query2->row()->TotalOut)  . ' pc/s" id="totalout<?php echo $details; ?>" name="totalout" readonly="" class="form-control" />' ;
                                               
                                             }
                                         ?> 
@@ -453,7 +453,7 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                         <div class="col-md-4">
                                                                             <?php
                                                                             echo
-                                                                            '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' pcs"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
+                                                                            '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' pc/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
                                                                         
