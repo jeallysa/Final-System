@@ -365,10 +365,18 @@ a:focus {
                                                                                  <p><div class="form-group row">
                                                                                 <div for="example-number-input" class="col-2 col-form-label">
                                                                                     <label for="type">Client Type</label>
-                                                                                <select class="form-control" name="cli_type" type="text" value="<?php echo $row->client_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Client Type should only countain letters">
-                                                                                     <option value="Retail">Retail</option>
-                                                                                     <option value="Coffee Service">Coffee Service</option>
-                                                                                 </select>
+                                                                                    <select class="form-control" name="cli_type" type="textarea" value="<?php echo $row->client_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters" disabled>
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_clienttype = $this->db->query("SELECT DISTINCT client_type FROM contracted_client;");
+                                                                                        foreach($query_clienttype->result() as $row2){
+                                                                                            if($row->client_type == $row2->client_type){
+                                                                                                echo '<option value="'.$row2->client_type.'" selected>'.$row2->client_type.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
+                                                                                     </select>
                                                                                 </div>
                                                                             </div>
                                                                             <h6> Contact Personnel: </h6>

@@ -505,12 +505,21 @@ a:focus {
                                                                  <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Type</label>
-                                                                            <select class="form-control" type="text" name="sticker_type" value="<?php echo $row->sticker_type; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
-                                                                                <option value="paper">Paper</option>
-                                                                                <option value="plastic">Plastic</option>
-                                                                                <option value="vinyl">Vinyl</option>
-                                                                              </select>
+                                                                           <label for="type">Type</label>
+                                                                                    <select class="form-control" name="sticker_type" type="textarea" value="<?php echo $row->sticker_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_stickertype = $this->db->query("SELECT DISTINCT sticker_type FROM sticker;");
+                                                                                        foreach($query_stickertype->result() as $row2){
+                                                                                            if($row->sticker_type == $row2->sticker_type){
+                                                                                                echo '<option value="'.$row2->sticker_type.'" selected>'.$row2->sticker_type.'</option>';
+                                                                                            }else{
+                                                                                                echo '<option value="'.$row2->sticker_type.'">'.$row2->sticker_type.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
+                                                                                     </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6 form-group">

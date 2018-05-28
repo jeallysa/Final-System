@@ -509,11 +509,20 @@ a:focus {
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
                                                                             <label for="email">Size</label>
-                                                                            <select class="form-control" type="text" name="size" value="<?php echo $row->package_size; ?>">
-                                                                                 <option value="250">250 Grams</option>
-                                                                                <option value="500">500 Grams</option>
-                                                                                <option value="1000">1000 Grams</option>
-                                                                              </select>
+                                                                                    <select class="form-control" name="size" type="textarea" value="<?php echo $row->package_size; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_packagesize = $this->db->query("SELECT DISTINCT package_size FROM packaging;");
+                                                                                        foreach($query_packagesize->result() as $row2){
+                                                                                            if($row->package_size == $row2->package_size){
+                                                                                                echo '<option value="'.$row2->package_size.'" selected>'.$row2->package_size.'</option>';
+                                                                                            }else{
+                                                                                                echo '<option value="'.$row2->package_size.'">'.$row2->package_size.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
+                                                                                     </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-6 form-group">
@@ -524,7 +533,7 @@ a:focus {
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                      <div class="col-md-6 form-group">
+                                                                   <div class="col-md-6 form-group">
                                                                                <div class="form-group label-floating">
                                                                                 <label for="email">Supplier</label>
                                                                                 <select class="form-control" name="sup_company" required>

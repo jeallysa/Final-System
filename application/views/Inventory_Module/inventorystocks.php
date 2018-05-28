@@ -463,12 +463,9 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                             '<input value="'  . number_format(($physical/1000)+($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
-            
-                                                                    </div>
-                                                                    <div class="form-group">
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -532,7 +529,6 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                 <button type="submit" class="btn btn-success">Yes</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                               </div>
-                             
                             </div>
                             </div>
                         </div>

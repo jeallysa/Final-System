@@ -524,14 +524,24 @@ a:focus {
                                                                  <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
-                                                                            <label for="email">Type</label>
-                                                                            <select class="form-control" type="text" name="raw_type" value="<?php echo $row->raw_coffee; ?>" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters">
-                                                                                 <option value="city roast">City Roast</option>
-                                                                                <option value="medium roast">Medium Roast</option>
-                                                                                <option value="light roast">Light Roast</option>
-                                                                              </select>
+                                                                             <label for="type">Type</label>
+                                                                                    <select class="form-control" name="raw_type" type="textarea" value="<?php echo $row->raw_type; ?>" id="example-number-input" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Position should only countain letters">
+                                                                                    <option disabled selected value></option>
+                                                                                    <?php
+                                                                                        $query_rawtype = $this->db->query("SELECT DISTINCT raw_type FROM raw_coffee;");
+                                                                                        foreach($query_rawtype->result() as $row2){
+                                                                                            if($row->raw_type == $row2->raw_type){
+                                                                                                echo '<option value="'.$row2->raw_type.'" selected>'.$row2->raw_type.'</option>';
+                                                                                            }else{
+                                                                                                echo '<option value="'.$row2->raw_type.'">'.$row2->raw_type.'</option>';
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                    
+                                                                                     </select>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> 
+
                                                                      <div class="col-md-6 form-group">
                                                                         <div class="form-group label-floating">
                                                                             <label for="email">Price/kg</label>

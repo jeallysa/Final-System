@@ -462,7 +462,7 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                         </div>
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="unit/s" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="unit/s" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">

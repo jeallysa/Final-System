@@ -459,7 +459,7 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                         
                                                                         <label class="col-md-6 control">Physical Count :</label>
                                                                         <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
+                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Pieces" name="physcount" type="number" class="form-control" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -615,10 +615,10 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                 '<td>'  . $object->sticker_id . '</td>' ,
                                                 '<td>'  . $object->sticker . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
-                                                '<td>'  . number_format($object->sticker_reorder)   . ' pcs</td>' ,
-                                                '<td><b>'  . number_format($object->sticker_stock)   . ' pcs</b></td>' ,
-                                                '<td>'  . number_format($object->sticker_physcount)   . ' pcs</td>' ,
-                                                '<td>'  . number_format($object->sticker_discrepancy)   . ' pcs</td>' ,
+                                                '<td>'  . number_format($object->sticker_reorder)   . ' pc/s</td>' ,
+                                                '<td><b>'  . number_format($object->sticker_stock)   . ' pc/s</b></td>' ,
+                                                '<td>'  . number_format($object->sticker_physcount)   . ' pc/s</td>' ,
+                                                '<td>'  . number_format($object->sticker_discrepancy)   . ' pc/s</td>' ,
                                                 '<td>'  . $object->inventory_date   . '</td>' ,
                                                 '<td>'  . $object->sticker_remarks   . '</td>' ;
 
