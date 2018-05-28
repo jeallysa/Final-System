@@ -290,7 +290,7 @@ a:focus {
                                     <div class="col-md-12 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">Name</label>
-                                            <input class="form-control" type="text" name="name" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
+                                            <input class="form-control" type="text" name="name" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" required>
                                         </div>
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">Type</label>
-                                            <select class="form-control" type="text" name="raw_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" >
+                                            <select class="form-control" type="text" name="raw_type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Name should only countain letters" required>
                                                 <option value="city roast">City Roast</option>
                                                 <option value="medium roast">Medium Roast</option>
                                                 <option value="light roast">Light Roast</option>

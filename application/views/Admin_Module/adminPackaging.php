@@ -284,7 +284,7 @@ a:focus {
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
                                             <label for="email">Type</label>
-                                            <input class="form-control" type="text" name="type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Type should only countain letters">
+                                            <input class="form-control" type="text" name="type" required pattern="[a-zA-Z][a-zA-Z\s]*" required title="Type should only countain letters" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 form-group">

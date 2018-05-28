@@ -239,7 +239,7 @@ a:focus {
                                     </div>
                                 
                                     <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-                                        <input class="form-control" name="email" placeholder="Email" type="text" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required title="You have entered an invalid E-mail address. Please try again." />
+                                        <input class="form-control" name="email" placeholder="Email" type="text" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required title="You have entered an invalid E-mail address. Please try again." required/>
                                     </div>
                                 </div>
                                  <div class="row">

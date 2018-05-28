@@ -39,7 +39,7 @@
 			
 			$this->load->model('Admin_Clients_Model');
 			$id = $this->input->post("deact_id");
-			$deact = $this->db->query("SELECT * FROM user WHERE user_no = '".$id."'")->row()->u_activation;
+			$deact = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_activation;
 			$comp_name =  $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_company;
 			$cli_type = $this->db->query("SELECT * FROM contracted_client WHERE client_id = '".$id."'")->row()->client_type;
 			if ($deact == 1){
@@ -50,10 +50,12 @@
 			}else{	
 				$this->Admin_Clients_Model->activity_logs('admin', "Activated: ".$comp_name." under ".$cli_type." ");	
 				$this->Admin_Clients_Model->activation($id);
+				
 				redirect('adminClients', 'refresh');
 			}	
 
 			$this->Admin_Clients_Model->activation($id);
+			
 			redirect('adminClients');
 
 		}
