@@ -317,8 +317,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                        <center><b>Delivery</b>
-                                            <br>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Delivery</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -326,9 +333,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
-
+                                            </center>
 
 
                                         <div class="col-md-4 form-group">
@@ -666,8 +671,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                       <center><b>Details</b>
-                                            <br>
+                                        
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -675,20 +682,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
+                                            </center> 
+                                           
 
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
                                                     
                                                    
-                                                    <th>Item Name</th>
-                                                    <th>Type</th>
-                                                    <th>Quantity</th>
-                                                    <th>Weight(kg)</th>
-                                                    <th>Unit Price</th>
-                                                    <th>Amount</th>
+                                                    <th><b>Item Name</b></th>
+                                                    <th><b>Type</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Weight(kg)</b></th>
+                                                    <th><b>Unit Price</b></th>
+                                                    <th><b>Amount</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -326,25 +326,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                           <center><b>Order Details</b>
-                                            <br>
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Order Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
+                                     
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            </center>
                                         
                                         
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
-                                                    <th>Item Name</th>
-                                                    <th>Type</th>
-                                                    <th>Quantity</th>
-                                                    <th>Weight(Kg)</th>
+                                                    <th><b>Item Name</b></th>
+                                                    <th><b>Type</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Weight(Kg)</b></th>
                                               <!--      <th>Yield Weight(g)</th>
                                                     <th>Yield(g)</th> -->
-                                                    <th>Unit Price</th>
-                                                    <th>Amount</th>
+                                                    <th><b>Unit Price</b></th>
+                                                    <th><b>Amount</b></th>
                                             <!--        <th>Date Received</th>
                                                      <th>Received by</th> -->
                                                 </tr>
@@ -443,25 +444,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                         <center><b>Delivery Details</b>
-                                            <br>
+                                             <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Delivery Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
+                                     
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            </center>
                                         
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
-                                                    <th>Date Delivered</th>
-                                                    <th>DR No. </th>
-                                                    <th>Item Name </th>
-                                                    <th>Type </th>
-                                                    <th>Quantity</th>
-                                                    <th>Weight(Kg)</th>
-                                                    <th>Yield Weight(Kg)</th>
-                                                    <th>Yield(Kg)</th>
-                                                    <th>Received By</th>
+                                                    <th><b>Date Delivered</b></th>
+                                                    <th><b>DR No. </b></th>
+                                                    <th><b>Item Name</b> </th>
+                                                    <th><b>Type</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Weight(Kg)</b></th>
+                                                    <th><b>Yield Weight(Kg)</b></th>
+                                                    <th><b>Yield(Kg)</b></th>
+                                                    <th><b>Received By</b></th>
                                                 </tr>
                                                 
                                             </thead>
@@ -589,20 +591,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                        <center><b>Payment Details</b>
-                                            <br>
+                                            <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Payment Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
+                                     
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                            </center>
                                         
                                         
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
-                                                    <th>Payment Date</th>
-                                                    <th>Amount Paid</th>
-                                                    <th>Bank</th> <!-- to be edited     -->
+                                                    <th><b>Payment Date</b></th>
+                                                    <th><b>Amount Paid</b></th>
+                                                    <th><b>Bank</b></th> <!-- to be edited     -->
                                                 </tr>
                                             </thead>
                                             <tbody>

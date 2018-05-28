@@ -452,7 +452,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
             $dateMin = $object->suppPO_date;
-               $tfee = $object->trucking_fee
+            $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -462,8 +462,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel panel-primary">
                                             <form action="InventoryPOUnpaidDelivery/insertPartialPayment/<?php echo $temp ?>" method="post" accept-charset="utf-8">
                                             <div class="modal-body" style="padding: 0px;">
-                                            <center><b>Payment</b>
-                                            <br>
+                                             <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Payment</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -471,17 +472,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                                <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                            </center> 
 
                                                 
                                                 <table class="table table-striped" id="table-mutasi">
                                                     <thead>
                                                         <tr>
-                                                            <th>Item Name</th>
-                                                            <th>Type</th>
+                                                            <th><b>Item Name</b></th>
+                                                            <th><b>Type</b></th>
                                                      <!--  <th>Yield Weight(g)</th> -->
-                                                            <th>Amount</th>
+                                                            <th><b>Amount</b></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -618,6 +618,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+            $dateMin = $object->suppPO_date;
 
 ?>
                                                       
@@ -629,8 +630,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="modal-body" style="padding: 5px;">
                                                     <div id="page-wrapper">
                                                         <div class="table-responsive">
-                                            <center><b>Details</b>
-                                            <br>
+                                           <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -638,21 +640,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                                <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            </center>
                                                             <table class="table table-striped" id="table-mutasi">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Date Received</th>
-                                                                       <th>DR No.</th>
-                                                                        <th>Item Name</th>
-                                                                        <th>Type</th>
-                                                                        <th>Quantity</th>
-                                                                        <th>Weight(kg)</th>
-                                                                        <th>Yield Weight(kg)</th>
-                                                                        <th>Yield(kg)</th>
-                                                                        <th>Received by</th>
-                                                                        
+                                                                        <th><b>Date Received</b></th>
+                                                                        <th><b>DR No.</b></th>
+                                                                        <th><b>Item Name</b></th>
+                                                                        <th><b>Type</b></th>
+                                                                        <th><b>Quantity</b></th>
+                                                                        <th><b>Weight(kg)</b></th>
+                                                                        <th><b>Yield Weight(kg)</b></th>
+                                                                        <th><b>Yield(kg)</b></th>
+                                                                        <th><b>Received by</b></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -674,11 +674,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
+                                                  $date = $object->date_received;
+                                                  
+                                                  $arr = explode('-', $date);
+                                                  $newDateModal = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             
                                                   
                                                    // $tempItemId = $object->supp_po_ordered_id;    can use later
                                             if($object->category == 1){      
                                            echo '<tr>' ,
-                                                '<td>'  . $object->date_received   . '</td>' ,
+                                                '<td>'  . $newDateModal   . '</td>' ,
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
