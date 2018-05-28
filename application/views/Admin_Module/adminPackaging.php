@@ -627,11 +627,6 @@ $(document).ready(function() {
         "lengthChange": false,
         "info":     true,
 		buttons: [
-            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5]
-                }
-            },
             
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> csv',"className": 'btn btn-success btn-xs',
                 exportOptions: {

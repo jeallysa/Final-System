@@ -442,11 +442,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php 
                                            if(!empty($TempOrdered)){
                                                        ?>                       
-                                                 <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-default accept' disabled>   
+                                                 <input type='submit' value='Create Draft'  id ='submitInfo'  class='btn btn-default accept' disabled>   
                                                  <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-secondary decline" disabled >
                                                    <?php 
                                            }else{ ?>
-                                                <input type='submit' value='Add'  id ='submitInfo'  class='btn btn-success accept' >   
+                                                <input type='submit' value='Create Draft'  id ='submitInfo'  class='btn btn-success accept' >   
                                                 <input type="submit" name = "cancel"  formaction="<?php echo base_url(); ?>InventoryPOAdd/cancelPO" value ="cancel" class="btn btn-danger decline">
                                           <?php }
                                                        ?>                

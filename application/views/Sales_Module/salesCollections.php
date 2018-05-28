@@ -274,12 +274,7 @@
         "lengthChange": false,
         "info":     false,
 		buttons: [
-            { 
-                "extend": 'print', 
-                "text":'<i class="fa fa-files-o"></i> Print',
-                "className": 'btn btn-default btn-xs',
-                "orientation": 'landscape' 
-            },
+            
 			{ 
                 "extend": 'excel',
                  "text":'<i class="fa fa-file-excel-o"></i> CSV',

@@ -286,20 +286,7 @@ $(document).ready(function() {
         "lengthChange": false,
         "info":     false,
 		buttons: [
-            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
-            orientation: 'landscape',
-                        exportOptions: {
-                         columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
-                        doc.pageMargins = [50,50,100,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '10%', '10%', '11%', '14%', '14%', '10%', '10%', '10%', '12%', '13%', '11%'];}},
+            
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', "orientation": 'landscape' },
 			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', 
              "orientation": 'landscape'

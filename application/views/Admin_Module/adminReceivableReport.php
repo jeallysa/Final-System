@@ -360,11 +360,7 @@ a:focus {
         "lengthChange": false,
         "info":     true,
         buttons: [
-            { "extend": 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs',
-                exportOptions: {
-                    columns: [0, 1, 2]
-                }
-            },
+
             
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
                 exportOptions: {

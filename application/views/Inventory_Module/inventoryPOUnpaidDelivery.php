@@ -356,12 +356,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          
                                     <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                           <label>DR #</label>
+                                           <label>Delivery Receipt No.</label>
                                            <!-- <select class="selectpicker" data-live-search="true" name="drList" id = "drList" required>
                                                 <option value="">Select DR#</option> -->
                                         <select class="form-control" name="drList" id="<?php echo "drList".$return ?>"required>
                                                <!-- <option disabled selected value="">Select DR#</option> -->
-                                                <option value="">Select DR#</option>
+                                                <option value="">Select DR No.</option>
                                                 
                    <?php                              
                           $retrieveDetails ="select distinct drNo from supp_delivery where supp_po_id = $temp"  ;  
