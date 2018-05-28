@@ -699,7 +699,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <span></span>
                                                <li class="">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>

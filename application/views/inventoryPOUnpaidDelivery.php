@@ -332,8 +332,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <form action="InventoryPOUnpaidDelivery/insertReturn" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 
-                                        <center><b>Return</b>
-                                            <br>
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Return</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -341,8 +342,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                            </center> 
+
                                 
                                 <div class="row">
                              
@@ -462,6 +463,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel panel-primary">
                                             <form action="InventoryPOUnpaidDelivery/insertPartialPayment/<?php echo $temp ?>" method="post" accept-charset="utf-8">
                                             <div class="modal-body" style="padding: 0px;">
+                                                
+                                                
                                              <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
                                         <center><h4><b><p>Payment</p></b></h4></center> 
                                         <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
@@ -787,7 +790,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <span></span>
                                                <li class="">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>

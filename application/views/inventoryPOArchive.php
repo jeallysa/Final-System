@@ -365,17 +365,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                       <center><b>Details</b>
-                                            <br>
+                                        
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
                                              $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                              ?>
                                             
-                                           <b><?php echo $newDate ?></b></center>
-                                            <br>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            <b><?php echo $newDate ?></b>
+                                            </center> 
+
 
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
