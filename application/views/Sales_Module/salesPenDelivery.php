@@ -23,9 +23,9 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     <style>
     /*
-		td.highlight {
-			background-color: whitesmoke !important;
-		}
+        td.highlight {
+            background-color: whitesmoke !important;
+        }
 */
 
     .table thead,
@@ -38,12 +38,13 @@
     tbody td {
         text-align: center;
     }
-	.select-pane {
+    .select-pane {
         display: none;
     }
-	.no-border{
-		border: none !important;
-	}
+    .no-border{
+        border: none !important;
+        border-bottom: none !important;
+    }
     
     .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
     .panel-primary{ border-color:#9c27b0 !important}
@@ -116,9 +117,22 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+
+                                <li id="nameheader">
+
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -191,10 +205,11 @@
                 <strong><?php echo $success; ?></strong> 
             </div>
       <?php } ?> 
-    <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
+    <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
-            <th><b class="pull-left">Purchase Order No.</b></th>
             <th><b class="pull-left">Purchase Date</b></th>
+            <th><b class="pull-left">Purchase Order No.</b></th>
+            
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Item Code</b></th>
             <th><b class="pull-center">Coffee Blend</b></th>
@@ -202,7 +217,7 @@
             <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
             
-            <th><b class="pull-left">Delivery Status</b></th>
+            <th><b class="pull-left">Remarks</b></th>
             <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
             <th class="hidden"></th>
         </thead>
@@ -213,8 +228,9 @@
 
             ?>
             <tr>
-                <td><?php echo $row1->contractPO_id; ?></td>
                 <td><?php echo $row1->contractPO_date; ?></td>
+                <td><?php echo $row1->contractPO_id; ?></td>
+                
                 <td><?php echo $row1->client_company; ?></td>
                 <td><?php echo $row1->blend_id; ?></td>
                 <td><?php echo "$row1->blend/ $row1->package_type/ $row1->package_size g"; ?></td>
@@ -228,7 +244,18 @@
                      ?>
                 </td>
                 
-                <td><?php echo $row1->delivery_stat; ?></td>
+                <td><?php 
+                          $date_roasted = $row1->date_roasted;
+                          $roast = $row1->roast;
+                          if($roast == 'Yes'){
+                            echo  'roasted on '.$date_roasted. ', ';
+                            }else{
+                                echo '';
+                            }
+                            echo $row1->delivery_stat;
+                 ?>
+                    
+                </td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
                         $roast = $row1->roast;
@@ -254,7 +281,7 @@
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
-                        } else if ($dbStat == 'pending') {
+                        } else if ($dbStat == 'pending delivery') {
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
@@ -272,10 +299,12 @@
                             </div>
                             <form action="<?php echo base_url(); ?>SalesDelivery/roastDel" method="post" accept-charset="utf-8">
                                 <div class="modal-body" style="padding: 5px;">
-									<h3 style="font-weight: bold; ">Purchase Order No. <?php echo $row1->contractPO_id ?></h3>
-                                   <h3>Are you sure to roast <?php echo $row1->blend ?> ?</h3>
+                                    <h3 style="font-weight: bold; ">Purchase Order No. <?php echo $row1->contractPO_id ?></h3>
+                                   <h3>Was <?php echo $row1->blend ?> already roasted ?</h3>
                                    <input class="form-control" type="hidden" name="po_roast" value="<?php echo $row1->contractPO_id; ?>" required>
-                                   <input class="form-control" type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required>
+                                   <input class="form-control"  type="hidden" name="po_date" value="<?php echo $row1->contractPO_date; ?>" required><br>
+                                    <label class=" control">Date Roasted :</label>
+                                   <input class="form-control" class="no-border" name="dateNow" max="<?php echo date("Y-m-d");?>"  value="<?php echo date("Y-m-d");?>" type="date" required />
                                    <input class="form-control" type="hidden" name="po_qty" value="<?php echo $row1->contractPO_qty; ?>" required>
                                    <input class="form-control" type="hidden" name="po_blend" value="<?php echo $row1->blend_id; ?>" required>
                                     <div class="panel-footer" align="pull-right">
@@ -457,11 +486,12 @@
 <div class="tab-pane" id="deliveries">
     <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
+            
             <th><b class="pull-left">Purchase Order No.</b></th>
             <th><b class="pull-left">Receipt No.</b></th>
-            <th><b class="pull-left">Delivery Date</b></th>
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Coffee Blend</b></th>
+            <th><b class="pull-left">Delivery Date</b></th>
             <th><b class="pull-left">Quantity Delivered</b></th>
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
@@ -474,9 +504,10 @@
                 {
             ?>
             <tr>
+                
                 <td><?php echo $row2->contractPO_id; ?></td>
                 <td><?php echo $row2->client_dr.'-'.$row2->client_invoice; ?></td>
-                <td><?php echo $row2->client_deliverDate; ?></td>
+                
                 <td><?php echo $row2->client_company; ?></td>
                 <td><?php echo "$row2->blend/ $row2->package_type/ $row2->package_size g/ "; ?>
                     <?php
@@ -484,6 +515,7 @@
                         echo 'Php '.number_format($price,2);
                      ?>
                 </td>
+                <td><?php echo $row2->client_deliverDate; ?></td>
                 <td><?php echo $row2->deliver_quantity; ?> bags</td>
                 <td>Php                     
                     <?php
@@ -494,18 +526,18 @@
                      ?></td>
                 <td><?php echo $row2->client_receive; ?></td>
                 <td>
-					<?php 
-						if ($row2->coff_returnQty == 0 && $row2->resolved == 'No') {
-							echo "";
-						} else if ($row2->coff_returnQty > 0 && $row2->resolved == 'No'){
-							echo 'returned '.$row2->coff_returnQty.' bag/s';
-						} else if ($row2->coff_returnQty == 0 && $row2->resolved == 'Yes') {
-							echo "returns has been resolved";
-						}
-					 ?>
-					
-			
-				</td>
+                    <?php 
+                        if ($row2->coff_returnQty == 0 && $row2->resolved == 'No') {
+                            echo "";
+                        } else if ($row2->coff_returnQty > 0 && $row2->resolved == 'No'){
+                            echo 'returned '.$row2->coff_returnQty.' bag/s';
+                        } else if ($row2->coff_returnQty == 0 && $row2->resolved == 'Yes') {
+                            echo "returns has been resolved";
+                        }
+                     ?>
+                    
+            
+                </td>
                 <td><button type="button" title="pay order" class="btn btn-success btn-xs" data-toggle="modal" data-target="#pay<?php echo $row2->client_deliveryID; ?>" <?php
                         $payment_remarks = $row2->payment_remarks;
                         if ($payment_remarks == 'paid') {
@@ -643,7 +675,7 @@
                                 <div class="card-block">
                                      <form action="<?php echo base_url(); ?>SalesDelivery/insert1" method="post" accept-charset="utf-8">
                                         <div class="modal-body" style="padding: 5px;">
-											                         <h3><center><?php echo $row2->client_company; ?></center></h3>
+                                                                     <h3><center><?php echo $row2->client_company; ?></center></h3>
 
                                             <div class="row">
                                                 <div class="col-lg-12" style="padding-bottom: 20px;">
@@ -700,7 +732,7 @@
 
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Quantity Returned:</label>
-																		  <div class="col-md-4">
+                                                                          <div class="col-md-4">
                                                                             <input class="form-control" type="number" name="qty_returned" min="1" max="<?php
                                                                             $fulqty = $row2->deliver_quantity;
                                                                             $retqty = $row2->coff_returnQty;
@@ -708,7 +740,7 @@
                                                                             echo $retdif;
 
                                                                             ?>" required="" oninput="validity.valid||(value='');" >
-																		  </div>
+                                                                          </div>
                                                                           <div class="col-md-2">
                                                                               <p>bags</p>
                                                                           </div>
@@ -720,14 +752,14 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="col-md-6 control">Remarks:</label>
-																		                                    <div class="col-md-6">
+                                                                                                            <div class="col-md-6">
                                                                         <input class="form-control col-md-3" type="text" name="remarks" required="">
                                                                          <input name="deliveryID" type="hidden" class="form-control" value="<?php echo $row2->client_deliveryID; ?>" >
                                                                         <input name="client_dr" type="hidden" class="form-control" value="<?php echo $row2->client_dr; ?>" >
                                                                         <input name="blend_id" type="hidden" class="form-control" value="<?php echo $row2->blend_id; ?>" >
                                                                         <input class="form-control" type="hidden" name="client_company" value="<?php echo $row2->client_company; ?>" required>
 
-																		                                    </div>
+                                                                                                            </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -845,11 +877,12 @@
     <br>
     <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
+            <th><b class="pull-left">Payment Date</b></th>
             <th><b class="pull-left">Collection No.</b></th>
             <th><b class="pull-left">Delivery Receipt No.</b></th>
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Mode of Payment</b></th>
-            <th><b class="pull-left">Payment Date</b></th>
+            
             <th><b class="pull-left">Amount</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
             <th><b class="pull-left">Withheld</b></th>
@@ -861,11 +894,12 @@
                 {
             ?>
             <tr>
+                <td><?php echo $row->paid_date; ?></td>
                 <td><?php echo $row->collection_no; ?></td>
                 <td><?php echo $row->client_dr; ?></td>
                 <td><?php echo $row->client_company; ?></td>
                 <td><?php echo $row->payment_mode; ?></td>
-                <td><?php echo $row->paid_date; ?></td>
+                
                 <td><?php echo 'Php '.number_format($row->paid_amount,2); ?></td>
                 <td><?php echo 'Php '.number_format($row->client_balance,2); ?></td>
                 <td><?php echo 'Php '.number_format($row->withheld,2); ?></td>
@@ -912,8 +946,11 @@
 $(document).ready(function() {
 
     $('table.display').DataTable( {
-        scrollCollapse: true,
 
+      // "columnDefs": [
+      //   { "orderable": false, "targets": 0 }
+      // ]
+      "ordering": false
     } );
 
     $('#datePicker')

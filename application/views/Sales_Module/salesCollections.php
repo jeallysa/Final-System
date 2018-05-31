@@ -100,9 +100,22 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+
+                               <li id="nameheader">
+
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -135,34 +148,34 @@
                                     <h3 class="title"><center>Collections Report</center></h3>
                                 </div>
                                 <div class="card-content">
-									<div class="row">
-										<div class="form-group col-xs-3 float-right">
-											 <label>Filter By:</label>
-											<div class="input-group input-daterange">
-												<input type="text" id="min" class="form-control" value="2000-01-01" >
-												<span class="input-group-addon">to</span>
-												<input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-											</div>
-										</div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-3 float-right">
+                                             <label>Filter By:</label>
+                                            <div class="input-group input-daterange">
+                                                <input type="text" id="min" class="form-control" value="2000-01-01" >
+                                                <span class="input-group-addon">to</span>
+                                                <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+                                            </div>
+                                        </div>
                                     <div class="form-group col-xs-3">
-										<p class="category">Total Collections: </p>
-                                    	<h3 class="title">
-										<b>
-										<?php
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='paid'; ;")->row()->total;
+                                        <p class="category">Total Collections: </p>
+                                        <h3 class="title">
+                                        <b>
+                                        <?php
+                                            $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='paid'; ;")->row()->total;
 
-										if(!empty($total)){
-											echo 'Php '.number_format($total,2);
-										}else{
-											echo 0;
-										}
+                                        if(!empty($total)){
+                                            echo 'Php '.number_format($total,2);
+                                        }else{
+                                            echo 0;
+                                        }
 
-										 ?></b>
-											</h3>
+                                         ?></b>
+                                            </h3>
                                     </div>
-									</div>
+                                    </div>
                                     <div>
-                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <table id="example" class="table table-striped cell-border dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Collection Receipt No.</b></th>
                                             <th><b class="pull-left">Delivery Receipt No.</b></th>
@@ -200,6 +213,21 @@
                                                 }
                                               ?>
                                         </tbody>
+                                        <tfoot>
+                                                <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                
+                                             
+                                                 </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -244,9 +272,9 @@
 <script src="../assets/js/demo.js"></script>
 
 
-<script>
-
-
+<script>   
+    
+    
     $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
@@ -269,23 +297,111 @@
     }
 
 
-    var oTable = $('#example').dataTable({
+    var oTable = $('#example').dataTable({ 
+        "order": [[ 4, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+
+        "info":     true,
 		buttons: [
+
+
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+            "message": "John Hay Coffeee Services Inc. \n Sales Collections",
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            },
             
-			{ 
-                "extend": 'excel',
-                 "text":'<i class="fa fa-file-excel-o"></i> CSV',
-                 "className": 'btn btn-success btn-xs',
-                  "orientation": 'landscape'},
-			{ 
-                "extend": 'pdf', 
+			/*{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            }*/
+            { 
+                "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
-                "className": 'btn btn-danger btn-xs',
-                "orientation": 'landscape'
-             }
+
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Collection Report',
+
+                "download": 'open',
+                
+               "messageBottom": "\n \n  Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n  Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+
+                customize: function (doc) {
+                        doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,50,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         /*doc.content[1].table.widths = [ '30%', '40%', '35%']; */
+
+                         var now = new Date();
+
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Collection Report \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+                    
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
+
+            }
         ]
     });
 
@@ -299,12 +415,12 @@
 
     // Event Listeners
     $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+        oTable.fnDraw(); 
     });
-    $("#max").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+    $("#max").datepicker().on( 'changeDate', function() { 
+        oTable.fnDraw(); 
     });
-
+    
 
 
 </script>

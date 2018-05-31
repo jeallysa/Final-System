@@ -1,4 +1,3 @@
-
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
@@ -69,7 +68,6 @@ input {
     .title {
     font-size: large;
     padding-top: 15px;
-
 }
     
     .navbar .dropdown-menu li a:hover,
@@ -92,7 +90,6 @@ input {
         <div class="sidebar" data-color="blue" data-image="<?php echo base_url(); ?>assets/img/sidebar-0.jpg">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
         Tip 2: you can also add an image using data-image tag
     -->
             <div class="logo ">
@@ -260,23 +257,15 @@ input {
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
+                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),3) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
-                                              }elseif($category == 4){
-                                                echo   '<tr>' ,
-                                                '<td>' . $object->name . ' </b></td>' ,
-                                                '<td>' . $object->type . ' </b></td>' ,
-                                                '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
-                                                '</tr>' ;
-
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -382,7 +371,7 @@ input {
                                                 if (isset($month_filt)){
                                                     if($month_filt == '1'){
                                                         foreach ($query->result() AS $row){
-                                                            $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '12' AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
+                                                            $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '12' AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
                                                     
                                                           $query2 = $this->db->query($begin);
                                                           if ($query2->num_rows() > 0) {
@@ -393,7 +382,7 @@ input {
                                                         }
                                                     }else{
                                                         foreach ($query->result() AS $row){
-                                                        $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1) a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."'- 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' - 1) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' - 1 AND raw_coffee = '".$row->raw_coffee."') AS  beginning;" ;
+                                                        $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' - 1) a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."'- 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' - 1) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' - 1 AND raw_coffee = '".$row->raw_coffee."') AS  beginning;" ;
                                                     
                                                           $query3 = $this->db->query($begin);
                                                           if ($query3->num_rows() > 0) {
@@ -410,9 +399,9 @@ input {
                                                 foreach ($query->result() AS $row){
                                                     $query4 = $this->db->query("SELECT month(now()) AS this_month");
                                                     if($query4->row()->this_month == '1'){
-                                                $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(transact_date) = '12' AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
+                                                $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '12') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '12') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(transact_date) = '12' AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
                                                     }else{
-                                                        $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0)  as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0)  as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(quantity+ raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1) a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) - 1 AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
+                                                        $begin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0)  as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(quantity), 0)  as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) - 1) a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1 UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) - 1) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) - 1 AND raw_coffee = '".$row->raw_coffee."') AS beginning;" ;
                                                     }
                                               $query5 = $this->db->query($begin);
                                               if ($query5->num_rows() > 0) {
@@ -428,9 +417,7 @@ input {
                                         <tbody>
                                              <?php
                                                     
-
                                                     if($data1['coffeein']->num_rows() > 0){
-
                                                         foreach($data1['coffeein'] -> result() as $row)
                                                         {
                                                 ?>
@@ -443,14 +430,12 @@ input {
                                                     $colname1 = $row2->raw_coffee; ?>
                                                         <td><?php echo  number_format($row->$colname1); ?>  g </td>
                                                 <?php
-
                                                 }
                                                 
                                                 ?>
                                             </tr>
                                             <?php
                                                     }
-
                                                 }
                                                 else{
                                                 ?>
@@ -459,7 +444,6 @@ input {
                                                     </tr>
                                                 <?php
                                                 }
-
                                                 ?>
                                         </tbody>
                                         <tfoot>
@@ -471,7 +455,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT (SELECT sum(a.totalin)  AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' AND raw_coffee = '".$row->raw_coffee."') AS totalin;" ;
+                                                  $totalin ="SELECT (SELECT sum(a.totalin)  AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' AND raw_coffee = '".$row->raw_coffee."') AS totalin;" ;
                                                   $query6 = $this->db->query($totalin);
                                                   if ($query6->num_rows() > 0) {
                                                   foreach ($query6->result() as $object) {
@@ -482,7 +466,7 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $totalin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now())) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) AND raw_coffee = '".$row->raw_coffee."') AS totalin ;" ;
+                                                  $totalin ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now())) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) AND raw_coffee = '".$row->raw_coffee."') AS totalin ;" ;
                                                   $query7 = $this->db->query($totalin);
                                                   if ($query7->num_rows() > 0) {
                                                   foreach ($query7->result() as $object) {
@@ -530,9 +514,7 @@ input {
                                         <tbody>
                                             <?php
                                                     
-
                                                     if($data6['coffeeout']->num_rows() > 0){
-
                                                         foreach($data6['coffeeout'] -> result() as $row)
                                                         {
                                                 ?>
@@ -545,14 +527,12 @@ input {
                                                     $colname2 = $row3->raw_coffee; ?>
                                                         <td><?php echo number_format($row->$colname2); ?>  g </td>
                                                 <?php
-
                                                 }
                                                 
                                                 ?>
                                             </tr>
                                             <?php
                                                     }
-
                                                 }
                                                 else{
                                                 ?>
@@ -561,7 +541,6 @@ input {
                                                     </tr>
                                                 <?php
                                                 }
-
                                                 ?>
                                         </tbody>
                                         
@@ -605,7 +584,7 @@ input {
                                                 if (isset($month_filt)){
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                  $end ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' AND raw_coffee = '".$row->raw_coffee."') AS ending" ;
+                                                  $end ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = '".$month_filt."') a ) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."' UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = '".$month_filt."') a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = '".$month_filt."' AND raw_coffee = '".$row->raw_coffee."') AS ending" ;
                                                   $query10 = $this->db->query($end);
                                                   if ($query10->num_rows() > 0) {
                                                   foreach ($query10->result() as $object) {
@@ -616,7 +595,7 @@ input {
                                                 }else{
                                                     $query = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee");
                                                     foreach ($query->result() AS $row){
-                                                    $end ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity + raw_discrepancy), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now())) a) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) AND raw_coffee = '".$row->raw_coffee."') AS ending" ;                                                 
+                                                    $end ="SELECT (SELECT sum(a.totalin) AS totalin FROM (SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN supp_delivery d JOIN supp_po e JOIN supplier f ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_supplier = d.supp_delivery_id AND d.supp_po_id = e.supp_po_id AND e.supp_id = f.sup_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID  where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(quantity), 0) as totalin FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and type = 'IN' and month(transact_date) = month(now())) a) + (SELECT sum(a.ending) AS ending FROM (SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id  where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now()) UNION SELECT IFNULL(SUM(IF(`type` = 'IN', `quantity`, 0)) - SUM(IF(`type` = 'OUT', `quantity`, 0)), 0) as ending FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id where raw_coffee = '".$row->raw_coffee."' and month(transact_date) = month(now())) a) + (SELECT IFNULL(sum(raw_discrepancy), 0) FROM raw_coffee WHERE month(inventory_date) = month(now()) AND raw_coffee = '".$row->raw_coffee."') AS ending" ;                                                 
                                                  $query11 = $this->db->query($end);
                                                   if ($query11->num_rows() > 0) {
                                                   foreach ($query11->result() as $object) {
@@ -691,48 +670,81 @@ input {
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
-        "order": [[ 0, "desc"]],
+        "order": [[ 0, "asc"]],
+        "ordering": false,
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
-		buttons: [
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+        "info":     true,
+        buttons: [
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', "footer": "true" },
+            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', "footer": true, 
+                orientation: 'landscape', "title": 'Inventory Report', "download": 'open', "messageBottom": "\n \n \n \n \n Prepared by: Jules Tomines",
                         exportOptions: {
                          columns: ':visible'
                  
                         },
+             "header": true,
                     customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
+                        doc.content.splice(0, 1, {
+                        text: [{
+                        text: 'John Hay Coffee Services Inc.\n \n',
+                        alignment: 'center',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Inventory Report \n \n \n',
+                        alignment: 'center',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }] });
                         doc.pageMargins = [50,50,100,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; 
+                        
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear(); 
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+                        
+                    }
             }
         ]
       
     });
-
 });
 </script>
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
-		"order": [[ 0, "desc"]],
+        "order": [[ 0, "asc"]],
+        "ordering": false,
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
-		buttons: [
-            			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+        "info":     true,
+        buttons: [
+                        { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
+            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
+                orientation: 'landscape',
                         exportOptions: {
                          columns: ':visible'
                  
@@ -744,23 +756,19 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; }
             }
         ]
       
     });
-
 });
 </script>
 <script>
-
 $(document).ready(function() {
     $('#example2').DataTable({
-        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }
-
     });
 });
 </script>

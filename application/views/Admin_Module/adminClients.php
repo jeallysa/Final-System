@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Cients</title>
+    <title>Clients</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -214,8 +215,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                               <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                               <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
@@ -293,21 +304,15 @@ a:focus {
                                                 </td>
                                                     <td>
                                                     <div class="onoffswitch">
-                                                         <?php
-                                                        if($row->client_activation == 1){
-
-                                                    ?>
-                                                         <input type="checkbox" id="button<?php echo $row->client_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->client_id;?>" checked>
-                                                    <?php
-                                                        }else{
-
-                                                    ?>
-
-                                                        <input type="checkbox" id="button<?php echo $row->client_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->client_id;?>">
-                                                    <?php
-                                                        }
-
-                                                    ?>
+                                                         <?php if ($row->client_activation == 1): ?>
+                                                          <!-- Button to deactivate -->
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->client_id;?>">Deactivate</button>
+                                                     <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
+                                                    <?php else: ?>
+                                                        <!-- Button to Activate -->
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->client_id;?>">Activate</button>
+                                                       <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
+                                                    <?php endif ?>
                                                     </div>
                                                 </td>
                                                 <div class="modal fade" id="deactivate<?php echo $row->client_id;?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -321,7 +326,7 @@ a:focus {
                                                                 <div class="modal-body" style="padding: 5px;">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this client?</h4>
+                                                                        <h4> Are you sure you want to <?= $row->client_activation == 1 ? 'deactivate' : 'activate'?> this client?</h4>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">
@@ -337,7 +342,7 @@ a:focus {
                                                                     <!--<span class="glyphicon glyphicon-ok"></span>-->
                                                                     
                                                                     <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                                                    <button type="button" class="btn btn-danger btn-close" onclick="document.getElementById('button<?php echo $row->client_id;?>').click()" data-dismiss="modal">No</button>
+                                                                    <button type="button" class="btn btn-danger btn-close"  data-dismiss="modal">No</button>
                                                                 </div>
                                                                 </form>
                                                         </div>
@@ -502,6 +507,7 @@ a:focus {
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable({
+        "order": [[ 1, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -513,10 +519,85 @@ $(document).ready(function() {
                 }
             },
             
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+			/*{ "extend": 'pdf', title: 'Clients', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', orientation: 'landscape',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                },
+                customize: function ( doc ) {
+                doc.content[1].table.widths = ['4%','12%','9%','12%','10%','20%','20%','12%']
                 }
+            }*/
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Clients',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6, 7],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Clients \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });

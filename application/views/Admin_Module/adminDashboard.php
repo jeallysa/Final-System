@@ -177,8 +177,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                               <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
@@ -205,6 +215,9 @@ a:focus {
             </nav>
             <div class="content">
                 <div class="container-fluid">
+                    <p style="text-align:right; font-weight: bold; font-size: 20px;"> <?php
+									echo "Today is " . date("M j, Y - l");
+									?> </p> <br>
                    <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -292,14 +305,46 @@ a:focus {
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
                         <div class="card-header" data-background-color="green">
-                            <h4 class="title">Reminder</h4>
+                            <h4 class="title">Reminder <i class="glyphicon glyphicon-info-sign" style="color:red !important"></i></h4>
                         </div>
                         <div class="card-content table-responsive">
                             <table id=example class="table table-hover">
                                 <tbody>
+
+                                 <?php
+
+                                            $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
+                                                $date = date('Y-m-d');
+
+                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays from contracted_client a join contract b on a.client_id = b.client_id where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 7 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 7 and year(date_expiration) = year(now()) != 0");
+
+                                                if(!empty($query)){
+                                                    foreach($query->result() as $object){
+                                                        if($object->date_expiration == $date ){
+                                        ?>
+                                                <ul>
+                                                      <li>  The Contract of <?php echo $object->client_company; ?> has expired today ! </li>
+                                                </ul>
+                                        <?php
+                                                        }
+                                                    }
+                                                }
+
+                                                if(!empty($query2)){
+                                                    foreach ($query2->result() as $key ) {
+                                                        if($key->date_expiration != $date ){
+                                                     ?>
+                                                    <ul>
+                                                      <li>  The Contract of <?php echo $key->client_company; ?> will expire <?php echo $key->numdays; ?> day/s from now. </li>
+                                                    </ul>
+                                                     <?php  
+                                                    }}
+                                                }
+
+                                        ?>
 											
 												
-											<?php
+											<!-- <?php
 										
 												$query = $this->db->query("SELECT date_expiration,client_id,client_company,seen_admin FROM contract NATURAL JOIN contracted_client WHERE seen_admin='0'");
 												$date = date('Y-m-d');
@@ -340,7 +385,7 @@ a:focus {
 													echo 0;
 												}
 
-										 	?>
+										 	?> -->
                         </div>
                     </div>
                 </div>
@@ -447,7 +492,7 @@ $(function() {
 					$(".select-pane").show();
 		}
 	});
-	$(document).ready(function() {
+	/*$(document).ready(function() {
 		demo.initDashboardPageCharts();
 
 		$(document).on('click', '#check', function(e){   
@@ -465,7 +510,7 @@ $(function() {
 
 		});
 
-	});	
+	});	*/
 </script>
 
 </html>

@@ -51,7 +51,7 @@
 			return $query->result();
 		}
 		public function load_POClient($id){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending delivery' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
 			return $query->result();
 		}
 		public function load_DelClient($id){
@@ -79,9 +79,62 @@
                     $date = $data[$x]['dateO'];
                     $blend_id = $data[$x]['blend'];
                     $quantity = $data[$x]['quantity'];
+                    /* NEEDED QUERY for Section 4 */
+					$query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
+
+
+
+					/* validation of stock if less or not */
+
+					foreach($query->result() AS $row){
+						$raw_guide = $row->raw_id;
+					    $percentage = $row->percentage;
+					    $package = $row->package_size;
+						$stockpre = $this->db->query("SELECT * FROM raw_coffee WHERE raw_id = '".$raw_guide."';");
+						foreach($stockpre->result() as $rowstock){
+							$stock = $rowstock->raw_stock;
+						}
+						$taker = round($quantity*($package*($percentage * 0.01)));
+						if ($stock < $taker){
+							$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        					$this->data['message'] = "Insufficient stocks for raw coffee! Transaction halted.";
+        					echo json_encode($this->data);
+							return;
+						}
+					}
+					$pack_id = $query->row()->package_id;
+					$stick_id = $query->row()->sticker_id;
+					$pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
+					$sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
+					if ($pack_stock < $quantity){
+						$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        				$this->data['message'] = "Insufficient stocks for packaging! Transaction halted.";
+						echo json_encode($this->data);
+						return;
+					}else if($sticker_stock < $quantity){
+						$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        				$this->data['message'] = "Insufficient stocks for stickers! Transaction halted.";
+						echo json_encode($this->data);
+						return;
+					}
+            }
+
+
+
+
+			for($x = 0; $x < count($data); $x++){
+                    $date = $data[$x]['dateO'];
+                    $blend_id = $data[$x]['blend'];
+                    $quantity = $data[$x]['quantity'];
+		            
                 
                     $query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
-                   
+                   $data = array(
+						'walkin_date' => $date,
+						'walkin_qty' => $quantity,
+						'blend_id' => $blend_id
+					);
+                   $this->db->insert('walkin_sales', $data);
                 	$inserted_id = $this->db->insert_id();
                     $pack_id = $query->row()->package_id;
                     $stick_id = $query->row()->sticker_id;

@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Raw Coffee Inventory Stocks</title>
+    <title>Blends Inventory Stocks</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -240,8 +240,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
@@ -381,7 +391,7 @@ a:focus {
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                            <th><b class="pull-left">Quantity</b></th>
-                                              <?php
+                                             <!--  <?php
                                                     $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', '') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
@@ -393,8 +403,8 @@ a:focus {
                                                 } else {
                                                     echo "0 results";
                                                 }
-                                                ?>
-                                            
+                                                ?> -->
+                                            <th><b class="pull-left">Proportions</b></th>
                                             <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
@@ -402,7 +412,7 @@ a:focus {
                                             <tr>
 
                                                 <?php
-                                                    $qcount = $this->db->query('SELECT * FROM raw_coffee');
+                                                     $qcount = $this->db->query('SELECT * FROM raw_coffee');
 
                                                     if($fetch_data_eb->num_rows() > 0){
 
@@ -417,7 +427,7 @@ a:focus {
                                                 <td><?php echo $row->blend_qty; ?></td>
 
                                                 
-                                                <?php
+                                                <!-- <?php
                                                 foreach($qcount->result() as $row2){
                                                     $colname = "per" . $row2->raw_id?>
                                                         <td><?php echo $row->$colname; ?></td>
@@ -425,7 +435,7 @@ a:focus {
 
                                                 }
                                                 
-                                                ?>
+                                                ?> -->
                                                
 
                                                 <!--
@@ -436,27 +446,67 @@ a:focus {
                                                 <td>350</td>
                                                 </td>
                                                 -->
-                                                
+                                                <td>
+                                                     <!-- PROPORTIONS DATA -->
+                                                        <div class="modal fade" id="proportions<?php echo $row->main_id; ?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="panel panel-primary">
+                                                                                    <div class="panel-heading" >
+                                                                                        <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">×</button>
+                                                                                        <h4 class="panel-title" id="contactLabel"> Blend Proportions for <?php echo $row->blend; ?></h4>
+                                                                                    </div>
+                                                                                    
+                                                                                        <div class="modal-body" style="padding: 5px;">
+                                                                                            <table id="blends" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                                                <thead>
+                                                                                                    <th> Raw Coffee </th>
+                                                                                                    <th> Percentage </th>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <?php 
+
+                                                                                                        $sql = "SELECT CONCAT(a.raw_coffee, ' ', a.raw_type) AS raw_coff, CONCAT(percentage, '%') AS percentage FROM raw_coffee a JOIN proportions b JOIN coffee_blend c ON c.blend_id = b.blend_id AND a.raw_id = b.raw_id WHERE c.blend_id = '".$row->main_id."' AND percentage > 0;";
+                                                                                                            $queryper = $this->db->query($sql);
+
+                                                                                                     ?>
+                                                                                                    <?php foreach ($queryper->result() as $percentage_result ): ?>
+                                                                                                        <tr>
+                                                                                                            <td><?= $percentage_result->raw_coff ?></td>
+                                                                                                            <td><?= $percentage_result->percentage ?></td></td>
+                                                                                                        </tr>
+                                                                                                    <?php endforeach ?>
+                                                                                                   <!--  <tr> 
+                                                                                                        <td> Guatemala </td>
+                                                                                                        <td> 30% </td>
+                                                                                                    </tr>
+                                                                                                    <tr> 
+                                                                                                        <td> Guatemala </td>
+                                                                                                        <td> 30% </td>
+                                                                                                    </tr> -->
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                            <!-- END OF PROPORTION DATA-->
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
+                                                </td>
                                                 <td>
                                                     <a href="<?php echo base_url(); ?>AdminBlends/edit_show?id=<?php echo $row->main_id; ?>" class="btn btn-warning btn-sm" style="float: right">Edit</a>
                                                 </td>
                                                    <td>
                                                     <div class="onoffswitch">
-                                                         <?php
-                                                        if($row->blend_activation == 1){
-
-                                                    ?>
-                                                         <input type="checkbox" id="button<?php echo $row->main_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>" checked>
-                                                    <?php
-                                                        }else{
-
-                                                    ?>
-
-                                                        <input type="checkbox" id="button<?php echo $row->main_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">
-                                                    <?php
-                                                        }
-
-                                                    ?>
+                                                         <?php if ($row->blend_activation == 1): ?>
+                                                          <!-- Button to deactivate -->
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Deactivate</button>
+                                                     <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
+                                                    <?php else: ?>
+                                                        <!-- Button to Activate -->
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Activate</button>
+                                                       <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
+                                                    <?php endif ?>
                                                     </div>
                                                 </td>
                                                 <div class="modal fade" id="deactivate<?php echo $row->main_id;?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -470,7 +520,7 @@ a:focus {
                                                                 <div class="modal-body" style="padding: 5px;">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this blend?</h4>
+                                                                        <h4> Are you sure you want to <?= $row->blend_activation == 1 ? 'deactivate' : 'activate'?> this blend?</h4>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">
@@ -575,14 +625,81 @@ $(document).ready(function() {
             
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
                 exportOptions: {
-                    columns: [':not(:nth-last-child(1)):not(:nth-last-child(2))']
+                    columns: [0, 1, 2, 3, 4]
                 }
             },
             
-            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                exportOptions: {
-                    columns: [':not(:nth-last-child(1)):not(:nth-last-child(2))']
-                }
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'portrait', 
+                "title": 'Company Blends Inventory',
+                "download": 'open',
+                
+               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Company Blends Inventory \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+                    doc.content[1].table.widths = ['20%','20%','20%','20%','20%'];
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });

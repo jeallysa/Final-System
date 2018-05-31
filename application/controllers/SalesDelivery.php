@@ -103,7 +103,7 @@
                 $this->load->model('SalesDelivery_model');
                 $po = $this->input->post("po_undo");
                 $this->SalesDelivery_model->undoDel($po);
-                $this->session->set_flashdata('success', 'Purchase order has been cancelled.');
+                $this->session->set_flashdata('success', 'Purchase order has been archived.');
                 redirect('SalesDelivery', 'refresh');	
             }else{
                 $this->session->set_flashdata('error', 'Invalid password, failed to cancel order');
@@ -118,8 +118,9 @@
 			$date = $this->input->post("po_date");
 			$QTY = $this->input->post("po_qty");
 			$blend_id = $this->input->post("po_blend");
+			$dateNow = $this->input->post("dateNow");
 
-			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id);
+			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id, $dateNow);
 			redirect('SalesDelivery', 'refresh');
 		}
 

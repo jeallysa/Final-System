@@ -18,13 +18,13 @@
         right: 0;
         left: auto;
     }
-	.select-pane {
+    .select-pane {
         display: none;
     }
-		.no-border{
-			border: none !important;
+        .no-border{
+            border: none !important;
 
-		}
+        }
         .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
     .panel-primary{ border-color:#9c27b0 !important}
 
@@ -60,13 +60,13 @@
                             <p>Clients</p>
                         </a>
                     </li>
-					<li>
+                    <li>
                         <a href="<?php echo base_url(); ?>salesReturns">
                            <i class="glyphicon glyphicon-indent-right"></i>
                             <p>Returns</p>
                         </a>
                     </li>
-					<li >
+                    <li >
                         <a href="<?php echo base_url(); ?>salesDelivery">
                             <i class="glyphicon glyphicon-bed"></i>
                             <p>Deliveries</p>
@@ -101,9 +101,22 @@
 
                             <li class="dropdown">
 
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+
+                                <li id="nameheader">
+
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -129,10 +142,10 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
-			
+            
                      <p style="text-align:right; font-weight: bold; font-size: 20px;"> <?php
-									echo "Today is " . date("M j, Y - l");
-									?> </p> <br>
+                                    echo "Today is " . date("M j, Y - l");
+                                    ?> </p> <br>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -140,21 +153,21 @@
                                      <i class="glyphicon glyphicon-signal"></i>
                                 </div>
                                 <div class="card-content">
-									
+                                    
                                     <p class="category">Sales of the Day</p>
                                     <h3 class="title">
-										<b>
-										<?php
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=curdate() ;")->row()->total;
+                                        <b>
+                                        <?php
+                                            $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE client_deliverDate=curdate() ;")->row()->total;
 
-										if(!empty($total)){
-											echo 'Php '.number_format($total,2);
-										}else{
-											echo 0;
-										}
+                                        if(!empty($total)){
+                                            echo 'Php '.number_format($total,2);
+                                        }else{
+                                            echo 0;
+                                        }
 
-										 ?>
-											</b>
+                                         ?>
+                                            </b>
                                     </h3>
 
                                 </div>
@@ -172,18 +185,18 @@
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Total Collections</p>
-									
+                                    
                                     <h3 class="title">
-										<b>
+                                        <b>
                                     <?php
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery  WHERE  payment_remarks='paid'; ")->row()->total;
-										if(!empty($total)){
-											echo 'Php '.number_format($total,2);
-										}else{
-											echo 0;
-										}
+                                            $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery  WHERE  payment_remarks='paid'; ")->row()->total;
+                                        if(!empty($total)){
+                                            echo 'Php '.number_format($total,2);
+                                        }else{
+                                            echo 0;
+                                        }
 
-										 ?></b>
+                                         ?></b>
                                     </h3>
 
                                 </div>
@@ -202,16 +215,16 @@
                                 <div class="card-content">
                                     <p class="category">Total Receivables</p>
                                     <h3 class="title">
-										<b>
+                                        <b>
                                     <?php
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
-											if(!empty($total)){
-												echo 'Php '.number_format($total,2);
-											}else{
-												echo 0;
-											}
-										 ?>
-											</b>
+                                            $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='unpaid';")->row()->total;
+                                            if(!empty($total)){
+                                                echo 'Php '.number_format($total,2);
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?>
+                                            </b>
                                     </h3>
                                 </div>
                                 <div class="card-footer">
@@ -229,16 +242,16 @@
                                 <div class="card-content">
                                     <p class="category">Clients</p>
                                     <h3 class="title">
-										<b>
+                                        <b>
                                     <?php
-											$total = $this->db->query("SELECT COUNT(client_company) AS total FROM contracted_client NATURAL JOIN contract WHERE client_activation='1';")->row()->total;
-											if(!empty($total)){
-												echo number_format($total);
-											}else{
-												echo 0;
-											}
-										 ?>
-											</b>
+                                            $total = $this->db->query("SELECT COUNT(client_company) AS total FROM contracted_client NATURAL JOIN contract WHERE client_activation='1';")->row()->total;
+                                            if(!empty($total)){
+                                                echo number_format($total);
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?><br>
+                                            </b>
                                     </h3>
                                 </div>
                                 <div class="card-footer">
@@ -250,61 +263,203 @@
                         </div>
                     </div>
                     <div class="row">
+                         <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Pending Orders</p>
+                                    <h3 class="title">
+                                        <b>
+                                    <?php
+                                            $total = $this->db->query("SELECT COUNT(delivery_stat) AS total FROM contracted_po WHERE delivery_stat ='pending delivery';")->row()->total;
+                                            if(!empty($total)){
+                                                echo $total;
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?>
+                                            </b>
+                                    </h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                      <i class="glyphicon glyphicon-circle-arrow-right"> <a href="<?php echo base_url();?>salesReceivables"> Details</a></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Partial Deliveries</p>
+                                    <h3 class="title">
+                                        <b>
+                                    <?php
+                                            $total = $this->db->query("SELECT COUNT(delivery_stat) AS total FROM contracted_po WHERE delivery_stat ='partial delivery';")->row()->total;
+                                            if(!empty($total)){
+                                                echo $total;
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?>
+                                            </b>
+                                    </h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                      <i class="glyphicon glyphicon-circle-arrow-right"> <a href="<?php echo base_url();?>salesReceivables"> Details</a></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Partial Payments</p>
+                                    <h3 class="title">
+                                        <b>
+                                    <?php
+                                            $total = $this->db->query("SELECT COUNT(payment_remarks) AS total FROM client_delivery WHERE payment_remarks ='partially paid';")->row()->total;
+                                            if(!empty($total)){
+                                                echo $total;
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?>
+                                            </b>
+                                    </h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                      <i class="glyphicon glyphicon-circle-arrow-right"> <a href="<?php echo base_url();?>salesReceivables"> Details</a></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                     <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Unpaid Payments</p>
+                                    <h3 class="title">
+                                        <b>
+                                    <?php
+                                            $total = $this->db->query("SELECT COUNT(payment_remarks) AS total FROM client_delivery WHERE payment_remarks ='unpaid';")->row()->total;
+                                            if(!empty($total)){
+                                                echo $total;
+                                            }else{
+                                                echo 0;
+                                            }
+                                         ?>
+                                            </b>
+                                    </h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                      <i class="glyphicon glyphicon-circle-arrow-right"> <a href="<?php echo base_url();?>salesReceivables"> Details</a></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
-                                    <h4 class="title">Reminders</h4>
+                                    <h4 class="title">Reminders<i class="glyphicon glyphicon-info-sign" style="color:red !important"></i> </h4>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <table class="table">
-                                        <tbody>
+                                    
+                                        <?php
+
+                                            $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
+                                                $date = date('Y-m-d');
+
+                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays        from contracted_client a
+join contract b on a.client_id = b.client_id
+where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 10 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 10 and year(date_expiration) = year(now()) != 0");
+
+                                                if(!empty($query)){
+                                                    foreach($query->result() as $object){
+                                                        if($object->date_expiration == $date ){
+                                        ?>
+                                                <ul>
+                                                      <li>  The Contract of <?php echo $object->client_company; ?> has expired today ! </li>
+                                                </ul>
+                                        <?php
+                                                        }
+                                                    }
+                                                }
+
+                                                if(!empty($query2)){
+                                                    foreach ($query2->result() as $key ) {
+                                                        if($key->date_expiration != $date ){
+                                                     ?>
+                                                    <ul>
+                                                      <li>  The Contract of <?php echo $key->client_company; ?> will expire <?php echo $key->numdays; ?> day/s from now. </li>
+                                                    </ul>
+                                                     <?php  
+                                                    }}
+                                                }
+
+                                        ?>
 
 
-											<?php
+                                           <!--  <?php
 
-												$query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client WHERE seen='0'");
-												$date = date('Y-m-d');
-
-
-												if(!empty($query)){
-													foreach($query->result() as $object){
-														if($object->date_expiration == $date){
-															if($object->seen ==  '0'){
-												?>
-
-													<tr>
-														<td>
-															<span > The contract of <?php echo $object->client_company; ?> client has Expired. </span>
-															<input class="no-border" type="hidden" value="<?php echo $object->client_id; ?>" id="idClient" readonly />
-														</td >
-														<td class="td-actions text-right"><button type="submit" class="btn btn-primary pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
-													</tr>
+                                                $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client WHERE seen='0'");
+                                                $date = date('Y-m-d');
 
 
-													<?php
-															}elseif($object->seen == '1'){
-													?>
-													<tr>
-														<td>
-															<span> The contract of <?php echo $object->client_company; ?> client has Expired. </span>
-															<input class="no-border" type="text" value="<?php echo $object->client_id; ?>" id="idClient" readonly />
-														</td >
-														<td class="td-actions text-right"><button type="submit" class="btn btn-default pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
-													</tr>
-													<?php
+                                                if(!empty($query)){
+                                                    foreach($query->result() as $object){
+                                                        if($object->date_expiration == $date){
+                                                            if($object->seen ==  '0'){
+                                                ?>
 
-															}
-														}else{
+                                                    <tr>
+                                                        <td>
+                                                            <span > The contract of <?php echo $object->client_company; ?> client has Expired. </span>
+                                                            <input class="no-border" type="hidden" value="<?php echo $object->client_id; ?>" id="idClient" readonly />
+                                                        </td >
+                                                        <td class="td-actions text-right"><button type="submit" class="btn btn-primary pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
+                                                    </tr>
 
-													}	}
-												}else{
-													echo 0;
-												}
 
-										 	?>
+                                                    <?php
+                                                            }elseif($object->seen == '1'){
+                                                    ?>
+                                                    <tr>
+                                                        <td>
+                                                            <span> The contract of <?php echo $object->client_company; ?> client has Expired. </span>
+                                                            <input class="no-border" type="text" value="<?php echo $object->client_id; ?>" id="idClient" readonly />
+                                                        </td >
+                                                        <td class="td-actions text-right"><button type="submit" class="btn btn-default pull-right" id="check" data-id="<?php echo $object->client_id; ?>" >Details</button></td>
+                                                    </tr>
+                                                    <?php
 
-                                        </tbody>
-                                    </table>
+                                                            }
+                                                        }else{
+
+                                                    }   }
+                                                }else{
+                                                    echo 0;
+                                                }
+
+                                            ?> -->
+
+                                        
                                 </div>
                             </div>
                         </div>
@@ -313,7 +468,7 @@
             </div>
             
         </div>
-		<footer class="footer">
+        <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright pull-right">
                         &copy;
@@ -336,33 +491,33 @@
 <script src="<?php echo base_url(); ?>assets/js/material-dashboard.js?v=1.2.0"></script>
 <script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
 <script type="text/javascript">
-	var id = document.getElementById('idClient').value;
-	$.ajax({
-		url:'<?=base_url()?>AdminDashboard/getExpire/' +id,
-		method: 'POST',
-		success:function(data){
-					$(".select-pane").show();
-		}
-	});
-	$(document).ready(function() {
-		demo.initDashboardPageCharts();
+    var id = document.getElementById('idClient').value;
+    $.ajax({
+        url:'<?=base_url()?>AdminDashboard/getExpire/' +id,
+        method: 'POST',
+        success:function(data){
+                    $(".select-pane").show();
+        }
+    });
+    /*$(document).ready(function() {
+        demo.initDashboardPageCharts();
 
-		$(document).on('click', '#check', function(e){
-			e.preventDefault();
-			var id = $(this).data('id');
-				$.ajax({
-					url:'<?=base_url()?>AdminDashboard/updateNotif/' +id,
-					method: 'POST',
-					success:function(data){
-						$(".select-pane").hide();
-						alert('naupdate na!');
-					}
+        $(document).on('click', '#check', function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+                $.ajax({
+                    url:'<?=base_url()?>AdminDashboard/updateNotif/' +id,
+                    method: 'POST',
+                    success:function(data){
+                        $(".select-pane").hide();
+                        alert('naupdate na!');
+                    }
 
-					});
+                    });
 
-		});
-
-	});
+        });
+*/
+    });
 </script>
 
 </html>

@@ -223,6 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </nav>
 
             <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
@@ -288,6 +289,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
             <div class="content">
                 <div class="container-fluid">
+                    <p style="text-align:right; font-weight: bold; font-size: 20px;"> <?php
+                                    echo "Today is " . date("M j, Y - l");
+                                    ?> </p> <br>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">

@@ -215,8 +215,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="material-icons">person</i>
@@ -277,7 +287,7 @@ a:focus {
                                                     {
                                                 ?>
                                                     <tr>
-                                                        <td>Employee-<?php echo $row->user_no; ?></td>
+                                                        <td>Employee <?php echo $row->user_no; ?></td>
                                                         <td><?php echo $row->u_lname; ?></td>
                                                         <td><?php echo $row->u_fname; ?></td>
                                                         <td><?php echo $row->u_type; ?></td>
@@ -290,21 +300,15 @@ a:focus {
                                                         </td>
                                                         <td>
                                                      <div class="onoffswitch">
-                                                         <?php
-                                                        if($row->u_activation == 1){
-
-                                                    ?>
-                                                         <input type="checkbox" id="button<?php echo $row->user_no;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>" checked>
-                                                    <?php
-                                                        }else{
-
-                                                    ?>
-
-                                                        <input type="checkbox" id="button<?php echo $row->user_no;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">
-                                                    <?php
-                                                        }
-
-                                                    ?>
+                                                         <?php if ($row->u_activation == 1): ?>
+                                                          <!-- Button to deactivate -->
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">Deactivate</button>
+                                                     <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
+                                                    <?php else: ?>
+                                                        <!-- Button to Activate -->
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">Activate</button>
+                                                       <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
+                                                    <?php endif ?>
                                                     </div>
                                                 </td>
 
@@ -319,7 +323,8 @@ a:focus {
                                                                 <div class="modal-body" style="padding: 5px;">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this account?</h4>
+                                                                        <h4> Are you sure you want to <?= $row->u_activation == 1 ? 'deactivate' : 'activate'?> this client?</h4>
+                                                                        <br>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">
@@ -497,6 +502,7 @@ a:focus {
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable({
+        "order": [[ 1, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -509,10 +515,85 @@ $(document).ready(function() {
                 }
             },
             
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+			/*{ "extend": 'pdf', title: 'Employee Accounts', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', orientation: 'landscape',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
+                },
+                customize: function ( doc ) {
+                doc.content[1].table.widths = ['12%','12%','12%','9%','23%','19%','12%']
                 }
+            }*/
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Employee Accounts',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Employee Accounts \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+                    doc.content[1].table.widths = ['12%','12%','12%','9%','23%','19%','12%'];
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });
